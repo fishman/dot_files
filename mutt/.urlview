@@ -1,0 +1,3 @@
+REGEXP ((((ht|f)tp)|https|file|mailto):(//)?[^ >"]*|www.[-a-z0-9.]+)[^ .,;>"']
+
+COMMAND open %s
