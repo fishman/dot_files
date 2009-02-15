@@ -1,0 +1,254 @@
+#!/bin/zsh
+
+autoload zmv
+alias mmv='noglob zmv -W'
+
+if ( which sudo >/dev/null 2>/dev/null ) ; then
+  alias su='export XAUTHORITY=${HOME}/.Xauthority ; sudo -s'
+  alias sudo='export XAUTHORITY=${HOME}/.Xauthority ; sudo'
+fi
+
+# alias du="du -hcs"
+alias du="du -hc"
+alias df="df -h"
+
+# Global aliases -- These do not have to be at the beginning of
+# the command line.
+alias -g M='|more'
+alias -g L='|less'
+alias -g G='|grep'
+alias -g X='|xargs'
+alias -g H='|head'
+alias -g T='|tail'
+alias -g V='|vim -'
+alias -g W='|wc -l'
+alias -g S='|sort'
+alias -g US='|sort -u'
+alias -g NS='|sort -n'
+alias -g RNS='|sort -nr'
+alias -g N='&>/dev/null&'
+
+
+# general helpers
+if [[ $OS == osx ]]; then
+  alias vim="vim --servername VIM"
+  alias rv="vim --remote"
+  alias mvim="mvim --remote-tab-silent"
+  alias m="mate ."
+  alias mw="mate -w"
+  alias nyzis="~/git/vi/Yzis/nyzis/nyzis"
+  alias gitx="/Applications/GitX.app/Contents/Resources/gitx"
+fi
+alias myip="ifconfig | grep 192.168 || ifconfig | grep 10.32"
+alias psg="ps ax | grep "
+alias wget="wget -c"
+alias getit='curl -O `pbpaste`'
+alias top="/usr/bin/top -ocpu -R -F -s 2 -n30"
+alias mtop="top -o rsize"
+alias sr="screen -r"
+alias unrar='nice -n 19 unrar'
+alias grep='egrep'
+#alias wc='sloccount'
+alias mutt='TERM=xterm-256color mutt'
+
+# ls alias
+if [[ $OS == osx ]]; then
+  alias ll='ls -lh'
+  alias la='ls -A'
+  alias l='ls -lha'
+  # List only directories and symbolic
+  # # links that point to directories
+  alias lsd='ls -ld *(-/DN)'
+  # List only file beginning with "."
+  alias lsa='ls -ld .*'
+  alias lla='ls -la'
+else
+  alias ls="ls --color=auto"
+  alias ls="ls --color=auto"
+  alias la="ls --color=always -a"
+  alias ll="ls --color=always -l"
+  alias lla="ls --color=always -la"
+  alias lal="ls --color=always -la"
+fi
+alias dir='ls -lht | less'
+
+# be faster alias
+alias cd..='cd ..;'
+alias ..='cd ..;'
+alias ...='cd ../..;'
+alias cls='clear'
+alias h='history'
+alias df='df -h'
+alias po='popd'
+alias pu='pushd'
+
+# various system
+if [[ $OS == osx ]]; then
+  alias vmwarerestart='sudo /Library/Application\ Support/VMware\ Fusion/boot.sh --restart'
+  alias bluetoothreload='sudo kextunload -b com.apple.driver.IOBluetoothA2DPAudioDriver; sleep 2 && sudo kextunload -b com.apple.driver.IOBluetoothA2DPAudioDriver && sudo kextload -b com.apple.driver.IOBluetoothA2DPAudioDriver'
+  alias ciscorestart='sudo kextunload -b com.cisco.nke.ipsec && sudo kextload -b com.cisco.nke.ipsec '
+  alias eject='hdiutil eject'
+  alias unmount='hdiutil unmount'
+fi
+
+alias unzipall='for z in *.zip; do unzip -n $z; done'
+
+# re
+alias idal='/Users/timebomb/Documents/Projects/RE/IDA/IDA\ Pro/idaadv/idal'
+alias gdbintel='gdb -x ~/.gdbinit_color'
+
+alias gentags='ctags -f .tmtags --excmd=pattern -R --tag-relative=yes'
+
+# random os x
+if [[ $OS == osx ]]; then
+  #vlc
+  alias vlc="open -a VLC"
+  #mplayer
+  alias mplayer="/Applications/MPlayer\ OSX\ Extended.app/Contents/Resources/External_Binaries/mplayer.app/Contents/MacOS/mplayer"
+  # web devel
+  alias devfox='/Applications/Devfox.app/Contents/MacOS/firefox-bin -P devprofile'
+  alias firefox='/Applications/Firefox.app/Contents/MacOS/firefox-bin -P default'
+  alias studiblock="cd ~/Sites/Studiblock/studiblock"
+  alias talentrun="cd ~/Sites/talentrun/talentrun"
+  alias integrator="cd ~/Documents/Projects/Acculogic/Integrator"
+  alias xampp="sudo /Applications/xampp/xamppfiles/mampp"
+  alias cake="~/sites/Studiblock/Frameworks/cake/cake/console/cake"
+  # xampp php 
+  alias doctrine-cli="/Applications/xampp/xamppfiles/bin/php ~/Sites/talentrun/talentrun/utilities/doctrine/doctrine-cli"
+
+  # textmate 
+  alias e="open -a TextMate"
+  alias matereload="osascript -e 'tell app \"TextMate\" to reload bundles'"
+  alias projects="cd ~/Documents/Projects"
+fi
+
+# security
+# libdnet
+# fragroute
+# libevent
+# nmap
+# nessus
+# superscan
+# snort
+# nikto
+# jikto
+# wireshark
+# etherape
+# ettercap
+# whois
+# sam spade
+# johnny.ihackstuff.com
+# metasploit
+# superscan
+# snmpenum.pl ip public windows.txt
+# nslookup
+# smbgetserverinfo
+# smbdumpusers
+# smbenum
+# nbtscan
+
+# mpc
+alias play='mpc toggle'
+alias stop='mpc stop'
+
+# devel
+alias sanitizemake="find . -iname '*.mk' -name '?akefile' -o -exec sed -i '' 's/-arch ppc//g' '{}' \;"
+
+# svn helpers
+alias sst="svn st"
+alias sup="svn up"
+alias sci="svn ci -m "
+alias si="svn propedit svn:ignore"
+alias svnurl="svn info | grep URL | awk '{ print $2 }'"
+alias remove_missing='svn rm `svn st | grep \! | tr -d "! "`'
+alias add_missing='svn add `svn st | grep \? | tr -d "? "`'
+alias srp="svn propset svn:ignore '*.log' log/ && svn propset svn:ignore '*.db' db/ && svn propset svn:ignore 'schema.rb'   db/"
+alias sdm="svn diff|mate"
+alias sdv="svn diff|vim -"
+alias sdstat="svn diff|diffstat"
+# see all local changes live in terminal
+alias slivestat="watch 'svn st --ignore-externals|grep -v ^X'"
+
+# diff helpers
+alias diff="diff -u"
+
+# git helpers
+alias gst='git status'
+alias gl='git pull'
+alias gp='git push'
+#alias gd='git diff | mate'
+alias gd='git diff | vim -'
+alias gc='git commit -v'
+alias gci='git commit -v -m '
+alias gca='git commit -v -a'
+alias gb='git branch'
+alias gba='git branch -a'
+alias glivestat="watch 'git status |grep -v ^X'"
+alias unclean="git diff-files --quiet && git diff-index --cached --quiet HEAD -- || unclean='*'"
+
+# rails helpers
+alias restful='script/plugin source http://svn.techno-weenie. net/projects/plugins'
+alias rfaplugin='git clone git://github.com/technoweenie/restful-authentication.git restful_authentication'
+
+#web development
+alias mysql='/Applications/xampp/xamppfiles/bin/mysql'
+alias talentrunscreens='screen -S talentrun -d -m -t"Application log" tail -f ~/Sites/Projects/talentrun/logs/    application.log & screen -S talentrun -X screen -t "Apache log" tail -f /Applications/xampp/xamppfiles//logs/error_log'
+alias findfile="find . -path '*/.svn' -prune -o -type f -print | grep -I -n -e"
+alias grepinfile="find . -path '*/.svn' -prune -o -type f -print -exec grep -i \.js \;"
+
+#alias cleanupssrepo="find . -name '*.scc' -o -name '*.obj' - o -name '*.idb' -o -name '*.pdb' -o -name '*.ilk' -o -name '*.sbr' -exec svn remove '{}' \;"
+alias cleanupssrepo="find . -name '*.obj'  -exec svn --force  remove '{}' \; ; find . -name '*.idb'  -exec svn --force      remove '{}' \; ; find . -name '*.ilk'  -exec svn --force      remove '{}' \; ; find . -name '*.pdb'  -exec svn --force      remove '{}' \;"
+alias cleanup="find . -name '*.obj'  -exec rm '{}' \; ;       find . -name '*.idb'  -exec rm '{}' \; ; find . -name '*.     ilk'  -exec rm '{}' \; ; find . -name '*.pdb'  -exec rm '{}'  \;"
+
+#alias rm='rm -i'
+
+cvi () {
+  vim -O ${${1%.[hc]}%.}.{h,c}
+}
+
+xvi () {
+  vim -O ${${${1%.h}%.cpp}%.}.{h,cpp}
+}
+
+wt() { 
+  while true ; do ( $@ ) ; sleep 1 ; clear ; done
+}
+
+function bdiff() { diff "$1" "$2" || diff <(hex "$1") <(hex "$2") ; }
+
+tohtml() {
+  if test -z $1 ; then
+    echo "tohtml <file>" >&2
+    return 1
+  fi
+  vim -e +:TOhtml +w +qa $1
+}
+
+yyyymmdd () { date +%Y%m%d ; }
+yyyymmdd-hhmmss () { date +%Y%m%d-%H%M%S ; }
+alias ymd=yyyymmdd
+alias ymd-hms=yyyymmdd-hhmmss
+
+function vman() { vim -c ":RMan ${*}" ; }
+function vimgrep () { tmp="$@" ; vim -c "vimgrep $tmp" ; }
+
+function xpwd () { echo $PWD | xclip -i ; xclip -o ; }
+function xcd () { cd `xclip -o` ; }
+
+function sum() { SUM=0; while read NUM; do SUM=$(($SUM+$NUM)); done; echo $SUM; }
+
+# ccd x will do cd ../x
+alias cdd="cd `basename \`pwd\``"
+
+#alias vnice="ionice -n7 nice -n20"
+vnice() {
+  if test -z "$1" ; then
+    echo "vnice [ <pid> | <program> ]" >&2
+    return 1
+  elif ( echo "$1" | grep -q '^[0-9]*$' ) ; then
+    ionice -n7 -p $1
+    renice 20 $1
+  else
+    ionice -n7 nice -n20 $@
+  fi
+}

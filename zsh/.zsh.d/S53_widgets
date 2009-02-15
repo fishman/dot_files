@@ -1,0 +1,13 @@
+#!/bin/zsh 
+
+# if you insert url's they're automatically quoted
+if [ ${ZSH_VERSION//\./} -ge 420 ]; then
+  autoload -U url-quote-magic
+  zle -N self-insert url-quote-magic
+fi
+
+paste-xclip() {
+  BUFFER=$BUFFER"`xclip -o`"
+  zle end-of-line
+}
+zle -N paste-xclip

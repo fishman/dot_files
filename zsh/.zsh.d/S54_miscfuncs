@@ -1,0 +1,19 @@
+#!/bin/zsh
+
+# prozesse finden (ps -ef | grep prozess)
+function psgr()
+{
+	FIRST=`echo $1 | sed -e 's/^\(.\).*/\1/'`
+	REST=`echo $1 | sed -e 's/^.\(.*\)/\1/'`
+	ps -ef | grep -v "$0" | grep "[$FIRST]$REST"
+}
+
+function calc() { gawk "BEGIN{ print $* }"; }
+function hcalc() { gawk -v CONVFMT="%x\n" "BEGIN{printf CONVFMT, $* }"; }
+
+#growl() { echo -e $'\e]9;'${1}'\007' ; return  ; }
+
+function sftp()
+{
+  lftp sftp://$1
+}

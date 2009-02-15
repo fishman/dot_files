@@ -1,0 +1,182 @@
+xman*topBox:false
+xman*bothShown:true
+
+! enable 96dpi fonts
+!Xft.dpi: 90
+!Xft.antialias: false
+
+xpdf.viKeys: true
+
+! xosview settings
+xosview*background: black
+xosview*foreground: Orange
+
+! urxvt*depth: 24
+urxvt*geometry:          179x51
+urxvt*background:        #313031
+urxvt*foreground:        White
+! URxvt*background:         #1C1C1C
+! URxvt*foreground:         #B4B4B4 
+! urxvt*borderWidth:        0
+! urxvt*visualBell:       true
+!urxvt*inheritPixmap:      true
+! urxvt*reverseVideo: true
+!urxvt*tintColor:         #dfdfdf
+!urxvt*shading:          20    !trans, 0=opaque
+!urxvt*fading:         10    !term unfocus
+urxvt*font:     xft:terminus:pixelsize=16
+urxvt*scrollBar: false
+urxvt*scrollBar_floating:  true
+urxvt*scrollBar_right: false
+urxvt*scrollColor:   #000000
+urxvt*saveLines:   1000
+!urxvt*termName:   urxvt
+urxvt*cursorColor:   #d8d8d8
+! urxvt*colorBD:   lightyellow
+! urxvt*colorUL:   yellow
+
+!colors
+!(unknown)
+! urxvt*color0: #000000
+! urxvt*color7: #bebebe
+! urxvt*color8: #666666
+! urxvt*color9: #cf6171
+! urxvt*color10: #c5f779
+! urxvt*color11: #fff796
+! urxvt*color12: #4186be
+! urxvt*color13: #cf9ebe
+! urxvt*color14: #71bebe
+! urxvt*color15: #ffffff
+! !(1 is an option color in .Xdefaults)
+! urxvt*color1: #ffa2a5
+! !(2 is a resource color in .Xdefaults)
+! urxvt*color2: #bdb66b
+! !(3 is for def/return color in python)
+! urxvt*color3: #f7e78c
+! !(4 is for comments color in python)
+! urxvt*color4: #84cfef
+! !(5 is for import/from color in python)
+! urxvt*color5: #ce5d5a
+! !(6 is for function color in python)
+! urxvt*color6: #87ff87
+
+! ---| thayer (tango) |--- {{{
+! Black (not tango) + DarkGrey
+URxvt*color0:             #000000
+URxvt*color8:             #555753
+! DarkRed + Red
+URxvt*color1:             #ff6565
+URxvt*color9:             #ff8d8d
+! DarkGreen + Green
+URxvt*color2:             #93d44f
+URxvt*color10:            #78e758
+! DarkYellow + Yellow
+URxvt*color3:             #eab93d
+URxvt*color11:            #ffc123
+! DarkBlue + Blue
+URxvt*color4:             #204a87
+URxvt*color12:            #3465a4
+! DarkMangenta + Mangenta
+URxvt*color5:             #ce5c00
+URxvt*color13:            #f57900
+!DarkCyan + Cyan (both not tango)
+URxvt*color6:             #89b6e2
+URxvt*color14:            #46a4ff
+! LightGrey + White
+URxvt*color7:             #cccccc
+URxvt*color15:            #ffffff
+!}}}
+
+
+
+URxvt.keysym.M-C: perl:mark-and-yank:activate_mark_mode
+URxvt.cutchars: `"'()*,;<>[]{|}'"
+URxvt.keysym.M-u: perl:mark-and-yank:activate_mark_url_mode
+URxvt.keysym.M-c: perl:macosx-clipboard:copy
+URxvt.keysym.M-v: perl:macosx-clipboard:paste
+URxvt.perl-lib: /Users/timebomb/.urxvt/
+URxvt.perl-ext: mark-and-yank,macosx-clipboard
+URxvt.urlLauncher: open
+
+
+!
+!XTerm*underLine: on
+XTerm*customization: -color
+!XTerm*visualBell: true
+XTerm*colorMode: on
+XTerm*colorBD: lightyellow
+!XTerm*colorBDMode: off
+XTerm*colorUL: yellow
+XTerm*colorULMode: on
+XTerm*dynamicColors: off
+XTerm*highlightSelection: true
+
+! Colorscheme based on the gvim colorscheme desert
+XTerm*background: #313031
+XTerm*foreground: White
+
+!colors
+!(unknown)
+XTerm*color0: #000000
+XTerm*color7: #bebebe
+XTerm*color8: #666666
+XTerm*color9: #cf6171
+XTerm*color10: #c5f779
+XTerm*color11: #fff796
+XTerm*color12: #4186be
+XTerm*color13: #cf9ebe
+XTerm*color14: #71bebe
+XTerm*color15: #ffffff
+
+!(1 is an option color in .Xdefaults)
+XTerm*color1: #ffa2a5
+
+!(2 is a resource color in .Xdefaults)
+XTerm*color2: #bdb66b
+
+!(3 is for def/return color in python)
+XTerm*color3: #f7e78c
+
+!(4 is for comments color in python)
+XTerm*color4: #84cfef
+
+!(5 is for import/from color in python)
+XTerm*color5: #ce5d5a
+
+!(6 is for function color in python)
+XTerm*color6: #87ff87
+
+!set the font, and fond size
+! this also uses a antialias/scalable font
+!xterm*faceName: Bitstream Vera Sans Mono
+xterm*faceName: Terminus
+xterm*faceSize: 12
+!xterm*font:     xft:terminus:pixelsize=18
+!xterm*font : -*-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-15
+
+!set the window geometry
+XTerm*geometry: 144x41
+XTerm*scrollBar: false
+
+XTerm*VT100.Translations: #override \
+<KeyPress> Prior: scroll-back(1,page) \n\
+<KeyPress> Next: scroll-forw(1,page) \n\
+Meta <KeyPress> W: quit() \n\
+Meta <KeyPress> V: insert-selection(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
+<BtnUp>: select-end(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
+
+
+## TERMINAL KEY SETTINGS
+## Adjust to OSX Terminal.app behaviour
+! *VT100.translations: #override\
+! <Key>Prior: scroll-back(1,pages) \n\
+! <Key>Next: scroll-forw(1,pages)\n\
+! Meta <Key> K: send-signal(int) clear-saved-lines() \n\
+! Meta <Key> P: print() \n\
+! Meta <Key> minus: smaller-vt-font() \n\
+! Meta <Key> KP_Subtract: smaller-vt-font() \n\
+! Meta <Key> plus: larger-vt-font() \n\
+! Meta <Key> KP_Add: larger-vt-font() \n\
+! Meta <Key> C: select-cursor-start() \ select-cursor-end(PRIMARY, CUT_BUFFER0) \n\
+! Meta <Key> V: insert-selection(PRIMARY, CUT_BUFFER0) \n\
+! Meta <Key> M: iconify() \n\

@@ -1,0 +1,34 @@
+#!/bin/zsh
+
+svn-log() {
+  case $1 in
+      #yesterday | yes | y) svn log -r '{'`date -d yesterday +"%Y-%m-%d"`'}':'{'`gdate +"%Y-%m-%d"`'}'
+      yesterday | yes | y) svn log -r '{'`date -v-1d +"%Y-%m-%d"`'}:{'`date +"%Y-%m-%d"`'}'
+    ;;
+
+    *) echo "Invalid Option: $1";;
+  esac
+}
+
+function svnu {
+exec svn update "$@" 2>&1 \
+| awk '/^C | conflicts /                  { print "\033[1;31m" $0"\033[0m"; next }
+/svn update/                       { print "\033[0;32m" $0"\033[0m"; next }
+/^\? /                             { print "\033[0;33m" $0"\033[0m"; next }
+/^A /                              { print "\033[1;33m" $0"\033[0m"; next }
+/^N /                              { print "\033[1;33m" $0"\033[0m"; next } # import
+/^R /                              { print "\033[0;35m" $0"\033[0m"; next }
+/^P /                              { print "\033[0;36m" $0"\033[0m"; next }
+/^Merging differences /            { print "\033[0;36m" $0"\033[0m"; next }
+/already contains the differences/ { print "\033[0;36m" $0"\033[0m"; next }
+/^U /                              { print "\033[1;32m" $0"\033[0m"; next }
+/^M /                              { print "\033[0;34m" $0"\033[0m"; next }
+/^(RCS file: |retrieving |done$)/  { print "\033[1;32m" $0"\033[0m"; next }
+/not .* pertinent/                 { print "\033[0;1m"  $0"\033[0m"; next }
+
+# Nothing should reach here
+{ print "\033[1;35m" $0 }
+
+END { printf "\033[0m" }'
+}
+

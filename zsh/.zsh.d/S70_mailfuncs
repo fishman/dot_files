@@ -1,0 +1,26 @@
+#!/bin/zsh
+
+newmail() {
+  osascript\
+    -e "    tell application \"Mail\"                   "\
+    -e "      activate                                  "\
+    -e "      set mysubject to \"$1\"                   "\
+    -e "      set mybody to \"$2\"                      "\
+    -e "      set mymail to ( make new outgoing message at the beginning of outgoing messages with properties {subject:mysubject, content:mybody} )"\
+    -e "      set visible of mymail to true             "\
+    -e "    end tell                                    "
+}
+
+sendattachment(){
+  osascript\
+    -e "    tell application \"Mail\"                   "\
+    -e "      activate                                  "\
+    -e "      set mysubject to \"$1\"                   "\
+    -e "      set theFile to \"$PWD/$1\"                "\
+    -e "      set theMessage to ( make outgoing message at the beginning of outgoing messages with properties {subject:mysubject} )"\
+    -e "      tell theMessage                           "\
+    -e "        make new attachment with properties {file name:theFile} at after the last paragraph"\
+    -e "      end tell                                  "\
+    -e "      set visible of theMessage to true         "\
+    -e "    end tell                                    "
+}

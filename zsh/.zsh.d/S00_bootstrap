@@ -1,0 +1,9 @@
+#!/bin/zsh
+
+OS=unknown
+
+if [[ $(uname) == Darwin ]]; then
+  OS=osx
+elif [[ $(uname) == Linux ]]; then
+  OS=linux
+fi

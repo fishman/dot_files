@@ -1,0 +1,455 @@
+screen 0
+{
+  styles {
+    normal {
+      font = "snap 10"
+        fg = "#777777"
+        bg = "#2a2a2a"
+        border = "#1a1a1a"
+    }
+    focus  { fg = "#ffffff" bg = "#000000" border = "#9e1828" }
+    urgent { fg = "#ffffff" bg = "#cc0066" border = "#ff9900" }
+  }
+  general
+    {
+      resize_hints = true
+        border = 2
+        snap = 8
+        mwfact_lower_limit = 0.1
+        mwfact_upper_limit = 0.9
+        resize_hints = false
+        new_get_focus = true 
+        new_become_master = false
+        floating_placement = smart
+        sloppy_focus = false
+    }
+    tags
+    {
+        tag code { }
+        tag code2 { }
+        tag irc { }
+        tag random { }
+        tag media { }
+        tag games { layout = floating }
+    }
+    layouts
+    {
+        layout tile { image = "/opt/local/share/awesome/icons/layouts/tilew.png" }
+        layout tileleft { image = "/opt/local/share/awesome/icons/layouts/tileleftw.png" }
+        layout tilebottom { image = "/opt/local/share/awesome/icons/layouts/tilebottomw.png" }
+        #layout tiletop { image = "/opt/local/share/awesome/icons/layouts/tiletopw.png" }
+        layout max { image = "/opt/local/share/awesome/icons/layouts/maxw.png" }
+        #layout spiral { image = "/opt/local/share/awesome/icons/layouts/spiralw.png" }
+        #layout dwindle { image = "/opt/local/share/awesome/icons/layouts/dwindlew.png" }
+        layout floating { image = "/opt/local/share/awesome/icons/layouts/floatingw.png" }
+    }
+    statusbar mystatusbar
+    {
+        position = "top"
+
+        layoutinfo mylayoutinfo
+        {
+            mouse
+            {
+                button = "1"
+                command = "tag_setlayout"
+                arg = "+1"
+            }
+            mouse
+            {
+                button = "4"
+                command = "tag_setlayout"
+                arg = "+1"
+            }
+            mouse
+            {
+                button = "3"
+                command = "tag_setlayout"
+                arg = "-1"
+            }
+            mouse
+            {
+                button = "5"
+                command = "tag_setlayout"
+                arg = "-1"
+            }
+        }
+        taglist mytaglist
+        {
+            mouse
+            {
+                button = "1"
+                command = "tag_view"
+            }
+            mouse
+            {
+                button = "1"
+                modkey = {"Mod2"}
+                command = "client_tag"
+            }
+            mouse
+            {
+                button = "3"
+                command = "tag_toggleview"
+            }
+            mouse
+            {
+                button = "3"
+                modkey = {"Mod2"}
+                command = "client_toggletag"
+            }
+            mouse
+            {
+                button = "4"
+                command = "tag_viewnext"
+            }
+            mouse
+            {
+                button = "5"
+                command = "tag_viewprev"
+            }
+        }
+        tasklist mytasklist
+        {
+            mouse
+            {
+                button = "4"
+                command = "client_focusnext"
+            }
+            mouse
+            {
+                button = "5"
+                command = "client_focusprev"
+            }
+            mouse
+            {
+                modkey = {"Mod2"}
+                button = "4"
+                command = "client_swapnext"
+            }
+            mouse
+            {
+                modkey = {"Mod2"}
+                button = "5"
+                command = "client_swapprev"
+            }
+        }
+    }
+}
+
+rules
+{
+    rule { name = "Gimp" float = true }
+    rule { name = "MPlayer" float = true }
+    rule { name = "Acroread" float = true }
+    rule { name = "pinentry" float = true }
+}
+
+mouse
+{
+    root
+    {
+        button = "3"
+        command = "spawn"
+        arg = "exec urxvtc"
+    }
+    root
+    {
+        button = "4"
+        command = "tag_viewnext"
+    }
+    root
+    {
+        button = "5"
+        command = "tag_viewprev"
+    }
+    client
+    {
+        modkey = {"Mod2"}
+        button = "1"
+        command = "client_movemouse"
+    }
+    client
+    {
+        modkey = {"Mod2"}
+        button = "2"
+        command = "client_zoom"
+    }
+    client
+    {
+        modkey = {"Mod2"}
+        button = "3"
+        command = "client_resizemouse"
+    }
+    titlebar
+    {
+        button = "1"
+        command = "client_movemouse"
+    }
+    titlebar
+    {
+        button = "3"
+        command = "client_resizemouse"
+    }
+}
+
+keys
+{
+    key
+    {
+        modkey = {"Mod2"}
+        key = "F2"
+        command = "spawn"
+        arg = "exec urxvtc -e man `for i in /usr/share/man/man?;do ls $i; done | cut -d. -f1 | awesome-menu 'See manual page for:'`"
+    }
+    key
+    {
+        modkey = {"Mod2"}
+        key = "F1"
+        command = "spawn"
+        arg = "exec find /usr/bin -type f -executable ! -empty | sed 's,.*/,,' | awesome-menu -e 'exec ' Execute:"
+    }
+    key
+    {
+        modkey = {"Mod2"}
+        key = "F3"
+        command = "spawn"
+        #arg = "exec xterm -e ssh `cut -d' ' -f1 ~/.ssh/known_hosts | cut -d, -f1 | awesome-menu 'ssh to:'`"
+        arg = "exec urxvtc -e ssh `cat ~/.ssh/config | grep 'Host ' | cut -d' ' -f2 | awesome-menu 'ssh to:'`"
+    }
+    key
+    {
+        modkey = {"Mod2"}
+        key = "Return"
+        command = "spawn"
+        arg = "exec urxvtc"
+    }
+    key
+    {
+        modkey = {"Mod2"}
+        key = "space"
+        command = "tag_setlayout"
+        arg = "+1"
+    }
+    key
+    {
+        modkey = {"Mod2", "Shift"}
+        key = "space"
+        command = "tag_setlayout"
+        arg = "-1"
+    }
+    key
+    {
+        modkey = {"Mod2"}
+        key = "b"
+        command = "statusbar_toggle"
+    }
+    key
+    {
+        modkey = {"Mod2"}
+        key = "j"
+        command = "client_focusnext"
+    }
+    key
+    {
+        modkey = {"Mod2"}
+        key = "k"
+        command = "client_focusprev"
+    }
+    key
+    {
+        modkey = {"Mod2"}
+        key = "Tab"
+        command = "focus_history"
+        arg = "-1"
+    }
+    key
+    {
+        modkey = {"Mod2", "Shift"}
+        key = "j"
+        command = "client_swapnext"
+    }
+    key
+    {
+        modkey = {"Mod2", "Shift"}
+        key = "k"
+        command = "client_swapprev"
+    }
+    key
+    {
+        modkey = {"Mod1"}
+        key = "Prior"
+        command = "screen_focus"
+        arg = "-1"
+    }
+    key
+    {
+        modkey = {"Mod1"}
+        key = "Next"
+        command = "screen_focus"
+        arg = "+1"
+    }
+    key
+    {
+        modkey = {"Mod2"}
+        key = "h"
+        command = "tag_setmwfact"
+        arg = "-0.05"
+    }
+    key
+    {
+        modkey = {"Mod2"}
+        key = "l"
+        command = "tag_setmwfact"
+        arg = "+0.05"
+    }
+    key
+    {
+        modkey = {"Mod2", "Shift"}
+        key = "h"
+        command = "tag_setnmaster"
+        arg = "+1"
+    }
+    key
+    {
+        modkey = {"Mod2", "Shift"}
+        key = "l"
+        command = "tag_setnmaster"
+        arg = "-1"
+    }
+    key
+    {
+        modkey = {"Mod2", "Control"}
+        key = "h"
+        command = "tag_setncol"
+        arg = "+1"
+    }
+    key
+    {
+        modkey = {"Mod2", "Control"}
+        key = "l"
+        command = "tag_setncol"
+        arg = "-1"
+    }
+    key
+    {
+        modkey = {"Mod2"}
+        key = "Escape"
+        command = "tag_prev_selected"
+    }
+    key
+    {
+        modkey = {"Mod1"}
+        key = "Home"
+        command = "tag_viewprev"
+    }
+    key
+    {
+        modkey = {"Mod1"}
+        key = "End"
+        command = "tag_viewnext"
+    }
+    key
+    {
+        modkey = {"Mod2"}
+        key = "m"
+        command = "client_togglemax"
+    }
+    key
+    {
+        modkey = {"Mod2", "Control"}
+        key = "Return"
+        command = "client_zoom"
+    }
+    key
+    {
+        modkey = {"Mod2", "Control"}
+        key = "space"
+        command = "client_togglefloating"
+    }
+    key
+    {
+        modkey = {"Mod2"}
+        key = "s"
+        command = "client_togglescratch"
+    }
+    key
+    {
+        modkey = {"Mod2", "Control"}
+        key = "s"
+        command = "client_setscratch"
+    }
+    key
+    {
+        modkey = {"Mod2"}
+        key = "w"
+        command = "client_kill"
+    }
+    key
+    {
+        modkey = {"Mod2", "Shift"}
+        key = "w"
+        command = "quit"
+    }
+    key
+    {
+        modkey = {"Mod2", "Control"}
+        key = "r"
+        command = "restart"
+    }
+    key
+    {
+       modkey = {"Mod2"}
+       key = "0"
+       command = "tag_view"
+    }
+    keylist
+    {
+        modkey = {"Mod2"}
+        command = "tag_view"
+        keylist = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+        arglist = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+    }
+    key
+    {
+        modkey = {"Mod2", "Control"}
+        key = "0"
+        command = "tag_toggleview"
+    }
+    keylist
+    {
+        modkey = {"Mod2", "Control"}
+        command = "tag_toggleview"
+        keylist = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+        arglist = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+    }
+
+    key
+    {
+        modkey = {"Mod2", "Shift"}
+        key = "0"
+        command = "client_tag"
+    }
+    keylist
+    {
+        modkey = {"Mod2", "Shift"}
+        command = "client_tag"
+        keylist = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+        arglist = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+    }
+
+    key
+    {
+        modkey = {"Mod2", "Shift", "Control"}
+        key = "0"
+        command = "client_toggletag"
+    }
+    keylist
+    {
+        modkey = {"Mod2", "Shift", "Control"}
+        command = "client_toggletag"
+        keylist = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+        arglist = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+    }
+}
+# vim: filetype=conf

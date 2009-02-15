@@ -1,0 +1,85 @@
+#! /bin/zsh
+
+autoload colors && colors
+
+precmd() {
+    local git_dir branch
+
+    psvar=()
+    git_dir=$(git-rev-parse --git-dir 2> /dev/null) || return
+    if test -d "$git_dir/../.dotest"; then
+        if test -f "$git_dir/../.dotest/rebasing"; then
+            psvar[3]="rebase"
+        elif test -f "$git_dir/../.dotest/applying"; then
+            psvar[3]="am"
+        else
+            psvar[3]="am/rebase"
+        fi
+        branch="$(git-symbolic-ref HEAD 2>/dev/null)"
+    elif test -f "$git_dir/.dotest-merge/interactive"; then
+        psvar[3]="rebase -i"
+        branch="$(cat "$git_dir/.dotest-merge/head-name")"
+    elif test -d "$git_dir/.dotest-merge"; then
+        psvar[3]="rebase -m"
+        branch="$(cat "$git_dir/.dotest-merge/head-name")"
+    elif test -f "$git_dir/MERGE_HEAD"; then
+        psvar[3]="merge"
+        branch="$(git symbolic-ref HEAD 2>/dev/null)"
+    else
+        test -f "$git_dir/BISECT_LOG" && psvar[3]="bisect"
+        branch="$(git symbolic-ref HEAD 2>/dev/null)" || \
+            branch="$(git describe --exact-match HEAD 2>/dev/null)" || \
+            branch="$(cut -c1-7 "$git_dir/HEAD")..."
+    fi
+
+    psvar[1]="${$(readlink -f ${git_dir:h})/$HOME/~}"
+    psvar[2]="${branch#refs/heads/}"
+}
+
+_mad_prompt_setup() {
+    local rst
+    local -a pcc
+
+    rst="%{$reset_color%}"
+    pcc[1]="%{$reset_color${1:-$fg_no_bold[green]}%}"
+    pcc[2]="%{$reset_color${2:-$fg_no_bold[yellow]}%}"
+    pcc[3]="%{$reset_color${3:-$fg_no_bold[cyan]}%}"
+    pcc[4]="%{$reset_color${4:-$fg_bold[red]}%}"
+
+#%{$'\e[s\e[A\e[4Dblah\e[u'$reset_color%}
+#%{$'\e[400C\e[20D'%}"────────────────────
+    PROMPT="\
+$pcc[1]┌─(%B%T$pcc[1])──%(1v.<$pcc[3]%1v %B%U%2v%u%(3v.$pcc[4] <%3v>.)$pcc[1]>.)──
+$pcc[1]└[$pcc[2]%{%(?..%S)%}%m%s$pcc[1]] $rst"
+    RPROMPT="$pcc[1](%B%~$pcc[1])$rst"
+    POSTEDIT=$reset_color
+}
+
+if [ $UID -eq 0 ]; then
+    PATH=~root/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
+    PROMPT="%{$reset_color$fg_bold[yellow]%}[%{$fg_bold[red]%}%n %m%{$fg_bold[yellow]%}]%{$reset_color%} "
+    RPROMPT="%{$reset_color$fg_no_bold[red]%}(%{$fg_bold[red]%}%~%{$fg_no_bold[red]%})%{$reset_color%} "
+else
+    PATH="/usr/lib/ccache:${HOME}/bin:${HOME}/.madconf/bin:${PATH}"
+    _mad_prompt_setup
+fi
+
+case "$TERM" in
+    screen)
+        PROMPT="${PROMPT}%{kzsh\\%}"
+
+        preexec () {
+            local CMD=${1[(wr)^(*=*|sudo|exec|-*)]}
+            echo -ne "\ek$CMD\e\\"
+        }
+    ;;
+    xterm|rxvt-unicode)
+        PROMPT="${PROMPT}%{]2;zsh%}"
+
+        preexec () {
+            local CMD=${1[(wr)^(*=*|sudo|exec|-*)]}
+            echo -ne "\e]2;$CMD\007"
+        }
+    ;;
+    *);;
+esac
