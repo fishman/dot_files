@@ -1,0 +1,81 @@
+#change the hardstatus settings to give an window list at the bottom of the  
+#screen, with the time and date and with the current window highlighted                                                                            
+  vbell on        # default: off
+  vbell_msg "   -- Ring, Ring!! --   "  # default: "Wuff,Wuff!!"
+  autodetach on       # default: on
+  startup_message off     # default: on
+  crlf off        # default: off
+  multiuser on
+  defscrollback 1000      # default: 100
+  silencewait 15      # default: 30
+#hardstatus string '%{= mK}%-Lw%{= KW}%50>%n%f* %t%{= mK}%+Lw%< %{= kG}%-=%D %d %M %Y %c:%s%{-}'
+hardstatus alwayslastline
+hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
+
+# pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+  termcap  xterm hs@:cs=\E[%i%d;%dr:im=\E[4h:ei=\E[4l
+  terminfo xterm hs@:cs=\E[%i%p1%d;%p2%dr:im=\E[4h:ei=\E[4l
+  termcapinfo  xterm Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
+  termcapinfo xterm* OL=100
+  termcapinfo xterm 'VR=\E[?5h:VN=\E[?5l'
+  termcapinfo xterm 'k1=\E[11~:k2=\E[12~:k3=\E[13~:k4=\E[14~'
+  termcapinfo xterm 'kh=\EOH:kI=\E[2~:kD=\E[3~:kH=\EOF:kP=\E[5~:kN=\E[6~'
+  termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]2;screen\007'
+  termcapinfo xterm 'vi=\E[?25l:ve=\E[34h\E[?25h:vs=\E[34l'
+  termcapinfo xterm 'XC=K%,%\E(B,[\304,\\\\\326,]\334,{\344,|\366,}\374,~\337'
+  termcapinfo xterm* be
+  termcapinfo wy75-42 xo:hs@
+  termcapinfo wy* CS=\E[?1h:CE=\E[?1l:vi=\E[?25l:ve=\E[?25h:VR=\E[?5h:VN=\E[?5l:cb=\E[1K:CD=\E[1J
+  termcapinfo  hp700 'Z0=\E[?3h:Z1=\E[?3l:hs:ts=\E[62"p\E[0$~\E[2$~\E[1$}:fs=\E[0}\E[61"p:ds=\E[62"p\E[1$~\E[61"p:ic@'
+  termcap  vt100* ms:AL=\E[%dL:DL=\E[%dM:UP=\E[%dA:DO=\E[%dB:LE=\E[%dD:RI=\E[%dC
+  terminfo vt100* ms:AL=\E[%p1%dL:DL=\E[%p1%dM:UP=\E[%p1%dA:DO=\E[%p1%dB:LE=\E[%p1%dD:RI=\E[%p1%dC
+  termcapinfo linux C8
+  bind = resize =
+  bind + resize +3
+  bind - resize -3
+  bind  ) select 10
+  bind  ! select 11
+  bind  @ select 12
+  bind \# select 13
+  bind \$ select 14
+  bind  % select 15
+  bind \^ select 16
+  bind  & select 17
+  bind  * select 18
+  bind  ( select 19
+#  caption always           "%?%F%{= Kk}%:%{=u kR}%?  %h %-024=%{+b} %C%a %D %d %M %Y%{= db}"
+#  hardstatus alwayslastline "%{= kR} %-Lw%{=b Kk} %n%f %t %{-}%+Lw %=%{= dd}"
+
+#escape ``
+#escape `e
+#escape \302\302
+
+#shelltitle "$ |bash"
+shelltitle "$ |bash"
+
+msgwait 15
+setenv DISPLAY ':0'
+#bindkey -k k1 prev
+#bindkey -k k1 select 1
+#bindkey -k k2 next
+#bindkey "\033\133\066\136" next #CTRL+PageUp
+#bindkey "\033\133\065\136" prev #Ctrl+PageDown
+#aterm bindings
+#bindkey "^[[c" next
+#bindkey "^[[d" prev
+#bindkey "^[Oc" next
+#bindkey "^[Od" prev
+
+#putty bindings
+#bindkey "^[OC" next
+#bindkey "^[OD" prev
+
+#going back and forth with control left/right
+# Terminal.app CTRL+Left/Right
+bindkey "^[[5C" next
+bindkey "^[[5D" prev
+#bindkey "^[[B" next
+#bindkey "^[[A" prev
+#termcapinfo xterm ti@:te@
+#defscrollback 1            #Will be handled localy
+
