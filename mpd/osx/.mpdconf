@@ -1,0 +1,7 @@
+port                    "6600"
+music_directory         "~/Music/iTunes/iTunes Music"
+playlist_directory      "~/.mpd/playlists"
+db_file                 "~/.mpd/mpd.db"
+log_file                "~/.mpd/mpd.log"
+error_file              "~/.mpd/mpd.error"
+pid_file                "~/.mpd/mpd.pid"
