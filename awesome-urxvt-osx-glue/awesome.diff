@@ -1,0 +1,112 @@
+diff -u -u awesome-2.3.4/Makefile.in awesome-osx/Makefile.in
+--- awesome-2.3.4/Makefile.in	2008-08-24 15:01:12.000000000 +0200
++++ awesome-osx/Makefile.in	2008-11-16 04:12:23.000000000 +0100
+@@ -248,7 +248,7 @@
+ mkdir_p = @mkdir_p@
+ oldincludedir = @oldincludedir@
+ pangocairo_CFLAGS = @pangocairo_CFLAGS@
+-pangocairo_LIBS = @pangocairo_LIBS@
++pangocairo_LIBS = @pangocairo_LIBS@  -lXext -lXinerama -lXrandr
+ pdfdir = @pdfdir@
+ prefix = @prefix@
+ program_transform_name = @program_transform_name@
+diff -u -u awesome-2.3.4/configure awesome-osx/configure
+--- awesome-2.3.4/configure	2008-08-24 15:01:11.000000000 +0200
++++ awesome-osx/configure	2008-11-16 04:10:37.000000000 +0100
+@@ -5946,47 +5946,6 @@
+ fi
+ 
+ pkg_failed=no
+-{ echo "$as_me:$LINENO: checking for xinerama" >&5
+-echo $ECHO_N "checking for xinerama... $ECHO_C" >&6; }
+-
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$xinerama_CFLAGS"; then
+-        pkg_cv_xinerama_CFLAGS="$xinerama_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
+-    { (echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"xinerama\"") >&5
+-  ($PKG_CONFIG --exists --print-errors "xinerama") 2>&5
+-  ac_status=$?
+-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+-  (exit $ac_status); }; then
+-  pkg_cv_xinerama_CFLAGS=`$PKG_CONFIG --cflags "xinerama" 2>/dev/null`
+-else
+-  pkg_failed=yes
+-fi
+-    fi
+-else
+-	pkg_failed=untried
+-fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$xinerama_LIBS"; then
+-        pkg_cv_xinerama_LIBS="$xinerama_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
+-    { (echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"xinerama\"") >&5
+-  ($PKG_CONFIG --exists --print-errors "xinerama") 2>&5
+-  ac_status=$?
+-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+-  (exit $ac_status); }; then
+-  pkg_cv_xinerama_LIBS=`$PKG_CONFIG --libs "xinerama" 2>/dev/null`
+-else
+-  pkg_failed=yes
+-fi
+-    fi
+-else
+-	pkg_failed=untried
+-fi
+-
+-
+ 
+ if test $pkg_failed = yes; then
+ 
+@@ -6020,48 +5979,6 @@
+ 	:
+ fi
+ 
+-pkg_failed=no
+-{ echo "$as_me:$LINENO: checking for xrandr" >&5
+-echo $ECHO_N "checking for xrandr... $ECHO_C" >&6; }
+-
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$xrandr_CFLAGS"; then
+-        pkg_cv_xrandr_CFLAGS="$xrandr_CFLAGS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
+-    { (echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"xrandr\"") >&5
+-  ($PKG_CONFIG --exists --print-errors "xrandr") 2>&5
+-  ac_status=$?
+-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+-  (exit $ac_status); }; then
+-  pkg_cv_xrandr_CFLAGS=`$PKG_CONFIG --cflags "xrandr" 2>/dev/null`
+-else
+-  pkg_failed=yes
+-fi
+-    fi
+-else
+-	pkg_failed=untried
+-fi
+-if test -n "$PKG_CONFIG"; then
+-    if test -n "$xrandr_LIBS"; then
+-        pkg_cv_xrandr_LIBS="$xrandr_LIBS"
+-    else
+-        if test -n "$PKG_CONFIG" && \
+-    { (echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"xrandr\"") >&5
+-  ($PKG_CONFIG --exists --print-errors "xrandr") 2>&5
+-  ac_status=$?
+-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+-  (exit $ac_status); }; then
+-  pkg_cv_xrandr_LIBS=`$PKG_CONFIG --libs "xrandr" 2>/dev/null`
+-else
+-  pkg_failed=yes
+-fi
+-    fi
+-else
+-	pkg_failed=untried
+-fi
+-
+-
+ 
+ if test $pkg_failed = yes; then
+ 

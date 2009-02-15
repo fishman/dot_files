@@ -1,0 +1,11 @@
+--- src/rxvtperl.xs	2008-12-21 11:46:17.000000000 +0100
++++ src/rxvtperl.xs-new	2008-12-21 11:46:04.000000000 +0100
+@@ -318,7 +318,7 @@
+ {
+   if (perl)
+     {
+-      perl_destruct (perl);
++      // perl_destruct (perl);
+       perl_free (perl);
+       PERL_SYS_TERM ();
+     }
