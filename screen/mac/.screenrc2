@@ -9,6 +9,7 @@
 
 # no annoying audible bell, please
 vbell on
+vbell_msg "   -- Ring, Ring!! --   "  # default: "Wuff,Wuff!!"
 
 # detach on hangup
 autodetach on
