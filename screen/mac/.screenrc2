@@ -35,6 +35,12 @@ pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
 
 defscrollback 10000
 
+sorendition gK
+
+hardcopy_append on
+hardcopydir ~/.screen
+
+
 # don't kill window after the process died
 # zombie "^["
 
@@ -122,7 +128,7 @@ defbce "on"
 #term "screen-256color"
 #term "screen-88color-bce"
 #term "screen-256color-bce"
-#term xterm
+term xterm-256color
 
 ################
 #
@@ -138,6 +144,17 @@ setenv SSH_AUTH_SOCK "$HOME/.screen/ssh-auth-sock.$HOSTNAME"
 #
 # keybindings
 #
+
+#remove some stupid / dangerous key bindings
+bind ^k
+#bind L
+bind ^\
+#make them better
+bind \\ quit
+bind K kill
+# bind I login on
+# bind O login off
+bind } history
 
 bind I screen -t 'irc'   /opt/local/bin/irssi
 bind M screen -t 'Email' /opt/local/bin/mutt
