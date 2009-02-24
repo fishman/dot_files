@@ -17,3 +17,8 @@ function sftp()
 {
   lftp sftp://$1
 }
+
+function showlog()
+{
+  cat $1 | sed '/ *#/d; /^ *$/d'
+}
