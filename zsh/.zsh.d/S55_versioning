@@ -11,11 +11,6 @@ else
   READLINK=readlink
 fi
 
-export GIT_AUTHOR_NAME="${FULLNAME}"
-export GIT_AUTHOR_EMAIL="${EMAIL}"
-export GIT_COMMITTER_NAME="${FULLNAME}"
-export GIT_COMMITTER_EMAIL="${EMAIL}"
-
 # Given a base directory as the first argument, use PWD o detemine
 # subdirectory of the repo root we are in.
 __sub_dir() {

@@ -13,11 +13,6 @@ export FULLNAME="Reza Jelveh"
 #export DEBEMAIL=$EMAIL
 #export DEBFULLNAME=$FULLNAME
 
-#export GIT_AUTHOR_NAME=$FULLNAME
-#export GIT_COMMITTER_NAME=$FULLNAME
-#export GIT_AUTHOR_EMAIL=$EMAIL
-#export GIT_COMMITTER_EMAIL=$EMAIL
-
 export RXVT_SOCKET=$HOME/.rxvt_socket
 
 export CVS_RSH="ssh"
