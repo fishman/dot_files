@@ -12,6 +12,7 @@ else
 fi
 
 autoload -U is-at-least
+autoload -U zargs
 
 #[ a ]##########################################################################
 setopt aliases              # expand aliases
