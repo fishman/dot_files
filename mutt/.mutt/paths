@@ -1,0 +1,3 @@
+set spoolfile=imaps://mail.tu-harburg.de/INBOX
+
+# vim: syntax=muttrc

@@ -1,0 +1,12 @@
+#text/html; view_attachment.sh %s html
+text/html; elinks -dump -dump-charset iso-8859-15 -default-mime-type text/html %s; needsterminal; copiousoutput;
+application/pdf; view_attachment.sh %s -
+application/octet-stream; view_attachment.sh %s -
+mime_lookup application/octet-stream
+video/*; view_attachment.sh %s -
+image/*; view_attachment.sh %s -
+application/*; view_attachment.sh %s -
+#text/calendar; open -a /Applications/iCal.app %s; nametemplate=%s.ics needsterminal 
+text/calendar; view_attachment.sh %s ics
+text/directory; waitopen -a /Applications/Address\\ Book.app %s; nametemplate=%s.vcf
+text/x-vcard; waitopen -a /Applications/Address\\ Book.app %s; nametemplate=%s.vcf

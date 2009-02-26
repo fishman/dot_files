@@ -1,0 +1,308 @@
+#   Gufo's Muttrc  (mutt 1.5.18)
+#   Version 0.13 2008/07/17
+#   http://gufo.dontexist.org/mutt.php
+
+
+source ~/.mutt/certificates
+
+## Commands path #
+#
+source ~/.mutt/paths
+
+
+## Identities & profiles ##
+#
+# Variuos identities (calls default profile too)
+source ~/.mutt/id
+
+
+## Crypto #
+#
+source ~/.mutt/crypto
+
+
+## Alias ##
+#
+set alias_file = ~/.mutt/aliases
+source ~/.mutt/aliases
+
+# Show alias name, not email address
+set reverse_alias = yes
+
+
+## Folders ##
+#
+# Mail folder (default = $HOME/Mail)
+#set folder = $HOME/mail
+
+# Mbox type: mbox, MMDF, MH, Maildir
+set mbox_type = Maildir
+
+# Set various Mailboxes
+#mailboxes `cat $HOME/.mutt/mailboxes`
+mailboxes `$HOME/.mutt/mailboxes.sh`
+
+# Postponed folder
+set postponed = $HOME/mail/postponed
+
+# Cache maildir headers
+set header_cache = "~/.mutt/headers"
+# On my systems mutt is the only program which plays with my
+# emails, so there's no reason to spend a stat system call for
+# each mail
+unset maildir_header_cache_verify
+
+# Don't ask to append messages on existing mailboxes
+set confirmappend = no
+
+
+## Reading mails
+#
+# imap
+set imap_idle = yes
+set imap_check_subscribed = yes
+
+# Check mail every 30 seconds
+set mail_check = 30
+
+# search for new messages in folders
+set check_new
+
+# Wait 15 second of idle time before updating status
+set timeout = 15
+
+# Display Charset
+#set charset = "ISO-8859-15"
+#set charset = "UTF-8"
+
+# Don't move read messages
+set move = no
+
+# Unread messages are to be considered new
+unset mark_old
+
+# Sort method
+set sort = threads
+set sort_aux = date
+
+# Don't ask to delete
+set delete = yes
+
+# Apply command to tagged messages automatically (;)
+set auto_tag
+
+# collapse threads with unread mails
+set collapse_unread
+
+# How mutt recognise threads
+#set reply_regexp = "^(([Rr]e?):[ \t]*)+"
+#set reply_regexp="^([rR][eE]?[\t]*([\\[0-9\\]+])*|aw):[ \t]*"
+#set reply_regexp="(^[Rr][Ee]?[ \t]*:[ \t]*)+"
+#set reply_regexp = "^(([Rr]e?):[ \t]*)+"
+
+# Quite good
+#set reply_regexp='^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*'
+
+# Alain Bench's slightly modified suggestion:
+set config_charset=utf-8
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Re[2]:	The Bat!
+# Re(2):	Microsoft Outlook IMO, Build 9.0.2416 (9.0.2911.0)
+# Re^2:
+# AW:		Microsoft Outlook 8.5 Germany
+# SV:		Internet Mail Service (5.5.2448.0) Norway
+# Ad:		Lotus Notes Release 5.07a Norway
+# Odp:		Microsoft Outlook Express 5 Poland
+# Re&nbsp;:	eGroups-EW/0.82
+# Re :		eGroups-EW/0.82 \240
+# Antwort:	Lotus Notes Release 5.0.5 Germany
+# Antw:		Novell GroupWise 5.5.2 Germany
+# Réf. :	IncrediMail 2001
+# Rép. :	Groupwise 5.5.3.1
+# TR:		Microsoft Outlook 8.5
+# Trans. :	AOL 7.0 for Windows FR
+#
+# Autoreply:	some ch MTA on delivery problems
+
+set reply_regexp="^((\
+[Rr][Eeé]?[  ]?:[ \t ]*|\
+Re\\[[0-9]+\\]:|\
+Re\\([0-9]+\\):|\
+Re\\^[0-9]+:|\
+AW:|\
+SV:|\
+Ad:|\
+Odp:|\
+Obj\\.? ?:|\
+Re&nbsp;:|\
+Antw(ort)?:|\
+R[eé]f\\. :|\
+Rép\\. :|\
+R[eé]p\\.?:|\
+F[Ww][Dd]? ?:|\
+T[Rr] ?:|\
+Trans\\. :\
+)[ \t ]*)+"		# The ending range and the first condition contain 3 chars:
+			 # space, tab, and no-break space \240.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+unset config_charset
+
+
+# Don't thread mails just because subject is similar but use reply_regexp
+set sort_re
+unset strict_threads
+
+# Search method  -- default pattern (Fr|To|Cc|Subj) -- 
+set simple_search = "~f %s | ~C %s | ~s %s"
+
+# Octet stream isn't treated according to mailcap but according to his extension
+# and what's found in:
+# 1) ${HOME}/.mime.types  
+# 2) the system mime.types file at /usr/local/share/mutt/mime.types 
+# 3) /etc/mime.types
+#
+mime_lookup application/octet-stream
+
+
+## Sending mails
+#
+
+# Save a copy of every message sent in $MAIL/sent
+set record = +Sent
+set copy = yes
+
+# Ask subject / dest address after editing mail body
+#set autoedit
+
+# Reply including quoted original
+set include = yes
+
+# Edit headers in editor
+set edit_headers
+
+## Composing 
+# Open vim one line past first blank line
+
+set fast_reply = yes
+set abort_nosubject = no
+set abort_unmodified = ask-yes
+set editor = 'vim +/^$ "+normal j"' 
+
+# Don't try to add From: 
+set use_from
+
+# Set follow-up-to header
+set followup_to
+
+# Reply from the same address the previous mail arrived to
+set reverse_name
+
+# and with the same name
+#set reverse_realname
+
+# Set automatically envelope_from field
+set envelope_from
+
+# Addressbook
+#set query_command = "abook --mutt-query '%s'"
+set query_command="lbdbq %s"  # little brother talks to address book
+
+# Forward mail attachments
+# set mime_forward
+# set mime_forward_rest 
+
+## Mailbox layout ##
+#
+
+set folder_format = "[%2C] %t %N %f" # %> Last modified: %-13d"  
+#set folder_format = "[%2C] %t %f" # %> Last modified: %-13d"  
+
+# Visualization order
+set sort_browser = unsorted
+
+#set index_format='%4C %Z [%b %d] %-15.15F %?M?-->%3M&(%4l)? %s'
+set index_format='%4C %Z %d %-20.20F %?M?-->%3M&(%4l)? %s'
+
+# Date format
+set date_format = "%d/%m/%y %H:%M"
+
+# Attachmen menu
+# default 
+#set attach_format = "%u%D%I %t%4n %T%.40d%> [%.7m/%.10M, %.6e%?C?, %C?, %s] "
+#set attach_format = "%1.2n %t%D%I %f %> [%.7m/%.10M, %.6e%?C?, %C?, %s]"
+set attach_format = "%u%D%I %t[%1.2n] %.40d %> [ %.10m/%.14M, %s ] "
+
+
+
+## Headers ##
+#
+
+# Show only 
+ignore *
+unignore Subject: Date: From: Reply-To: To: CC: BCC: X-Mailer: User-Agent:
+
+# In this order
+unhdr_order *
+hdr_order From: To: Reply-To: CC: BCC: Date: Subject:
+
+
+## Pager ##
+#
+
+# Stop at the end of a message 
+set pager_stop
+
+# Always show n line of the pager
+set pager_index_lines = 5
+
+# Preserve context (ala slrn) of multi-paged messages
+set pager_context = 1
+
+# Show ~ sign like Vi
+set tilde
+
+# Wrap long lines
+#set wrap = 80
+
+## Attachment ##
+#
+
+# Mailcap
+set mailcap_path = ~/.mutt/mailcap
+
+# Visualization order
+alternative_order text/plain text/enriched text/html text image/*
+auto_view text/html text/richtext
+
+
+## Mailing lists ##
+#
+source ~/.mutt/mailing-lists
+
+
+## Hooks ##
+#
+source ~/.mutt/hooks
+
+
+## Macro and bindings ##
+#
+source ~/.mutt/bindings
+
+## Sidebar ##
+#
+source ~/.mutt/sidebar
+
+## Colors ##
+#
+source ~/.mutt/colors-blackback
+# source ~/.mutt/colors-256
+#source ~/.mutt/colors
+#source ~/.mutt/colors-whiteback
+#source ~/.mutt/colors-slrn-like
+
+## Patches config ##
+#
+#source ~/.mutt/patch-config
+
+

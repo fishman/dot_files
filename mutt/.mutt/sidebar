@@ -1,0 +1,16 @@
+# sidebar
+set sidebar_width=20
+set sidebar_visible=yes
+
+bind  index   \Cp      sidebar-prev
+bind  index   \Cn      sidebar-next
+bind  index   \Cd      sidebar-open
+bind  pager   \Cp      sidebar-prev
+bind  pager   \Cn      sidebar-next
+bind  pager   \Cd      sidebar-open
+
+macro index   i   ':toggle sidebar_visible^M'
+macro pager   i   ':toggle sidebar_visible^M'
+color sidebar_new green black
+
+# vim: syntax=muttrc

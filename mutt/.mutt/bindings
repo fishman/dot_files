@@ -1,0 +1,97 @@
+## Macros ##
+#
+
+# Mark all read
+macro	index	M	"<tag-pattern>.*\r<tag-prefix><clear-flag>N<untag-pattern>.*\r" "Mark all messages in this mailbox as read"
+
+# Macros to invoke a profile
+source '~/.mutt/profiles/bindings'
+
+# Macro to open mailbox index
+macro 	index 	<left> 	"<change-folder>?<toggle-mailboxes>" 	"Open mailbox list"
+macro 	pager 	<left> 	"<change-folder>?<toggle-mailboxes>" 	"Open mailbox list"
+# Coming from the pager, pressing left arrow quit the browser and get back
+macro 	browser	<left> 	"<exit>"			 	"exit"
+
+# Mark article as spam and move it to the spam folder
+macro 	index	S	"<save-message>=Spam/\n" "move message to spam folder"
+macro 	pager	S	"<save-message>=Spam/\n" "move message to spam folder"
+
+# View attachment using less
+macro 	attach 	l 	"<pipe-entry>less\n" "View attachment using less"
+# Addressbook
+
+# start
+macro 	generic	\ca 	"!abook\n" "start abook"
+macro 	index 	\ca 	"!abook\n" "start abook"
+macro 	pager 	\ca 	"!abook\n" "start abook"
+
+# add address
+macro 	index 	A 	"|abook --add-email\n" "add sender to abook"
+macro 	pager 	A 	"|abook --add-email\n" "add sender to abook"
+
+# open url
+macro	index	\cb	"|urlview\n" "open url with urlview"
+macro	pager	\cb	"|urlview\n" "open url with urlview"
+
+# reload configuration
+macro	index	\cr	":source ~/.mutt/muttrc\n" "Reload configuration"
+
+
+## Bindings ##
+#
+
+# Unbind ctrl-d
+bind 	pager,index	\cd 	"noop"
+
+# Toggle the new status (the slrn way)
+bind 	index	u	"toggle-new"
+bind 	pager	u	"mark-as-new"
+
+bind 	index	U	"undelete-message"
+bind 	pager	U	"undelete-message"
+
+bind 	index	\cu	"undelete-pattern"
+bind 	index	\cu	"undelete-pattern"
+
+# History in editor menu
+bind editor <Down> history-down
+bind editor <Up> history-up
+
+# Go to the next-unread message 
+bind 	pager 	n	"next-unread"
+bind 	index 	n	"next-unread"
+bind 	pager   B      "bounce-message"
+bind 	pager   b      "previous-page" 
+
+# Use <tab> for next search match
+bind 	pager 	<tab>	"search-next"
+bind 	index 	<tab>	"search-next"
+
+# Check all mailboxes
+bind 	browser	$	"check-new"
+
+bind 	index	G	"sync-mailbox"
+bind 	pager	G	"sync-mailbox"
+
+# Go to next message instead of next-undeleted
+bind 	index,pager	<down>	"next-entry"
+bind 	index,pager	<up>	"previous-entry"
+
+# Threads
+#^D      delete-thread           delete all messages in the current thread
+#^U      undelete-thread         undelete all messages in the current thread
+#^N      next-thread             jump to the start of the next thread
+#^P      previous-thread         jump to the start of the previous thread
+#^R      read-thread             mark the current thread as read
+#ESC d   delete-subthread        delete all messages in the current subthread
+#ESC u   undelete-subthread      undelete all messages in the current subthread
+#ESC n   next-subthread          jump to the start of the next subthread
+#ESC p   previous-subthread      jump to the start of the previous subthread
+#ESC r   read-subthread          mark the current subthread as read
+#ESC t   tag-thread              toggle the tag on the current thread
+#ESC v   collapse-thread         toggle collapse for the current thread
+#ESC V   collapse-all            toggle collapse for all threads
+#P       parent-message          jump to parent message in thread
+
+# vim: syntax=muttrc

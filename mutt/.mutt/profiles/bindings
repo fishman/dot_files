@@ -1,0 +1,7 @@
+# default
+source ~/.mutt/profiles/default
+
+macro   index   <F7>    ":source ~/.mutt/profiles/default\n" "Load default profile"
+macro   index   <F8>    ":source ~/.mutt/profiles/default\n" "Load default profile"
+
+# vim: syntax=muttrc
