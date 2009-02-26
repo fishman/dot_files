@@ -1,14 +1,14 @@
 #change the hardstatus settings to give an window list at the bottom of the  
 #screen, with the time and date and with the current window highlighted                                                                            
-  vbell on        # default: off
+  vbell on                              # default: off
   vbell_msg "   -- Ring, Ring!! --   "  # default: "Wuff,Wuff!!"
-  autodetach on       # default: on
-  startup_message off     # default: on
-  crlf off        # default: off
+  autodetach on                         # default: on
+  startup_message off                   # default: on
+  crlf off                              # default: off
   multiuser on
-  defscrollback 1000      # default: 100
-  silencewait 15      # default: 30
-#hardstatus string '%{= mK}%-Lw%{= KW}%50>%n%f* %t%{= mK}%+Lw%< %{= kG}%-=%D %d %M %Y %c:%s%{-}'
+  defscrollback 1000                    # default: 100
+  silencewait 15                        # default: 30
+# hardstatus string '%{= mK}%-Lw%{= KW}%50>%n%f* %t%{= mK}%+Lw%< %{= kG}%-=%D %d %M %Y %c:%s%{-}'
 hardstatus alwayslastline
 hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m %{W}%c %{g}]'
 
@@ -43,21 +43,31 @@ hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u
   bind  & select 17
   bind  * select 18
   bind  ( select 19
-#  caption always           "%?%F%{= Kk}%:%{=u kR}%?  %h %-024=%{+b} %C%a %D %d %M %Y%{= db}"
-#  hardstatus alwayslastline "%{= kR} %-Lw%{=b Kk} %n%f %t %{-}%+Lw %=%{= dd}"
+ # caption always           "%?%F%{= Kk}%:%{=u kR}%?  %h %-024=%{+b} %C%a %D %d %M %Y%{= db}"
+ # hardstatus alwayslastline "%{= kR} %-Lw%{=b Kk} %n%f %t %{-}%+Lw %=%{= dd}"
 
-#escape ``
+
+escape ``
 #escape `e
 #escape \302\302
 
-#shelltitle "$ |bash"
-shelltitle "$ |bash"
+# shelltitle "$ |bash"
+#####################################################
+bind I screen -t 'irc'   /opt/local/bin/irssi
+bind M screen -t 'Email' /opt/local/bin/mutt
+#####################################################
 
 msgwait 15
-setenv DISPLAY ':0'
-#bindkey -k k1 prev
-#bindkey -k k1 select 1
-#bindkey -k k2 next
+setenv DISPLAY ':2'
+
+########################
+###
+### F11-F12 become Prev/Fwd
+###
+########################
+bindkey -k F1 prev
+bindkey -k F2 next
+
 #bindkey "\033\133\066\136" next #CTRL+PageUp
 #bindkey "\033\133\065\136" prev #Ctrl+PageDown
 #aterm bindings
@@ -72,10 +82,9 @@ setenv DISPLAY ':0'
 
 #going back and forth with control left/right
 # Terminal.app CTRL+Left/Right
-bindkey "^[[5C" next
-bindkey "^[[5D" prev
+# bindkey "^[[5C" next
+# bindkey "^[[5D" prev
 #bindkey "^[[B" next
 #bindkey "^[[A" prev
 #termcapinfo xterm ti@:te@
 #defscrollback 1            #Will be handled localy
-
