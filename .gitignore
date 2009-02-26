@@ -1,3 +1,5 @@
 *.elc
 *~
 w3m/history
+**/.zsh.d/??_*
+**/.zsh.d/*.html
