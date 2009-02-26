@@ -8,6 +8,23 @@ if ( which sudo >/dev/null 2>/dev/null ) ; then
   alias sudo='export XAUTHORITY=${HOME}/.Xauthority ; sudo'
 fi
 
+# Suffix Aliases ... ain't this one nifty shell?
+if [[ $OS == osx ]]; then
+  alias -s png=open
+  alias -s jpg=open
+  alias -s jpeg=open
+  alias -s html=open
+  alias -s org=open
+  alias -s avi=open
+else
+  alias -s png=feh
+  alias -s jpg=feh
+  alias -s jpeg=feh
+  alias -s html=w3m
+  alias -s org=w3m
+  alias -s avi=mplayer
+fi
+
 # alias du="du -hcs"
 alias du="du -hc"
 alias df="df -h"
