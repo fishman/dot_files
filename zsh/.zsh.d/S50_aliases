@@ -133,6 +133,8 @@ if [[ $OS == osx ]]; then
   alias cake="~/sites/Studiblock/Frameworks/cake/cake/console/cake"
   # xampp php 
   alias doctrine-cli="/Applications/xampp/xamppfiles/bin/php ~/Sites/talentrun/talentrun/utilities/doctrine/doctrine-cli"
+  alias mysql='/Applications/xampp/xamppfiles/bin/mysql'
+  alias talentrunscreens='screen -S talentrun -d -m -t"Application log" tail -f ~/Sites/Projects/talentrun/logs/    application.log & screen -S talentrun -X screen -t "Apache log" tail -f /Applications/xampp/xamppfiles//logs/error_log'
 
   # textmate 
   alias e="open -a TextMate"
@@ -208,9 +210,6 @@ alias unclean="git diff-files --quiet && git diff-index --cached --quiet HEAD --
 alias restful='script/plugin source http://svn.techno-weenie. net/projects/plugins'
 alias rfaplugin='git clone git://github.com/technoweenie/restful-authentication.git restful_authentication'
 
-#web development
-alias mysql='/Applications/xampp/xamppfiles/bin/mysql'
-alias talentrunscreens='screen -S talentrun -d -m -t"Application log" tail -f ~/Sites/Projects/talentrun/logs/    application.log & screen -S talentrun -X screen -t "Apache log" tail -f /Applications/xampp/xamppfiles//logs/error_log'
 alias findfile="find . -path '*/.svn' -prune -o -type f -print | grep -I -n -e"
 alias grepinfile="find . -path '*/.svn' -prune -o -type f -print -exec grep -i \.js \;"
 
