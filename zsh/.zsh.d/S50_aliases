@@ -24,6 +24,7 @@ else
   alias -s org=w3m
   alias -s avi=mplayer
 fi
+alias -s rb=vim
 
 # alias du="du -hcs"
 alias du="du -hc"
