@@ -135,10 +135,19 @@ new_parse_git_branch() {
 
 # Show character if index and/or work-tree are dirty
 git_status() {
-  unclean=$(git diff-files --quiet && git diff-index --cached --quiet HEAD --) || unclean='*'
-  # unclean=
-  echo $unclean
+  my_status=$(git status)
+
+  if [[ "$my_status" == *"Changes to be committed"* ]]; then
+    output="%{$fg[green]%}+"
+  fi
+
+  if [[ "$my_status" == *"Changed but not updated"* ]]; then
+    output="$output%{$fg[red]%}*"
+  fi
+
+  echo $output
 }
+
 
 
 zsh_git_invalidate_vars() {
