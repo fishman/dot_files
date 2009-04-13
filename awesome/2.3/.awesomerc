@@ -30,6 +30,7 @@ screen 0
         tag irc { }
         tag random { }
         tag media { }
+        tag stuff { layout = floating }
         tag games { layout = floating }
     }
     layouts
@@ -143,6 +144,7 @@ rules
     rule { name = "MPlayer" float = true }
     rule { name = "Acroread" float = true }
     rule { name = "pinentry" float = true }
+    rule { name = "MATLAB" float = true tags = "stuff" }
 }
 
 mouse
