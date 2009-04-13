@@ -97,7 +97,7 @@ URxvt.keysym.M-u: perl:mark-and-yank:activate_mark_url_mode
 URxvt.keysym.M-c: perl:macosx-clipboard:copy
 URxvt.keysym.M-v: perl:macosx-clipboard:paste
 URxvt.urlLauncher: open
-URxvt.matcher.button: 2
+URxvt.matcher.rend.0: fg8
 URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 
 
