@@ -1,32 +1,54 @@
 [github]
-  user = fishman
+	user = fishman
+	token =
 [color]
-  ui = true
+	pager = true
+	ui = auto
 [user]
-  editor = vim
+	name = "Reza Jelveh"
+	editor = vim
+	email =
 [imap]
-  folder = "INBOX.patches"
-  host = imaps://imap.gmx.net
-  sslverify = no
+	folder = "INBOX.patches"
+	host = imaps://imap.gmx.net
+	user =
+	sslverify = no
 [merge]
-  tool = vimdiff
+	tool = vimdiff
+[apply]
+	; whitespace = strip
 [alias]
-  wup = log -p origin..@{0}
-  wu = log --stat origin..@{0}
-  st = status
-  up = !sh -c \"git stash && git pull --rebase && git stash apply\"
-  ; su = !sh -c \"git stash && git svn rebase && git stash apply\"
-  su = svn rebase
-  mergehub = !sh -c \"git stash && git fetch github && git merge github/master && git stash apply\"
-  sci = !sh -c \"git stash && git svn dcommit && git stash apply\"
-  log1 = log --pretty=oneline --abbrev-commit
-  rlog = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\"
-  glog = log --pretty=format:'%h : %s' --graph
-  top = !eval cd "$(pwd)/$(git rev-parse --show-cdup)" && pwd
-  cat   = -p cat-file -p
-  push-head = !git-push origin `git-symbolic-ref HEAD`
-  vgc = repack -f -a -d --depth=250 --window=250
-  nvgc = !ionice -n7 nice -n20 git vgc
-  kill1 = rebase -i HEAD~1
-  forcep = push origin +master
+	last = cat-file commit HEAD
+	wup = log -p origin..@{0}
+	wu = log --stat origin..@{0}
+	st    = ls-files --exclude-per-directory=.gitignore \
+	                --exclude-from=.git/info/exclude \
+	                -t -o -u -s -m -d
+	stc = diff --stat --name-status --cached
+	co = checkout
+	up = !sh -c \"git stash && git pull --rebase && git stash apply\"
+	; su = !sh -c \"git stash && git svn rebase && git stash apply\"
+	su = svn rebase
+	mergehub = !sh -c \"git stash && git fetch github && git merge github/master && git stash apply\"
+	sci = !sh -c \"git stash && git svn dcommit && git stash apply\"
+	log1 = log --pretty=oneline --abbrev-commit
+	rlog = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\"
+	glog = log --pretty=format:'%h : %s' --graph
+	top = !eval cd "$(pwd)/$(git rev-parse --show-cdup)" && pwd
+	cat = -p cat-file -p
+	push-head = !git-push origin `git-symbolic-ref HEAD`
+	vgc = repack -f -a -d --depth=250 --window=250
+	nvgc = !ionice -n7 nice -n20 git vgc
+	kill1 = rebase -i HEAD~1
+	forcep = push origin +master
+	dstat = diff --stat
+	age = !sh -c \"git ls-files | xargs -n1 -i{} git log -1 --pretty=format:"%ci {}" -- {}\"
 
+[tig]
+	show-rev-graph = yes        # Show revision graph?
+	show-refs = yes             # Show references?
+	# show-line-numbers = no      # Show line numbers?
+	author-width = 15           # Set width of the author column
+	line-graphics = yes          # Disable graphics characters
+	line-number-interval = 5    # Interval between line numbers
+	tab-size = 4                # Number of spaces per tab
