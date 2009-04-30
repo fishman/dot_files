@@ -115,7 +115,7 @@ alias unzipall='for z in *.zip; do unzip -n $z; done'
 alias idal='/Users/timebomb/Documents/Projects/RE/IDA/IDA\ Pro/idaadv/idal'
 alias gdbintel='gdb -x ~/.gdbinit_color'
 
-alias gentags='ctags -f .tmtags --excmd=pattern -R --tag-relative=yes'
+alias gentags='ctags -f .tmtags --excmd=pattern -R --tag-relative=yes ; sort .tmtags -o .tmtags'
 
 # random os x
 if [[ $OS == osx ]]; then
