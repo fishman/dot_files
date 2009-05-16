@@ -117,8 +117,12 @@ alias gdbintel='gdb -x ~/.gdbinit_color'
 
 alias gentags='ctags -f .tmtags --excmd=pattern -R --tag-relative=yes ; sort .tmtags -o .tmtags'
 
+alias git='noglob git'
+
 # random os x
 if [[ $OS == osx ]]; then
+  # mercurial 
+  alias murky="open -a Murky"
   #vlc
   alias vlc="open -a VLC"
   #mplayer
@@ -172,7 +176,7 @@ alias play='mpc toggle'
 alias stop='mpc stop'
 
 # devel
-alias sanitizemake="find . -iname '*.mk' -name '?akefile' -o -exec sed -i '' 's/-arch ppc//g' '{}' \;"
+alias sanitizemake="find . -name '*.mk' -or -name '?akefile' -exec sed -i '' 's/-arch ppc//g' '{}' \;"
 
 # svn helpers
 alias sst="svn st"
