@@ -176,7 +176,7 @@ alias play='mpc toggle'
 alias stop='mpc stop'
 
 # devel
-alias sanitizemake="find . -name '*.mk' -or -name '?akefile' -exec sed -i '' 's/-arch ppc//g' '{}' \;"
+alias sanitizemake="find . -name '*.mk' -or -name '?akefile' | xargs sed -i -e 's/-arch ppc//g'"
 
 # svn helpers
 alias sst="svn st"
