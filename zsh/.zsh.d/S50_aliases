@@ -56,6 +56,9 @@ if [[ $OS == osx ]]; then
   alias mw="mate -w"
   alias nyzis="~/git/vi/Yzis/nyzis/nyzis"
   alias gitx="/Applications/GitX.app/Contents/Resources/gitx"
+
+  # protonet iTunes sync
+  alias protosync="rsync -e 'ssh -ax -c blowfish' -avz protonet@10.42.2.1:iTunes ~/Music/iTunes/iTunes\ Music"
 fi
 alias myip="ifconfig | grep 192.168 || ifconfig | grep 10.32"
 alias psg="ps ax | grep "
