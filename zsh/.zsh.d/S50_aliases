@@ -73,7 +73,7 @@ alias grep='egrep'
 alias mutt='TERM=xterm-256color mutt'
 
 # ls alias
-if [[ $OS == osx ]]; then
+if [[ $OS == osx  &&  $EPREFIX == '' ]]; then
   alias ll='ls -lh'
   alias la='ls -A'
   alias l='ls -lha'
