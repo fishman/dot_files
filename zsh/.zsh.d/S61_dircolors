@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+if test -x dircolors; then
+  eval "`dircolors`"
+  export LS_COLORS="*.ogm=01;35:${LS_COLORS}"
+  export ZLS_COLORS=$LS_COLORS
+else
+  # no dircolors on osx
+  export CLICOLOR=1
+  export LSCOLORS=ExFxCxDxBxegedabagacad
+  export ZLSCOLORS=$LSCOLORS
+fi
+
