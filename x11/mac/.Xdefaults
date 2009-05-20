@@ -24,7 +24,8 @@ urxvt*foreground:        White
 !urxvt*tintColor:         #dfdfdf
 !urxvt*shading:          20    !trans, 0=opaque
 !urxvt*fading:         10    !term unfocus
-urxvt*font:     xft:terminus:pixelsize=16
+urxvt*font:     xft:Terminus:pixelsize=14
+
 urxvt*scrollBar: false
 urxvt*scrollBar_floating:  true
 urxvt*scrollBar_right: false

@@ -27,10 +27,11 @@ xset b 0 0 0
 # exec /usr/bin/quartz-wm --only-proxy &
 # urxvtd -q -o -f
 export RXVT_SOCKET=$HOME/.rxvt_socket
-/opt/local/bin/urxvtd -q -o &
+/opt/local/gentoo/usr/bin/urxvtd -q -o &
 # exec /usr/bin/quartz-wm 
 # cd ~
 
 # xmonad
+# xterm
 /opt/local/bin/awesome
 # quartz-wm

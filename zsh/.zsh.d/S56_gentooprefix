@@ -1,6 +1,6 @@
 # ..
 export EPREFIX="/opt/local/gentoo"
-export PATH="$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:$PATH"
+export PATH="$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:${EPREFIX}/usr/portage/scripts:$PATH"
 # export LDFLAGS="-Wl,-search_paths_first -L${EPREFIX}/usr/lib -L${EPREFIX}/lib"
 # export CPPFLAGS="-I${EPREFIX}/usr/include"
 # source /opt/local/gentoo/etc/profile
