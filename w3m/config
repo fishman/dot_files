@@ -11,6 +11,7 @@ search_conv 1
 pre_conv 0
 ucs_conv 1
 use_language_tag 1
+east_asian_width 0
 use_combining 1
 use_wide 1
 ext_halfdump 0
@@ -38,9 +39,6 @@ ftp_proxy
 https_proxy 
 http_proxy 
 use_proxy 1
-max_news 50
-nntpmode 
-nntpserver 
 dns_order 0
 meta_refresh 0
 follow_redirection 10
@@ -76,11 +74,6 @@ preserve_timestamp 1
 auto_uncompress 0
 decode_cte 0
 clear_buffer 1
-fixed_wheel_scroll_count 5
-relative_wheel_scroll_ratio 30
-relative_wheel_scroll 0
-reverse_mouse 0
-use_mouse 1
 ignorecase_search 1
 wrap_search 0
 mark_all_pages 0
@@ -109,7 +102,7 @@ label_topline 0
 show_srch_str 1
 show_lnum 1
 fold_line 0
-display_image 0
+display_image 1
 view_unseenobject 1
 ignore_null_img_alt 1
 display_ins_del 1
