@@ -3,13 +3,7 @@
 autoload colors
 colors
 
-# the stock readlink from osx does not have
-# -f
-if [[ $OS == osx ]]; then
-  READLINK=greadlink
-else
-  READLINK=readlink
-fi
+READLINK=readlink
 
 # Given a base directory as the first argument, use PWD o detemine
 # subdirectory of the repo root we are in.
