@@ -71,6 +71,7 @@ alias unrar='nice -n 19 unrar'
 alias grep='egrep'
 #alias wc='sloccount'
 alias mutt='TERM=xterm-256color mutt'
+alias irssi='screen -S irssi -d -R irssi'
 
 # ls alias
 if [[ $OS == osx  &&  $EPREFIX == '' ]]; then
