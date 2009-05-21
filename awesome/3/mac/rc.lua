@@ -183,8 +183,8 @@ root.buttons({
 -- {{{ Key bindings
 globalkeys =
 {
-    key({ modkey,           }, "Left",   awful.tag.viewprev       ),
-    key({ modkey,           }, "Right",  awful.tag.viewnext       ),
+    key({ "Mod1",           }, "Home",   awful.tag.viewprev       ),
+    key({ "Mod1",           }, "End",  awful.tag.viewnext       ),
     key({ modkey,           }, "Escape", awful.tag.history.restore),
 
     key({ modkey,           }, "j",
@@ -201,8 +201,8 @@ globalkeys =
     -- Layout manipulation
     key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1) end),
     key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1) end),
-    key({ modkey, "Control" }, "j", function () awful.screen.focus( 1)       end),
-    key({ modkey, "Control" }, "k", function () awful.screen.focus(-1)       end),
+    key({ modkey,           }, "Next", function () awful.screen.focus( 1)       end),
+    key({ modkey,           }, "Prev", function () awful.screen.focus(-1)       end),
     key({ modkey,           }, "u", awful.client.urgent.jumpto),
     key({ modkey,           }, "Tab",
         function ()
