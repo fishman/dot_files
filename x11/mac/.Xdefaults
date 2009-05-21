@@ -153,7 +153,7 @@ XTerm*color6: #87ff87
 ! this also uses a antialias/scalable font
 !xterm*faceName: Bitstream Vera Sans Mono
 xterm*faceName: Terminus
-xterm*faceSize: 12
+xterm*faceSize: 10
 !xterm*font:     xft:terminus:pixelsize=18
 !xterm*font : -*-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-15
 
