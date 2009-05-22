@@ -58,7 +58,8 @@ if [[ $OS == osx ]]; then
   alias gitx="/Applications/GitX.app/Contents/Resources/gitx"
 
   # protonet iTunes sync
-  alias protosync="rsync -e 'ssh -ax -c blowfish' -avz ~/Music/iTunes/iTunes\ Music protonet@10.42.2.1:iTunes"
+  # alias protosync="rsync -e 'ssh -ax -c blowfish' -avz ~/Music/iTunes/iTunes\ Music user@ip:iTunes"
+  alias matlab='matlab > /dev/null &'
 fi
 alias myip="ifconfig | grep 192.168 || ifconfig | grep 10.32"
 alias psg="ps ax | grep "
