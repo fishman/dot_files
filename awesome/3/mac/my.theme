@@ -2,7 +2,7 @@
 -- Default awesome theme --
 ---------------------------
 
-font          = sans 8
+font          = snap 8
 
 bg_normal     = #171717
 bg_focus      = #524E41
