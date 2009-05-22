@@ -132,6 +132,15 @@ ituneswidget = widget({
 wicked.register(ituneswidget, wicked.widgets.itunes,
 ' <span color="white">Now Playing:</span> $1', 5)
 
+fswidget = widget({
+    type = 'textbox',
+    name = 'fswidget'
+})
+
+wicked.register(fswidget, wicked.widgets.fs,
+    ' <span color="white">FS:</span> ${/ used}/${/ size} (${/ usep}% used)', 120)
+
+
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -195,7 +204,7 @@ for s = 1, screen.count() do
 
     -- Create the wibox
     mybottombox[s] = wibox({ position = "bottom", fg = beautiful.fg_normal, bg = beautiful.bg_normal })
-    mybottombox[s].widgets = { memwidget, ituneswidget }
+    mybottombox[s].widgets = { memwidget, ituneswidget, fswidget }
     mybottombox[s].screen = s
 end
 -- }}}
