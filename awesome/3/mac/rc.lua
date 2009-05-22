@@ -115,6 +115,7 @@ mysystray = widget({ type = "systray", align = "right" })
 -- Create a wibox for each screen and add it
 mywibox = {}
 mypromptbox = {}
+mybottombox = {}
 mylayoutbox = {}
 mytaglist = {}
 mytaglist.buttons = { button({ }, 1, awful.tag.viewonly),
@@ -170,6 +171,10 @@ for s = 1, screen.count() do
                            mylayoutbox[s],
                            s == 1 and mysystray or nil }
     mywibox[s].screen = s
+
+    -- Create the wibox
+    mybottombox[s] = wibox({ position = "bottom", fg = beautiful.fg_normal, bg = beautiful.bg_normal })
+    mybottombox[s].screen = s
 end
 -- }}}
 
