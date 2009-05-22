@@ -5,6 +5,8 @@ require("beautiful")
 -- Notification library
 require("naughty")
 
+require("wicked/wicked")
+
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 -- The default is a dark theme
@@ -112,6 +114,25 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 -- Create a systray
 mysystray = widget({ type = "systray", align = "right" })
 
+
+-- create cpu widget
+memwidget = widget({
+  type = 'textbox',
+  name = 'memwidget'
+})
+wicked.register(memwidget, wicked.widgets.mem,
+' <span color="white">Memory:</span> $1% ($2Mb/$3Mb)', 10)
+
+ituneswidget = widget({
+  type = 'textbox',
+  name = 'ituneswidget',
+  align = 'right'
+})
+
+wicked.register(ituneswidget, wicked.widgets.itunes,
+' <span color="white">Now Playing:</span> $1', 5)
+
+
 -- Create a wibox for each screen and add it
 mywibox = {}
 mypromptbox = {}
@@ -174,6 +195,7 @@ for s = 1, screen.count() do
 
     -- Create the wibox
     mybottombox[s] = wibox({ position = "bottom", fg = beautiful.fg_normal, bg = beautiful.bg_normal })
+    mybottombox[s].widgets = { memwidget, ituneswidget }
     mybottombox[s].screen = s
 end
 -- }}}
