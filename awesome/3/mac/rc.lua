@@ -8,7 +8,7 @@ require("naughty")
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 -- The default is a dark theme
-theme_path = "/Users/timebomb/.config/awesome/my.theme"
+theme_path = os.getenv("HOME") .. "/.config/awesome/my.theme"
 -- theme_path = "/opt/local/gentoo/usr/share/awesome/themes/default/theme"
 -- Uncommment this for a lighter theme
 -- theme_path = "/opt/local/gentoo/usr/share/awesome/themes/sky/theme"
