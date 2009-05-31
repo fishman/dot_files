@@ -264,7 +264,7 @@ globalkeys =
     key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
     -- Spaces control
-    key({ modkey,           }, "F8", function () awful.util.spawn('open -a Spaces &') end),
+    key({ modkey,           }, "F8", function () awful.util.spawn('sleep 1 ; open -a Spaces') end),
 
     -- iTunes control
     key({ modkey,           }, "F10", function () awful.util.spawn("osascript -e 'tell application \"iTunes\" to playpause'") end),
