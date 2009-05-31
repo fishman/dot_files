@@ -21,9 +21,10 @@ urxvt*foreground:        White
 ! urxvt*visualBell:       true
 !urxvt*inheritPixmap:      true
 ! urxvt*reverseVideo: true
-!urxvt*tintColor:         #dfdfdf
-!urxvt*shading:          20    !trans, 0=opaque
-!urxvt*fading:         10    !term unfocus
+! urxvt*transparent: true
+urxvt*tintColor:         #dfdfdf
+urxvt*shading:          20    !trans, 0=opaque
+urxvt*fading:         10    !term unfocus
 urxvt*font:     xft:Terminus:pixelsize=14
 URxvt*urgentOnBell: true
 

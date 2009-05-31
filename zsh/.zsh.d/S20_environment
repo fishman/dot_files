@@ -24,7 +24,7 @@ export VISUAL=vim
 #export CCACHE_DIR=$HOME/.ccache
 
 export INPUTRC="~/.inputrc"
-export MAIL="${HOME}/mail/inbox"
+# export MAIL="${HOME}/mail/inbox"
 
 export RLWRAP_HOME=~/.cache/rlwrap/
 export GTK_IM_MODULE=xim
