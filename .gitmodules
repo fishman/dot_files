@@ -1,3 +1,6 @@
 [submodule "awesome/3/mac/wicked"]
 	path = awesome/3/mac/wicked
 	url = git://github.com/fishman/wicked.git
+[submodule "awesome/3/linux/wicked"]
+	path = awesome/3/linux/wicked
+	url = git://git.glacicle.com/awesome/wicked.git
