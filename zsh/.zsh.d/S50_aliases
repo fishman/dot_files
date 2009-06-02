@@ -112,6 +112,8 @@ if [[ $OS == osx ]]; then
   alias ciscorestart='sudo kextunload -b com.cisco.nke.ipsec && sudo kextload -b com.cisco.nke.ipsec '
   alias eject='hdiutil eject'
   alias unmount='hdiutil unmount'
+  # flush dns cache on osx
+  alias flushcache='dscacheutil -flushcache'
 fi
 
 alias unzipall='for z in *.zip; do unzip -n $z; done'
