@@ -143,9 +143,7 @@ if [[ $OS == osx ]]; then
   alias xampp="sudo /Applications/xampp/xamppfiles/mampp"
   alias cake="~/sites/Studiblock/studiblock/cake/console/cake"
   # xampp php 
-  alias doctrine-cli="/Applications/xampp/xamppfiles/bin/php ~/Sites/talentrun/talentrun/utilities/doctrine/doctrine-cli"
   alias mysql='/Applications/xampp/xamppfiles/bin/mysql'
-  alias talentrunscreens='screen -S talentrun -d -m -t"Application log" tail -f ~/Sites/Projects/talentrun/logs/    application.log & screen -S talentrun -X screen -t "Apache log" tail -f /Applications/xampp/xamppfiles//logs/error_log'
 
   # textmate 
   alias e="open -a TextMate"
