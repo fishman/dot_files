@@ -238,8 +238,8 @@ globalkeys =
     -- Layout manipulation
     key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1) end),
     key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1) end),
-    key({ modkey,           }, "Next", function () awful.screen.focus( 1)       end),
-    key({ modkey,           }, "Prev", function () awful.screen.focus(-1)       end),
+    key({ "Mod1",           }, "Next", function () awful.screen.focus( 1)       end),
+    key({ "Mod1",           }, "Prior", function () awful.screen.focus(-1)       end),
     key({ modkey,           }, "u", awful.client.urgent.jumpto),
     key({ modkey,           }, "Tab",
         function ()
