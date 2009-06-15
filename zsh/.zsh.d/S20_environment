@@ -38,6 +38,7 @@ PATH="/usr/local/bin:$PATH"
 PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin"
 PATH="$PATH:/usr/X11R6/bin"
 PATH="$PATH:/opt/local/sloccount/bin"
+PATH="$PATH:/usr/local/clang/bin"
 export PATH
 
 if [[ $OS == osx ]]; then
