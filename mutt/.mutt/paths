@@ -1,3 +1,4 @@
-set spoolfile=imaps://mail.tu-harburg.de/INBOX
+# set spoolfile=imaps://mail.tu-harburg.de/INBOX
+set spoolfile=/var/mail/timebomb
 
 # vim: syntax=muttrc
