@@ -129,8 +129,8 @@ ituneswidget = widget({
   align = 'right'
 })
 
-wicked.register(ituneswidget, wicked.widgets.itunes,
-' <span color="white">Now Playing:</span> $1', 5)
+-- wicked.register(ituneswidget, wicked.widgets.itunes,
+-- ' <span color="white">Now Playing:</span> $1', 5)
 
 fswidget = widget({
     type = 'textbox',
