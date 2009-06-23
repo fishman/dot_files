@@ -16,6 +16,7 @@ if [[ $OS == osx ]]; then
   alias -s html=open
   alias -s org=open
   alias -s avi=open
+  alias -s xcodeproj=open
 else
   alias -s png=feh
   alias -s jpg=feh
