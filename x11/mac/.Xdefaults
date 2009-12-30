@@ -155,8 +155,8 @@ XTerm*color6: #87ff87
 !set the font, and fond size
 ! this also uses a antialias/scalable font
 !xterm*faceName: Bitstream Vera Sans Mono
-xterm*faceName: Terminus
-xterm*faceSize: 10
+! xterm*faceName: Terminus
+! xterm*faceSize: 10
 !xterm*font:     xft:terminus:pixelsize=18
 !xterm*font : -*-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-15
 
@@ -174,15 +174,15 @@ Meta <KeyPress> V: insert-selection(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
 
 ## TERMINAL KEY SETTINGS
 ## Adjust to OSX Terminal.app behaviour
-! *VT100.translations: #override\
-! <Key>Prior: scroll-back(1,pages) \n\
-! <Key>Next: scroll-forw(1,pages)\n\
-! Meta <Key> K: send-signal(int) clear-saved-lines() \n\
-! Meta <Key> P: print() \n\
-! Meta <Key> minus: smaller-vt-font() \n\
-! Meta <Key> KP_Subtract: smaller-vt-font() \n\
-! Meta <Key> plus: larger-vt-font() \n\
-! Meta <Key> KP_Add: larger-vt-font() \n\
-! Meta <Key> C: select-cursor-start() \ select-cursor-end(PRIMARY, CUT_BUFFER0) \n\
-! Meta <Key> V: insert-selection(PRIMARY, CUT_BUFFER0) \n\
-! Meta <Key> M: iconify() \n\
+*VT100.translations: #override\
+<Key>Prior: scroll-back(1,pages) \n\
+<Key>Next: scroll-forw(1,pages)\n\
+Meta <Key> K: send-signal(int) clear-saved-lines() \n\
+Meta <Key> P: print() \n\
+Meta <Key> minus: smaller-vt-font() \n\
+Meta <Key> KP_Subtract: smaller-vt-font() \n\
+Meta <Key> plus: larger-vt-font() \n\
+Meta <Key> KP_Add: larger-vt-font() \n\
+Meta <Key> C: select-cursor-start() \ select-cursor-end(PRIMARY, CUT_BUFFER0) \n\
+Meta <Key> V: insert-selection(PRIMARY, CUT_BUFFER0) \n\
+Meta <Key> M: iconify() \n\
