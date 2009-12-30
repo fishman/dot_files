@@ -62,12 +62,13 @@ if [[ $OS == osx ]]; then
   # alias protosync="rsync -e 'ssh -ax -c blowfish' -avz ~/Music/iTunes/iTunes\ Music user@ip:iTunes"
   alias matlab='matlab > /dev/null &'
   alias xcdebug='xcodebuild -configuration Debug -target'
+  # alias top="/usr/bin/top -ocpu -R -F -s 2 -n30"
+  alias top="/usr/bin/top -ocpu -R -s 2 -n30"
 fi
 alias myip="ifconfig | grep 192.168 || ifconfig | grep 10.32"
 alias psg="ps ax | grep "
 alias wget="wget -c"
 alias getit='curl -O `pbpaste`'
-alias top="/usr/bin/top -ocpu -R -F -s 2 -n30"
 alias mtop="top -o rsize"
 alias sr="screen -r"
 alias unrar='nice -n 19 unrar'

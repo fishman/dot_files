@@ -13,6 +13,8 @@
 	host = imaps://imap.gmx.net
 	user =
 	sslverify = no
+[push]
+	default = current
 [merge]
 	tool = vimdiff
 [apply]
@@ -26,12 +28,14 @@
 	                -t -o -u -s -m -d
 	stc = diff --stat --name-status --cached
 	co = checkout
-	up = !sh -c \"git stash && git pull --rebase && git stash apply\"
+        up = !sh -c \"git stash && git pull --rebase && git stash apply\"
 	; su = !sh -c \"git stash && git svn rebase && git stash apply\"
-	su = svn rebase
+        su = svn rebase
 	mergehub = !sh -c \"git stash && git fetch github && git merge github/master && git stash apply\"
-	sci = !sh -c \"git stash && git svn dcommit && git stash apply\"
+	; sci = !sh -c \"git stash && git svn dcommit && git stash apply\"
+        sci = svn dcommit
 	log1 = log --pretty=oneline --abbrev-commit
+	tip = log -1
 	rlog = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\"
 	glog = log --pretty=format:'%h : %s' --graph
 	top = !eval cd "$(pwd)/$(git rev-parse --show-cdup)" && pwd
@@ -52,3 +56,5 @@
 	line-graphics = yes          # Disable graphics characters
 	line-number-interval = 5    # Interval between line numbers
 	tab-size = 4                # Number of spaces per tab
+[diff "png"]
+	textconv = exif

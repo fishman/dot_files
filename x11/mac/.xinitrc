@@ -34,5 +34,6 @@ export RXVT_SOCKET=$HOME/.rxvt_socket
 # xmonad
 # xterm
 PATH=~/bin:/opt/local/gentoo/usr/bin:$PATH
+# /opt/local/gentoo/usr/bin/ratpoison
 /opt/local/gentoo/usr/bin/awesome
 # quartz-wm

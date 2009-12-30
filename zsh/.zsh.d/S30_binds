@@ -25,4 +25,4 @@ bindkey -v "^P" up-history
 #  bindkey -v "^[h" run-help
 
 bindkey -v "^[H" beginning-of-line
-bindkey -v "^X" paste-xclip
+# bindkey -v "^X" paste-xclip
