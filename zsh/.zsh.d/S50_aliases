@@ -37,6 +37,7 @@ alias -g M='|more'
 alias -g L='|less'
 alias -g G='|grep'
 alias -g X='|xargs'
+alias -g XC='|xclip -selection clipboard'
 alias -g H='|head'
 alias -g T='|tail'
 alias -g V='|vim -'
@@ -63,13 +64,13 @@ if [[ $OS == osx ]]; then
   alias matlab='matlab > /dev/null &'
   alias xcdebug='xcodebuild -configuration Debug -target'
   # alias top="/usr/bin/top -ocpu -R -F -s 2 -n30"
-  alias top="/usr/bin/top -ocpu -R -s 2 -n30"
+  alias top="/usr/bin/top -ocpu -R -F -s 2 -n20"
+  alias getit='curl -O `pbpaste`'
+  alias mtop="top -o rsize"
 fi
 alias myip="ifconfig | grep 192.168 || ifconfig | grep 10.32"
 alias psg="ps ax | grep "
 alias wget="wget -c"
-alias getit='curl -O `pbpaste`'
-alias mtop="top -o rsize"
 alias sr="screen -r"
 alias unrar='nice -n 19 unrar'
 alias grep='egrep'

@@ -129,8 +129,8 @@ new_parse_git_branch() {
 
 # Show character if index and/or work-tree are dirty
 git_status() {
-  unclean=$(git diff-files --quiet && git diff-index --cached --quiet HEAD --) || unclean='*'
-  echo $unclean
+  # unclean=$(git diff-files --quiet && git diff-index --cached --quiet HEAD --) || unclean='*'
+  # echo $unclean
 }
 
 
