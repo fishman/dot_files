@@ -161,7 +161,7 @@ XTerm*color6: #87ff87
 !xterm*font : -*-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-15
 
 !set the window geometry
-XTerm*geometry: 144x41
+XTerm*geometry: 144x36
 XTerm*scrollBar: false
 
 ! XTerm*VT100.Translations: #override \
