@@ -1,0 +1,8 @@
+! left apple key becomes alt 
+! and right one stays meta
+clear mod1
+clear mod2
+keycode 71 = Alt_L
+add mod2 = Alt_L
+keycode 63 = Meta_L
+add mod1 = Meta_L
