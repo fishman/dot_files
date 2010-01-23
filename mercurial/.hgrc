@@ -1,0 +1,71 @@
+[ui]
+username = Reza Jelveh
+ssh = ssh -C
+logtemplate = "\033[33mchangeset:{rev}:{node|short}\033[0m\n{branches}{tags}{parents}user:{author}\ndate:{date|date}\n{files}{file_copies}description:\n{desc|strip}\n\n\n"
+
+[defaults]
+email = --diffstat --git
+
+[extensions]
+#svn=~/.hg/hgsubversion
+rebase=
+fetch=
+#alias=
+convert=
+extdiff=
+graphlog=
+patchbomb=
+record=
+color=
+hgk=
+transplant=
+hg.crecord=~/.hg/crecord.py
+hgext.fetch=
+#cutehg=~/Library/Python/2.6/site-packages/cutehg
+#MacOSXKeychain=/Library/Python/2.5/site-packages/hgext/hgkeychain.py
+
+[color]
+status.modified = magenta bold
+status.added = green bold
+status.removed = red bold
+status.deleted = cyan bold
+status.unknown = blue bold
+status.ignored = black bold
+
+[alias]
+blame=annotate -u -n
+rec=record
+stat = status -mardc
+llog = log --limit 10
+log1 = log --template '\033[33m{date|shortdate} \033[0m[{rev}:\033[31m{node|short}\033[0m] \033[32m{author|person}\033[0m: {desc|firstline}\n' -l 10
+#sin = incoming --template '{date|shortdate} [{rev}:{node|short}] {author|person}: {desc|firstline}\n'
+#sout = outgoing --template '{date|shortdate} [{rev}:{node|short}] {author|person}: {desc|firstline}\n'
+#sheads = heads --template '{date|shortdate} [{rev}:{node|short}] {author|person}: {desc|firstline}\n'
+#sglog = glog --template '[{rev}:{node|short}] by {author|person} \n{desc|fill68}\n\n'
+
+[diff]
+git=True
+
+[email]
+method = smtp
+from = Reza Jelveh <toyb0mb@gmx.net>
+
+[smtp]
+tls = True
+host = 
+username = 
+password = 
+
+[extdiff]
+cmd.sbsdiff  = diff
+opts.sbsdiff = -N -b --side-by-side --width=90
+
+[merge-patterns]
+** = filemerge
+
+[merge-tools]
+filemerge.executable = vim
+filemerge.args = -d $base $local
+filemerge.checkchanged = true
+filemerge.gui = true
+
