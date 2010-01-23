@@ -10,6 +10,7 @@ PATH_BACK=$PATH
 if [ -e $EPREFIX/etc/profile.env ] ; then
 . $EPREFIX/etc/profile.env
 fi
+unset RUBYOPT
 
 PATH="$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/usr/sbin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:${EPREFIX}/usr/portage/scripts:${ROOTPATH}:$PATH_BACK"
 

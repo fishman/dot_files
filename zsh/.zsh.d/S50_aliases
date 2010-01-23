@@ -64,7 +64,7 @@ if [[ $OS == osx ]]; then
   alias matlab='matlab > /dev/null &'
   alias xcdebug='xcodebuild -configuration Debug -target'
   # alias top="/usr/bin/top -ocpu -R -F -s 2 -n30"
-  alias top="/usr/bin/top -ocpu -R -F -s 2 -n20"
+  alias top="/usr/bin/top -ocpu -R -s 2 -n20"
   alias getit='curl -O `pbpaste`'
   alias mtop="top -o rsize"
 fi
