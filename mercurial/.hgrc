@@ -19,8 +19,9 @@ record=
 color=
 hgk=
 transplant=
-hg.crecord=~/.hg/crecord.py
+hg.crecord= ~/.hgext/crecord/crecord
 hgext.fetch=
+hgext.mq=
 #cutehg=~/Library/Python/2.6/site-packages/cutehg
 #MacOSXKeychain=/Library/Python/2.5/site-packages/hgext/hgkeychain.py
 
