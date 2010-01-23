@@ -106,63 +106,90 @@ URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
 
 
 !
+UXTerm*geometry: 140x36
 !XTerm*underLine: on
-XTerm*customization: -color
+UXTerm*customization: -color
 !XTerm*visualBell: true
-XTerm*colorMode: on
-XTerm*colorBD: lightyellow
+UXTerm*colorMode: on
+UXTerm*colorBD: lightyellow
 !XTerm*colorBDMode: off
-XTerm*colorUL: yellow
-XTerm*colorULMode: on
-XTerm*dynamicColors: off
-XTerm*highlightSelection: true
+UXTerm*colorUL: yellow
+UXTerm*colorULMode: on
+UXTerm*dynamicColors: off
+UXTerm*highlightSelection: true
 
 ! Colorscheme based on the gvim colorscheme desert
-XTerm*background: #313031
-XTerm*foreground: White
+UXTerm*background: #313031
+UXTerm*foreground: White
+
+! ---| thayer (tango) |--- {{{
+! Black (not tango) + DarkGrey
+UXTerm*color0:             #000000
+UXTerm*color8:             #555753
+! DarkRed + Red
+UXTerm*color1:             #ff6565
+UXTerm*color9:             #ff8d8d
+! DarkGreen + Green
+UXTerm*color2:             #93d44f
+UXTerm*color10:            #78e758
+! DarkYellow + Yellow
+UXTerm*color3:             #eab93d
+UXTerm*color11:            #ffc123
+! DarkBlue + Blue
+UXTerm*color4:             #204a87
+UXTerm*color12:            #3465a4
+! DarkMangenta + Mangenta
+UXTerm*color5:             #ce5c00
+UXTerm*color13:            #f57900
+!DarkCyan + Cyan (both not tango)
+UXTerm*color6:             #89b6e2
+UXTerm*color14:            #46a4ff
+! LightGrey + White
+UXTerm*color7:             #cccccc
+UXTerm*color15:            #ffffff
+!}}}
 
 !colors
 !(unknown)
-XTerm*color0: #000000
-XTerm*color7: #bebebe
-XTerm*color8: #666666
-XTerm*color9: #cf6171
-XTerm*color10: #c5f779
-XTerm*color11: #fff796
-XTerm*color12: #4186be
-XTerm*color13: #cf9ebe
-XTerm*color14: #71bebe
-XTerm*color15: #ffffff
+! UXTerm*color0: #000000
+! UXTerm*color7: #bebebe
+! UXTerm*color8: #666666
+! UXTerm*color9: #cf6171
+! UXTerm*color10: #c5f779
+! UXTerm*color11: #fff796
+! UXTerm*color12: #4186be
+! UXTerm*color13: #cf9ebe
+! UXTerm*color14: #71bebe
+! UXTerm*color15: #ffffff
 
-!(1 is an option color in .Xdefaults)
-XTerm*color1: #ffa2a5
+! !(1 is an option color in .Xdefaults)
+! UXTerm*color1: #ffa2a5
 
-!(2 is a resource color in .Xdefaults)
-XTerm*color2: #bdb66b
+! !(2 is a resource color in .Xdefaults)
+! UXTerm*color2: #bdb66b
 
-!(3 is for def/return color in python)
-XTerm*color3: #f7e78c
+! !(3 is for def/return color in python)
+! UXTerm*color3: #f7e78c
 
-!(4 is for comments color in python)
-XTerm*color4: #84cfef
+! !(4 is for comments color in python)
+! UXTerm*color4: #84cfef
 
-!(5 is for import/from color in python)
-XTerm*color5: #ce5d5a
+! !(5 is for import/from color in python)
+! UXTerm*color5: #ce5d5a
 
-!(6 is for function color in python)
-XTerm*color6: #87ff87
+! !(6 is for function color in python)
+! UXTerm*color6: #87ff87
 
 !set the font, and fond size
 ! this also uses a antialias/scalable font
 !xterm*faceName: Bitstream Vera Sans Mono
 ! xterm*faceName: Terminus
 ! xterm*faceSize: 10
-!xterm*font:     xft:terminus:pixelsize=18
-!xterm*font : -*-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-15
+! xterm*font:     xft:terminus:pixelsize=18
+! xterm*font : -*-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-15
 
 !set the window geometry
-XTerm*geometry: 144x36
-XTerm*scrollBar: false
+UXTerm*scrollBar: false
 
 ! XTerm*VT100.Translations: #override \
 ! <KeyPress> Prior: scroll-back(1,page) \n\

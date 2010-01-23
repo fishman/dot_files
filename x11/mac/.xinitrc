@@ -24,6 +24,9 @@ fi
 xset b off
 xset b 0 0 0
 
+xset fp+ /opt/local/gentoo/share/fonts/terminus &
+xset fp rehash &
+
 # exec /usr/bin/quartz-wm --only-proxy &
 # urxvtd -q -o -f
 export RXVT_SOCKET=$HOME/.rxvt_socket
