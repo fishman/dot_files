@@ -137,7 +137,7 @@ if [[ $OS == osx ]]; then
   #vlc
   alias vlc="open -a VLC"
   #mplayer
-  alias mplayer="/Applications/MPlayer\ OSX\ Extended.app/Contents/Resources/External_Binaries/mplayer.app/Contents/MacOS/mplayer"
+  alias mplayer="/Applications/MPlayer\ OSX\ Extended.app/Contents/Resources/Binaries/mpextended.mpBinaries/Contents/mpextended.mpBinaries/Contents/MacOS/mplayer"
   # web devel
   alias devfox='/Applications/Devfox.app/Contents/MacOS/firefox-bin -P devprofile'
   alias firefox='/Applications/Firefox.app/Contents/MacOS/firefox-bin -P default'
