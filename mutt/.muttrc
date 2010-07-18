@@ -39,8 +39,8 @@ set reverse_alias = yes
 set mbox_type = Maildir
 
 # Set various Mailboxes
-#mailboxes `cat $HOME/.mutt/mailboxes`
-mailboxes `$HOME/.mutt/mailboxes.sh`
+mailboxes `cat $HOME/.mutt/mailboxes`
+# mailboxes `$HOME/.mutt/mailboxes.sh`
 
 # Postponed folder
 set postponed = $HOME/mail/postponed
@@ -288,10 +288,11 @@ source ~/.mutt/hooks
 ## Macro and bindings ##
 #
 source ~/.mutt/bindings
+source ~/.mutt/macros
 
 ## Sidebar ##
 #
-source ~/.mutt/sidebar
+# source ~/.mutt/sidebar
 
 ## Colors ##
 #
