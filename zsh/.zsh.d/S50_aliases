@@ -187,7 +187,7 @@ alias sanitizemake="find . -name '*.mk' -or -name '?akefile' | xargs sed -i -e '
 
 # svn helpers
 alias sst="svn st"
-alias sup="svn up"
+# alias sup="svn up"
 alias sci="svn ci -m "
 alias si="svn propedit svn:ignore"
 alias svnurl="svn info | grep URL | awk '{ print $2 }'"
