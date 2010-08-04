@@ -189,7 +189,7 @@ set abort_unmodified = ask-yes
 set editor = 'vim +/^$ "+normal j"' 
 
 # Don't try to add From: 
-set use_from
+set use_from=yes
 
 # Set follow-up-to header
 set followup_to
@@ -201,7 +201,7 @@ set reverse_name
 #set reverse_realname
 
 # Set automatically envelope_from field
-set envelope_from
+set envelope_from=yes
 
 # Addressbook
 #set query_command = "abook --mutt-query '%s'"
@@ -306,4 +306,7 @@ source ~/.mutt/colors-blackback
 #
 #source ~/.mutt/patch-config
 
+# set sendmail="/opt/local/gentoo/usr/share/msmtp/msmtpq/msmtpQ" 
+set sendmail="/opt/local/gentoo/usr/bin/msmtp" 
 
+set askcc=yes

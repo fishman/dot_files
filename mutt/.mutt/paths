@@ -1,4 +1,4 @@
-# set spoolfile=imaps://mail.tu-harburg.de/INBOX
-set spoolfile=/var/mail/timebomb
+# set spoolfile=imaps://imap.gmail.com/INBOX
+set spoolfile=/Volumes/Files/Library/Mail/GMAIL/INBOX
 
 # vim: syntax=muttrc

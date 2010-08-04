@@ -213,6 +213,7 @@ Meta <Key> plus: larger-vt-font() \n\
 Meta <Key> KP_Add: larger-vt-font() \n\
 Meta <Key> C: select-cursor-start() \ select-cursor-end(PRIMARY, CUT_BUFFER0) \n\
 Meta <Key> V: insert-selection(PRIMARY, CUT_BUFFER0) \n\
+<BtnUp>: select-end(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
 Meta <Key> M: iconify() \n\
 Ctrl ~Shift <Key>Tab: string(0x1b) string("[27;5;9~") \n \
 Ctrl Shift <Key> Tab: string(0x1b) string("[27;6;9~") \n

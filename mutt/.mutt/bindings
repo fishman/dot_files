@@ -78,6 +78,7 @@ bind 	pager	G	"sync-mailbox"
 bind 	index,pager	<down>	"next-entry"
 bind 	index,pager	<up>	"previous-entry"
 
+bind 	index,pager	gr	"group-reply"
 # Threads
 #^D      delete-thread           delete all messages in the current thread
 #^U      undelete-thread         undelete all messages in the current thread
