@@ -40,7 +40,7 @@ hosts=($((
 zstyle ':completion:*' hosts $hosts
 zstyle ':completion:*:hosts' list-colors '=(#b)(*)(.jukie.net)=01;30=01;31' '=[^.]#=01;31'
 
-users=(root bart bartman)
+users=(root hatori timebomb)
 zstyle ':completion:*' users $users
 
 zstyle ':completion:*:*:[ak]dvi:*' file-patterns \

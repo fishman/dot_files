@@ -92,6 +92,10 @@ else
             lprompt '[]' white green
             rprompt '()' yellow white
             ;;
+        freshlulz*)
+            lprompt '[]' white green
+            rprompt '()' yellow white
+            ;;
 
         meson*)
             lprompt '<>' red yellow

@@ -1,17 +1,19 @@
 #!/bin/zsh
 
-export EPREFIX="/opt/local/gentoo"
-PATH_BACK=$PATH
+if [[ $OS == osx ]]; then
+  export EPREFIX="/opt/local/gentoo"
+  PATH_BACK=$PATH
 
-# export LDFLAGS="-Wl,-search_paths_first -L${EPREFIX}/usr/lib -L${EPREFIX}/lib"
-# export CPPFLAGS="-I${EPREFIX}/usr/include"
-# source /opt/local/gentoo/etc/profile
+  # export LDFLAGS="-Wl,-search_paths_first -L${EPREFIX}/usr/lib -L${EPREFIX}/lib"
+  # export CPPFLAGS="-I${EPREFIX}/usr/include"
+  # source /opt/local/gentoo/etc/profile
 
-if [ -e $EPREFIX/etc/profile.env ] ; then
-. $EPREFIX/etc/profile.env
+  if [ -e $EPREFIX/etc/profile.env ] ; then
+    . $EPREFIX/etc/profile.env
+  fi
+  unset RUBYOPT
+
+  PATH="$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/usr/sbin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:${EPREFIX}/usr/portage/scripts:${ROOTPATH}:$PATH_BACK"
+
+  alias myoverlay='cd /opt/local/gentoo/usr/local/portage'
 fi
-unset RUBYOPT
-
-PATH="$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/usr/sbin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:${EPREFIX}/usr/portage/scripts:${ROOTPATH}:$PATH_BACK"
-
-alias myoverlay='cd /opt/local/gentoo/usr/local/portage'
