@@ -56,7 +56,11 @@ vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
 
 -- battery
 batwidget = widget({ type = "textbox" })
-vicious.register(batwidget, vicious.widgets.bat, " <span color='cyan'>bat: $1</span><span color='white'>$2%</span> |", 61, "BAT0") 
+vicious.register(batwidget, vicious.widgets.bat, " <span color='cyan'>bat: $1</span><span color='white'>$2% ($3)</span> |", 61, "BAT0") 
+
+-- volume
+volwidget = widget({ type = "textbox" })
+vicious.register(volwidget, vicious.widgets.volume, " <span color='cyan'>vol: $2 </span><span color='white'>$1%</span> |", 2, "Master") 
 
 -- memory widget
 memwidget = widget({ type = "textbox" })
@@ -185,6 +189,7 @@ for s = 1, screen.count() do
         mytextclock,
         memwidget,
         batwidget,
+        volwidget,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
