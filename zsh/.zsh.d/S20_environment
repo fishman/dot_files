@@ -32,19 +32,21 @@ export GTK_IM_MODULE=xim
 export LC_MESSAGES=C
 export LC_ALL=
 
-PATH="$HOME/bin:$PATH"
-PATH="/opt/local/bin:/opt/local/vim/bin:$PATH"
-PATH="/usr/local/bin:$PATH"
-PATH="$PATH:/sbin:/usr/sbin:/usr/local/sbin"
-PATH="$PATH:/usr/X11R6/bin"
-PATH="$PATH:/opt/local/sloccount/bin"
-PATH="$PATH:/usr/local/clang/bin"
-export PATH
-
-if [[ $OS == osx ]]; then
+if [[ $OS == linux ]]; then
+  path=($HOME/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin)
+elif [[ $OS == osx ]]; then
+  PATH="$HOME/bin:$PATH"
+  PATH="/opt/local/bin:/opt/local/vim/bin:$PATH"
+  PATH="/usr/local/bin:$PATH"
+  PATH="$PATH:/sbin:/usr/sbin"
+  PATH="$PATH:/usr/local/sbin"
+  PATH="$PATH:/usr/X11R6/bin"
+  PATH="$PATH:/opt/local/sloccount/bin"
+  PATH="$PATH:/usr/local/clang/bin"
   export MANPATH=/opt/local/share/man:$MANPATH
 fi
 
+export PATH
 # less options
 LESS=FRSX
 

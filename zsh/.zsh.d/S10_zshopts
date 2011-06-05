@@ -9,7 +9,7 @@ setopt all_export           # define = export
 #setopt always_last_prompt   #
 setopt always_to_end        # always go to end of word after completion
 setopt append_history       # append to history, dont truncate it
-setopt auto_cd              # do cd path if only 'path' is given as command
+# setopt auto_cd              # do cd path if only 'path' is given as command
 setopt auto_continue        # send SIGCONT to jobs disowned
 setopt auto_list            # list choice on ambiguous command
 setopt auto_menu            # show menu for completion
@@ -187,3 +187,6 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_REDUCE_BLANKS
 setopt HIST_SAVE_NO_DUPS
 setopt HIST_VERIFY
+
+# add cd search path
+cdpath=(~ ~/git /opt)
