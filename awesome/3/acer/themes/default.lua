@@ -47,7 +47,9 @@ theme.menu_width  = "100"
 -- You can add as many variables as
 -- you wish and access them by using
 -- beautiful.variable in your rc.lua
---theme.bg_widget = "#cc0000"
+-- theme.bg_widget = "#cc0000"
+-- theme.bg_widget = theme.bg_normal
+-- theme.fg_widget = theme.bg_focus-
 
 -- Define the image to load
 theme.titlebar_close_button_normal = "/usr/share/awesome/themes/default/titlebar/close_normal.png"
