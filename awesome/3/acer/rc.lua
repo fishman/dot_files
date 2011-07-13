@@ -66,11 +66,17 @@ volwidget:set_gradient_colors({ beautiful.fg_widget,
    beautiful.fg_center_widget, beautiful.fg_end_widget
 }) -- Register widget
 vicious.register(volwidget, vicious.contrib.pulse, "$1", 2, "alsa_output.pci-0000_00_1b.0.analog-stereo")
---volwidget:buttons(awful.util.table.join(
+volwidget.widget:buttons(awful.util.table.join(
+   awful.button({ }, 1, function () awful.util.spawn("pavucontrol") end),
+   awful.button({ }, 4, function () vicious.contrib.pulse.add(5,"alsa_output.pci-0000_00_1b.0.analog-stereo") end),
+   awful.button({ }, 5, function () vicious.contrib.pulse.add(-5,"alsa_output.pci-0000_00_1b.0.analog-stereo") end)
+))
+
+-- volwidget:buttons(awful.util.table.join(
 --awful.button({ }, 1, function () awful.util.spawn("amixer set Master toggle") end),
 --awful.button({ }, 5, function () awful.util.spawn("amixer set Master 1-,1-") end),
 --awful.button({ }, 4, function () awful.util.spawn("amixer set Master 1+,1+") end)
---))
+-- ))
 
 -- {{{ CPU usage and temperature
 cpuicon = widget({ type = "imagebox" })
@@ -343,8 +349,16 @@ globalkeys = awful.util.table.join(
 
     -- Volume control
     awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer set Master toggle") end),
-    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 1-,1-") end),
-    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 1+,1+") end),
+    -- awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 1-,1-") end),
+    -- awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 1+,1+") end),
+    awful.key({ }, "XF86AudioLowerVolume",function()
+            vicious.contrib.pulse.add(-5,"alsa_output.pci-0000_00_1b.0.analog-stereo")
+            osd.notify("Vol:",pulsevolume("alsa_output.pci-0000_00_1b.0.analog-stereo"))
+    end),
+    awful.key({ }, "XF86AudioRaiseVolume",function()
+            vicious.contrib.pulse.add(5,"alsa_output.pci-0000_00_1b.0.analog-stereo")
+            osd.notify("Vol:",pulsevolume("alsa_output.pci-0000_00_1b.0.analog-stereo"))
+    end),
 
 
     -- Prompt
