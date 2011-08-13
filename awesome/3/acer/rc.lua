@@ -8,8 +8,8 @@ require("beautiful")
 require("naughty")
 
 require("vicious")
-require("vicious.contrib")
 require("scratch")
+require("xdg-menu")
 
 home = os.getenv("HOME")
 -- {{{ Variable definitions
@@ -54,29 +54,36 @@ layouts =
 separator = widget({ type = "imagebox" })
 separator.image = image(beautiful.widget_sep)
 -- }}}
+-- {{{ Volume level
 volicon = widget({ type = "imagebox" })
 volicon.image = image(beautiful.widget_vol)
--- Initialize widget
-volwidget = awful.widget.progressbar()
--- Pogressbar properties
-volwidget:set_vertical(true):set_ticks(true)
-volwidget:set_height(14):set_width(8):set_ticks_size(2)
-volwidget:set_background_color(beautiful.fg_off_widget)
-volwidget:set_gradient_colors({ beautiful.fg_widget,
+-- Initialize widgets
+volbar    = awful.widget.progressbar()
+volwidget = widget({ type = "textbox" })
+-- Progressbar properties
+volbar:set_vertical(true):set_ticks(true)
+volbar:set_height(12):set_width(8):set_ticks_size(2)
+volbar:set_background_color(beautiful.fg_off_widget)
+volbar:set_gradient_colors({ beautiful.fg_widget,
    beautiful.fg_center_widget, beautiful.fg_end_widget
-}) -- Register widget
-vicious.register(volwidget, vicious.contrib.pulse, "$1", 2, "alsa_output.pci-0000_00_1b.0.analog-stereo")
-volwidget.widget:buttons(awful.util.table.join(
-   awful.button({ }, 1, function () awful.util.spawn("pavucontrol") end),
-   awful.button({ }, 4, function () vicious.contrib.pulse.add(5,"alsa_output.pci-0000_00_1b.0.analog-stereo") end),
-   awful.button({ }, 5, function () vicious.contrib.pulse.add(-5,"alsa_output.pci-0000_00_1b.0.analog-stereo") end)
-))
-
--- volwidget:buttons(awful.util.table.join(
---awful.button({ }, 1, function () awful.util.spawn("amixer set Master toggle") end),
---awful.button({ }, 5, function () awful.util.spawn("amixer set Master 1-,1-") end),
---awful.button({ }, 4, function () awful.util.spawn("amixer set Master 1+,1+") end)
--- ))
+}) -- Enable caching
+vicious.cache(vicious.widgets.volume)
+-- Register widgets
+vicious.register(volbar,    vicious.widgets.volume,  "$1",  2, "Master")
+vicious.register(volwidget, vicious.widgets.volume, " $1%", 2, "Master")
+-- Register buttons
+volbar.widget:buttons(awful.util.table.join(
+   awful.button({ }, 1, function () awful.util.spawn("amixer -q set Master toggle", false) end),
+   awful.button({ }, 3, function () awful.util.spawn("urxvtc -e alsamixer", false) end),
+   awful.button({ }, 4, function () awful.util.spawn("amixer -q set Master 2dB+", false) end),
+   awful.button({ }, 5, function () awful.util.spawn("amixer -q set Master 2dB-", false) end)
+)) -- Register assigned buttons
+volwidget:buttons(awful.util.table.join(
+   awful.button({ }, 1, function () awful.util.spawn("amixer -q set Master toggle", false) end),
+   awful.button({ }, 3, function () awful.util.spawn("urxvtc -e alsamixer", false) end),
+   awful.button({ }, 4, function () awful.util.spawn("amixer -q set Master 2dB+", false) end),
+   awful.button({ }, 5, function () awful.util.spawn("amixer -q set Master 2dB-", false) end)
+)) -- Register assigned buttons
 
 -- {{{ CPU usage and temperature
 cpuicon = widget({ type = "imagebox" })
@@ -160,8 +167,8 @@ vicious.register(fs.r, vicious.widgets.fs, "${/ used_p}",     599)
 tags = {
     names  = { "term", "coding", "web", "mail", "im", "vms", "media", 8, 9 },
     layout = {
-        awful.layout.suit.tile.bottom, layouts[1], awful.layout.suit.max, layouts[4], layouts[1],
-        layouts[6], layouts[6], layouts[5], layouts[6]
+        awful.layout.suit.tile.bottom, layouts[1], awful.layout.suit.max, awful.layout.suit.max, layouts[1],
+        layouts[6], awful.layout.suit.floating, layouts[5], layouts[6]
     }
 }
 for s = 1, scount do
@@ -180,7 +187,8 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
+                                    { "open terminal", terminal },
+                                    { "xdg", xdgmenu}
                                   }
                         })
 
@@ -279,10 +287,10 @@ for s = 1, scount do
         },
         s == 1 and mysystray or nil,
         separator, mytextclock, dateicon,
+        separator, volwidget,  volbar.widget, volicon,
         separator, fs.r.widget, fsicon,
         separator, membar.widget, memicon,
         separator, batwidget, baticon,
-        separator, volwidget.widget, volicon,
         separator, tzswidget, cpugraph.widget, cpuicon,
         separator, mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
@@ -348,17 +356,20 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
     -- Volume control
-    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer set Master toggle") end),
-    -- awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 1-,1-") end),
-    -- awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 1+,1+") end),
-    awful.key({ }, "XF86AudioLowerVolume",function()
-            vicious.contrib.pulse.add(-5,"alsa_output.pci-0000_00_1b.0.analog-stereo")
-            osd.notify("Vol:",pulsevolume("alsa_output.pci-0000_00_1b.0.analog-stereo"))
-    end),
-    awful.key({ }, "XF86AudioRaiseVolume",function()
-            vicious.contrib.pulse.add(5,"alsa_output.pci-0000_00_1b.0.analog-stereo")
-            osd.notify("Vol:",pulsevolume("alsa_output.pci-0000_00_1b.0.analog-stereo"))
-    end),
+    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -q set Master toggle", false) end),
+    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -q set Master 2dB-", false) end),
+    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -q set Master 2dB+", false) end),
+    awful.key({ modkey,  }, "F12", function () awful.util.spawn("Equal") end),
+
+    awful.key({ modkey,  }, "e", function () awful.util.spawn("urxvtc -e mc") end),
+    -- awful.key({ }, "XF86AudioLowerVolume",function()
+    --         vicious.contrib.pulse.add(-5,"alsa_output.pci-0000_00_1b.0.analog-stereo")
+    --         osd.notify("Vol:",pulsevolume("alsa_output.pci-0000_00_1b.0.analog-stereo"))
+    -- end),
+    -- awful.key({ }, "XF86AudioRaiseVolume",function()
+    --         vicious.contrib.pulse.add(5,"alsa_output.pci-0000_00_1b.0.analog-stereo")
+    --         osd.notify("Vol:",pulsevolume("alsa_output.pci-0000_00_1b.0.analog-stereo"))
+    -- end),
 
 
     -- Prompt
@@ -366,7 +377,7 @@ globalkeys = awful.util.table.join(
     -- Run or raise applications with dmenu
     awful.key({ modkey }, "r",
     function ()
-        local f_reader = io.popen( "dmenu_path | dmenu -b -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#955'")
+        local f_reader = io.popen( "lsx /usr/bin ~/bin /opt/bin | dmenu -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#955'")
         local command = assert(f_reader:read('*a'))
         f_reader:close()
         if command == "" then return end
@@ -475,6 +486,14 @@ awful.rules.rules = {
                      focus = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
+    { rule = { class = "Pcmanfm" },
+      properties = { floating = true } },
+    { rule = { class = "Zathura" },
+      properties = { floating = true } },
+    { rule = { class = "Epdfview" },
+      properties = { floating = true } },
+    { rule = { class = "Remmina" },
+      properties = { floating = true } },
     -- media
     { rule = { class = "Smplayer" },
       properties = { floating = true },
@@ -492,19 +511,21 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "Firefox", instance = "Navigator" },
       properties = { tag = tags[1][3] } },
+    { rule = { class = "Firefox", instance = "Download" },
+      properties = { floating = true } },
     { rule = { class = "luakit" },
       properties = { tag = tags[1][3] } },
     { rule = { class = "Uzbl-core" },
       properties = { tag = tags[1][3] } },
     { rule = { class = "Opera" },
       properties = { tag = tags[1][3] } },
-    { rule = { class = "Chromium" },
+    { rule = { class = "Iron" },
       properties = { tag = tags[1][3] } },
       -- thunderbird
     { rule = { class = "Lanikai" },
-      properties = { tag = tags[1][3] } },
+      properties = { tag = tags[1][4] } },
     { rule = { class = "Thunderbird" },
-      properties = { tag = tags[1][3] } },
+      properties = { tag = tags[1][4] } },
     { rule = { class = "Calibre" },
       properties = { tag = tags[1][4] } },
     { rule = { class = "Skype" },

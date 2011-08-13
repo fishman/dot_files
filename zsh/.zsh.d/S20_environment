@@ -30,7 +30,7 @@ export RLWRAP_HOME=~/.cache/rlwrap/
 export GTK_IM_MODULE=xim
 
 export LC_MESSAGES=C
-export LC_ALL=
+export LC_ALL=en_US.UTF-8
 
 if [[ $OS == linux ]]; then
   path=($HOME/bin /usr/local/bin /usr/bin /bin /usr/sbin /sbin)

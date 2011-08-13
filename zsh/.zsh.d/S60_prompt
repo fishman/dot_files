@@ -6,7 +6,7 @@
 if [[ $OS == osx ]]; then
   HOSTNAME=`hostname | cut -d"." -f2,3,4`
 else
-  HOSTNAME=${$(hostname -f)#*.}
+  HOSTNAME=${$(hostname)#*.}
 fi
 
 setopt prompt_subst

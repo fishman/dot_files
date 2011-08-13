@@ -67,6 +67,8 @@ if [[ $OS == osx ]]; then
   alias top="/usr/bin/top -ocpu -R -s 2 -n20"
   alias getit='curl -O `pbpaste`'
   alias mtop="top -o rsize"
+else
+  alias open='xdg-open'
 fi
 alias myip="ifconfig | grep 192.168 || ifconfig | grep 10.32"
 alias psg="ps ax | grep "
@@ -77,6 +79,8 @@ alias grep='egrep'
 #alias wc='sloccount'
 alias mutt='TERM=xterm-256color mutt'
 alias irssi='screen -S irssi -d -R irssi'
+# color for stuff
+alias flux='xflux -l 53.5559 -q 9.98766'
 
 # ls alias
 if [[ $OS == osx  &&  $EPREFIX == '' ]]; then
@@ -152,6 +156,9 @@ if [[ $OS == osx ]]; then
   alias matereload="osascript -e 'tell app \"TextMate\" to reload bundles'"
   alias projects="cd ~/Documents/Projects"
 fi
+
+# arch aliases
+alias rc.d="sudo rc.d"
 
 # security
 # libdnet

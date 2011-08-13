@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-OS=unknown
+export OS=unknown
 
 if [[ $(uname) == Darwin ]]; then
   OS=osx

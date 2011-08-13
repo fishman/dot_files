@@ -1,4 +1,4 @@
 # set spoolfile=imaps://imap.gmail.com/INBOX
-set spoolfile=/Volumes/Files/Library/Mail/GMAIL/INBOX
+set spoolfile=~/Library/Offlineimap/GMAIL/INBOX
 
 # vim: syntax=muttrc

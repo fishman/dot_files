@@ -307,6 +307,8 @@ source ~/.mutt/colors-blackback
 #source ~/.mutt/patch-config
 
 # set sendmail="/opt/local/gentoo/usr/share/msmtp/msmtpq/msmtpQ" 
-set sendmail="/opt/local/gentoo/usr/bin/msmtp" 
+# queue mails
+set sendmail="/usr/bin/msmtpQ" 
+set sendmail_wait = -1
 
 set askcc=yes

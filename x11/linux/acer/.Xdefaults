@@ -1,4 +1,4 @@
-Xcursor.theme: Adwaita
+Xcursor.theme: Grounation
 
 xman*topBox:false
 xman*bothShown:true
@@ -189,3 +189,4 @@ UXTerm*color15:            #ffffff
 
 !set the window geometry
 UXTerm*scrollBar: false
+URxvt*pointerBlank: true
