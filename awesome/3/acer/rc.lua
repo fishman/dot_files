@@ -168,7 +168,7 @@ tags = {
     names  = { "term", "coding", "web", "mail", "im", "vms", "media", 8, 9 },
     layout = {
         awful.layout.suit.tile.bottom, layouts[1], awful.layout.suit.max, awful.layout.suit.max, layouts[1],
-        layouts[6], awful.layout.suit.floating, layouts[5], layouts[6]
+        awful.layout.suit.floating, awful.layout.suit.floating, awful.layout.suit.floating, awful.layout.suit.floating
     }
 }
 for s = 1, scount do
@@ -356,9 +356,12 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
 
     -- Volume control
-    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -q set Master toggle", false) end),
-    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -q set Master 2dB-", false) end),
-    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -q set Master 2dB+", false) end),
+    -- awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -q set Master toggle", false) end),
+    -- awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -q set Master 2dB-", false) end),
+    -- awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -q set Master 2dB+", false) end),
+    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("pvol.py -m", false) end),
+    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("pvol.py -c -2", false) end),
+    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("pvol.py -c 2", false) end),
     awful.key({ modkey,  }, "F12", function () awful.util.spawn("Equal") end),
 
     awful.key({ modkey,  }, "e", function () awful.util.spawn("urxvtc -e mc") end),
@@ -495,6 +498,15 @@ awful.rules.rules = {
     { rule = { class = "Remmina" },
       properties = { floating = true } },
     -- media
+    { rule = { class = "Deadbeef" },
+      properties = { floating = true },
+      properties = { tag = tags[1][7] } },
+    { rule = { class = "gtkpod" },
+      properties = { floating = true },
+      properties = { tag = tags[1][7] } },
+    { rule = { class = "gpodder" },
+      properties = { floating = true },
+      properties = { tag = tags[1][7] } },
     { rule = { class = "Smplayer" },
       properties = { floating = true },
       properties = { tag = tags[1][7] } },

@@ -39,7 +39,11 @@ set reverse_alias = yes
 set mbox_type = Maildir
 
 # Set various Mailboxes
-mailboxes `cat $HOME/.mutt/mailboxes`
+source ~/.mutt/mailboxes
+
+set folder=$HOME/Mail
+set spoolfile=+GMAIL/INBOX
+# mailboxes `cat $HOME/.mutt/mailboxes`
 # mailboxes `$HOME/.mutt/mailboxes.sh`
 
 # Postponed folder
@@ -204,8 +208,8 @@ set reverse_name
 set envelope_from=yes
 
 # Addressbook
-#set query_command = "abook --mutt-query '%s'"
-set query_command="lbdbq %s"  # little brother talks to address book
+set query_command = "abook --mutt-query '%s'"
+# set query_command="lbdbq %s"  # little brother talks to address book
 
 # Forward mail attachments
 # set mime_forward
@@ -288,7 +292,7 @@ source ~/.mutt/hooks
 ## Macro and bindings ##
 #
 source ~/.mutt/bindings
-source ~/.mutt/macros
+source ~/.mutt/macros_static
 
 ## Sidebar ##
 #
@@ -296,7 +300,8 @@ source ~/.mutt/macros
 
 ## Colors ##
 #
-source ~/.mutt/colors-blackback
+# source ~/.mutt/colors-blackback
+source ~/.mutt/colors-zenburn
 # source ~/.mutt/colors-256
 #source ~/.mutt/colors
 #source ~/.mutt/colors-whiteback
