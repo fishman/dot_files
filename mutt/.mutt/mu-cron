@@ -1,0 +1,2 @@
+31 */2 * * * /usr/bin/mu index --quiet --maildir ~/Mail
+

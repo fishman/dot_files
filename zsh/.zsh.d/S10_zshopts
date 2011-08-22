@@ -156,7 +156,7 @@ setopt transient_rprompt    # better for cut/paste
 #setopt typeset_silent       #
 #setopt unset                #
 #setopt verbose              #
-setopt vi                   # use bindkeys
+# setopt vi                   # use bindkeys
 setopt no_xtrace            # do not debug by default
 setopt zle                  # use zsh le
 

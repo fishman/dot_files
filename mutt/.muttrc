@@ -23,8 +23,8 @@ source ~/.mutt/crypto
 
 ## Alias ##
 #
-set alias_file = ~/.mutt/aliases
-source ~/.mutt/aliases
+# set alias_file = ~/.mutt/aliases
+# source ~/.mutt/aliases
 
 # Show alias name, not email address
 set reverse_alias = yes
@@ -209,6 +209,7 @@ set envelope_from=yes
 
 # Addressbook
 set query_command = "abook --mutt-query '%s'"
+macro index,pager A "<pipe-message>abook --add-email-quiet<return>" "add the sender address to abook"
 # set query_command="lbdbq %s"  # little brother talks to address book
 
 # Forward mail attachments

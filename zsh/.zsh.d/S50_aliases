@@ -24,6 +24,7 @@ else
   alias -s html=w3m
   alias -s org=w3m
   alias -s avi=mplayer
+  alias -s pdf=zathura
 fi
 alias -s rb=vim
 
