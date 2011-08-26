@@ -1,0 +1,11 @@
+account-hook . 'unset my_account_name; unset imap_user; unset imap_pass; unset tunnel; unset from'
+folder-hook GMAIL \
+  'unset imap_user ;\
+   set from=foo@gmail.com ;\
+   set my_account_name=GMAIL ;\
+   source ~/.mutt/macros ;\
+   set postponed=+GMAIL/[Gmail].Drafts ;\
+   set record=+GMAIL/sent ;\
+   set spoolfile=+GMAIL/INBOX'
+
+# vim: ft=muttrc
