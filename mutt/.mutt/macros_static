@@ -3,6 +3,9 @@ macro generic "g1" "<c+/GMAIL/INBOX<return>"
 macro generic "g2" "<c+/TUHH/INBOX<return>"
 macro generic "g3" "<c+/GMX/INBOX<return>"
 macro generic "g4" "<c+/VSERVER2/INBOX<return>"
+
+ macro attach W <save-entry><kill-line>~/Downloads/Attachments/
+ macro attach E <save-entry><kill-line>~/Downloads/Attachments/<enter>
 # Mu
 # mutt macros for mu
 macro index <F8> "<shell-escape>mu find --clearlinks --format=links --linksdir=~/Mail/search " \

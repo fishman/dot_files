@@ -72,6 +72,8 @@ set mail_check = 30
 # search for new messages in folders
 set check_new
 
+set beep_new
+
 # Wait 15 second of idle time before updating status
 set timeout = 15
 
@@ -297,7 +299,7 @@ source ~/.mutt/macros_static
 
 ## Sidebar ##
 #
-# source ~/.mutt/sidebar
+source ~/.mutt/sidebar
 
 ## Colors ##
 #
