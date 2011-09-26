@@ -4,10 +4,10 @@ bindkey -v "^[[3~" delete-char
 bindkey -v "^[[5~" backward-word
 bindkey -v "^[[6~" forward-word
 
-#  bindkey -v "^[[A" history-beginning-search-backward
-#  bindkey -v "^[[B" history-beginning-search-forward
-bindkey "^[[A"  up-line-or-search       # cursor up
-bindkey "^[[B"  down-line-or-search     # <ESC>-
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
+# bindkey "^[[A"  up-line-or-search       # cursor up
+# bindkey "^[[B"  down-line-or-search     # <ESC>-
 
 bindkey -v "^A" beginning-of-line
 bindkey -v "^E" end-of-line

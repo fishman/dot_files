@@ -80,6 +80,7 @@ alias grep='egrep'
 #alias wc='sloccount'
 alias mutt='TERM=xterm-256color mutt'
 alias irssi='screen -S irssi -d -R irssi'
+alias tmux='tmux attach'
 # color for stuff
 alias flux='xflux -l 53.5559 -q 9.98766'
 

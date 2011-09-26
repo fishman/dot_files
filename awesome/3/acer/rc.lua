@@ -21,6 +21,7 @@ beautiful.init(home .. "/.config/awesome/themes/zenburn.lua")
 terminal = "urxvtc"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
+mailview = terminal .. " -e mutt -R"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -167,7 +168,7 @@ vicious.register(fs.r, vicious.widgets.fs, "${/ used_p}",     599)
 tags = {
     names  = { "term", "coding", "web", "mail", "im", "vms", "media", 8, 9 },
     layout = {
-        awful.layout.suit.tile.bottom, layouts[1], awful.layout.suit.max, awful.layout.suit.max, layouts[1],
+        awful.layout.suit.tile.bottom, layouts[1], awful.layout.suit.floating, awful.layout.suit.max, layouts[1],
         awful.layout.suit.floating, awful.layout.suit.floating, awful.layout.suit.floating, awful.layout.suit.floating
     }
 }
@@ -362,9 +363,12 @@ globalkeys = awful.util.table.join(
     awful.key({ }, "XF86AudioMute", function () awful.util.spawn("pvol.py -m", false) end),
     awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("pvol.py -c -2", false) end),
     awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("pvol.py -c 2", false) end),
+    awful.key({ }, "XF86Sleep", function () awful.util.spawn("sudo /usr/sbin/pm-hibernate") end),
+    awful.key({ modkey,  }, "F10", function () awful.util.spawn("cmus-remote --pause", false) end),
     awful.key({ modkey,  }, "F12", function () awful.util.spawn("Equal") end),
 
     awful.key({ modkey,  }, "e", function () awful.util.spawn("urxvtc -e mc") end),
+    -- awful.key({ modkey,           }, "m", function() awful.util.spawn(mailview) end),
     -- awful.key({ }, "XF86AudioLowerVolume",function()
     --         vicious.contrib.pulse.add(-5,"alsa_output.pci-0000_00_1b.0.analog-stereo")
     --         osd.notify("Vol:",pulsevolume("alsa_output.pci-0000_00_1b.0.analog-stereo"))
@@ -377,29 +381,32 @@ globalkeys = awful.util.table.join(
 
     -- Prompt
     -- awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
-    -- Run or raise applications with dmenu
-    awful.key({ modkey }, "r",
-    function ()
-        local f_reader = io.popen( "lsx /usr/bin ~/bin /opt/bin | dmenu -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#955'")
-        local command = assert(f_reader:read('*a'))
-        f_reader:close()
-        if command == "" then return end
-
-        -- Check throught the clients if the class match the command
-        local lower_command=string.lower(command)
-        for k, c in pairs(client.get()) do
-            local class=string.lower(c.class)
-            if string.match(class, lower_command) then
-                for i, v in ipairs(c:tags()) do
-                    awful.tag.viewonly(v)
-                    c:raise()
-                    c.minimized = false
-                    return
-                end
-            end
-        end
-        awful.util.spawn(command)
+    awful.key({modkey }, "r", function()
+            awful.util.spawn_with_shell( "exe=`lsx /usr/bin ~/bin /opt/bin | dmenu -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#955'` && exec $exe")
     end),
+    -- Run or raise applications with dmenu
+    -- awful.key({ modkey }, "r",
+    -- function ()
+    --     local f_reader = io.popen( "lsx /usr/bin ~/bin /opt/bin | dmenu -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#955'")
+    --     local command = assert(f_reader:read('*a'))
+    --     f_reader:close()
+    --     if command == "" then return end
+
+    --     -- Check throught the clients if the class match the command
+    --     local lower_command=string.lower(command)
+    --     for k, c in pairs(client.get()) do
+    --         local class=string.lower(c.class)
+    --         if string.match(class, lower_command) then
+    --             for i, v in ipairs(c:tags()) do
+    --                 awful.tag.viewonly(v)
+    --                 c:raise()
+    --                 c.minimized = false
+    --                 return
+    --             end
+    --         end
+    --     end
+    --     awful.util.spawn(command)
+    -- end),
 
     awful.key({ modkey }, "x",
               function ()
@@ -490,29 +497,16 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons } },
     { rule = { class = "Pcmanfm" },
-      properties = { floating = true } },
-    { rule = { class = "Zathura" },
-      properties = { floating = true } },
-    { rule = { class = "Epdfview" },
-      properties = { floating = true } },
-    { rule = { class = "Remmina" },
+      properties = { floating = true },
+      callback = awful.placement.centered },
+    { rule_any = { class = { "Xmessage",  "Gxmessage" } },
+      properties = { floating = true },
+      callback = awful.placement.centered },
+    { rule_any = { class = { "Zathura", "Epdfview", "Remmina"} },
       properties = { floating = true } },
     -- media
-    { rule = { class = "Deadbeef" },
-      properties = { floating = true },
-      properties = { tag = tags[1][7] } },
-    { rule = { class = "gtkpod" },
-      properties = { floating = true },
-      properties = { tag = tags[1][7] } },
-    { rule = { class = "gpodder" },
-      properties = { floating = true },
-      properties = { tag = tags[1][7] } },
-    { rule = { class = "Smplayer" },
-      properties = { floating = true },
-      properties = { tag = tags[1][7] } },
-    { rule = { class = "MPlayer" },
-      properties = { floating = true },
-      properties = { tag = tags[1][7] } },
+    { rule_any = { class = { "Smplayer", "MPlayer", "Deadbeef", "gtkpod", "gpodder" } },
+      properties = { floating = true, tag = tags[1][7], switchtotag = true } },
     { rule = { class = "Dxtime" },
       properties = { floating = true } },
     { rule = { class = "Zim" },
@@ -521,32 +515,28 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "gimp" },
       properties = { floating = true } },
+    { rule_any = { class = { "Firefox", "Iron", "Opera", "luakit", "Uzbl-core" } },
+      properties = { tag = tags[1][3], switchtotag = true } },
+    -- { rule = { class = "Firefox" },
+      -- except = { instance = "Navigator" },
+      -- properties = { floating = true } },
     { rule = { class = "Firefox", instance = "Navigator" },
-      properties = { tag = tags[1][3] } },
-    { rule = { class = "Firefox", instance = "Download" },
-      properties = { floating = true } },
-    { rule = { class = "luakit" },
-      properties = { tag = tags[1][3] } },
-    { rule = { class = "Uzbl-core" },
-      properties = { tag = tags[1][3] } },
-    { rule = { class = "Opera" },
-      properties = { tag = tags[1][3] } },
+      properties = { maximize_vertical = true, maximized_horizontal = true } },
     { rule = { class = "Iron" },
-      properties = { tag = tags[1][3] } },
+      properties = { maximize_vertical = true, maximized_horizontal = true } },
       -- thunderbird
-    { rule = { class = "Lanikai" },
-      properties = { tag = tags[1][4] } },
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][4] } },
     { rule = { class = "Calibre" },
       properties = { tag = tags[1][4] } },
-    { rule = { class = "Skype" },
-      properties = { tag = tags[1][5] } },
-    { rule = { class = "Pidgin" },
-      properties = { tag = tags[1][5] } },
-    { rule = { class = "Vmware" },
-      properties = { tag = tags[1][6] } },
-    { rule = { class = "VirtualBox" },
+    { rule_any = { class = { "Skype", "Pidgin" } },
+      properties = { tag = tags[1][5], switchtotag = true } },
+    { rule = { class = "Pidgin", role = "buddy_list" },
+      properties = { floating = true } },
+    { rule = { class = "Skype"},
+      except = { name = "Chat" },
+      properties = { floating = true } },
+    { rule_any = { class = { "Vmware", "VirtualBox" } },
       properties = { tag = tags[1][6] } },
     { rule = { class = "[~] % qemu-system-x86_64" },
       properties = { tag = tags[1][6] } },
@@ -555,6 +545,12 @@ awful.rules.rules = {
       properties = { tag = tags[1][8] } },
     { rule = { class = "libreoffice-impress" },
       properties = { tag = tags[1][8] } },
+    -- this is flash
+    { rule = { class = "Exe" },
+      properties = { tag = tags[1][8] },
+      callback = balala },
+    -- { rule = { class = "Exe" },
+    --   properties = { maximize_vertical = false, tag = tags[1][5], fullscreen = true } },
 }
 -- }}}
 

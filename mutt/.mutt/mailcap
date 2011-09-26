@@ -1,6 +1,10 @@
 #text/html; view_attachment.sh %s html
+text/html; xdg-open %s|sleep 2;description=HTML Text; nametemplate=%s.html;
 text/html; w3m -T text/html -dump %s; copiousoutput
-application/pdf; ~/.mutt/view_attachment.sh %s -
+# text/html;                     w3m %s; nametemplate=%s.html;
+#text/html; xdg-open '%s'; description=HTML Text; nametemplate=%s.html; needsterminal
+# text/html; ~/.mutt/view_attachment.sh %s -
+application/pdf; zathura %s
 application/octet-stream; ~/.mutt/view_attachment.sh %s -
 mime_lookup application/octet-stream
 video/*; ~/.mutt/view_attachment.sh %s -
