@@ -168,7 +168,7 @@ vicious.register(fs.r, vicious.widgets.fs, "${/ used_p}",     599)
 tags = {
     names  = { "term", "coding", "web", "mail", "im", "vms", "media", 8, 9 },
     layout = {
-        awful.layout.suit.tile.bottom, layouts[1], awful.layout.suit.floating, awful.layout.suit.max, layouts[1],
+        awful.layout.suit.tile.bottom, layouts[1], awful.layout.suit.max, awful.layout.suit.floating, awful.layout.suit.floating,
         awful.layout.suit.floating, awful.layout.suit.floating, awful.layout.suit.floating, awful.layout.suit.floating
     }
 }
@@ -368,6 +368,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,  }, "F12", function () awful.util.spawn("Equal") end),
 
     awful.key({ modkey,  }, "e", function () awful.util.spawn("urxvtc -e mc") end),
+    awful.key({ modkey,  }, "Print", function () awful.util.spawn_with_shell("sleep 0.1; scrot -s") end),
     -- awful.key({ modkey,           }, "m", function() awful.util.spawn(mailview) end),
     -- awful.key({ }, "XF86AudioLowerVolume",function()
     --         vicious.contrib.pulse.add(-5,"alsa_output.pci-0000_00_1b.0.analog-stereo")
