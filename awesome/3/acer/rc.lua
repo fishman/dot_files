@@ -523,15 +523,20 @@ awful.rules.rules = {
       properties = { floating = true } },
     -- media
     { rule_any = { class = { "Smplayer", "MPlayer", "Deadbeef", "gtkpod", "gpodder" } },
-      properties = { switchtotag = true, floating = true },
-      callback = function(c) awful.client.movetotag(tags[mouse.screen][7], c) end},
+      properties = { floating = true },
+      callback = function(c)
+              awful.client.movetotag(tags[mouse.screen][7], c)
+              awful.tag.viewonly(tags[mouse.screen][7])
+      end},
     { rule_any = { class = { "Dxtime", "Zim", "pinentry", "gimp", "Synapse", "TogglDesktop" } },
       properties = { floating = true } },
     { rule_any = { class = { "Gvim", "Anjuta", "Emacs" } },
       properties = { tag = tags[1][2], switchtotag = true } },
     { rule_any = { class = { "Firefox", "Iron", "Opera", "luakit", "Uzbl-core" } },
-      properties = { switchtotag = true },
-      callback = function(c) awful.client.movetotag(tags[mouse.screen][3], c) end},
+      callback = function(c)
+              awful.client.movetotag(tags[mouse.screen][3], c)
+              awful.tag.viewonly(tags[mouse.screen][3])
+      end},
     { rule = { class = "Firefox" },
       except = { instance = "Navigator" },
       properties = { floating = true } },
