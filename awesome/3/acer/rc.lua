@@ -353,7 +353,8 @@ globalkeys = awful.util.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
+    -- awful.key({ modkey, "Shift"   }, "q", awesome.quit),
+    awful.key({ modkey, "Shift"   }, "q", function () awful.util.spawn('xfce4-session-logout') end),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
@@ -370,14 +371,19 @@ globalkeys = awful.util.table.join(
     -- awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -q set Master toggle", false) end),
     -- awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -q set Master 2dB-", false) end),
     -- awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -q set Master 2dB+", false) end),
-    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("pvol.py -m", false) end),
-    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("pvol.py -c -2", false) end),
-    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("pvol.py -c 2", false) end),
-    awful.key({ }, "XF86Sleep", function () awful.util.spawn("sudo /usr/sbin/pm-hibernate") end),
+    -- awful.key({ }, "XF86AudioMute", function () awful.util.spawn("pvol.py -m", false) end),
+    -- awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("pvol.py -c -2", false) end),
+    -- awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("pvol.py -c 2", false) end),
+    -- awful.key({ }, "XF86Sleep", function () awful.util.spawn("sudo /usr/sbin/s2both") end),
+    awful.key({ }, "XF86Sleep", function () awful.util.spawn("dbus-send --system --print-reply --dest=\"org.freedesktop.UPower\" /org/freedesktop/UPower org.freedesktop.UPower.Hibernate") end),
     awful.key({ modkey,  }, "F10", function () awful.util.spawn("cmus-remote --pause", false) end),
     awful.key({ modkey,  }, "F12", function () awful.util.spawn("Equal") end),
+    awful.key({ modkey,  }, "F9", function () scratch.drop("urxvtc", "bottom") end),
 
-    awful.key({ modkey,  }, "e", function () awful.util.spawn("urxvtc -e mc") end),
+    -- awful.key({ modkey,  }, "e", function () awful.util.spawn("urxvtc -e mc") end),
+    awful.key({modkey}, "e", function()
+	    revelation({class="URxvt"})
+    end),
     awful.key({ modkey,  }, "Print", function () awful.util.spawn_with_shell("sleep 0.1; scrot -s") end),
     -- awful.key({ modkey,           }, "m", function() awful.util.spawn(mailview) end),
     -- awful.key({ }, "XF86AudioLowerVolume",function()
@@ -507,41 +513,42 @@ awful.rules.rules = {
                      focus = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
-    { rule = { class = "Pcmanfm" },
+    { rule_any = { class = { "Pcmanfm", "Nautilus" } },
       properties = { floating = true },
       callback = awful.placement.centered },
-    { rule_any = { class = { "Xmessage",  "Gxmessage" } },
+    { rule_any = { class = { "Xmessage",  "Gxmessage", "Hamster-time-tracker" } },
       properties = { floating = true },
       callback = awful.placement.centered },
-    { rule_any = { class = { "Zathura", "Epdfview", "Remmina"} },
+    { rule_any = { class = { "Zathura", "Epdfview", "Remmina", "Bottlechooser.rb"} },
       properties = { floating = true } },
     -- media
     { rule_any = { class = { "Smplayer", "MPlayer", "Deadbeef", "gtkpod", "gpodder" } },
-      properties = { floating = true, tag = tags[1][7], switchtotag = true } },
-    { rule = { class = "Dxtime" },
+      properties = { switchtotag = true, floating = true },
+      callback = function(c) awful.client.movetotag(tags[mouse.screen][7], c) end},
+    { rule_any = { class = { "Dxtime", "Zim", "pinentry", "gimp", "Synapse", "TogglDesktop" } },
       properties = { floating = true } },
-    { rule = { class = "Zim" },
-      properties = { floating = true } },
-    { rule = { class = "pinentry" },
-      properties = { floating = true } },
-    { rule = { class = "gimp" },
-      properties = { floating = true } },
+    { rule_any = { class = { "Gvim", "Anjuta", "Emacs" } },
+      properties = { tag = tags[1][2], switchtotag = true } },
     { rule_any = { class = { "Firefox", "Iron", "Opera", "luakit", "Uzbl-core" } },
-      properties = { tag = tags[1][3], switchtotag = true } },
-    -- { rule = { class = "Firefox" },
-      -- except = { instance = "Navigator" },
-      -- properties = { floating = true } },
-    { rule = { class = "Firefox", instance = "Navigator" },
-      properties = { maximize_vertical = true, maximized_horizontal = true } },
-    { rule = { class = "Iron" },
-      properties = { maximize_vertical = true, maximized_horizontal = true } },
+      properties = { switchtotag = true },
+      callback = function(c) awful.client.movetotag(tags[mouse.screen][3], c) end},
+    { rule = { class = "Firefox" },
+      except = { instance = "Navigator" },
+      properties = { floating = true } },
+    -- { rule = { class = "Firefox", instance = "Navigator" },
+    --   properties = { maximize_vertical = true, maximized_horizontal = true } },
+    -- { rule = { class = "Iron" },
+    --   properties = { maximize_vertical = true, maximized_horizontal = true } },
       -- thunderbird
+    -- { rule = { class = "URxvt" },
+    --   properties = { tag = tags[1][1], switchtotag = true } },
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][4] } },
     { rule = { class = "Calibre" },
       properties = { tag = tags[1][4] } },
     { rule_any = { class = { "Skype", "Pidgin" } },
-      properties = { tag = tags[1][5], switchtotag = true } },
+      properties = { switchtotag = true },
+      callback = function(c) awful.client.movetotag(tags[mouse.screen][5], c) end},
     { rule = { class = "Pidgin", role = "buddy_list" },
       properties = { floating = true } },
     { rule = { class = "Skype"},
@@ -549,16 +556,15 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule_any = { class = { "Vmware", "VirtualBox" } },
       properties = { tag = tags[1][6] } },
-    { rule = { class = "[~] % qemu-system-x86_64" },
+    -- { rule = { class = "[~] % qemu-system-x86_64" },
+    { rule = { class = "qemu-system-x86_64" },
       properties = { tag = tags[1][6] } },
       -- office
-    { rule = { class = "libreoffice-startcenter" },
-      properties = { tag = tags[1][8] } },
-    { rule = { class = "libreoffice-impress" },
+    { rule_any = { class = { "libreoffice-startcenter",  "libreoffice-impress" }, name = { "PowerPoint % [~]" }  },
       properties = { tag = tags[1][8] } },
     -- this is flash
     { rule = { class = "Exe" },
-      properties = { tag = tags[1][8] },
+      properties = { tag = tags[1][3] },
       callback = balala },
     -- { rule = { class = "Exe" },
     --   properties = { maximize_vertical = false, tag = tags[1][5], fullscreen = true } },
@@ -572,12 +578,12 @@ client.add_signal("manage", function (c, startup)
     -- awful.titlebar.add(c, { modkey = modkey })
 
     -- Enable sloppy focus
-    c:add_signal("mouse::enter", function(c)
-        if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-            and awful.client.focus.filter(c) then
-            client.focus = c
-        end
-    end)
+    -- c:add_signal("mouse::enter", function(c)
+    --     if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+    --         and awful.client.focus.filter(c) then
+    --         client.focus = c
+    --     end
+    -- end)
 
     if not startup then
         -- Set the windows at the slave,
