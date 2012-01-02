@@ -8,8 +8,11 @@ require("beautiful")
 require("naughty")
 
 require("vicious")
+require("vicious.contrib")
 require("scratch")
 require("xdg-menu")
+require("revelation")
+-- require("blingbling")
 
 home = os.getenv("HOME")
 -- {{{ Variable definitions
@@ -68,23 +71,30 @@ volbar:set_background_color(beautiful.fg_off_widget)
 volbar:set_gradient_colors({ beautiful.fg_widget,
    beautiful.fg_center_widget, beautiful.fg_end_widget
 }) -- Enable caching
-vicious.cache(vicious.widgets.volume)
--- Register widgets
-vicious.register(volbar,    vicious.widgets.volume,  "$1",  2, "Master")
-vicious.register(volwidget, vicious.widgets.volume, " $1%", 2, "Master")
--- Register buttons
+-- vicious.cache(vicious.widgets.volume)
+-- -- Register widgets
+-- vicious.register(volbar,    vicious.widgets.volume,  "$1",  2, "Master")
+-- vicious.register(volwidget, vicious.widgets.volume, " $1%", 2, "Master")
+vicious.register(volbar, vicious.contrib.pulse, "$1", 2, "alsa_output.pci-0000_00_1b.0.analog-stereo")
+---volwidget:buttons(awful.util.table.join(
 volbar.widget:buttons(awful.util.table.join(
-   awful.button({ }, 1, function () awful.util.spawn("amixer -q set Master toggle", false) end),
-   awful.button({ }, 3, function () awful.util.spawn("urxvtc -e alsamixer", false) end),
-   awful.button({ }, 4, function () awful.util.spawn("amixer -q set Master 2dB+", false) end),
-   awful.button({ }, 5, function () awful.util.spawn("amixer -q set Master 2dB-", false) end)
-)) -- Register assigned buttons
-volwidget:buttons(awful.util.table.join(
-   awful.button({ }, 1, function () awful.util.spawn("amixer -q set Master toggle", false) end),
-   awful.button({ }, 3, function () awful.util.spawn("urxvtc -e alsamixer", false) end),
-   awful.button({ }, 4, function () awful.util.spawn("amixer -q set Master 2dB+", false) end),
-   awful.button({ }, 5, function () awful.util.spawn("amixer -q set Master 2dB-", false) end)
-)) -- Register assigned buttons
+   awful.button({ }, 1, function () awful.util.spawn("pavucontrol") end),
+   awful.button({ }, 4, function () vicious.contrib.pulse.add(5,"alsa_output.pci-0000_00_1b.0.analog-stereo") end),
+   awful.button({ }, 5, function () vicious.contrib.pulse.add(-5,"alsa_output.pci-0000_00_1b.0.analog-stereo") end)
+))
+-- -- Register buttons
+-- volbar.widget:buttons(awful.util.table.join(
+--    awful.button({ }, 1, function () awful.util.spawn("amixer -q set Master toggle", false) end),
+--    awful.button({ }, 3, function () awful.util.spawn("urxvtc -e alsamixer", false) end),
+--    awful.button({ }, 4, function () awful.util.spawn("amixer -q set Master 2dB+", false) end),
+--    awful.button({ }, 5, function () awful.util.spawn("amixer -q set Master 2dB-", false) end)
+-- )) -- Register assigned buttons
+-- volwidget:buttons(awful.util.table.join(
+--    awful.button({ }, 1, function () awful.util.spawn("amixer -q set Master toggle", false) end),
+--    awful.button({ }, 3, function () awful.util.spawn("urxvtc -e alsamixer", false) end),
+--    awful.button({ }, 4, function () awful.util.spawn("amixer -q set Master 2dB+", false) end),
+--    awful.button({ }, 5, function () awful.util.spawn("amixer -q set Master 2dB-", false) end)
+-- )) -- Register assigned buttons
 
 -- {{{ CPU usage and temperature
 cpuicon = widget({ type = "imagebox" })
