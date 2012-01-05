@@ -1,5 +1,5 @@
 #text/html; view_attachment.sh %s html
-text/html; xdg-open %s|sleep 2;description=HTML Text; nametemplate=%s.html;
+text/html; xdg-open %s|sleep 4;description=HTML Text; nametemplate=%s.html;
 text/html; w3m -T text/html -dump %s; copiousoutput
 # text/html;                     w3m %s; nametemplate=%s.html;
 #text/html; xdg-open '%s'; description=HTML Text; nametemplate=%s.html; needsterminal

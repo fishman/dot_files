@@ -1,10 +1,10 @@
 # have to be sourced on folder hooks
 macro index,pager ,a "<save-message>=$my_account_name/archive<return>"
 macro index,pager ,p "<save-message>=$my_account_name/pending<return>"
-macro index,pager gi "<change-folder>=$my_account_name/INBOX<enter>" "Go to inbox"
+macro index,pager gi "<change-folder>=$my_account_name/inbox<enter>" "Go to inbox"
 macro index,pager ga "<change-folder>=$my_account_name/archive<enter>" "Go to archive"
 macro index,pager gp "<change-folder>=$my_account_name/pending<enter>" "Go to pending"
-macro index,pager gs "<change-folder>=$my_account_name/sent<enter>" "Go to Sent Mail"
-macro index,pager gd "<change-folder>=$my_account_name/drafts<enter>" "Go to drafts"
+macro index,pager gs "<change-folder>=$my_account_name/bak.sent<enter>" "Go to Sent Mail"
+macro index,pager gd "<change-folder>=$my_account_name/bak.drafts<enter>" "Go to drafts"
 
 # vim: syntax=muttrc

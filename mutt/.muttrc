@@ -42,7 +42,7 @@ set mbox_type = Maildir
 source ~/.mutt/mailboxes
 
 set folder=$HOME/Mail
-set spoolfile=+GMAIL/INBOX
+set spoolfile=+gmail/inbox
 # mailboxes `cat $HOME/.mutt/mailboxes`
 # mailboxes `$HOME/.mutt/mailboxes.sh`
 
@@ -316,7 +316,12 @@ source ~/.mutt/colors-zenburn
 
 # set sendmail="/opt/local/gentoo/usr/share/msmtp/msmtpq/msmtpQ" 
 # queue mails
-set sendmail="/usr/bin/msmtpQ" 
+set sendmail="/usr/bin/msmtpq" 
 set sendmail_wait = -1
 
 set askcc=yes
+
+# don't wait for key press on successfully running subprocess
+set wait_key=no
+
+set quit=ask-yes
