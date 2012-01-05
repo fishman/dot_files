@@ -537,6 +537,11 @@ awful.rules.rules = {
               awful.client.movetotag(tags[mouse.screen][3], c)
               awful.tag.viewonly(tags[mouse.screen][3])
       end},
+    { rule = { name = "plugin-container" },
+      properties = { floating = true },
+      callback = function(c)
+            c.fullscreen = true
+      end},
     { rule = { class = "Firefox" },
       except = { instance = "Navigator" },
       properties = { floating = true } },
@@ -569,8 +574,7 @@ awful.rules.rules = {
       properties = { tag = tags[1][8] } },
     -- this is flash
     { rule = { class = "Exe" },
-      properties = { tag = tags[1][3] },
-      callback = balala },
+      properties = { tag = tags[1][3] } },
     -- { rule = { class = "Exe" },
     --   properties = { maximize_vertical = false, tag = tags[1][5], fullscreen = true } },
 }
