@@ -74,7 +74,6 @@ fi
 alias myip="ifconfig | grep 192.168 || ifconfig | grep 10.32"
 alias psg="ps ax | grep "
 alias wget="wget -c"
-alias sr="screen -r"
 alias unrar='nice -n 19 unrar'
 alias grep='egrep'
 #alias wc='sloccount'
