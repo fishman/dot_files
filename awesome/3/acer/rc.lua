@@ -379,6 +379,9 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,  }, "F10", function () awful.util.spawn("cmus-remote --pause", false) end),
     awful.key({ modkey,  }, "F12", function () awful.util.spawn("Equal") end),
     awful.key({ modkey,  }, "F9", function () scratch.drop("urxvtc", "bottom") end),
+    awful.key({ }, "XF86WLAN", function () awful.util.spawn(home .. "/bin/grfkill") end),
+    awful.key({ modkey }, "F3", function () awful.util.spawn(home .. "/bin/grfkill") end),
+    awful.key({ modkey }, "Delete", function () awful.util.spawn("xkill") end),
 
     -- awful.key({ modkey,  }, "e", function () awful.util.spawn("urxvtc -e mc") end),
     awful.key({modkey}, "e", function()
@@ -398,9 +401,10 @@ globalkeys = awful.util.table.join(
 
     -- Prompt
     -- awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
-    awful.key({modkey }, "r", function()
-            awful.util.spawn_with_shell( "exe=`lsx /usr/bin ~/bin /opt/bin | dmenu -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#955'` && exec $exe")
-    end),
+    awful.key({modkey }, "r", function() awful.util.spawn( "dmenu_run") end),
+    -- awful.key({modkey }, "r", function()
+            -- awful.util.spawn_with_shell( "exe=`stest -x /usr/bin/* ~/bin/* /opt/bin/* | sort -df | dmenu -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#955'` && exec $exe")
+    -- end),
     -- Run or raise applications with dmenu
     -- awful.key({ modkey }, "r",
     -- function ()
@@ -519,7 +523,7 @@ awful.rules.rules = {
     { rule_any = { class = { "Xmessage",  "Gxmessage", "Hamster-time-tracker" } },
       properties = { floating = true },
       callback = awful.placement.centered },
-    { rule_any = { class = { "Zathura", "Epdfview", "Remmina", "Bottlechooser.rb"} },
+    { rule_any = { class = { "Zathura", "Epdfview", "Remmina", "Bottlechooser.rb", "Evince", "GV"} },
       properties = { floating = true } },
     -- media
     { rule_any = { class = { "Smplayer", "MPlayer", "Deadbeef", "gtkpod", "gpodder" } },
