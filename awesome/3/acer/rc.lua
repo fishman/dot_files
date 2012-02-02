@@ -32,6 +32,11 @@ mailview = terminal .. " -e mutt -R"
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
+
+function run_once(prg)
+    awful.util.spawn_with_shell("pgrep -u $USER -x " .. prg .. " || (" .. prg .. ")")
+end
+
 local scount = screen.count()
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -401,7 +406,10 @@ globalkeys = awful.util.table.join(
 
     -- Prompt
     -- awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
-    awful.key({modkey }, "r", function() awful.util.spawn( "dmenu_run") end),
+    awful.key({modkey }, "s", function()
+	    awful.util.spawn_with_shell( "exe=`sr -elvi | awk '{print $1}' | perl -nle 'print if $. != 1' | dmenu -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#955'` && surfraw `echo $exe | cut -d ' ' -f 1,2,3,4,5`")
+    end),
+    awful.key({modkey }, "r", function() awful.util.spawn( "dmenu_run -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#955'") end),
     -- awful.key({modkey }, "r", function()
             -- awful.util.spawn_with_shell( "exe=`stest -x /usr/bin/* ~/bin/* /opt/bin/* | sort -df | dmenu -nb '".. beautiful.bg_normal .."' -nf '".. beautiful.fg_normal .."' -sb '#955'` && exec $exe")
     -- end),
@@ -517,7 +525,7 @@ awful.rules.rules = {
                      focus = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
-    { rule_any = { class = { "Pcmanfm", "Nautilus" } },
+    { rule_any = { class = { "Pcmanfm", "Nautilus", "Thunar" } },
       properties = { floating = true },
       callback = awful.placement.centered },
     { rule_any = { class = { "Xmessage",  "Gxmessage", "Hamster-time-tracker" } },
@@ -541,7 +549,8 @@ awful.rules.rules = {
               awful.client.movetotag(tags[mouse.screen][3], c)
               awful.tag.viewonly(tags[mouse.screen][3])
       end},
-    { rule = { name = "plugin-container" },
+    -- this is flash
+    { rule_any = { name = { "plugin-container" }, class = { "Exe" } },
       properties = { floating = true },
       callback = function(c)
             c.fullscreen = true
@@ -576,11 +585,12 @@ awful.rules.rules = {
       -- office
     { rule_any = { class = { "libreoffice-startcenter",  "libreoffice-impress" }, name = { "PowerPoint % [~]" }  },
       properties = { tag = tags[1][8] } },
-    -- this is flash
-    { rule = { class = "Exe" },
-      properties = { tag = tags[1][3] } },
-    -- { rule = { class = "Exe" },
-    --   properties = { maximize_vertical = false, tag = tags[1][5], fullscreen = true } },
+      -- dia
+    { rule = { class = "Dia", role = "diagram_window" },
+      properties = { tag = tags[1][9], fullscreen = true } },
+    { rule = { class = "Dia", role = "toolbox_window" },
+      properties = { tag = tags[1][9], fullscreen = true },
+      callback = function(c) c.ontop = true end},
 }
 -- }}}
 
