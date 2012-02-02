@@ -89,7 +89,7 @@ unset mark_old
 
 # Sort method
 set sort = threads
-set sort_aux = date
+set sort_aux=reverse-last-date-received
 
 # Don't ask to delete
 set delete = yes
