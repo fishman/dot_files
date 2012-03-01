@@ -540,7 +540,7 @@ awful.rules.rules = {
               awful.client.movetotag(tags[mouse.screen][7], c)
               awful.tag.viewonly(tags[mouse.screen][7])
       end},
-    { rule_any = { class = { "Dxtime", "Zim", "pinentry", "gimp", "Synapse", "TogglDesktop" } },
+    { rule_any = { class = { "Dxtime", "Zim", "pinentry", "gimp", "Synapse", "TogglDesktop", "GenieSQL" } },
       properties = { floating = true } },
     { rule_any = { class = { "Gvim", "Anjuta", "Emacs" } },
       properties = { tag = tags[1][2], switchtotag = true } },
