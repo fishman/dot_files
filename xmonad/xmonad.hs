@@ -201,8 +201,8 @@ colorFocusedBorder  = "#9d871f"
 
 
 barFont  = "terminus"
-barXFont = "inconsolata:size=12"
-xftFont = "xft: inconsolata-14"
+barXFont = "aquafont:size=12"
+xftFont = "xft: aquafont-12"
 {- barXFont = "aquafont:size=12" -}
 {- xftFont = "xft: aquafont-14" -}
 --}}}
@@ -235,6 +235,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask,      xK_c        ), kill)
     , ((modMask .|. shiftMask,      xK_l        ), spawn "slock")
     , ((modMask,                    xK_F8       ), spawn "/home/hatori/bin/window-go.sh")
+    , ((modMask,                    xK_f        ), sendMessage $ Toggle FULL)
     -- Programs
     , ((0,                          xK_Print    ), spawn "scrot -e 'mv $f ~/screenshots/'")
     , ((modMask,		            xK_o        ), runOrRaise "chromium-browser" (className =? "Chromium" ))
@@ -266,6 +267,8 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask,                    xK_l        ), sendMessage Expand)                          -- %! Expand a master area
     , ((modMask,                    xK_comma    ), sendMessage (IncMasterN 1))
     , ((modMask,                    xK_period   ), sendMessage (IncMasterN (-1)))
+    -- Focus window with urgency hook
+    , ((modMask,                     xK_u       ), focusUrgent )
 
     -- quake terminal
     , ((modMask,                    xK_Down     ), scratchpadSpawnAction defaultConfig { terminal = "uxterm" })
@@ -276,6 +279,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask,     xK_Right     ), shiftToNext)
     , ((modMask .|. controlMask,   xK_Left      ), prevWS)
     , ((modMask .|. shiftMask,     xK_Left      ), shiftToPrev)
+    , ((modMask,                   xK_Escape    ), toggleWS)
 
     -- quit, or restart
     , ((modMask .|. shiftMask,      xK_q        ), spawn "xfce4-session-logout")
