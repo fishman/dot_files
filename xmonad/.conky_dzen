@@ -1,0 +1,8 @@
+background yes
+out_to_console yes
+out_to_x no
+# Update interval in seconds
+update_interval 3
+
+TEXT
+^i(/home/hatori/.xmonad/dzen2/cpu.xbm) ^fg(\#FFFFFF)${cpu}% ^i(/home/hatori/.xmonad/dzen2/mem.xbm) ^fg(\#FFFFFF)${memperc}% ^fg(\#ebac54) ${if_existing /proc/net/route wlan0}^i(/home/hatori/.xmonad/dzen2/net_down_03.xbm)${downspeed wlan0} ^fg(\#ff3333)^i(/home/hatori/.xmonad/dzen2/net_up_03.xbm)${upspeed wlan0} ^fg(\#ebac54) ^i(/home/hatori/.xmonad/dzen2/music.xbm) ^fg(\#00ffff)${exec cat /dev/shm/hatori/cmus-status | cut -c-30} ^fg(\#ebac54) ^i(/home/hatori/.xmonad/dzen2/spkr_01.xbm) ^fg(\#00ffff)${exec amixer get Master | egrep -o "[0-9]+%" | head -1 | egrep -o "[0-9]*"}% ^fg(\#ebac54)  ^i(/home/hatori/.xmonad/dzen2/clock.xbm) ^fg(\#FFFFFF)${time %d.%m.} ^fg(\#ebac54)${time %R}
