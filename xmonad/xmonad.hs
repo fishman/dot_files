@@ -67,14 +67,14 @@ myBitmapsDir = "/home/hatori/.xmonad/dzen2"
 main = do
     dzenLeftBar <- spawnPipe myXmonadBar
     dzenRightBar <- spawnPipe myStatusBar
-    xmonad $ ewmh $ withUrgencyHook NoUrgencyHook
+    xmonad $ withUrgencyHook NoUrgencyHook
         $ defaultConfig
       { terminal            = myTerminal
       , workspaces          = myWorkspaces
       , keys                = keys'
       , modMask             = modMask'
       , handleEventHook     = fullscreenEventHook
-      , layoutHook          = layoutHook'
+      , layoutHook          = mkToggle (NOBORDERS ?? FULL ?? EOT) . smartBorders $ layoutHook'
       , manageHook          = manageHook'
       , logHook             = myLogHook dzenLeftBar >> fadeInactiveLogHook 0xdddddddd
       , normalBorderColor   = colorNormalBorder
@@ -158,7 +158,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP
     }
 
 -- Layout
-tiled     = mkToggle (NOBORDERS ?? FULL ?? EOT) $ smartBorders (ResizableTall 1 (2/100) (1/2) [])
+tiled     = smartBorders (ResizableTall 1 (2/100) (1/2) [])
 reflectTiled = (reflectHoriz tiled)
 {- tabLayout = (tabbed shrinkText myTheme) -}
 full      = noBorders Full
@@ -171,14 +171,14 @@ customLayout2 = avoidStruts $ Full ||| tiled ||| Mirror tiled ||| simpleFloat
   where
     tiled   = ResizableTall 1 (2/100) (1/2) []
 
-gimpLayout  = avoidStruts $ withIM (0.11) (Role "gimp-toolbox") $
+gimpLayout  = avoidStruts $ smartBorders $ withIM (0.15) (Role "gimp-toolbox") $
               reflectHoriz $
-              withIM (0.15) (Role "gimp-dock") Full
+              withIM (0.15) (Role "gimp-dock") (tiled ||| Grid)
 
 {- imLayout    = avoidStruts $ withIM (1%5) (And (ClassName "Pidgin") (Role "buddy_list")) Grid  -}
 imLayout = avoidStruts $ smartBorders $ withIM ratio pidginRoster $ reflectHoriz $ withIM skypeRatio skypeRoster (tiled ||| reflectTiled ||| Grid) where
     chatLayout      = Grid
-    ratio           = (1%9)
+    ratio           = (1%7)
     skypeRatio      = (1%8)
     pidginRoster    = And (ClassName "Pidgin") (Role "buddy_list")
     skypeRoster     = (ClassName "Skype") `And` (Not (Title "Option")) `And` (Not (Title "Chat")) `And` (Not (Role "CallWindowForm"))
@@ -236,6 +236,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask,      xK_l        ), spawn "slock")
     , ((modMask,                    xK_F8       ), spawn "/home/hatori/bin/window-go.sh")
     , ((modMask,                    xK_f        ), sendMessage $ Toggle FULL)
+    , ((modMask,                    xK_F3       ), runOrRaise "/home/hatori/bin/grfkill" (className =? "Grfkill" ))
     -- Programs
     , ((0,                          xK_Print    ), spawn "scrot -e 'mv $f ~/screenshots/'")
     , ((modMask,		            xK_o        ), runOrRaise "chromium-browser" (className =? "Chromium" ))
