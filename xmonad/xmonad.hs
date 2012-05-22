@@ -158,7 +158,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP
     }
 
 -- Layout
-tiled     = smartBorders (ResizableTall 1 (2/100) (1/2) [])
+tiled     = ResizableTall 1 (2/100) (1/2) []
 reflectTiled = (reflectHoriz tiled)
 {- tabLayout = (tabbed shrinkText myTheme) -}
 full      = noBorders Full
@@ -171,12 +171,12 @@ customLayout2 = avoidStruts $ Full ||| tiled ||| Mirror tiled ||| simpleFloat
   where
     tiled   = ResizableTall 1 (2/100) (1/2) []
 
-gimpLayout  = avoidStruts $ smartBorders $ withIM (0.15) (Role "gimp-toolbox") $
+gimpLayout  = avoidStruts $ withIM (0.15) (Role "gimp-toolbox") $
               reflectHoriz $
-              withIM (0.15) (Role "gimp-dock") (tiled ||| Grid)
+              withIM (0.15) (Role "gimp-dock") tiled
 
 {- imLayout    = avoidStruts $ withIM (1%5) (And (ClassName "Pidgin") (Role "buddy_list")) Grid  -}
-imLayout = avoidStruts $ smartBorders $ withIM ratio pidginRoster $ reflectHoriz $ withIM skypeRatio skypeRoster (tiled ||| reflectTiled ||| Grid) where
+imLayout = avoidStruts $ withIM ratio pidginRoster $ reflectHoriz $ withIM skypeRatio skypeRoster (tiled ||| reflectTiled ||| Grid) where
     chatLayout      = Grid
     ratio           = (1%7)
     skypeRatio      = (1%8)
