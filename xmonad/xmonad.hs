@@ -59,8 +59,8 @@ modMask' = mod4Mask
 -- Define workspaces
 myWorkspaces    = ["1:main","2:web","3:vim","4:chat","5:music", "6:gimp", "7:IDE"]
 -- Dzen/Conky
-myXmonadBar = "dzen2 -x '1440' -y '0' -h '24' -w '640' -ta 'l' -fg '#FFFFFF' -bg '#1B1D1E' -fn aquafont-9"
-myStatusBar = "conky -c /home/hatori/.xmonad/.conky_dzen | dzen2 -x '640' -w '590' -h '24' -ta 'r' -bg '#1B1D1E' -fg '#FFFFFF' -y '0' -fn aquafont-9"
+myXmonadBar = "dzen2 -e '' -x '1440' -y '0' -h '24' -w '640' -ta 'l' -fg '#FFFFFF' -bg '#1B1D1E' -fn aquafont-9"
+myStatusBar = "conky -c /home/hatori/.xmonad/.conky_dzen | dzen2 -e '' -x '640' -w '590' -h '24' -ta 'r' -bg '#1B1D1E' -fg '#FFFFFF' -y '0' -fn aquafont-9"
 myBitmapsDir = "/home/hatori/.xmonad/dzen2"
 --}}}
 -- Main {{{
@@ -181,7 +181,11 @@ imLayout = avoidStruts $ withIM ratio pidginRoster $ reflectHoriz $ withIM skype
     ratio           = (1%7)
     skypeRatio      = (1%8)
     pidginRoster    = And (ClassName "Pidgin") (Role "buddy_list")
-    skypeRoster     = (ClassName "Skype") `And` (Not (Title "Option")) `And` (Not (Title "Chat")) `And` (Not (Role "CallWindowForm"))
+    skypeRoster     = (ClassName "Skype") `And`
+        (Not (Title "Options")) `And`
+        (Not (Title "Optionen")) `And`
+        (Not (Role "CallWindow")) `And`
+        (Not (Role "ConversationsWindow"))
 
 webLayout = avoidStruts $ full
 
@@ -240,7 +244,8 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- Programs
     , ((0,                          xK_Print    ), spawn "scrot -e 'mv $f ~/screenshots/'")
     , ((modMask,		            xK_o        ), runOrRaise "chromium-browser" (className =? "Chromium" ))
-    , ((modMask,                    xK_m        ), spawn "nautilus --no-desktop --browser")
+    {- , ((modMask,                    xK_m        ), spawn "nautilus --no-desktop --browser") -}
+    , ((modMask,                    xK_m        ), spawn "thunar")
     -- Media Keys
     , ((0,                          0x1008ff12  ), spawn "amixer -q sset Master toggle")        -- XF86AudioMute
     , ((0,                          0x1008ff11  ), spawn "amixer -q sset Master 5%-")   -- XF86AudioLowerVolume
@@ -259,6 +264,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask,                    xK_n        ), refresh)
     , ((modMask,                    xK_Tab      ), windows W.focusDown)                         -- move focus to next window
     , ((modMask,                    xK_j        ), windows W.focusDown)
+    , ((modMask .|. shiftMask,      xK_Tab      ), windows W.focusUp)                           -- move focus to previous window
     , ((modMask,                    xK_k        ), windows W.focusUp  )
     , ((modMask .|. shiftMask,      xK_j        ), windows W.swapDown)                          -- swap the focused window with the next window
     , ((modMask .|. shiftMask,      xK_k        ), windows W.swapUp)                            -- swap the focused window with the previous window
@@ -272,7 +278,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask,                     xK_u       ), focusUrgent )
 
     -- quake terminal
-    , ((modMask,                    xK_Down     ), scratchpadSpawnAction defaultConfig { terminal = "uxterm" })
+    , ((modMask,                    xK_Down     ), scratchpadSpawnAction defaultConfig { terminal = "uxterm -bg '#313031'" })
 
 
     -- workspaces
