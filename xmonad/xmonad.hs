@@ -37,10 +37,6 @@ import XMonad.Layout.ResizableTile
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.Grid
--- toggle fullscreen
-import XMonad.Layout.MultiToggle
-import XMonad.Layout.MultiToggle.Instances
-
 
 import Data.Ratio ((%))
 -- import Data.List (isInfixOf)
@@ -74,7 +70,7 @@ main = do
       , keys                = keys'
       , modMask             = modMask'
       , handleEventHook     = fullscreenEventHook
-      , layoutHook          = mkToggle (NOBORDERS ?? FULL ?? EOT) . smartBorders $ layoutHook'
+      , layoutHook          = smartBorders $ layoutHook'
       , manageHook          = manageHook'
       , logHook             = myLogHook dzenLeftBar >> fadeInactiveLogHook 0xdddddddd
       , normalBorderColor   = colorNormalBorder
@@ -239,7 +235,6 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. shiftMask,      xK_c        ), kill)
     , ((modMask .|. shiftMask,      xK_l        ), spawn "slock")
     , ((modMask,                    xK_F8       ), spawn "/home/hatori/bin/window-go.sh")
-    , ((modMask,                    xK_f        ), sendMessage $ Toggle FULL)
     , ((modMask,                    xK_F3       ), runOrRaise "/home/hatori/bin/grfkill" (className =? "Grfkill" ))
     -- Programs
     , ((0,                          xK_Print    ), spawn "scrot -e 'mv $f ~/screenshots/'")
