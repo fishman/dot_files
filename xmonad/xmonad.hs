@@ -39,6 +39,7 @@ import XMonad.Layout.LayoutModifier
 import XMonad.Layout.Grid
 
 import Data.Ratio ((%))
+import Data.Monoid (mappend)
 -- import Data.List (isInfixOf)
 
 import qualified XMonad.StackSet as W
@@ -60,19 +61,21 @@ myStatusBar = "conky -c /home/hatori/.xmonad/.conky_dzen | dzen2 -e '' -x '640' 
 myBitmapsDir = "/home/hatori/.xmonad/dzen2"
 --}}}
 -- Main {{{
+
 main = do
     dzenLeftBar <- spawnPipe myXmonadBar
     dzenRightBar <- spawnPipe myStatusBar
     xmonad $ withUrgencyHook NoUrgencyHook
         $ defaultConfig
       { terminal            = myTerminal
+      , startupHook         = ewmhDesktopsStartup >> setWMName "TX3"
       , workspaces          = myWorkspaces
       , keys                = keys'
       , modMask             = modMask'
-      , handleEventHook     = fullscreenEventHook
+      , handleEventHook     = ewmhDesktopsEventHook `mappend` fullscreenEventHook
       , layoutHook          = smartBorders $ layoutHook'
       , manageHook          = manageHook'
-      , logHook             = myLogHook dzenLeftBar >> fadeInactiveLogHook 0xdddddddd
+      , logHook             = ewmhDesktopsLogHook >> myLogHook dzenLeftBar >> fadeInactiveLogHook 0xdddddddd
       , normalBorderColor   = colorNormalBorder
       , focusedBorderColor  = colorFocusedBorder
       , borderWidth         = 2
@@ -92,10 +95,12 @@ manageHook' =  scratchpadManageHook (W.RationalRect 0.25 0.375 0.5 0.35) <+>
     , [className    =? c            --> doShift	 "4:chat"   |   c   <- myChat   ] -- move chat to chat
     , [className    =? c            --> doShift  "5:music"  |   c   <- myMusic  ] -- move music to music
     , [className    =? c            --> doShift  "6:gimp"   |   c   <- myGimp   ] -- move img to div
+    , [resource     =? r            --> doShift  "6:gimp"   |   r   <- gimpRes  ]
     , [className    =? c            --> doShift  "7:IDE"    |   c   <- myIDEs   ] -- move eclipse to IDE
     , [className    =? c            --> doCenterFloat       |   c   <- myFloats ] -- float my floats
     , [name         =? n            --> doCenterFloat       |   n   <- myNames  ] -- float my names
-    , [isFullscreen                 --> myDoFullFloat                           ]
+    , [  composeOne [ isFullscreen -?> doFullFloat ]                            ]
+    , [isDialog                     --> doCenterFloat                           ]
     ])
 
     where
@@ -104,14 +109,15 @@ manageHook' =  scratchpadManageHook (W.RationalRect 0.25 0.375 0.5 0.35) <+>
         name      = stringProperty "WM_NAME"
 
         -- classnames
-        myFloats  = ["Smplayer","MPlayer","VirtualBox","Xmessage","XFontSel","Downloads","Nm-connection-editor"]
+        myFloats  = ["Smplayer","MPlayer","VirtualBox","Xmessage","XFontSel","Downloads","Nm-connection-editor", "VmWare", "Gxmessage"]
         myWebs    = ["Firefox","Google-chrome","Chromium", "Chromium-browser"]
         myMovie   = ["Boxee","Trine"]
         myMusic	  = ["Rhythmbox","Spotify"]
         myChat	  = ["Pidgin","Buddy List", "Skype"]
-        myGimp	  = ["Gimp"]
+        myGimp	  = ["Gimp", "Inkscape"]
+        gimpRes	  = ["Photoshop.exe"]
         myDev	  = ["gnome-terminal"]
-        myIDEs    = ["Eclipse", "PencilMainWindow"]
+        myIDEs    = ["Eclipse", "PencilMainWindow", "Vmware", "VirtualBox"]
         myVim	  = ["Gvim"]
 
         -- resources
@@ -150,6 +156,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP
                                     _                           ->      x
                                 )
       , ppTitle             =   (" " ++) . dzenColor "white" "#1B1D1E" . dzenEscape
+      , ppSort              =   fmap (.scratchpadFilterOutWorkspace) $ ppSort defaultPP
       , ppOutput            =   hPutStrLn h
     }
 
