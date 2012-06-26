@@ -1,0 +1,35 @@
+! JWR - dark
+URxvt.background: #242931
+URxvt.foreground: #BBBBBB
+
+!black
+*color0:#3D3D3D
+*color8:#5E5E5E
+
+!red
+*color1:#3C5156
+*color9:#
+
+!green
+*color2:#9DA270
+*color10:#CF4F88
+
+!yellow
+*color3:#587b7d
+*color11:#446360
+
+!blue
+*color4:#395573
+*color12:#4779B3
+
+!magenta
+*color5:#5E468C
+*color13:#7F62B3
+
+!cyan
+*color6:#2B7694
+*color14:#47959E
+
+!white
+*color7:#899CA1
+*color15:#C0C0C0

@@ -1,0 +1,41 @@
+!GAIA
+URxvt*background:        #6D9F99
+URxvt.foreground:        #F9F9F9
+URxvt.cursorColor:       #F9F9F9
+
+!black FIXED
+*color0: #073642
+*color8: #16596A
+
+!red FIXED1
+*color1: #DC322F
+*color9: #F54844
+
+!green FIXED
+*color2: #B7CE42
+*color10: #BDE077
+
+!yellow FIXED
+*color3: #FFA905
+*color11: #F2B643
+
+!blue
+!*color4: #003F9B
+*color4: #0070BE
+!*color12: #1584F5
+*color12: #657b83
+
+!magenta
+!*color5: #B7416E
+!*color13: #E16A98
+*color5: #d33682
+*color13: #DE6EA4
+
+!cyan
+*color6: #E37B06
+*color14: #42717B
+
+!white FIXED
+*color7: #F2F1F0
+*color15: #F9F9F9
+
