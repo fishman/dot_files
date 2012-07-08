@@ -68,7 +68,7 @@ main = do
     xmonad $ withUrgencyHook NoUrgencyHook
         $ defaultConfig
       { terminal            = myTerminal
-      , startupHook         = ewmhDesktopsStartup >> setWMName "TX3"
+      , startupHook         = ewmhDesktopsStartup >> setWMName "LG3D"
       , workspaces          = myWorkspaces
       , keys                = keys'
       , modMask             = modMask'
