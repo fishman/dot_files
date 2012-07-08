@@ -1,0 +1,114 @@
+! Colors
+#include "/home/hatori/.dotfiles/x11/colors/jwr"
+
+dzen2.font: aquafont:medium:size=9
+dzen2.foreground: #FFFFFF
+dzen2.background: #1B1D1E
+
+! Fonts
+URxvt*font:     xft:Terminus:pixelsize=16
+xterm*faceName:  terminus:pixelsize=18
+
+
+! font settings suggested by infinality
+Xft.dpi: 100
+!Xft.autohint: 1
+!Xft.lcdfilter:  lcddefault
+!Xft.hintstyle:  hintfull
+!Xft.hinting: 1
+!Xft.antialias: 1
+!Xft.dpi: 96
+!Xft.rgba: rgb
+
+! URxvt (scrollstyle:  rxvt (default), plain, next, or xterm)
+! URxvt*title:             Terminal
+URxvt.saveLines:         1500
+URxvt*scrollBar:         false
+URxvt*scrollColor:       #2A2A2A
+URxvt*scrollstyle:       plain
+URxvt*scrollBar_right:   true
+URxvt.scrollKey:         true
+URxvt.scrollWithBuffer:  true
+URxvt.scrollBack:        true
+URxvt.jumpScroll:        true
+URxvt.skipScroll:        true
+URxvt.urgentOnBell:      true
+URxvt.trippleclickwords: true
+!URxvt.depth:             32
+URxvt.shading:           15
+URxvt.transparent:       false
+URxvt.colorIT:           #605D5D
+URxvt.colorBD:           #F9F9F9
+URxvt.colorUL:           #FFA905
+URxvt.colorRV:           #16596A
+URxvt*chdir:             /home/hatori
+URxvt*cursorBlink:       false
+URxvt*cursorUnderline:   false
+
+! Extensions (tabbed)
+URxvt.perl-ext:         mark-and-yank,matcher
+URxvt.perl-lib:         /home/hatori/.urxvt/
+URxvt.cutchars:         `"'()*,;<>[]{|}'"
+URxvt.keysym.M-y:       perl:mark-and-yank:activate_mark_mode
+URxvt.keysym.M-u:       perl:mark-and-yank:activate_mark_url_mode
+URxvt.urlLauncher:      xdg-open
+URxvt.underlineURLs:    true
+URxvt.matcher.rend.0:   fg8
+URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
+
+! fix control + arrow keys in urxvt
+URxvt.keysym.M-Down:        \033[1;3B
+URxvt.keysym.M-Up:          \033[1;3A
+URxvt.keysym.M-Left:        \033[1;3D
+URxvt.keysym.M-Right:       \033[1;3C
+URxvt.keysym.Control-Up:    \033[1;5A
+URxvt.keysym.Control-Down:  \033[1;5B
+URxvt.keysym.Control-Left:  \033[1;5D
+URxvt.keysym.Control-Right: \033[1;5C
+
+
+xcalc*geometry:                        200x275
+xcalc.ti.bevel.background:             #111111
+xcalc.ti.bevel.screen.background:      #000000
+xcalc.ti.bevel.screen.DEG.background:  #000000
+xcalc.ti.bevel.screen.DEG.foreground:  LightSeaGreen
+xcalc.ti.bevel.screen.GRAD.background: #000000
+xcalc.ti.bevel.screen.GRAD.foreground: LightSeaGreen
+xcalc.ti.bevel.screen.RAD.background:  #000000
+xcalc.ti.bevel.screen.RAD.foreground:  LightSeaGreen
+xcalc.ti.bevel.screen.INV.background:  #000000
+xcalc.ti.bevel.screen.INV.foreground:  Red
+xcalc.ti.bevel.screen.LCD.background:  #000000
+xcalc.ti.bevel.screen.LCD.foreground:  LightSeaGreen
+xcalc.ti.bevel.screen.LCD.shadowWidth: 0
+xcalc.ti.bevel.screen.M.background:    #000000
+xcalc.ti.bevel.screen.M.foreground:    LightSeaGreen
+xcalc.ti.bevel.screen.P.background:    #000000
+xcalc.ti.bevel.screen.P.foreground:    Yellow
+xcalc.ti.Command.foreground:  White
+xcalc.ti.Command.background:  #777777
+xcalc.ti.button5.background:  Orange3
+xcalc.ti.button19.background: #611161
+xcalc.ti.button18.background: #611161
+xcalc.ti.button20.background: #611111
+!uncomment to change label on division button
+!xcalc.ti.button20.label:      /
+xcalc.ti.button25.background: #722222
+xcalc.ti.button30.background: #833333
+xcalc.ti.button35.background: #944444
+xcalc.ti.button40.background: #a55555
+xcalc.ti.button22.background: #222262
+xcalc.ti.button23.background: #222262
+xcalc.ti.button24.background: #222272
+xcalc.ti.button27.background: #333373
+xcalc.ti.button28.background: #333373
+xcalc.ti.button29.background: #333373
+xcalc.ti.button32.background: #444484
+xcalc.ti.button33.background: #444484
+xcalc.ti.button34.background: #444484
+xcalc.ti.button37.background: #555595
+xcalc.ti.button38.background: #555595
+xcalc.ti.button39.background: #555595
+XCalc*Cursor:                 hand2
+XCalc*ShapeStyle:             rectangle
+
