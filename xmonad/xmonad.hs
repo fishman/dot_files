@@ -12,10 +12,13 @@ import System.IO
 import System.Exit
 
 import XMonad.Util.Run
+import XMonad.Util.NamedScratchpad
 import XMonad.Util.Scratchpad (scratchpadSpawnAction, scratchpadManageHook, scratchpadFilterOutWorkspace)
 
 import XMonad.Actions.CycleWS
 import XMonad.Actions.WindowGo (title, raiseMaybe, runOrRaise)
+-- move windows without mouse
+import XMonad.Actions.FloatKeys
 
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -25,6 +28,7 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.ICCCMFocus
 
 import XMonad.Layout.NoBorders (smartBorders, noBorders)
 import XMonad.Layout.PerWorkspace (onWorkspace, onWorkspaces)
@@ -56,8 +60,8 @@ modMask' = mod4Mask
 -- Define workspaces
 myWorkspaces    = ["1:main","2:web","3:vim","4:chat","5:music", "6:gimp", "7:IDE"]
 -- Dzen/Conky
-myXmonadBar = "dzen2 -e '' -x '1440' -y '0' -h '24' -w '640' -ta 'l' -fg '#FFFFFF' -bg '#1B1D1E' -fn aquafont-9"
-myStatusBar = "conky -c /home/hatori/.xmonad/.conky_dzen | dzen2 -e '' -x '640' -w '590' -h '24' -ta 'r' -bg '#1B1D1E' -fg '#FFFFFF' -y '0' -fn aquafont-9"
+myXmonadBar = "dzen2 -e '' -x '1440' -y '0' -h '24' -w '640' -ta 'l'"
+myStatusBar = "conky -c /home/hatori/.xmonad/.conky_dzen | dzen2 -e '' -x '640' -w '590' -h '24' -ta 'r' -y '0'"
 myBitmapsDir = "/home/hatori/.xmonad/dzen2"
 --}}}
 -- Main {{{
@@ -74,11 +78,11 @@ main = do
       , modMask             = modMask'
       , handleEventHook     = ewmhDesktopsEventHook `mappend` fullscreenEventHook
       , layoutHook          = smartBorders $ layoutHook'
-      , manageHook          = manageHook'
-      , logHook             = ewmhDesktopsLogHook >> myLogHook dzenLeftBar >> fadeInactiveLogHook 0xdddddddd
+      , manageHook          = namedScratchpadManageHook myScratchpads <+> manageHook'
+      , logHook             = myLogHook dzenLeftBar >> fadeInactiveLogHook 0xdddddddd >> takeTopFocus
       , normalBorderColor   = colorNormalBorder
       , focusedBorderColor  = colorFocusedBorder
-      , borderWidth         = 2
+      , borderWidth         = 1
 }
 --}}}
 
@@ -86,7 +90,7 @@ main = do
 -- Hooks {{{
 -- ManageHook {{{
 manageHook' :: ManageHook
-manageHook' =  scratchpadManageHook (W.RationalRect 0.25 0.375 0.5 0.35) <+>
+manageHook' =  scratchpadManageHook (W.RationalRect 0.25 0 0.5 0.35) <+>
             (composeAll . concat $
     [ [resource     =? r            --> doIgnore            |   r   <- myIgnores] -- ignore desktop
     , [className    =? c            --> doShift  "1:main"   |   c   <- myDev    ] -- move dev to main
@@ -94,6 +98,7 @@ manageHook' =  scratchpadManageHook (W.RationalRect 0.25 0.375 0.5 0.35) <+>
     , [className    =? c            --> doShift  "3:vim"    |   c   <- myVim    ] -- move webs to main
     , [className    =? c            --> doShift	 "4:chat"   |   c   <- myChat   ] -- move chat to chat
     , [className    =? c            --> doShift  "5:music"  |   c   <- myMusic  ] -- move music to music
+    , [resource     =? r            --> doShift  "5:music"  |   r   <- plusRes  ]
     , [className    =? c            --> doShift  "6:gimp"   |   c   <- myGimp   ] -- move img to div
     , [resource     =? r            --> doShift  "6:gimp"   |   r   <- gimpRes  ]
     , [className    =? c            --> doShift  "7:IDE"    |   c   <- myIDEs   ] -- move eclipse to IDE
@@ -116,8 +121,9 @@ manageHook' =  scratchpadManageHook (W.RationalRect 0.25 0.375 0.5 0.35) <+>
         myChat	  = ["Pidgin","Buddy List", "Skype"]
         myGimp	  = ["Gimp", "Inkscape"]
         gimpRes	  = ["Photoshop.exe"]
+        plusRes	  = ["plus.google.com"]
         myDev	  = ["gnome-terminal"]
-        myIDEs    = ["Eclipse", "PencilMainWindow", "Vmware", "VirtualBox"]
+        myIDEs    = ["Eclipse", "PencilMainWindow", "Vmware", "VirtualBox", "jetbrains-idea-ce"]
         myVim	  = ["Gvim"]
 
         -- resources
@@ -140,14 +146,14 @@ layoutHook'  =  onWorkspaces ["1:main","5:music"] customLayout $
 myLogHook :: Handle -> X ()
 myLogHook h = dynamicLogWithPP $ defaultPP
     {
-        ppCurrent           =   dzenColor "#ebac54" "#1B1D1E" . pad
+        ppCurrent           =   dzenColor colorActive "#1B1D1E" . pad
       , ppVisible           =   dzenColor "white" "#1B1D1E" . pad
       , ppHidden            =   dzenColor "white" "#1B1D1E" . pad
       , ppHiddenNoWindows   =   dzenColor "#7b7b7b" "#1B1D1E" . pad
       , ppUrgent            =   dzenColor "#ff0000" "#1B1D1E" . pad
       , ppWsSep             =   " "
       , ppSep               =   "  |  "
-      , ppLayout            =   dzenColor "#ebac54" "#1B1D1E" .
+      , ppLayout            =   dzenColor colorActive "#1B1D1E" .
                                 (\x -> case x of
                                     "ResizableTall"             ->      "^i(" ++ myBitmapsDir ++ "/tall.xbm)"
                                     "Mirror ResizableTall"      ->      "^i(" ++ myBitmapsDir ++ "/mtall.xbm)"
@@ -206,12 +212,12 @@ colorWhite          = "#CCCCC6"
 colorNormalBorder   = "#3F3F3F"
 colorFocusedBorder  = "#9d871f"
 
+colorActive         = "#ebac54"
+
 
 barFont  = "terminus"
-barXFont = "aquafont:size=12"
-xftFont = "xft: aquafont-12"
-{- barXFont = "aquafont:size=12" -}
-{- xftFont = "xft: aquafont-14" -}
+barXFont = "aquafont:size=11"
+xftFont = "xft: aquafont-11"
 --}}}
 
 -- Prompt Config {{{
@@ -219,8 +225,8 @@ mXPConfig :: XPConfig
 mXPConfig =
     defaultXPConfig { font                  = barFont
                     , bgColor               = colorDarkGray
-                    , fgColor               = colorGreen
-                    , bgHLight              = colorGreen
+                    , fgColor               = colorActive
+                    , bgHLight              = colorActive
                     , fgHLight              = colorDarkGray
                     , promptBorderWidth     = 0
                     , height                = 14
@@ -234,11 +240,15 @@ largeXPConfig = mXPConfig
                 , height = 22
                 }
 -- }}}
+myScratchpads =
+    [  NS "zim"     "zim"                (className =? "Zim")     defaultFloating
+    ]
 -- Key mapping {{{
 keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     [ ((modMask,                    xK_p        ), runOrRaisePrompt largeXPConfig)
     , ((modMask .|. shiftMask,      xK_Return   ), spawn $ XMonad.terminal conf)
     , ((modMask,                    xK_F2       ), runOrRaise "gmrun" (className =? "Gmrun" ))
+    , ((modMask,                    xK_v        ), runOrRaise "vmware" (className =? "Vmware" ))
     , ((modMask .|. shiftMask,      xK_c        ), kill)
     , ((modMask .|. shiftMask,      xK_l        ), spawn "slock")
     , ((modMask,                    xK_F8       ), spawn "/home/hatori/bin/window-go.sh")
@@ -252,12 +262,9 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((0,                          0x1008ff12  ), spawn "amixer -q sset Master toggle")        -- XF86AudioMute
     , ((0,                          0x1008ff11  ), spawn "amixer -q sset Master 5%-")   -- XF86AudioLowerVolume
     , ((0,                          0x1008ff13  ), spawn "amixer -q sset Master 5%+")   -- XF86AudioRaiseVolume
-    , ((modMask,                    xK_F10  ), spawn "cmus-remote -u")
-    , ((modMask,                    xK_F11  ), spawn "cmus-remote -n")
-    , ((modMask,                    xK_F12  ), spawn "cmus-remote -r")
-    {- , ((0,                          0x1008ff14  ), spawn "cmus-remote --pause") -}
-    {- , ((0,                          0x1008ff17  ), spawn "cmus-remote --next") -}
-    {- , ((0,                          0x1008ff16  ), spawn "cmus-remote --previous") -}
+    , ((modMask,                    xK_F10  ), spawn "mpc toggle >& /dev/null")
+    , ((modMask,                    xK_F11  ), spawn "mpc prev >& /dev/null")
+    , ((modMask,                    xK_F12  ), spawn "mpc next >& /dev/null")
 
     -- layouts
     , ((modMask,                    xK_space    ), sendMessage NextLayout)
@@ -276,18 +283,30 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask,                    xK_l        ), sendMessage Expand)                          -- %! Expand a master area
     , ((modMask,                    xK_comma    ), sendMessage (IncMasterN 1))
     , ((modMask,                    xK_period   ), sendMessage (IncMasterN (-1)))
+    -- Move Floats
+    , ((modMask,                    xK_Left     ), withFocused (keysMoveWindow (-15, 0)))
+    , ((modMask,                    xK_Right    ), withFocused (keysMoveWindow (15, 0)))
+    , ((modMask,                    xK_Down     ), withFocused (keysMoveWindow (0, 10)))
+    , ((modMask,                    xK_Up       ), withFocused (keysMoveWindow (0, -10)))
+    -- Size floats
+    , ((modMask .|. shiftMask,      xK_Left     ), withFocused (keysResizeWindow (-15, 0) (0, 0)))
+    , ((modMask .|. shiftMask,      xK_Right    ), withFocused (keysResizeWindow (15, 0) (0, 0)))
+    , ((modMask .|. shiftMask,      xK_Down     ), withFocused (keysResizeWindow (0, 15) (0, 0)))
+    , ((modMask .|. shiftMask,      xK_Up       ), withFocused (keysResizeWindow (0, -15) (0, 0)))
+
     -- Focus window with urgency hook
     , ((modMask,                     xK_u       ), focusUrgent )
 
     -- quake terminal
-    , ((modMask,                    xK_Down     ), scratchpadSpawnAction defaultConfig { terminal = "uxterm -bg '#313031'" })
+    , ((modMask,                    xK_s        ), scratchpadSpawnAction defaultConfig { terminal = "uxterm" })
+    , ((modMask .|. shiftMask,      xK_s        ), namedScratchpadAction myScratchpads "zim")
 
 
     -- workspaces
     , ((modMask .|. controlMask,   xK_Right     ), nextWS)
-    , ((modMask .|. shiftMask,     xK_Right     ), shiftToNext)
+    -- , ((modMask .|. shiftMask,     xK_Right     ), shiftToNext)
     , ((modMask .|. controlMask,   xK_Left      ), prevWS)
-    , ((modMask .|. shiftMask,     xK_Left      ), shiftToPrev)
+    -- , ((modMask .|. shiftMask,     xK_Left      ), shiftToPrev)
     , ((modMask,                   xK_Escape    ), toggleWS)
 
     -- quit, or restart
