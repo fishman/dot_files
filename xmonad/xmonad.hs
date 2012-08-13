@@ -1,6 +1,8 @@
 -- ~/.xmonad/xmonad.hs
 -- Imports {{{
 import XMonad
+
+import XMonad.Config.Xfce
 -- Prompt
 import XMonad.Prompt
 import XMonad.Prompt.RunOrRaise (runOrRaisePrompt)
@@ -79,7 +81,7 @@ main = do
       , handleEventHook     = ewmhDesktopsEventHook `mappend` fullscreenEventHook
       , layoutHook          = smartBorders $ layoutHook'
       , manageHook          = namedScratchpadManageHook myScratchpads <+> manageHook'
-      , logHook             = myLogHook dzenLeftBar >> fadeInactiveLogHook 0xdddddddd >> takeTopFocus
+      , logHook             = takeTopFocus >> myLogHook dzenLeftBar >> fadeInactiveLogHook 0xdddddddd
       , normalBorderColor   = colorNormalBorder
       , focusedBorderColor  = colorFocusedBorder
       , borderWidth         = 1
@@ -241,7 +243,9 @@ largeXPConfig = mXPConfig
                 }
 -- }}}
 myScratchpads =
-    [  NS "zim"     "zim"                (className =? "Zim")     defaultFloating
+    [
+    NS "htop" "xterm -e htop" (title =? "htop") defaultFloating ,
+    NS "zim"     "zim"                (className =? "Zim")   (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
     ]
 -- Key mapping {{{
 keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
@@ -300,6 +304,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- quake terminal
     , ((modMask,                    xK_s        ), scratchpadSpawnAction defaultConfig { terminal = "uxterm" })
     , ((modMask .|. shiftMask,      xK_s        ), namedScratchpadAction myScratchpads "zim")
+    , ((modMask .|. shiftMask,      xK_t        ), namedScratchpadAction myScratchpads "htop")
 
 
     -- workspaces
