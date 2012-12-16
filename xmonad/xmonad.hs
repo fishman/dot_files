@@ -30,7 +30,7 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.UrgencyHook
-import XMonad.Hooks.ICCCMFocus
+{- import XMonad.Hooks.ICCCMFocus -}
 
 import XMonad.Layout.NoBorders (smartBorders, noBorders)
 import XMonad.Layout.PerWorkspace (onWorkspace, onWorkspaces)
@@ -45,8 +45,8 @@ import XMonad.Layout.LayoutModifier
 import XMonad.Layout.Grid
 
 import Data.Ratio ((%))
+import Data.List (isInfixOf)
 import Data.Monoid (mappend)
--- import Data.List (isInfixOf)
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
@@ -81,7 +81,7 @@ main = do
       , handleEventHook     = ewmhDesktopsEventHook `mappend` fullscreenEventHook
       , layoutHook          = smartBorders $ layoutHook'
       , manageHook          = namedScratchpadManageHook myScratchpads <+> manageHook'
-      , logHook             = takeTopFocus >> myLogHook dzenLeftBar >> fadeInactiveLogHook 0xdddddddd
+      , logHook             = myLogHook dzenLeftBar >> fadeInactiveLogHook 0xdddddddd >> setWMName "LG3D"
       , normalBorderColor   = colorNormalBorder
       , focusedBorderColor  = colorFocusedBorder
       , borderWidth         = 1
@@ -104,8 +104,8 @@ manageHook' =  scratchpadManageHook (W.RationalRect 0.25 0 0.5 0.35) <+>
     , [className    =? c            --> doShift  "6:gimp"   |   c   <- myGimp   ] -- move img to div
     , [resource     =? r            --> doShift  "6:gimp"   |   r   <- gimpRes  ]
     , [className    =? c            --> doShift  "7:IDE"    |   c   <- myIDEs   ] -- move eclipse to IDE
-    , [className    =? c            --> doCenterFloat       |   c   <- myFloats ] -- float my floats
-    , [name         =? n            --> doCenterFloat       |   n   <- myNames  ] -- float my names
+    , [className    =? c            --> doFloat             |   c   <- myFloats ] -- float my floats
+    , [name         =? n            --> doFloat             |   n   <- myNames  ] -- float my names
     , [  composeOne [ isFullscreen -?> doFullFloat ]                            ]
     , [isDialog                     --> doCenterFloat                           ]
     ])
@@ -116,17 +116,17 @@ manageHook' =  scratchpadManageHook (W.RationalRect 0.25 0 0.5 0.35) <+>
         name      = stringProperty "WM_NAME"
 
         -- classnames
-        myFloats  = ["Smplayer","MPlayer","VirtualBox","Xmessage","XFontSel","Downloads","Nm-connection-editor", "VmWare", "Gxmessage"]
+        myFloats  = ["Smplayer","MPlayer","VirtualBox","Xmessage","XFontSel","Downloads","Nm-connection-editor", "VmWare", "Gxmessage", "Vidalia", "Thunar", "Blueman-manager", "feh", "Toggle-desktop", "Wicd-client.py", "Pavucontrol", "File-roller", "Doublecmd", "Spacefm", "Do", "Xfce4-appfinder", "Calibre-ebook-viewer"]
         myWebs    = ["Firefox","Google-chrome","Chromium", "Chromium-browser"]
         myMovie   = ["Boxee","Trine"]
-        myMusic	  = ["Rhythmbox","Spotify"]
+        myMusic	  = ["Rhythmbox","Spotify","Deadbeef"]
         myChat	  = ["Pidgin","Buddy List", "Skype"]
         myGimp	  = ["Gimp", "Inkscape"]
         gimpRes	  = ["Photoshop.exe"]
         plusRes	  = ["plus.google.com"]
         myDev	  = ["gnome-terminal"]
-        myIDEs    = ["Eclipse", "PencilMainWindow", "Vmware", "VirtualBox", "jetbrains-idea-ce"]
-        myVim	  = ["Gvim"]
+        myIDEs    = ["Eclipse", "PencilMainWindow", "Vmware", "VirtualBox", "jetbrains-idea-ce", "jetbrains-idea"]
+        myVim	  = ["Gvim", "Emacs"]
 
         -- resources
         myIgnores = ["desktop","desktop_window","notify-osd","xfce4-notifyd", "stalonetray","panel"]
@@ -187,7 +187,8 @@ gimpLayout  = avoidStruts $ withIM (0.15) (Role "gimp-toolbox") $
               withIM (0.15) (Role "gimp-dock") tiled
 
 {- imLayout    = avoidStruts $ withIM (1%5) (And (ClassName "Pidgin") (Role "buddy_list")) Grid  -}
-imLayout = avoidStruts $ withIM ratio pidginRoster $ reflectHoriz $ withIM skypeRatio skypeRoster (tiled ||| reflectTiled ||| Grid) where
+{- imLayout = avoidStruts $ withIM ratio pidginRoster $ reflectHoriz $ withIM skypeRatio skypeRoster (tiled ||| reflectTiled ||| Grid) where -}
+imLayout = avoidStruts $ withIM ratio pidginRoster $ reflectHoriz $ withIM skypeRatio skypeRoster (Grid) where
     chatLayout      = Grid
     ratio           = (1%7)
     skypeRatio      = (1%8)
@@ -242,10 +243,16 @@ largeXPConfig = mXPConfig
                 , height = 22
                 }
 -- }}}
+q ~? x  = fmap (x `isInfixOf`) q
+
+    {- NS "mc"   "urxvtc -e mc"   (title ~? "mc ")       defaultFloating, -}
+    {- NS "mc"   "doublecmd"      (className =? "Doublecmd")  defaultFloating, -}
 myScratchpads =
     [
-    NS "htop" "xterm -e htop" (title =? "htop") defaultFloating ,
-    NS "zim"     "zim"                (className =? "Zim")   (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
+    NS "htop" "urxvtc -e htop" (title =? "htop")           defaultFloating,
+    NS "mc"   "spacefm"        (className =? "Spacefm")  defaultFloating,
+    NS "vimwiki" "/usr/bin/gvim -c 'set title titlestring=vimwiki|call vimwiki#base#goto_index(v:count1)'" (title =? "vimwiki") defaultFloating,
+    NS "zim"  "zim"            (className =? "Zim")  (customFloating $ W.RationalRect (1/6) (1/6) (2/3) (2/3))
     ]
 -- Key mapping {{{
 keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
@@ -261,14 +268,15 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((0,                          xK_Print    ), spawn "scrot -e 'mv $f ~/screenshots/'")
     , ((modMask,		            xK_o        ), runOrRaise "chromium-browser" (className =? "Chromium" ))
     {- , ((modMask,                    xK_m        ), spawn "nautilus --no-desktop --browser") -}
-    , ((modMask,                    xK_m        ), spawn "thunar")
+    {- , ((modMask,                    xK_m        ), spawn "thunar") -}
+    , ((modMask,                    xK_m        ), namedScratchpadAction myScratchpads "mc")
     -- Media Keys
     , ((0,                          0x1008ff12  ), spawn "amixer -q sset Master toggle")        -- XF86AudioMute
     , ((0,                          0x1008ff11  ), spawn "amixer -q sset Master 5%-")   -- XF86AudioLowerVolume
     , ((0,                          0x1008ff13  ), spawn "amixer -q sset Master 5%+")   -- XF86AudioRaiseVolume
-    , ((modMask,                    xK_F10  ), spawn "mpc toggle >& /dev/null")
-    , ((modMask,                    xK_F11  ), spawn "mpc prev >& /dev/null")
-    , ((modMask,                    xK_F12  ), spawn "mpc next >& /dev/null")
+    , ((modMask,                    xK_F10  ), spawn "cmus-remote -u >& /dev/null")
+    , ((modMask,                    xK_F11  ), spawn "cmus-remote -r >& /dev/null")
+    , ((modMask,                    xK_F12  ), spawn "cmus-remote -n >& /dev/null")
 
     -- layouts
     , ((modMask,                    xK_space    ), sendMessage NextLayout)
@@ -303,6 +311,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     -- quake terminal
     , ((modMask,                    xK_s        ), scratchpadSpawnAction defaultConfig { terminal = "uxterm" })
+    , ((modMask .|. controlMask,    xK_s        ), namedScratchpadAction myScratchpads "vimwiki")
     , ((modMask .|. shiftMask,      xK_s        ), namedScratchpadAction myScratchpads "zim")
     , ((modMask .|. shiftMask,      xK_t        ), namedScratchpadAction myScratchpads "htop")
 
