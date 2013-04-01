@@ -138,7 +138,7 @@ fi
 
 unset rst bgc
 
-if [[ "$TERM" != "linux" ]]; then
+if [[ "$TERM" != "eterm-color" ]]; then
 
   # this updates title bar before prompt is printed
   precmd () {
