@@ -579,7 +579,6 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule_any = { class = { "Vmware", "VirtualBox" } },
       properties = { tag = tags[1][6] } },
-    -- { rule = { class = "[~] % qemu-system-x86_64" },
     { rule = { class = "qemu-system-x86_64" },
       properties = { tag = tags[1][6] } },
       -- office

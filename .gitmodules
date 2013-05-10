@@ -4,3 +4,6 @@
 [submodule "awesome/3/linux/wicked"]
 	path = awesome/3/linux/wicked
 	url = git://git.glacicle.com/awesome/wicked.git
+[submodule "powerline"]
+	path = powerline
+	url = git://github.com/Lokaltog/powerline
