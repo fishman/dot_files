@@ -54,16 +54,18 @@ export QT_IM_MODULE=fcitx
 export XMODIFIERS="@im=fcitx"
 export DE=gnome
 export OOO_FORCE_DESKTOP=gnome
-export AWT_TOOLKIT=MToolkit
+# export AWT_TOOLKIT=MToolkit
+# export _JAVA_AWT_WM_NONREPARENTING=1
 export JAVA_FONTS=/usr/share/fonts/TTF
 export GDFONTPATH=/usr/share/fonts/TTF
 export GDK_NATIVE_WINDOWS=1
 export GDK_USE_XFT=1
 export GNOME_DESKTOP_SESSION_ID=Default
-export _JAVA_AWT_WM_NONREPARENTING=1
+export ALTERNATE_EDITOR=""
+# export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
 # xrandr --dpi 135
-xrandr --dpi 110
+# xrandr --dpi 110
 
 if test $enable_pulseaudio = 1; then
 	start-pulseaudio-x11

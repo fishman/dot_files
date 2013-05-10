@@ -1,8 +1,8 @@
 #! /bin/zsh
 
-bindkey -v "^[[3~" delete-char
-bindkey -v "^[[5~" backward-word
-bindkey -v "^[[6~" forward-word
+# bindkey -v "^[[3~" delete-char
+# bindkey -v "^[[5~" backward-word
+# bindkey -v "^[[6~" forward-word
 
 bindkey "^[[A" history-beginning-search-backward
 bindkey "^[[B" history-beginning-search-forward
@@ -24,5 +24,16 @@ bindkey -v "^P" up-history
 #  bindkey -v "^[H" run-help
 #  bindkey -v "^[h" run-help
 
-bindkey -v "^[H" beginning-of-line
+# bindkey -v "^[H" beginning-of-line
 # bindkey -v "^X" paste-xclip
+
+# Select directory and open a ZSH tab completer
+# http://zsh.sourceforge.net/Guide/zshguide06.html#l149
+# http://www.refining-linux.org/archives/40/ZSH-Gem-5-Menu-selection/
+# http://www.cs.elte.hu/zsh-manual/zsh_14.html#SEC52
+#
+# - space: advance to the directory and open it for the completion
+# - backspace: undo the selection
+zmodload zsh/complist
+bindkey -M menuselect ' ' accept-and-infer-next-history
+bindkey -M menuselect '^?' undo

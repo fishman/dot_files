@@ -1,24 +1,32 @@
 ! Colors
 #include "/home/hatori/.dotfiles/x11/colors/jwr"
+! #include "/home/hatori/.dotfiles/x11/colors/solarized"
 
 dzen2.font: aquafont:medium:size=9
 dzen2.foreground: #FFFFFF
 dzen2.background: #1B1D1E
 
 ! Fonts
-URxvt*font:     xft:Terminus:pixelsize=16
-xterm*faceName:  terminus:pixelsize=18
+! URxvt*background: rgba:1000/5000/5000/dddd
+Emacs*font:     Inconsolata for Powerline-12
+URxvt*font: xft:Terminus:pixelsize=16,xft:Inconsolata for Powerline:16
+! URxvt*font: xft:Terminus:pixelsize=16
+xterm*faceName: Dejavu Sans Mono:8
+! xterm*faceName:  terminus:pixelsize=18
+xterm*termName: xterm-256color
 
+Emacs*geometry:     120x40
 
 ! font settings suggested by infinality
-Xft.dpi: 100
-!Xft.autohint: 1
+! Xft.dpi: 110
+!Xft.antialias: 1
 !Xft.lcdfilter:  lcddefault
 !Xft.hintstyle:  hintfull
-!Xft.hinting: 1
-!Xft.antialias: 1
-!Xft.dpi: 96
 !Xft.rgba: rgb
+
+!Xft.autohint: 1
+!Xft.hinting: 1
+!Xft.dpi: 96
 
 ! URxvt (scrollstyle:  rxvt (default), plain, next, or xterm)
 ! URxvt*title:             Terminal
@@ -34,9 +42,9 @@ URxvt.jumpScroll:        true
 URxvt.skipScroll:        true
 URxvt.urgentOnBell:      true
 URxvt.trippleclickwords: true
-!URxvt.depth:             32
-URxvt.shading:           15
-URxvt.transparent:       false
+URxvt.depth:             32
+! URxvt.shading:           15
+! URxvt.transparent:       false
 URxvt.colorIT:           #605D5D
 URxvt.colorBD:           #F9F9F9
 URxvt.colorUL:           #FFA905

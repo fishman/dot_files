@@ -84,7 +84,7 @@ setopt hist_no_functions    # don't save functions defs in history
 setopt hist_no_store        # remove hists access cmds from hist
 setopt hist_reduce_blanks   # remove superfluous blanks
 setopt hist_save_no_dups    # no dups on history saving
-setopt hist_verify          # some expansion gadget
+# setopt hist_verify          # some expansion gadget
 setopt no_hup               # don't SIGHUP bg cmds on logout
 setopt no_ignore_braces     # do braces expansion
 setopt no_ignore_eof        # don't ignore ^D
@@ -156,9 +156,31 @@ setopt transient_rprompt    # better for cut/paste
 #setopt typeset_silent       #
 #setopt unset                #
 #setopt verbose              #
-# setopt vi                   # use bindkeys
+setopt vi                   # use bindkeys
 setopt no_xtrace            # do not debug by default
 setopt zle                  # use zsh le
+# use cursor as indicator of vi mode
+# zle-keymap-select () {
+#   if [ $KEYMAP = vicmd ]; then
+#     if [[ $TMUX = '' ]]; then
+#       echo -ne "\033]12;Red\007"
+#     else
+#       printf '\033Ptmux;\033\033]12;red\007\033\\'
+#     fi
+#   else
+#     if [[ $TMUX = '' ]]; then
+#       echo -ne "\033]12;Grey\007"
+#     else
+#       printf '\033Ptmux;\033\033]12;grey\007\033\\'
+#     fi
+#   fi
+# }
+# zle-line-init () {
+#   zle -K viins
+#   echo -ne "\033]12;Grey\007"
+# }
+# zle -N zle-keymap-select
+# zle -N zle-line-init
 
 is-at-least 4.3.0 && {
     unsetopt hist_save_by_copy
@@ -186,7 +208,9 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_REDUCE_BLANKS
 setopt HIST_SAVE_NO_DUPS
-setopt HIST_VERIFY
+# setopt HIST_VERIFY
 
 # add cd search path
-cdpath=(~ ~/git /opt)
+cdpath=(~ ~/git)
+fpath=(~/.zsh.d/zsh-completions $fpath)
+

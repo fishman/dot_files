@@ -26,7 +26,6 @@ else
   alias -s avi=mplayer
   alias -s pdf=zathura
 fi
-alias -s rb=vim
 
 # alias du="du -hcs"
 alias du="du -hc"
@@ -70,6 +69,7 @@ if [[ $OS == osx ]]; then
   alias getit='curl -O `pbpaste`'
   alias mtop="top -o rsize"
 else
+  alias emacs='emacs -nw' # prefer console version of emacs
   alias open='xdg-open'
 fi
 alias myip="ifconfig | grep 192.168 || ifconfig | grep 10.32"
@@ -86,15 +86,8 @@ alias flux='xflux -l 53.5559 -q 9.98766'
 
 # ls alias
 if [[ $OS == osx  &&  $EPREFIX == '' ]]; then
-  alias ll='ls -lh'
-  alias la='ls -A'
-  alias l='ls -lha'
-  # List only directories and symbolic
-  # # links that point to directories
-  alias lsd='ls -ld *(-/DN)'
-  # List only file beginning with "."
-  alias lsa='ls -ld .*'
-  alias lla='ls -la'
+  alias lf='ls -Gl | grep ^d' #Only list directories
+  alias lsd='ls -Gal | grep ^d' #Only list directories, including hidden ones
 else
   alias ls="ls --color=auto"
   alias ls="ls --color=auto"
@@ -104,11 +97,23 @@ else
   alias lal="ls --color=always -la"
 fi
 alias dir='ls -lht | less'
+alias ll='ls -lh'
+alias la='ls -A'
+alias l='ls -lha'
+# List only directories and symbolic
+# # links that point to directories
+alias lsd='ls -ld *(-/DN)'
+# List only file beginning with "."
+alias lsa='ls -ld .*'
+alias lla='ls -la'
 
 # be faster alias
 alias cd..='cd ..;'
-alias ..='cd ..;'
-alias ...='cd ../..;'
+alias ..='cd ..'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias .....='cd ../../../../'
+alias ......='cd ../../../../../'
 alias cls='clear'
 alias h='history'
 alias df='df -h'
@@ -135,6 +140,7 @@ alias gdbintel='gdb -x ~/.gdbinit_color'
 alias gentags='ctags -f .tmtags --excmd=pattern -R --tag-relative=yes ; sort .tmtags -o .tmtags'
 
 alias git='noglob git'
+alias calc='noglob calc'
 
 # random os x
 if [[ $OS == osx ]]; then
@@ -157,10 +163,19 @@ if [[ $OS == osx ]]; then
   alias e="open -a TextMate"
   alias matereload="osascript -e 'tell app \"TextMate\" to reload bundles'"
   alias projects="cd ~/Documents/Projects"
-fi
 
-# arch aliases
-alias rc.d="sudo rc.d"
+else
+  # arch aliases
+  alias rc.d="sudo rc.d"
+  alias hamburg="TZ='Europe/Berlin' date"
+  alias tehran="TZ='Asia/Tehran' date"
+  alias systemctl="sudo systemctl"
+  alias e="emacsclient -t"
+  alias emacsquit="emacsclient -t '(let ((last-nonmenu-event nil))(save-buffers-kill-emacs))'"
+  # task aliases
+  alias due="task rc.calendar.details:full cal"
+  alias holiday="task rc.calendar.holidays:full cal"
+fi
 
 # security
 # libdnet
@@ -289,3 +304,57 @@ vnice() {
     ionice -n7 nice -n20 $@
   fi
 }
+
+alias mmouse="sudo hidd --connect '00:1F:5B:B1:B2:65'"
+alias ppt='WINEARCH=win32 WINEPREFIX=~/.local/share/wineprefixes/office2007pro wine ~/.local/share/wineprefixes/office2007pro/drive_c/Program\ Files/Microsoft\ Office/Office14/POWERPNT.EXE >& /dev/null'
+
+# rest devel
+alias get="curl -i -H \"Accept: application/json\" "
+alias post="curl -i -H \"Accept: application/json\" -X POST -d "
+
+alias vim="vim --servername $PWD"
+
+alias aria="aria2c -c -s2 --load-cookies=~/.mozilla/firefox/01t2sdop.default/cookies.sqlite"
+
+if [ -x ~/bin/fasd ]; then
+    # fasd_cache="$HOME/.zsh_cache/fasd-init"
+    # if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+    #     fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install >| "$fasd_cache"
+    # fi
+    # source "$fasd_cache"
+    # unset fasd_cache
+    eval "$(fasd --init auto)"
+
+    alias v='f -e vim' # quick opening files with vim
+    alias m='f -e mplayer' # quick opening files with mplayer
+    alias o='a -e xdg-open' # quick opening files with xdg-open
+    alias c='f -e cat'
+fi
+
+alias venv="virtualenv"
+alias venv2="virtualenv2"
+
+alias conditions='wu'
+alias forecast='wu -forecast'
+alias forecast10='wu -forecast10'
+alias alerts='wu -alerts'
+alias astronomy='wu -astro'
+alias yesterday='wu -yesterday'
+alias almanac='wu -almanac'
+alias tides='wu -tides'
+alias slookup='wu -lookup'
+alias tube='display http://www.tfl.gov.uk/assets/downloads/standard-tube-map.gif'
+
+# show most frequent commands
+alias freq='cut -f1 -d" " ~/.zsh_cache/history | sort | uniq -c | sort -nr | head -n 30'
+
+# devops
+alias memhog="ps aux --sort=-resident|head -11"
+alias deleted="lsof | grep delete"
+alias bigfile="find . -size +100M"
+alias newfiles="find . -mtime -7"
+alias oldfiles="find . -mtime +14 -type f -name '*.gz'"
+alias listening="netstat -tlnp"
+alias zombies='ps Haxwwo stat,pid,ppid,user,wchan:25,command | grep -e "^STAT" -e "^D" -e "^Z"'
+
+alias omnisharp='mono ~/.vim/bundle/Omnisharp/OmniSharp/bin/Debug/OmniSharp.exe'

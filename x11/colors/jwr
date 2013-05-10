@@ -1,7 +1,7 @@
 ! JWR - dark
 *background: #121212
 *foreground: #BBBBBB
-!URxvt.background: rgba:0000/0000/0000/9999
+URxvt.background: rgba:1800/1800/1800/dddd
 
 !URxvt*background:               #000
 !URxvt*foreground:               #bbb
