@@ -11,8 +11,8 @@ dzen2.background: #1B1D1E
 Emacs*font:     Inconsolata for Powerline-12
 URxvt*font: xft:Terminus:pixelsize=16,xft:Inconsolata for Powerline:16
 ! URxvt*font: xft:Terminus:pixelsize=16
-xterm*faceName: Dejavu Sans Mono:8
-! xterm*faceName:  terminus:pixelsize=18
+! xterm*faceName: Dejavu Sans Mono:8
+xterm*faceName:  terminus:pixelsize=18
 xterm*termName: xterm-256color
 
 Emacs*geometry:     120x40
@@ -53,16 +53,27 @@ URxvt*chdir:             /home/hatori
 URxvt*cursorBlink:       false
 URxvt*cursorUnderline:   false
 
-! Extensions (tabbed)
-URxvt.perl-ext:         mark-and-yank,matcher
+! Extensions
 URxvt.perl-lib:         /home/hatori/.urxvt/
+URxvt.perl-ext-common:  url-select,font-size,clipboard,keyboard-select
 URxvt.cutchars:         `"'()*,;<>[]{|}'"
-URxvt.keysym.M-y:       perl:mark-and-yank:activate_mark_mode
-URxvt.keysym.M-u:       perl:mark-and-yank:activate_mark_url_mode
-URxvt.urlLauncher:      xdg-open
-URxvt.underlineURLs:    true
-URxvt.matcher.rend.0:   fg8
-URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
+URxvt.keysym.M-u:       perl:url-select:select_next
+URxvt.keysym.C-S-Up:    perl:font-size:increase
+URxvt.keysym.C-S-Down:  perl:font-size:decrease
+URxvt.keysym.M-s:       perl:keyboard-select:search
+URxvt.keysym.M-Escape:  perl:keyboard-select:activate
+URxvt.keysym.M-c:       perl:clipboard:copy
+URxvt.keysym.M-v:       perl:clipboard:paste
+URxvt.keysym.M-C-v:     perl:clipboard:paste_escaped
+URxvt.clipboard.copycmd:  xclip -i -selection clipboard
+URxvt.clipboard.pastecmd: xclip -o -selection clipboard
+URxvt.url-select.launcher:  xdg-open
+URxvt.url-select.underline: true
+! URxvt.underlineURLs:    true
+! URxvt.matcher.rend.0:   fg8
+! URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
+URxvt.iso14755: false
+URxvt.iso14755_52: false
 
 ! fix control + arrow keys in urxvt
 URxvt.keysym.M-Down:        \033[1;3B
