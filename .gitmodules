@@ -7,3 +7,6 @@
 [submodule "powerline"]
 	path = powerline
 	url = git://github.com/Lokaltog/powerline
+[submodule "urxvt/urxvt-font-size"]
+	path = urxvt/urxvt-font-size
+	url = https://github.com/majutsushi/urxvt-font-size
