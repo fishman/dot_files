@@ -89,3 +89,17 @@ function zipfolder()
 {
     zip -9 -r $1 $2
 }
+
+ranger-cd() {
+    tempfile=$(mktemp)
+    ranger --choosedir="$tempfile" "${@:-$(pwd)}" < $TTY
+    test -f "$tempfile" &&
+    if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+        cd -- "$(cat "$tempfile")"
+    fi
+    rm -f -- "$tempfile"
+}
+
+# bind Ctrl-O to ranger-cd:
+zle -N ranger-cd
+bindkey '^o' ranger-cd
