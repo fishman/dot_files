@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 if [[ $OS == osx ]]; then
-  export EPREFIX="/opt/local/gentoo"
+  export EPREFIX="$HOME/Gentoo"
   PATH_BACK=$PATH
 
   # export LDFLAGS="-Wl,-search_paths_first -L${EPREFIX}/usr/lib -L${EPREFIX}/lib"
@@ -15,5 +15,5 @@ if [[ $OS == osx ]]; then
 
   PATH="$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/usr/sbin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:${EPREFIX}/usr/portage/scripts:${ROOTPATH}:$PATH_BACK"
 
-  alias myoverlay='cd /opt/local/gentoo/usr/local/portage'
+  alias myoverlay="cd $EPREFIX/usr/local/portage"
 fi

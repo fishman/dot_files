@@ -52,8 +52,10 @@ alias -g N='&>/dev/null&'
 # general helpers
 alias b='bundle exec'
 if [[ $OS == osx ]]; then
-  alias vim="vim --servername VIM"
-  alias rv="vim --remote"
+  #alias vim="vim --servername VIM"
+  #alias rv="vim --remote"
+  alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
+  alias vimdiff="/Applications/MacVim.app/Contents/MacOS/Vim"
   alias mvim="mvim --remote-tab-silent"
   alias m="mate ."
   alias mw="mate -w"
@@ -68,7 +70,11 @@ if [[ $OS == osx ]]; then
   alias top="/usr/bin/top -ocpu -R -s 2 -n20"
   alias getit='curl -O `pbpaste`'
   alias mtop="top -o rsize"
+  alias pgstart="pg_ctl start -D /Users/timebomb/Gentoo/var/lib/postgresql/9.2/data -o '-D /Users/timebomb/Gentoo/etc/postgresql-9.2/ --data-directory=/Users/timebomb/Gentoo/var/lib/postgresql/9.2/data'"
+  alias pgstop="pg_ctl stop -D /Users/timebomb/Gentoo/var/lib/postgresql/9.2/data"
+
 else
+  alias vim="vim --servername $PWD"
   alias emacs='emacs -nw' # prefer console version of emacs
   alias open='xdg-open'
 fi
@@ -311,8 +317,6 @@ alias ppt='WINEARCH=win32 WINEPREFIX=~/.local/share/wineprefixes/office2007pro w
 # rest devel
 alias get="curl -i -H \"Accept: application/json\" "
 alias post="curl -i -H \"Accept: application/json\" -X POST -d "
-
-alias vim="vim --servername $PWD"
 
 alias aria="aria2c -c -s2 --load-cookies=~/.mozilla/firefox/01t2sdop.default/cookies.sqlite"
 
