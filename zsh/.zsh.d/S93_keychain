@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+if [[ -x $(which keychain) ]]; then
+    eval `keychain --eval --agents ssh id_dsa`
+fi

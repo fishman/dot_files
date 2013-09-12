@@ -5,6 +5,7 @@ macro generic "g3" "<c+/gmx/inbox<return>"
 macro generic "g4" "<c+/vserver/inbox<return>"
 macro generic "g5" "<c+/pitchme/inbox<return>"
 macro generic "g6" "<c+/team/inbox<return>"
+macro generic "g7" "<c+/louisiana/inbox<return>"
 
  macro attach W <save-entry><kill-line>~/Downloads/Attachments/
  macro attach E <save-entry><kill-line>~/Downloads/Attachments/<enter>
