@@ -97,7 +97,7 @@ else
             rprompt '()' yellow white
             ;;
 
-        meson*)
+        masterlulz*)
             lprompt '<>' red yellow
             rprompt '<>' red white
             ;;

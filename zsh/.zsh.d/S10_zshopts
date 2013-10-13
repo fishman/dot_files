@@ -212,5 +212,5 @@ setopt HIST_SAVE_NO_DUPS
 
 # add cd search path
 cdpath=(~ ~/git)
-fpath=(~/.zsh.d/zsh-completions $fpath)
+fpath=(~/.zsh.d/zsh-completions ~/.zsh.d/zsh-functions $fpath)
 

@@ -70,8 +70,8 @@ if [[ $OS == osx ]]; then
   alias top="/usr/bin/top -ocpu -R -s 2 -n20"
   alias getit='curl -O `pbpaste`'
   alias mtop="top -o rsize"
-  alias pgstart="pg_ctl start -D /Users/timebomb/Gentoo/var/lib/postgresql/9.2/data -o '-D /Users/timebomb/Gentoo/etc/postgresql-9.2/ --data-directory=/Users/timebomb/Gentoo/var/lib/postgresql/9.2/data'"
-  alias pgstop="pg_ctl stop -D /Users/timebomb/Gentoo/var/lib/postgresql/9.2/data"
+  alias pgstart="pg_ctl start -D /Users/timebomb/Gentoo/var/lib/postgresql/9.3/data -o '-D /Users/timebomb/Gentoo/etc/postgresql-9.3/ --data-directory=/Users/timebomb/Gentoo/var/lib/postgresql/9.3/data'"
+  alias pgstop="pg_ctl stop -D /Users/timebomb/Gentoo/var/lib/postgresql/9.3/data"
 
 else
   alias vim="vim --servername $PWD"
