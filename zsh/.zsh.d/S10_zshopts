@@ -2,6 +2,8 @@
 
 autoload -U is-at-least
 autoload -U zargs
+autoload predict-on
+
 
 #[ a ]##########################################################################
 setopt aliases              # expand aliases
@@ -214,3 +216,12 @@ setopt HIST_SAVE_NO_DUPS
 cdpath=(~ ~/git)
 fpath=(~/.zsh.d/zsh-completions ~/.zsh.d/zsh-functions $fpath)
 
+
+autoload predict-on
+predict-toggle() {
+    ((predict_on=1-predict_on)) && predict-on || predict-off
+}
+zle -N predict-toggle
+bindkey '^Z'   predict-toggle
+zstyle ':predict' toggle true
+zstyle ':predict' verbose true

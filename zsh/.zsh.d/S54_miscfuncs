@@ -26,7 +26,7 @@ function showlog()
 function mc()
 {
   stty -ixon
-  /usr/bin/mc $@
+  /usr/bin/env mc $@
   stty ixon
 }
 
