@@ -20,6 +20,7 @@ export CVSREAD=yes
 export MANWIDTH=80
 export EDITOR=vim
 export GIT_EDITOR=vim
+export VIEW=open
 export VISUAL=vim
 #export CCACHE_DIR=$HOME/.ccache
 

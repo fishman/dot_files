@@ -13,7 +13,7 @@ bindkey -v "^A" beginning-of-line
 bindkey -v "^E" end-of-line
 bindkey -v "^K" kill-line
 bindkey -v "^L" clear-screen
-bindkey -v "^R" history-incremental-search-backward
+# bindkey -v "^R" history-incremental-search-backward
 bindkey -v "^U" kill-whole-line
 bindkey -v "^V" quoted-insert
 #bindkey -v "^W" backward-kill-word
@@ -37,3 +37,13 @@ bindkey -v "^P" up-history
 zmodload zsh/complist
 bindkey -M menuselect ' ' accept-and-infer-next-history
 bindkey -M menuselect '^?' undo
+
+insert_sudo () { zle beginning-of-line; zle -U "sudo " }
+zle -N insert-sudo insert_sudo
+bindkey "^[s" insert-sudo
+
+# Meta-u to chdir to the parent directory
+bindkey -s '\eu' '^Ucd ..; ls^M'
+
+# If AUTO_PUSHD is set, Meta-p pops the dir stack
+bindkey -s '\ep' '^Upopd >/dev/null; dirs -v^M'
