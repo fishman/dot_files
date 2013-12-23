@@ -1,0 +1,4 @@
+command source ~/.lldbinit
+
+settings set prompt "[lldb]$ "
+

@@ -1,0 +1,50 @@
+env PYTHONHOME=/usr
+
+# script import os, sys
+
+command alias sp script print
+
+# breakpoint shortcuts
+# break on function/method/selector: b -n name
+# break on C/C++ method: b -M method
+# break on selector: b -S selector:here:
+# break on address: b -a 0xfeedface
+command alias b breakpoint set
+command alias bd breakpoint disable
+command alias be breakpoint enable
+command alias bdel breakpoint delete
+command alias bcommand breakpoint command add
+command alias commands breakpoint command list
+# command alias \bt bt all
+# command alias bt bt 15
+
+# jump aliases
+# jump 0xfeedface
+command alias jump register write pc
+command alias jmp register write pc
+command alias j register write pc
+
+# fix p/s
+# p/s rsi
+command alias p/s register read
+
+# fscript (cbf to fix fscript anywhere)
+command alias f_init p (char)[[NSBundle bundleWithPath:@"/Library/Frameworks/FScript.framework"] load]
+command alias f_start p (void)[FScriptMenuItem insertInMainMenu]
+
+command alias return thread return
+
+command regex ps 's/^[[:space:]]*$/po [NSThread callStackSymbols]/'
+command regex pv 's/^[[:space:]]*$/po [[[UIApplication sharedApplication] keyWindow] recursiveDescription]/' 's/^(.+)$/po [%1 recursiveDescription]/'
+command regex pe 's/^[[:space:]]*$/po [[NSProcessInfo processInfo] environment]/'
+command regex pd 's/^(.+)$/po [[NSString alloc] initWithData:%1 encoding:4]/'
+command regex pjson 's/^(.+)$/po [[NSString alloc] initWithData:(id)[NSJSONSerialization dataWithJSONObject:%1 options:0 error:nil] encoding:4]/'
+command regex pcef 's/^(.+)$/p  (unsigned short*)%1.string_->str/'
+
+
+command script import ~/.lldb/ls_simulator.py
+command script import ~/.lldb/unsignedshortptrsummary.py
+
+command alias reload command source ~/.lldbinit
+
+settings set prompt "\033[31m[lldb]\033[0m$ "
