@@ -1,0 +1,11 @@
+browser "open"
+bookmark-interactive true
+confirm-exit yes
+
+color article color188 color237
+color background color188 color237
+color info color142 color237 bold
+color listfocus color223 color235 bold
+color listfocus_unread color144 color235 bold
+color listnormal color188 color237
+color listnormal_unread color144 color237
