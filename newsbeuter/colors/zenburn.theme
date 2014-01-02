@@ -1,0 +1,8 @@
+# newsbeuter zenburn theme
+color background          color188   color237
+color listnormal          color188   color237
+color listfocus           color223  color235   bold
+color listnormal_unread   color144 color237
+color listfocus_unread    color144 color235   bold
+color info                color142  color237   bold
+color article             color188   color237
