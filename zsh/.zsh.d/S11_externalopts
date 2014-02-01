@@ -5,6 +5,7 @@ bindkey -M filterselect '^R' down-line-or-history
 bindkey -M filterselect '^S' up-line-or-history
 bindkey -M filterselect '^E' accept-search
 bindkey '^R' zaw-history
+bindkey '^Xa' zaw-applications
 
 zstyle ':filter-select:highlight' matched fg=green
 zstyle ':filter-select' max-lines 4
