@@ -48,14 +48,14 @@ alias -g NS='|sort -n'
 alias -g RNS='|sort -nr'
 alias -g N='&>/dev/null&'
 
+alias tail='tail -n $((${LINES:-`tput lines 2>/dev/null||echo -n 80`} - 7))'
 
 # general helpers
 alias b='bundle exec'
 if [[ $OS == osx ]]; then
   #alias vim="vim --servername VIM"
   #alias rv="vim --remote"
-  alias vim="/Applications/MacVim.app/Contents/MacOS/Vim"
-  alias vimdiff="/Applications/MacVim.app/Contents/MacOS/Vim"
+  alias vim=/Applications/MacVim.app/Contents/MacOS/vim
   alias mvim="mvim --remote-tab-silent"
   alias m="mate ."
   alias mw="mate -w"
