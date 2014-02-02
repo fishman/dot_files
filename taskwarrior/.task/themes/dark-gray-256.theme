@@ -1,0 +1,77 @@
+###############################################################################
+# Sample taskwarrior 1.9 (or later) dark gray 256-color theme
+#
+# taskwarrior - a command line task list manager.
+#
+# Copyright 2006-2014, Paul Beckingham, Federico Hernandez.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+# OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# http://www.opensource.org/licenses/mit-license.php
+#
+###############################################################################
+
+color=on
+color.header=color8
+color.footnote=color8
+color.error=color8
+color.debug=color8
+
+color.summary.bar=black on gray12
+color.summary.background=white on gray3
+
+color.history.add=color0 on gray6
+color.history.done=color0 on gray15
+color.history.delete=color0 on gray10
+
+color.burndown.pending=on gray6
+color.burndown.started=on gray15
+color.burndown.done=on gray10
+
+color.sync.added=gray10
+color.sync.changed=gray15
+color.sync.rejected=gray6
+
+color.undo.before=gray6
+color.undo.after=gray15
+
+color.calendar.today=color8 on color15
+color.calendar.due=color7 on color8
+color.calendar.due.today=color15 on color8
+color.calendar.overdue=underline color0 on color7
+color.calendar.weekend=on color235
+color.calendar.holiday=color7 on color15
+color.calendar.weeknumber=gray4
+
+color.recurring=gray8
+color.overdue=color0 on color15
+color.due.today=underline color0 on color7
+color.due=color7
+color.active=color7 on color8
+color.pri.none=
+color.pri.H=color15
+color.pri.M=color7
+color.pri.L=color8
+color.tagged=gray12
+color.blocked=color15 on color8
+color.blocking=color15 on color7
+color.project.none=
+color.tag.none=
+color.alternate=on gray2
+

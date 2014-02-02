@@ -1,0 +1,30 @@
+# [Created by task 2.2.0 12/29/2013 00:29:54]
+# Taskwarrior program configuration file.
+# For more documentation, see http://taskwarrior.org or try 'man task', 'man task-faq',
+# 'man task-tutorial', 'man task-color', 'man task-sync' or 'man taskrc'
+
+# Here is an example of entries that use the default, override and blank values
+#   variable=foo   -- By specifying a value, this overrides the default
+#   variable=      -- By specifying no value, this means no default
+#   #variable=foo  -- By commenting out the line, or deleting it, this uses the default
+
+# Use the command 'task show' to see all defaults and overrides
+
+# Files
+data.location=~/.task
+include ~/.task/holidays.de-DE.rc
+include ~/.task/holidays.en-US.rc
+
+# Color theme (uncomment one to use)
+#include ~/.task/themes/light-16.theme
+#include ~/.task/themes/light-256.theme
+#include ~/.task/themes/dark-16.theme
+#include ~/.task/themes/dark-256.theme
+#include ~/.task/themes/dark-red-256.theme
+include ~/.task/themes/dark-green-256.theme
+#include ~/.task/themes/dark-blue-256.theme
+# include ~/.task/themes/dark-violets-256.theme
+#include ~/.task/themes/dark-yellow-green.theme
+#include ~/.task/themes/dark-gray-256.theme
+# include ~/.task/themes/solarized-dark-256.theme
+

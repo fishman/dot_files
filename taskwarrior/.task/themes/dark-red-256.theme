@@ -1,0 +1,77 @@
+###############################################################################
+# Sample taskwarrior 1.9 (or later) dark 256-color theme, featuring red.
+#
+# taskwarrior - a command line task list manager.
+#
+# Copyright 2006-2014, Paul Beckingham, Federico Hernandez.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+# OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+# http://www.opensource.org/licenses/mit-license.php
+#
+###############################################################################
+
+color=on
+color.header=rgb100
+color.footnote=rgb100
+color.error=rgb100
+color.debug=rgb100
+
+color.summary.bar=white on rgb300
+color.summary.background=white on color0
+
+color.history.add=color0 on rgb100
+color.history.done=color0 on rgb300
+color.history.delete=color0 on rgb500
+
+color.burndown.pending=on rgb200
+color.burndown.started=on rgb411
+color.burndown.done=on gray4
+
+color.sync.added=gray4
+color.sync.changed=rgb411
+color.sync.rejected=rgb200
+
+color.undo.before=rgb301
+color.undo.after=rgb503
+
+color.calendar.today=color0 on rgb511
+color.calendar.due=color0 on color249
+color.calendar.due.today=color0 on color252
+color.calendar.overdue=color0 on color255
+color.calendar.weekend=on color235
+color.calendar.holiday=rgb522 on rgb300
+color.calendar.weeknumber=rgb100
+
+color.recurring=rgb511
+color.overdue=color255
+color.due.today=color252
+color.due=color249
+color.active=rgb500 on rgb100
+color.pri.none=
+color.pri.H=rgb500
+color.pri.M=rgb400
+color.pri.L=rgb300
+color.tagged=color246
+color.blocked=white on rgb100
+color.blocking=white on rgb200
+color.project.none=
+color.tag.none=
+color.alternate=on color233
+
