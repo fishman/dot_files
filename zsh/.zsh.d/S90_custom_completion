@@ -10,3 +10,14 @@ _cheat () {
 }
 
 compdef _cheat cheat
+
+zstyle ':completion:*:*:task:*' verbose yes
+zstyle ':completion:*:*:task:*:descriptions' format '%U%B%d%b%u'
+
+zstyle ':completion:*:*:task:*' group-name ''
+
+alias t=task
+proj () {
+    t proj:$@
+}
+compdef _task t=task
