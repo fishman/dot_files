@@ -216,6 +216,11 @@ setopt HIST_SAVE_NO_DUPS
 cdpath=(~ ~/git)
 fpath=(~/.zsh.d/zsh-completions ~/.zsh.d/zsh-functions $fpath)
 
+autoload -Uz git-escape-magic
+git-escape-magic
+
+autoload -Uz git-flow-completion
+git-flow-completion
 
 autoload predict-on
 predict-toggle() {
