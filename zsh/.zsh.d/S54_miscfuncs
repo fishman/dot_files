@@ -116,3 +116,28 @@ function url-encode; {
 function google() {
     $VIEW "http://www.google.com/search?q=`url-encode "${(j: :)@}"`"
 }
+
+function webshare() {
+    local SSHHOST=$1
+    local SSHPORT=9999
+
+    python -m SimpleHTTPServer &
+    local PID=$!
+
+    open http://$SSHHOST:$SSHPORT
+    echo Press enter to stop sharing, http://$SSHHOST:$SSHPORT copied to primary selection
+    /usr/bin/ssh -R $SSHPORT:127.0.0.1:8000 $SSHHOST 'read'
+    kill $PID
+}
+
+# https://raw.github.com/christianbundy/whereami
+function whereami() {
+    echo "$(tput setaf 2)$(whoami)$(tput setaf 0)@$(tput setaf 3)$(hostname)$(tput setaf 0):$(tput setaf 6)$(pwd)$(tput sgr0)"
+}
+
+sshcd() {
+    t=${@[$#]}
+    c=("ssh" "-t" "${@:1:$(( $# -1 ))}" "${t%:*}" "cd ${t##*:}; \$SHELL -l")
+    "${c[@]}"
+}
+

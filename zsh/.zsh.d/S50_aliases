@@ -49,6 +49,7 @@ alias -g RNS='|sort -nr'
 alias -g N='&>/dev/null&'
 
 alias tail='tail -n $((${LINES:-`tput lines 2>/dev/null||echo -n 80`} - 7))'
+alias head='head -n $((${LINES:-`tput lines 2>/dev/null||echo -n 80`} - 7))'
 
 # general helpers
 alias b='bundle exec'
@@ -147,6 +148,7 @@ alias gentags='ctags -f .tmtags --excmd=pattern -R --tag-relative=yes ; sort .tm
 
 alias git='noglob git'
 alias calc='noglob calc'
+alias emerge='noglob emerge'
 
 # random os x
 if [[ $OS == osx ]]; then
@@ -154,8 +156,6 @@ if [[ $OS == osx ]]; then
   alias murky="open -a Murky"
   #vlc
   alias vlc="open -a VLC"
-  #mplayer
-  alias mplayer="/Applications/MPlayer\ OSX\ Extended.app/Contents/Resources/Binaries/mpextended.mpBinaries/Contents/mpextended.mpBinaries/Contents/MacOS/mplayer"
   # web devel
   alias devfox='/Applications/Devfox.app/Contents/MacOS/firefox-bin -P devprofile'
   alias firefox='/Applications/Firefox.app/Contents/MacOS/firefox-bin -P default'
@@ -173,15 +173,17 @@ if [[ $OS == osx ]]; then
 else
   # arch aliases
   alias rc.d="sudo rc.d"
-  alias hamburg="TZ='Europe/Berlin' date"
-  alias tehran="TZ='Asia/Tehran' date"
   alias systemctl="sudo systemctl"
   alias e="emacsclient -t"
   alias emacsquit="emacsclient -t '(let ((last-nonmenu-event nil))(save-buffers-kill-emacs))'"
-  # task aliases
-  alias due="task rc.calendar.details:full cal"
-  alias holiday="task rc.calendar.holidays:full cal"
 fi
+alias est="TZ=EST date"
+alias cst="TZ=CST6CDT date"
+alias hamburg="TZ='Europe/Berlin' date"
+alias tehran="TZ='Asia/Tehran' date"
+# task aliases
+alias due="task rc.calendar.details:full cal"
+alias holiday="task rc.calendar.holidays:full cal"
 
 # security
 # libdnet
@@ -330,8 +332,9 @@ if [ -x ~/bin/fasd ]; then
     eval "$(fasd --init auto)"
 
     alias v='f -e vim' # quick opening files with vim
+    alias cm='f -i -e cmus-remote'
     alias m='f -e mplayer' # quick opening files with mplayer
-    alias o='a -e xdg-open' # quick opening files with xdg-open
+    alias o='a -e open' # quick opening files with xdg-open
     alias c='f -e cat'
 fi
 
@@ -362,3 +365,4 @@ alias listening="netstat -tlnp"
 alias zombies='ps Haxwwo stat,pid,ppid,user,wchan:25,command | grep -e "^STAT" -e "^D" -e "^Z"'
 
 alias omnisharp='mono ~/.vim/bundle/Omnisharp/OmniSharp/bin/Debug/OmniSharp.exe'
+alias cpv='rsync -pogr --progress'
