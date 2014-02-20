@@ -212,8 +212,6 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_SAVE_NO_DUPS
 # setopt HIST_VERIFY
 
-# add cd search path
-cdpath=(~ ~/git)
 fpath=(~/.zsh.d/zsh-completions ~/.zsh.d/zsh-functions $fpath)
 
 autoload -Uz git-escape-magic
