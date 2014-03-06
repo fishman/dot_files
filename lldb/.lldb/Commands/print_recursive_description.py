@@ -22,31 +22,40 @@
 # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import os
-
-lldb_auto_load_paths = ["~/.lldb/scripts",
-        "~/.lldb/Commands",
-        "~/.lldb/Summaries"]
-lldb_script_endings = [".py"]
+import lldb
 
 
-def __lldb_init_module(debugger, dict):
-    # Go through all files
-    to_load = set()
-    endings = tuple(lldb_script_endings)
+def print_recursive_description_command(debugger, command, result, internal_dict):
+    """
+    Overview:
 
-    # Go through all lldb auto load paths
-    for path in lldb_auto_load_paths:
-        # Got through all folders in auto load paths
-        for root, dirs, files in os.walk(os.path.expanduser(path)):
-            # Got through all files
-            for f in files:
-                # Add only files with correct endings
-                if f.endswith(endings):
-                    full_file_path = os.path.join(root, f)
-                    to_load.add(full_file_path)
+    A command to print view hierarchy using -[UIView (NSString *)recursiveDescription] private method.
 
-    # Load all scripts
-    for script_path in to_load:
-        command = "command script import \"{}\"".format(script_path)
-        debugger.HandleCommand(command)
+    Example:
+
+    prd self.view
+    """
+    target = debugger.GetSelectedTarget()
+    process = target.GetProcess()
+    thread = process.GetSelectedThread()
+    frame = thread.GetSelectedFrame()
+
+    if not target.IsValid() or not process.IsValid():
+        result.SetError("Unable to get target/process")
+        return
+
+    options = lldb.SBExpressionOptions()
+    options.SetIgnoreBreakpoints()
+
+    print_command = "(NSString *)[{0!s} recursiveDescription]".format(command)
+    if frame.IsValid():
+        data = frame.EvaluateExpression(print_command, options)
+        data_description = data.GetObjectDescription()
+        
+        print >> result, data_description
+    else:
+        print "Invalid frame."
+
+
+def __lldb_init_module(debugger, internal_dict):
+    debugger.HandleCommand('command script add -f print_recursive_description.print_recursive_description_command prd')
