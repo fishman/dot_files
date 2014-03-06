@@ -1,4 +1,4 @@
-env PYTHONHOME=/usr
+# env PYTHONHOME=/usr
 
 # script import os, sys
 
@@ -42,8 +42,7 @@ command regex pjson 's/^(.+)$/po [[NSString alloc] initWithData:(id)[NSJSONSeria
 command regex pcef 's/^(.+)$/p  (unsigned short*)%1.string_->str/'
 
 
-command script import ~/.lldb/ls_simulator.py
-command script import ~/.lldb/unsignedshortptrsummary.py
+command script import ~/.lldb/autoload.py
 
 command alias reload command source ~/.lldbinit
 

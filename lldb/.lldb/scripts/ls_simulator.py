@@ -12,4 +12,4 @@ def ls_simulator_cmd(debugger, command, result, dict):
 
 def __lldb_init_module(debugger, internal_dict):
     debugger.HandleCommand("command script add -f ls_simulator.ls_simulator_cmd lssim")
-    print "lssim installed."
+    print 'The "lssim" command has been installed and is ready to use.'
