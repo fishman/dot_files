@@ -18,7 +18,7 @@ fi
 autoload -U read-from-minibuffer
 
 function zaw-src-ack() {
-    local ack_args REPLY f line ret
+    local ack_args REPLY f line ret cand
     local -a ack_history
     ack_history=( "${(@)${(f)"$(fc -l -n -m "$ACK_COMMAND *" 0 -1)"}#ack }" )
 
@@ -33,7 +33,7 @@ function zaw-src-ack() {
             (( histno++ ))
         done
         HISTNO="${histno}"
-        read-from-minibuffer "ack "
+        read-from-minibuffer "${ACK_COMMAND} "
         ret=$?
     }
 
@@ -44,19 +44,33 @@ function zaw-src-ack() {
                     if [[ -z "${line}" ]]; then
                         break
                     fi
-                    candidates+="${f}"
-                    cand_descriptions+="${f}:${line}"
+
+                    if [ ! ${ZAW_EDITOR_JUMP_PARAM} ]; then
+                        ZAW_EDITOR_JUMP_PARAM="+%LINE% %FILE%"
+                    fi
+
+                    cand="${ZAW_EDITOR_JUMP_PARAM/\%LINE\%/${line/:*/}}"
+                    cand="${cand/\%FILE\%/${f}}"
+
+                    candidates+="${cand}"
+                    cand_short=`echo ${f} | awk -F'/' '{if (NF>3){LASTDIR=NF-1; print $1"/.../"$LASTDIR"/"$NF;} else {print $0}}'`
+                    cand_descriptions+="${cand_short}:${line}"
                 done
             done
 
-        print -s -r -- "ack ${REPLY}"
+        print -s -r -- "${ACK_COMMAND} ${REPLY}"
 
-        actions=("zaw-callback-edit-file" "zaw-callback-append-to-buffer")
+        actions=("zaw-src-ack-open-file" "zaw-callback-append-to-buffer")
         act_descriptions=("edit file" "append to edit buffer")
         options=("-m")
     else
         return 1
     fi
+}
+
+function zaw-src-ack-open-file() {
+  BUFFER="${ZAW_EDITOR} $1"
+  zle accept-line
 }
 
 zaw-register-src -n ack zaw-src-ack

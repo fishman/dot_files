@@ -2,7 +2,7 @@
 
 function zaw-src-process () {
     local ps_list title ps pid_list
-    ps_list="$(ps -aux --sort args | awk '$11 !~ /^\[/ {print $0}')" # filter out kernel processes
+    ps_list="$(ps -au args | awk '$11 !~ /^\[/ {print $0}')" # filter out kernel processes
     title="${${(f)ps_list}[1]}"
     ps="$(echo $ps_list | sed '1d')"
     pid_list="$(echo $ps | awk '{print $2}')"

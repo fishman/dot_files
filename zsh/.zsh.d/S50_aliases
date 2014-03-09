@@ -87,7 +87,6 @@ alias grep='egrep'
 #alias wc='sloccount'
 alias mutt='TERM=xterm-256color mutt'
 alias irssi='screen -S irssi -d -R irssi'
-alias tmux='tmux attach'
 # color for stuff
 alias flux='xflux -l 53.5559 -q 9.98766'
 
@@ -333,10 +332,12 @@ if [ -x ~/bin/fasd ]; then
 
     alias v='f -e vim' # quick opening files with vim
     alias cm='f -i -e cmus-remote'
-    alias m='f -e mplayer' # quick opening files with mplayer
+    alias m='f -e mpv' # quick opening files with mpv
     alias o='a -e open' # quick opening files with xdg-open
     alias c='f -e cat'
 fi
+
+alias crontab="VIM_CRONTAB=true crontab"
 
 alias venv="virtualenv"
 alias venv2="virtualenv2"

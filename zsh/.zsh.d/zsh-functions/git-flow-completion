@@ -341,6 +341,4 @@ __git_command_successful () {
 	return 0
 }
 
-print func is initialized
-
 zstyle ':completion:*:*:git:*' user-commands flow:'provide high-level repository operations'

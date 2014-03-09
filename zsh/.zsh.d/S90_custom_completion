@@ -21,3 +21,6 @@ proj () {
     t proj:$@
 }
 compdef _task t=task
+
+# use the mplayer completion with mpv/fasd
+compdef _mplayer m=mplayer

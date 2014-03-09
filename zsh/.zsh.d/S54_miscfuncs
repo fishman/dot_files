@@ -141,3 +141,12 @@ sshcd() {
     "${c[@]}"
 }
 
+
+hr() { printf '\033(0'; printf 'q%.0s' $(seq $(tput cols)); printf '\033(B'; }
+
+
+runonce() {
+    if [ -z $(pgrep $1) ]; then
+        nohup $@ >/dev/null 2>&1 &
+    fi
+}
