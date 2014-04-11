@@ -1,111 +1,62 @@
-xman*topBox:false
-xman*bothShown:true
+! *foreground:        White
+URxvt.perl-lib:     /Users/myuser/.urxvt
+URxvt*chdir:        /Users/myuser/git
 
-! enable 96dpi fonts
-!Xft.dpi: 90
-!Xft.antialias: false
+urxvt*font:         xft:Terminus:pixelsize=14
+xterm*faceName:     terminus:pixelsize=18
 
-xpdf.viKeys: true
+xpdf.viKeys:        true
 
-! xosview settings
-xosview*background: black
-xosview*foreground: Orange
+#include "/Users/myuser/.dotfiles/x11/colors/tango"
+! #include "/Users/myuser/.dotfiles/x11/colors/jwr"
+#include "/Users/myuser/.dotfiles/x11/modules/rxvt_perl"
+#include "/Users/myuser/.dotfiles/x11/modules/rxvt_keysym"
+#include "/Users/myuser/.dotfiles/x11/modules/xcalc"
+#include "/Users/myuser/.dotfiles/x11/modules/xmisc"
+#include "/Users/myuser/.dotfiles/x11/modules/osxterm"
 
-! urxvt*depth: 24
-urxvt*geometry:          179x51
-urxvt*background:        #313031
-urxvt*foreground:        White
-! URxvt*background:         #1C1C1C
-! URxvt*foreground:         #B4B4B4 
-! urxvt*borderWidth:        0
-! urxvt*visualBell:       true
-!urxvt*inheritPixmap:      true
-! urxvt*reverseVideo: true
-! urxvt*transparent: true
-urxvt*tintColor:         #dfdfdf
-urxvt*shading:          20    !trans, 0=opaque
-urxvt*fading:         10    !term unfocus
-urxvt*font:     xft:Terminus:pixelsize=14
-URxvt*urgentOnBell: true
+URxvt.url-select.launcher:  /usr/bin/open
+URxvt.clipboard.copycmd:    /usr/bin/pbcopy
+URxvt.clipboard.pastecmd:   /usr/bin/pbpaste
 
+urxvt*termName:             rxvt-unicode
+scratchpad*font:            xft:Terminus:pixelsize=14
+scratchpad*termName:        rxvt-unicode
+scratchpad*background:      #313031
+scratchpad*foreground:      White
 
-urxvt*scrollBar: false
-urxvt*scrollBar_floating:  true
-urxvt*scrollBar_right: false
-urxvt*scrollColor:   #000000
-urxvt*saveLines:   1000
-!urxvt*termName:   urxvt
-urxvt*cursorColor:   #d8d8d8
-! urxvt*colorBD:   lightyellow
-! urxvt*colorUL:   yellow
+urxvt*geometry:             179x51
+urxvt*background:           #313031
+urxvt*foreground:           White
+urxvt*tintColor:            #dfdfdf
+urxvt*shading:              20    !trans, 0=opaque
+urxvt*fading:               10    !term unfocus
+urxvt*cursorColor:          #d8d8d8
 
-!colors
-!(unknown)
-! urxvt*color0: #000000
-! urxvt*color7: #bebebe
-! urxvt*color8: #666666
-! urxvt*color9: #cf6171
-! urxvt*color10: #c5f779
-! urxvt*color11: #fff796
-! urxvt*color12: #4186be
-! urxvt*color13: #cf9ebe
-! urxvt*color14: #71bebe
-! urxvt*color15: #ffffff
-! !(1 is an option color in .Xdefaults)
-! urxvt*color1: #ffa2a5
-! !(2 is a resource color in .Xdefaults)
-! urxvt*color2: #bdb66b
-! !(3 is for def/return color in python)
-! urxvt*color3: #f7e78c
-! !(4 is for comments color in python)
-! urxvt*color4: #84cfef
-! !(5 is for import/from color in python)
-! urxvt*color5: #ce5d5a
-! !(6 is for function color in python)
-! urxvt*color6: #87ff87
-
-! ---| thayer (tango) |--- {{{
-! Black (not tango) + DarkGrey
-URxvt*color0:             #000000
-URxvt*color8:             #555753
-! DarkRed + Red
-URxvt*color1:             #ff6565
-URxvt*color9:             #ff8d8d
-! DarkGreen + Green
-URxvt*color2:             #93d44f
-URxvt*color10:            #78e758
-! DarkYellow + Yellow
-URxvt*color3:             #eab93d
-URxvt*color11:            #ffc123
-! DarkBlue + Blue
-URxvt*color4:             #204a87
-URxvt*color12:            #3465a4
-! DarkMangenta + Mangenta
-URxvt*color5:             #ce5c00
-URxvt*color13:            #f57900
-!DarkCyan + Cyan (both not tango)
-URxvt*color6:             #89b6e2
-URxvt*color14:            #46a4ff
-! LightGrey + White
-URxvt*color7:             #cccccc
-URxvt*color15:            #ffffff
-!}}}
+! URxvt (scrollstyle:  rxvt (default), plain, next, or xterm)
+! URxvt*title:             Terminal
+URxvt.saveLines:         1500
+URxvt*scrollBar:         false
+URxvt*scrollColor:       #2A2A2A
+URxvt*scrollstyle:       plain
+URxvt*scrollBar_right:   true
+URxvt.scrollKey:         true
+URxvt.scrollWithBuffer:  true
+URxvt.scrollBack:        true
+URxvt.jumpScroll:        true
+URxvt.skipScroll:        true
+URxvt.urgentOnBell:      true
+URxvt.trippleclickwords: true
+URxvt.colorIT:           #605D5D
+URxvt.colorBD:           #F9F9F9
+URxvt.colorUL:           #FFA905
+URxvt.colorRV:           #16596A
+URxvt*cursorBlink:       false
+URxvt*cursorUnderline:   false
 
 
-
-URxvt.perl-ext: mark-and-yank,macosx-clipboard,matcher
-URxvt.perl-lib: /Users/timebomb/.urxvt/
-URxvt.cutchars: `"'()*,;<>[]{|}'"
-URxvt.keysym.M-C: perl:mark-and-yank:activate_mark_mode
-URxvt.keysym.M-u: perl:mark-and-yank:activate_mark_url_mode
-URxvt.keysym.M-c: perl:macosx-clipboard:copy
-URxvt.keysym.M-v: perl:macosx-clipboard:paste
-URxvt.urlLauncher: open
-URxvt.matcher.rend.0: fg8
-URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
-
-
-!
+! Colorscheme based on the gvim colorscheme desert
+! xterm*termName:     xterm-256color
 UXTerm*geometry: 140x36
 !XTerm*underLine: on
 UXTerm*customization: -color
@@ -122,64 +73,6 @@ UXTerm*highlightSelection: true
 UXTerm*background: #313031
 UXTerm*foreground: White
 
-! ---| thayer (tango) |--- {{{
-! Black (not tango) + DarkGrey
-UXTerm*color0:             #000000
-UXTerm*color8:             #555753
-! DarkRed + Red
-UXTerm*color1:             #ff6565
-UXTerm*color9:             #ff8d8d
-! DarkGreen + Green
-UXTerm*color2:             #93d44f
-UXTerm*color10:            #78e758
-! DarkYellow + Yellow
-UXTerm*color3:             #eab93d
-UXTerm*color11:            #ffc123
-! DarkBlue + Blue
-UXTerm*color4:             #204a87
-UXTerm*color12:            #3465a4
-! DarkMangenta + Mangenta
-UXTerm*color5:             #ce5c00
-UXTerm*color13:            #f57900
-!DarkCyan + Cyan (both not tango)
-UXTerm*color6:             #89b6e2
-UXTerm*color14:            #46a4ff
-! LightGrey + White
-UXTerm*color7:             #cccccc
-UXTerm*color15:            #ffffff
-!}}}
-
-!colors
-!(unknown)
-! UXTerm*color0: #000000
-! UXTerm*color7: #bebebe
-! UXTerm*color8: #666666
-! UXTerm*color9: #cf6171
-! UXTerm*color10: #c5f779
-! UXTerm*color11: #fff796
-! UXTerm*color12: #4186be
-! UXTerm*color13: #cf9ebe
-! UXTerm*color14: #71bebe
-! UXTerm*color15: #ffffff
-
-! !(1 is an option color in .Xdefaults)
-! UXTerm*color1: #ffa2a5
-
-! !(2 is a resource color in .Xdefaults)
-! UXTerm*color2: #bdb66b
-
-! !(3 is for def/return color in python)
-! UXTerm*color3: #f7e78c
-
-! !(4 is for comments color in python)
-! UXTerm*color4: #84cfef
-
-! !(5 is for import/from color in python)
-! UXTerm*color5: #ce5d5a
-
-! !(6 is for function color in python)
-! UXTerm*color6: #87ff87
-
 !set the font, and fond size
 ! this also uses a antialias/scalable font
 !xterm*faceName: Bitstream Vera Sans Mono
@@ -187,33 +80,15 @@ UXTerm*color15:            #ffffff
 ! xterm*faceSize: 10
 ! xterm*font:     xft:terminus:pixelsize=18
 ! xterm*font : -*-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-15
-
-!set the window geometry
-UXTerm*scrollBar: false
-
-! XTerm*VT100.Translations: #override \
-! <KeyPress> Prior: scroll-back(1,page) \n\
-! <KeyPress> Next: scroll-forw(1,page) \n\
-! Meta <KeyPress> W: quit() \n\
-! Meta <KeyPress> V: insert-selection(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
-! <BtnUp>: select-end(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
-
-
-
-## TERMINAL KEY SETTINGS
-## Adjust to OSX Terminal.app behaviour
-*VT100.translations: #override\
-<Key>Prior: scroll-back(1,pages) \n\
-<Key>Next: scroll-forw(1,pages)\n\
-Meta <Key> K: send-signal(int) clear-saved-lines() \n\
-Meta <Key> P: print() \n\
-Meta <Key> minus: smaller-vt-font() \n\
-Meta <Key> KP_Subtract: smaller-vt-font() \n\
-Meta <Key> plus: larger-vt-font() \n\
-Meta <Key> KP_Add: larger-vt-font() \n\
-Meta <Key> C: select-cursor-start() \ select-cursor-end(PRIMARY, CUT_BUFFER0) \n\
-Meta <Key> V: insert-selection(PRIMARY, CUT_BUFFER0) \n\
-<BtnUp>: select-end(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
-Meta <Key> M: iconify() \n\
-Ctrl ~Shift <Key>Tab: string(0x1b) string("[27;5;9~") \n \
-Ctrl Shift <Key> Tab: string(0x1b) string("[27;6;9~") \n
+!
+!!!!!!!!!!!!!!! UNUSED !!!!!!!!!!!!!
+! URxvt*background:           #1C1C1C
+! URxvt*foreground:           #B4B4B4 
+! URxvt*borderWidth:          0
+! URxvt*visualBell:           true
+! URxvt*inheritPixmap:        true
+! URxvt*reverseVideo:         true
+! URxvt*transparent:          true
+! URxvt.depth:             32
+! URxvt.shading:           15
+! URxvt.transparent:       false

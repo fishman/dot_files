@@ -1,0 +1,25 @@
+## TERMINAL KEY SETTINGS
+## Adjust to OSX Terminal.app behaviour
+*VT100.translations: #override\
+<Key>Prior: scroll-back(1,pages) \n\
+<Key>Next: scroll-forw(1,pages)\n\
+Meta <Key> K: send-signal(int) clear-saved-lines() \n\
+Meta <Key> P: print() \n\
+Meta <Key> minus: smaller-vt-font() \n\
+Meta <Key> KP_Subtract: smaller-vt-font() \n\
+Meta <Key> plus: larger-vt-font() \n\
+Meta <Key> KP_Add: larger-vt-font() \n\
+Meta <Key> C: select-cursor-start() \ select-cursor-end(PRIMARY, CUT_BUFFER0) \n\
+Meta <Key> V: insert-selection(PRIMARY, CUT_BUFFER0) \n\
+<BtnUp>: select-end(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
+Meta <Key> M: iconify() \n\
+Ctrl ~Shift <Key>Tab: string(0x1b) string("[27;5;9~") \n \
+Ctrl Shift <Key> Tab: string(0x1b) string("[27;6;9~") \n
+
+
+! XTerm*VT100.Translations: #override \
+! <KeyPress> Prior: scroll-back(1,page) \n\
+! <KeyPress> Next: scroll-forw(1,page) \n\
+! Meta <KeyPress> W: quit() \n\
+! Meta <KeyPress> V: insert-selection(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\
+! <BtnUp>: select-end(CLIPBOARD,PRIMARY,CUT_BUFFER0) \n\

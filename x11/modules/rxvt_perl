@@ -1,0 +1,24 @@
+! URxvt.perl-ext-common:      url-select,font-size,clipboard,keyboard-select
+URxvt.perl-ext-common:      url-select,clipboard,keyboard-select
+URxvt.cutchars:             `"'()*,;<>[]{|}'"
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.keysym.C-S-Up:        perl:font-size:increase
+URxvt.keysym.C-S-Down:      perl:font-size:decrease
+URxvt.keysym.M-s:           perl:keyboard-select:search
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-c:           perl:clipboard:copy
+URxvt.keysym.M-v:           perl:clipboard:paste
+URxvt.keysym.M-C-v:         perl:clipboard:paste_escaped
+URxvt.url-select.underline: true
+URxvt.iso14755:             false
+URxvt.iso14755_52:          false
+
+! URxvt.perl-ext: mark-and-yank,macosx-clipboard,matcher
+! URxvt.keysym.M-C: perl:mark-and-yank:activate_mark_mode
+! URxvt.keysym.M-u: perl:mark-and-yank:activate_mark_url_mode
+! URxvt.keysym.M-c: perl:macosx-clipboard:copy
+! URxvt.keysym.M-v: perl:macosx-clipboard:paste
+! URxvt.underlineURLs:    true
+! URxvt.matcher.rend.0: fg8
+! URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
+

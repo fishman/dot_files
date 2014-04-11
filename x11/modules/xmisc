@@ -1,0 +1,6 @@
+xman*topBox:    false
+xman*bothShown: true
+
+! xosview settings
+xosview*background: black
+xosview*foreground: Orange
