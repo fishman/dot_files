@@ -2,35 +2,43 @@
 URxvt.perl-lib:     /Users/myuser/.urxvt
 URxvt*chdir:        /Users/myuser/git
 
-urxvt*font:         xft:Terminus:pixelsize=14
+urxvt*font:         xft:terminus:pixelsize=14,xft:Inconsolata for Powerline:style=Medium
 xterm*faceName:     terminus:pixelsize=18
 
 xpdf.viKeys:        true
 
 #include "/Users/myuser/.dotfiles/x11/colors/tango"
 ! #include "/Users/myuser/.dotfiles/x11/colors/jwr"
+#include "/Users/myuser/.dotfiles/x11/modules/font"
 #include "/Users/myuser/.dotfiles/x11/modules/rxvt_perl"
 #include "/Users/myuser/.dotfiles/x11/modules/rxvt_keysym"
 #include "/Users/myuser/.dotfiles/x11/modules/xcalc"
 #include "/Users/myuser/.dotfiles/x11/modules/xmisc"
 #include "/Users/myuser/.dotfiles/x11/modules/osxterm"
 
-URxvt.url-select.launcher:  /usr/bin/open
+URxvt.url-select.launcher:  /Users/myuser/bin/xdg-open
 URxvt.clipboard.copycmd:    /usr/bin/pbcopy
 URxvt.clipboard.pastecmd:   /usr/bin/pbpaste
 
 urxvt*termName:             rxvt-unicode
-scratchpad*font:            xft:Terminus:pixelsize=14
+scratchpad*font:            xft:terminus:pixelsize=14,xft:Inconsolata for Powerline:style=Medium
 scratchpad*termName:        rxvt-unicode
 scratchpad*background:      #313031
 scratchpad*foreground:      White
+float*font:                 xft:terminus:pixelsize=14,xft:Inconsolata for Powerline:style=Medium
+float*termName:             rxvt-unicode
+float*background:           #313031
+float*foreground:           White
+float*geometry:             120x28
 
 urxvt*geometry:             179x51
 urxvt*background:           #313031
 urxvt*foreground:           White
-urxvt*tintColor:            #dfdfdf
-urxvt*shading:              20    !trans, 0=opaque
-urxvt*fading:               10    !term unfocus
+urxvt*tintColor:            White
+URxvt*transparent:          true
+! urxvt*shading:              20    !trans, 0=opaque
+urxvt*shading:              20
+! urxvt*fading:               50    !term unfocus
 urxvt*cursorColor:          #d8d8d8
 
 ! URxvt (scrollstyle:  rxvt (default), plain, next, or xterm)
@@ -88,7 +96,4 @@ UXTerm*foreground: White
 ! URxvt*visualBell:           true
 ! URxvt*inheritPixmap:        true
 ! URxvt*reverseVideo:         true
-! URxvt*transparent:          true
-! URxvt.depth:             32
-! URxvt.shading:           15
-! URxvt.transparent:       false
+! URxvt.depth:                32
