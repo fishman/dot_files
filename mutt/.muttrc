@@ -23,7 +23,7 @@ source ~/.mutt/crypto
 
 ## Alias ##
 #
-# set alias_file = ~/.mutt/aliases
+set alias_file = ~/.mutt/aliases
 # source ~/.mutt/aliases
 
 # Show alias name, not email address
@@ -63,8 +63,8 @@ set confirmappend = no
 ## Reading mails
 #
 # imap
-set imap_idle = yes
-set imap_check_subscribed = yes
+# set imap_idle = yes
+# set imap_check_subscribed = yes
 
 # Check mail every 30 seconds
 set mail_check = 30
@@ -304,7 +304,8 @@ source ~/.mutt/sidebar
 ## Colors ##
 #
 # source ~/.mutt/colors-blackback
-source ~/.mutt/colors-zenburn
+# source ~/.mutt/colors-zenburn
+source ~/.mutt/mutt-colors-solarized-dark-256.muttrc
 # source ~/.mutt/colors-256
 #source ~/.mutt/colors
 #source ~/.mutt/colors-whiteback
