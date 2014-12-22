@@ -14,6 +14,9 @@ if [[ $OS == osx ]]; then
   unset RUBYOPT
 
   PATH="$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/usr/sbin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:${EPREFIX}/usr/portage/scripts:${ROOTPATH}:$PATH_BACK"
+  PATH="$PATH:$HOME/Gentoo/usr/lib/Python.framework/Versions/2.7/bin"
+
+  export DISTFILES="${EPREFIX}/usr/portage/distfiles"
 
   alias myoverlay="cd $EPREFIX/usr/local/portage"
 fi
