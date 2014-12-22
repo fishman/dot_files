@@ -54,9 +54,8 @@ alias head='head -n $((${LINES:-`tput lines 2>/dev/null||echo -n 80`} - 7))'
 # general helpers
 alias b='bundle exec'
 if [[ $OS == osx ]]; then
-  #alias vim="vim --servername VIM"
   #alias rv="vim --remote"
-  alias vim=/Applications/MacVim.app/Contents/MacOS/vim
+  # alias vim=/Applications/MacVim.app/Contents/MacOS/vim
   alias mvim="mvim --remote-tab-silent"
   alias m="mate ."
   alias mw="mate -w"
@@ -71,11 +70,11 @@ if [[ $OS == osx ]]; then
   alias top="/usr/bin/top -ocpu -R -s 2 -n20"
   alias getit='curl -O `pbpaste`'
   alias mtop="top -o rsize"
-  alias pgstart="pg_ctl start -D /Users/timebomb/Gentoo/var/lib/postgresql/9.3/data -o '-D /Users/timebomb/Gentoo/etc/postgresql-9.3/ --data-directory=/Users/timebomb/Gentoo/var/lib/postgresql/9.3/data'"
-  alias pgstop="pg_ctl stop -D /Users/timebomb/Gentoo/var/lib/postgresql/9.3/data"
+  alias pgstart="pg_ctl start  -l logfile -D '${EPREFIX}/var/lib/postgresql/9.3/data' -o '-D ${EPREFIX}/etc/postgresql-9.3/ --data-directory=${EPREFIX}/var/lib/postgresql/9.3/data'"
+  alias pgstop="pg_ctl stop -D '${EPREFIX}/var/lib/postgresql/9.3/data'"
 
 else
-  alias vim="vim --servername $PWD"
+  #alias vim="vim --servername $PWD"
   alias emacs='emacs -nw' # prefer console version of emacs
   alias open='xdg-open'
 fi
@@ -140,7 +139,7 @@ fi
 alias unzipall='for z in *.zip; do unzip -n $z; done'
 
 # re
-alias idal='/Users/timebomb/Documents/Projects/RE/IDA/IDA\ Pro/idaadv/idal'
+alias idal="${HOME}/Documents/Projects/RE/IDA/IDA\ Pro/idaadv/idal"
 alias gdbintel='gdb -x ~/.gdbinit_color'
 
 alias gentags='ctags -f .tmtags --excmd=pattern -R --tag-relative=yes ; sort .tmtags -o .tmtags'
@@ -164,11 +163,7 @@ if [[ $OS == osx ]]; then
   alias xampp="sudo /Applications/xampp/xamppfiles/mampp"
   alias cake="~/sites/Studiblock/studiblock/cake/console/cake"
 
-  # textmate 
-  alias e="open -a TextMate"
-  alias matereload="osascript -e 'tell app \"TextMate\" to reload bundles'"
   alias projects="cd ~/Documents/Projects"
-
 else
   # arch aliases
   alias rc.d="sudo rc.d"
@@ -176,8 +171,10 @@ else
   alias e="emacsclient -t"
   alias emacsquit="emacsclient -t '(let ((last-nonmenu-event nil))(save-buffers-kill-emacs))'"
 fi
+alias e='emacsclient -t -a ""'
 alias est="TZ=EST date"
 alias cst="TZ=CST6CDT date"
+alias pdt="TZ=PDT date"
 alias hamburg="TZ='Europe/Berlin' date"
 alias tehran="TZ='Asia/Tehran' date"
 # task aliases
@@ -208,6 +205,10 @@ alias holiday="task rc.calendar.holidays:full cal"
 # smbdumpusers
 # smbenum
 # nbtscan
+
+# tools
+# multitail
+# slurm
 
 # mpc
 alias play='mpc toggle'
@@ -245,6 +246,8 @@ alias gci='git commit -v -m '
 alias gca='git commit -v -a'
 alias gb='git branch'
 alias gba='git branch -a'
+alias g='git'
+alias clone='git clone'
 alias glivestat="watch 'git status |grep -v ^X'"
 alias unclean="git diff-files --quiet && git diff-index --cached --quiet HEAD -- || unclean='*'"
 
@@ -273,7 +276,7 @@ wt() {
   while true ; do ( $@ ) ; sleep 1 ; clear ; done
 }
 
-function bdiff() { diff "$1" "$2" || diff <(hex "$1") <(hex "$2") ; }
+function bdiff() { diff "$1" "$2" || diff <(xxd "$1") <(xxd "$2") ; }
 
 tohtml() {
   if test -z $1 ; then
@@ -322,18 +325,19 @@ alias post="curl -i -H \"Accept: application/json\" -X POST -d "
 alias aria="aria2c -c -s2 --load-cookies=~/.mozilla/firefox/01t2sdop.default/cookies.sqlite"
 
 if [ -x ~/bin/fasd ]; then
-    # fasd_cache="$HOME/.zsh_cache/fasd-init"
-    # if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-    #     fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install >| "$fasd_cache"
-    # fi
-    # source "$fasd_cache"
-    # unset fasd_cache
+    fasd_cache="$HOME/.zsh_cache/fasd-init"
+    if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+        fasd --init posix-alias zsh-hook >| "$fasd_cache"
+    fi
+    source "$fasd_cache"
+    unset fasd_cache
     eval "$(fasd --init auto)"
 
     alias v='f -e vim' # quick opening files with vim
     alias cm='f -i -e cmus-remote'
     alias m='f -e mpv' # quick opening files with mpv
-    alias o='a -e open' # quick opening files with xdg-open
+    alias m3='f -e "mpv --no-video"' # quick opening files with mpv
+    alias o='a -e xdg-open' # quick opening files with xdg-open
     alias c='f -e cat'
 fi
 
@@ -367,3 +371,14 @@ alias zombies='ps Haxwwo stat,pid,ppid,user,wchan:25,command | grep -e "^STAT" -
 
 alias omnisharp='mono ~/.vim/bundle/Omnisharp/OmniSharp/bin/Debug/OmniSharp.exe'
 alias cpv='rsync -pogr --progress'
+alias sendresume="mutt -a ~/Documents/Resume/ResumeDoc.docx -s Resume"
+
+alias mkvirtualenv2='mkvirtualenv -p `which python2.7`'
+
+if [ -x "$(which nvim)" ]; then
+    alias vim="nvim"
+fi
+
+if [ -x "$(which hub)" ]; then
+    eval "$(hub alias -s)"
+fi
