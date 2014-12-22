@@ -45,6 +45,13 @@ hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u
   bind  ( select 19
  # caption always           "%?%F%{= Kk}%:%{=u kR}%?  %h %-024=%{+b} %C%a %D %d %M %Y%{= db}"
  # hardstatus alwayslastline "%{= kR} %-Lw%{=b Kk} %n%f %t %{-}%+Lw %=%{= dd}"
+# terminfo and termcap for nice 256 color terminal
+# allow bold colors - necessary for some reason
+  attrcolor b ".I"
+# tell screen how to set colors. AB = background, AF=foreground
+  termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+# erase background with current bg color
+  defbce "on"
 
 
 escape ``
@@ -59,6 +66,7 @@ bind M screen -t 'Email' /opt/local/bin/mutt
 
 msgwait 15
 setenv DISPLAY ':2'
+term screen-256color-bce
 
 ########################
 ###
