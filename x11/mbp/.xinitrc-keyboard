@@ -1,0 +1,4 @@
+#!/bin/bash
+
+setxkbmap dvorak -option terminate:ctrl_alt_bkspc -option ctrl:swapcaps
+xmodmap ~/.xmodmap
