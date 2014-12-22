@@ -1,14 +1,15 @@
-! URxvt.perl-ext-common:      url-select,font-size,clipboard,keyboard-select
-URxvt.perl-ext-common:      url-select,clipboard,keyboard-select
-URxvt.cutchars:             `"'()*,;<>[]{|}'"
-URxvt.keysym.M-u:           perl:url-select:select_next
-URxvt.keysym.C-S-Up:        perl:font-size:increase
-URxvt.keysym.C-S-Down:      perl:font-size:decrease
-URxvt.keysym.M-s:           perl:keyboard-select:search
-URxvt.keysym.M-Escape:      perl:keyboard-select:activate
-URxvt.keysym.M-c:           perl:clipboard:copy
-URxvt.keysym.M-v:           perl:clipboard:paste
-URxvt.keysym.M-C-v:         perl:clipboard:paste_escaped
+URxvt.perl-ext-common:      url-select,fullscreen,clipboard,keyboard-select
+! URxvt.perl-ext-common:      url-select,fullscreen,font-size,clipboard,keyboard-select
+*.cutchars:             `"'()*,;<>[]{|}'"
+*.keysym.M-u:           perl:url-select:select_next
+! *.keysym.C-S-Up:        perl:font-size:incglobal
+! *.keysym.C-S-Down:      perl:font-size:decglobal
+*.keysym.M-s:           perl:keyboard-select:search
+*.keysym.M-Escape:      perl:keyboard-select:activate
+*.keysym.M-c:           perl:clipboard:copy
+*.keysym.M-v:           perl:clipboard:paste
+*.keysym.M-C-v:         perl:clipboard:paste_escaped
+*.keysym.F11:           perl:fullscreen:switch
 URxvt.url-select.underline: true
 URxvt.iso14755:             false
 URxvt.iso14755_52:          false
