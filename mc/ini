@@ -58,7 +58,7 @@ editor_option_save_position=1
 editor_option_auto_para_formatting=0
 editor_option_typewriter_wrap=0
 editor_edit_confirm_save=1
-editor_syntax_highlighting=1
+editor_syntax_highlighting=0
 editor_persistent_selections=1
 editor_cursor_beyond_eol=0
 editor_cursor_after_inserted_block=0
@@ -83,6 +83,9 @@ skin=modarin256-defbg
 
 filepos_max_saved_entries=1024
 
+editor_drop_selection_on_copy=1
+editor_stop_format_chars=-+*\\,.;:&>
+
 [Layout]
 message_visible=1
 keybar_visible=1
@@ -93,7 +96,7 @@ menubar_visible=1
 free_space=1
 horizontal_split=0
 vertical_equal=1
-left_panel_size=89
+left_panel_size=74
 horizontal_equal=1
 top_panel_size=1
 
@@ -115,6 +118,8 @@ color_terminals=
 
 screen-256color=
 
+rxvt-unicode=
+
 [Panels]
 show_mini_info=true
 kilobyte_si=false
@@ -135,6 +140,8 @@ torben_fj_mode=false
 quick_search_mode=0
 
 simple_swap=false
+
+select_flags=6
 
 [HotlistConfig]
 expanded_view_of_groups=0

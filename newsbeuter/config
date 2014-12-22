@@ -1,11 +1,78 @@
-browser "open"
+# ----------------------------------------------------------------------
+# file:    ~/.config/newsbeuter/config
+# author:  moparx     - http://moparx.com/configs
+# date:    05/08/2013 - 18:12 EDT
+# vim: set ai et fenc=utf-8 ft=conf nu si sts=0 sw=4 ts=8 tw=0 :
+# ----------------------------------------------------------------------
+
+# auto-reload yes
+browser firefox
+cleanup-on-quit yes
+confirm-exit yes
+download-path "~/Music/podcasts/%h/%n"
+feed-sort-order title-dec
+max-downloads 4
+notify-always yes
+notify-format "newsbeuter: %n unread articles within %f unread feeds"
+notify-program "dunstify"
+notify-xterm yes
+notify-screen yes
+player mplayer
+refresh-on-startup no
+# reload-time 20
+# reload-threads 2
+#show-read-articles no
+show-read-feeds no
+
+browser "xdg-open"
 bookmark-interactive true
 confirm-exit yes
 
-color article color188 color237
-color background color188 color237
-color info color142 color237 bold
-color listfocus color223 color235 bold
-color listfocus_unread color144 color235 bold
-color listnormal color188 color237
-color listnormal_unread color144 color237
+# binds ----------------------------------------------------------------
+
+unbind-key t
+unbind-key R
+bind-key \ reload-all
+bind-key "RIGHT" select-tag
+bind-key "SPACE" open
+bind-key j next feedlist
+bind-key k prev feedlist
+bind-key J next-feed feedlist
+bind-key K prev-feed feedlist
+
+
+# hide articles matching: ---------------------------------------------
+
+ignore-article "*" "title =~ \"Sponsor\""
+ignore-article "*" "title =~ \"Advertisement\""
+ignore-mode "display"
+
+# formatting and colorization ------------------------------------------
+
+articlelist-format "%4i %f %D  %?T?|%-17T| ?%t"
+
+highlight feedlist    "^  *[0-9]+  *N  "                    color156 default
+highlight articlelist "^  *[0-9]+  *N  "                    color156 default
+
+highlight article     "(^Feed:.*|^Title:.*|^Author:.*)"     color75  default
+highlight article     "(^Link:.*|^Date:.*)"                 color75  default
+highlight article     "^Podcast Download URL:.*"            color71  default
+highlight article     "^Links:"                             white    color240 underline
+highlight article     "\\[[0-9][0-9]*\\]"                   color72  default  bold
+highlight article     "\\[image [0-9][0-9]*\\]"             color72  default  bold
+highlight article     "\\[embedded flash: [0-9][0-9]*\\]"   color72  default  bold
+highlight article     ":.*\\(link\\)$"                      color74  default
+highlight article     ":.*\\(image\\)$"                     color74  default
+highlight article     ":.*\\(embedded flash\\)$"            color74  default
+
+color listnormal                                            white    default
+color listfocus                                             default  color240
+color info                                                  default  color240
+
+# color article color188 color237
+# color background color188 color237
+# color info color142 color237 bold
+# color listfocus color223 color235 bold
+# color listfocus_unread color144 color235 bold
+# color listnormal color188 color237
+# color listnormal_unread color144 color237
