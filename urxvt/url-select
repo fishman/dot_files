@@ -42,28 +42,45 @@ sub on_start {
 	if ($self->x_resource('url-select.autocopy') eq 'true') {
 		$self->{autocopy} = 1;
 	}
-	if ($self->x_resource('url-select.button') =~ /^\d+$/) {
-		$self->{button} = $self->x_resource('url-select.button');
-	} elsif ($self->x_resource('matcher.button') =~ /^\d+$/) {
-		$self->{button} = $self->x_resource('matcher.button');
-	} else {
-		$self->{button} = 2;
+
+	$self->{state} = 0;
+
+	for my $mod (split '', $self->x_resource("url-select.button") ||
+	                       $self->x_resource("matcher.button") || 2) {
+		if ($mod =~ /^\d+$/) {
+			$self->{button} = $mod;
+		} elsif ($mod eq "C") {
+			$self->{state} |= urxvt::ControlMask;
+		} elsif ($mod eq "S") {
+			$self->{state} |= urxvt::ShiftMask;
+		} elsif ($mod eq "M") {
+			$self->{state} |= $self->ModMetaMask;
+		} elsif ($mod ne "-" && $mod ne " ") {
+			warn("invalid button/modifier in $self->{_name}<$self->{argv}[0]>: $mod\n");
+		}
 	}
 
 	if ($self->x_resource('matcher.pattern')) {
 		@{$self->{pattern}} = ($self->x_resource('matcher.pattern'));
-	} elsif ($self->x_resource('matcher.pattern.1')) {
-		my $current = 1;
+	} elsif ($self->x_resource('matcher.pattern.0')) {
+		my $current = 0;
 
-		while ($self->x_resource("matcher.pattern.$current")) {
-			push @{$self->{pattern}}, $self->x_resource("matcher.pattern.$current");
+		while (defined (my $res = $self->x_resource("matcher.pattern.$current"))) {
+			$res = $self->locale_decode($res);
+			utf8::encode $res;
+			push @{$self->{pattern}}, qr($res)x;
 			$current++;
 		}
 	} else {
-		@{$self->{pattern}} = qr{(
-			(?:https?://|ftp://|news://|git://|mailto:|file://|www\.)
-			[\w\-\@;\/?:&=%\$_.+!*\x27(),~#]+[\w\-\@;\/?&=%\$_+!*\x27()~]
-		)}x;
+		@{$self->{pattern}} = qr{
+			(?:https?://|ftp://|news://|mailto:|file://|\bwww\.)
+			[\w\-\@;\/?:&=%\$.+!*\x27,~#]*
+			(
+				\([\w\-\@;\/?:&=%\$.+!*\x27,~#]*\)   # Allow a pair of matched parentheses
+				|                                    #
+				[\w\-\@;\/?:&=%\$+*~]                # exclude some trailing characters (heuristic)
+			)+
+		}x;
 	}
 
 	()
@@ -80,8 +97,7 @@ sub line_update {
 	for my $pattern (@{$self->{pattern}}) {
 		while ($text =~ /$pattern/g) {
 			my $url = $&;
-			my ($beg, $end) = ($-[1], $+[1] - 1);
-			--$end if $url =~ /["')]$/;
+			my ($beg, $end) = ($-[0], $+[0] - 1);
 
 			for (@{$rend}[$beg .. $end]) {
 				$_ |= urxvt::RS_Uline;
@@ -91,6 +107,12 @@ sub line_update {
 	}
 
 	()
+}
+
+sub on_action {
+    my ($self, $action) = @_;
+
+    on_user_command($self, "url-select:" . $action);
 }
 
 
@@ -112,7 +134,8 @@ sub key_press {
 	my ($self, $event, $keysym) = @_;
 	my $char = chr($keysym);
 
-	if ($keysym == 0xff1b || lc($char) eq 'q') {
+	if ($keysym == 0xff1b || lc($char) eq 'q' ||
+	    (lc($char) eq 'c' && $event->{state} & urxvt::ControlMask)) {
 		deactivate($self);
 	} elsif ($keysym == 0xff0d || $char eq 'o') {
 		$self->exec_async(@{$self->{browser}}, ${$self->{found}[$self->{n}]}[4]);
@@ -149,10 +172,26 @@ sub on_button_press {
 	my $mask = $self->ModLevel3Mask | $self->ModMetaMask |
 	           urxvt::ShiftMask | urxvt::ControlMask;
 
-	if ($event->{button} == $self->{button} && ($event->{state} & $mask) == 0) {
-		$self->{button_pressed} = 1;
-		$self->{button_col} = $event->{col};
-		$self->{button_row} = $event->{row};
+	if ($event->{button} == $self->{button} && ($event->{state} & $mask) == $self->{state}) {
+		my $col = $event->{col};
+		my $row = $event->{row};
+		my $line = $self->line($row);
+		my $text = $line->t;
+
+		for my $pattern (@{$self->{pattern}}) {
+			while ($text =~ /$pattern/g) {
+				my ($url, $beg, $end) = ($&, $-[0], $+[0]);
+				--$end if $url =~ s/["')]$//;
+
+				if ($col >= $beg && $col <= $end) {
+					$self->{button_pressed} = 1;
+					$self->{button_col} = $col;
+					$self->{button_row} = $row;
+					$self->{button_url} = $url;
+					return 1;
+				}
+			}
+		}
 	}
 
 	()
@@ -168,20 +207,8 @@ sub on_button_release {
 		$self->{button_pressed} = 0;
 
 		if ($col == $self->{button_col} && $row == $self->{button_row}) {
-			my $line = $self->line($row);
-			my $text = $line->t;
-
-			for my $pattern (@{$self->{pattern}}) {
-				while ($text =~ /$pattern/g) {
-					my ($url, $beg, $end) = ($&, $-[0], $+[0]);
-					--$end if $url =~ s/["')]$//;
-
-					if ($col >= $beg && $col <= $end) {
-						$self->exec_async(@{$self->{browser}}, $url);
-						return 1;
-					}
-				}
-			}
+			$self->exec_async(@{$self->{browser}}, $self->{button_url});
+			return 1;
 		}
 	}
 
@@ -223,7 +250,6 @@ sub select_next {
 
 				do {
 					my ($beg, $end) = ($-[0], $+[0]);
-					--$end if $& =~ /['")]$/;
 					push @{$self->{found}}, [$line->coord_of($beg),
 							$line->coord_of($end), substr($text, $beg, $end - $beg)];
 				} while ($text =~ /$pattern/g);
