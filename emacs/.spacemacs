@@ -4,6 +4,9 @@
                                                   markdown
                                                   python
                                                   ruby
+
+
+
                                                   auto-completion
                                                   c-c++
                                                   flycheck
@@ -19,6 +22,7 @@
                                                   github
                                                   version-control
                                                   latex
+
                                                   erlang
                                                   elixir
                                                   (org :variables
@@ -33,9 +37,15 @@
 
 (setq markdown-command "~/git/gh-markdown-cli/bin/mdown")
 (setq markdown-css-path "/home/timebomb/.emacs.d/github.css")
-(defun dotspacemacs/config ()
+(defun dotspacemacs/user-config ()
 
- (setq org-agenda-files '("~/Documents/org"))
+ 
+(setq org-log-done t)
+;; (setq org-agenda-files (list "~/org/work.org"
+;;                              "~/org/school.org" 
+;;                              "~/org/home.org"))
+
+(setq org-agenda-files '("~/Documents/org"))
 
   "This is were you can ultimately override default Spacemacs configuration.
  This function is called at the very end of Spacemacs initialization."
@@ -47,7 +57,33 @@
     "Oc" 'org-capture
     "OC" 'helm-org-capture-templates ;requires templates to be defined.
     "Ol" 'org-store-link)
-  (linum-relative-toggle))
+  (linum-relative-toggle)
+
+  "Configuration function.
+   This function is called at the very end of Spacemacs initialization after
+   layers configuration."
+  (setq initial-major-mode 'org-mode)
+  (setq org-directory "~/org")
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+  (setq org-mobile-inbox-for-pull "~/org/flagged.org")
+  (setq org-mobile-directory "~/Dropbox/MobileOrg")
+  (setq org-agenda-files '("~/org"))
+  (setq dotspacemacs-version-check-enable 'nil)
+
+  (setq-default
+   ;; js2-mode
+   js2-basic-offset 2
+   ;; web-mode
+   css-indent-offset 2
+   web-mode-markup-indent-offset 2
+   web-mode-css-indent-offset 2
+   web-mode-code-indent-offset 2
+   web-mode-attr-indent-offset 2)
+  (with-eval-after-load 'web-mode
+    (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))) 
+)
 ;; (setq-default git-enable-github-support t)
 ;; (setq-default git-magit-status-fullscreen t)
 ;; (setq powerline-default-separator 'arrow))
@@ -94,3 +130,17 @@
  ;;  nilfheim background color, irblacks green, hemisu green
 ;; flatland theme issues: 1. search highlight is to bright 
 ;; 2. 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(send-mail-function (quote mailclient-send-it)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:background nil))))
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
