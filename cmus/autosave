@@ -3,7 +3,9 @@ set altformat_current= %F
 set altformat_playlist= %f%= %d 
 set altformat_title=%f
 set altformat_trackwin= %f%= %d 
-set auto_expand_albums=true
+set auto_expand_albums_follow=true
+set auto_expand_albums_search=true
+set auto_expand_albums_selcur=true
 set auto_reshuffle=true
 set buffer_seconds=10
 set color_cmdline_attr=default
@@ -44,25 +46,34 @@ set continue=true
 set device=/dev/cdrom
 set display_artist_sort_name=false
 set dsp.ao.buffer_size=16384
+set dsp.ao.device_interface=
 set dsp.ao.driver=
 set dsp.ao.wav_counter=1
 set dsp.ao.wav_dir=/Users/timebomb
+set dsp.coreaudio.device=
+set dsp.coreaudio.enable_hog_mode=false
+set dsp.coreaudio.sync_sample_rate=true
 set follow=false
 set format_current= %a - %l -%3n. %t%= %y 
 set format_playlist= %-25%a %3n. %t%= %y %d 
 set format_playlist_va= %-25%A %3n. %t (%a)%= %y %d 
+set format_statusline= %{status} %{?show_playback_position?%{position} %{?duration?/ %{duration} }?%{?duration?%{duration} }}- %{total} %{?bpm>0?at %{bpm} BPM }%{?volume>=0?vol: %{?lvolume!=rvolume?%{lvolume},%{rvolume} ?%{volume} }}%{?stream?buf: %{buffer} }%{?show_current_bitrate & bitrate>=0? %{bitrate} kbps }%=%{?repeat_current?repeat current?%{?play_library?%{playlist_mode} from %{?play_sorted?sorted }library?playlist}} | %1{continue}%1{follow}%1{repeat}%1{shuffle} 
 set format_title=%a - %l - %t (%y)
 set format_trackwin=%3n. %t%= %y %d 
+set format_trackwin_album= %l 
 set format_trackwin_va=%3n. %t (%a)%= %y %d 
+set format_treewin=  %l
+set format_treewin_artist=%a
 set icecast_default_charset=ISO-8859-1
 set id3_default_charset=ISO-8859-1
 set lib_sort=albumartist date album discnumber tracknumber title filename
-set output_plugin=ao
+set mouse=false
+set output_plugin=coreaudio
 set passwd=
 set pl_sort=
-set play_library=false
-set play_sorted=false
-set repeat=true
+set play_library=true
+set play_sorted=true
+set repeat=false
 set repeat_current=false
 set replaygain=disabled
 set replaygain_limit=true
@@ -75,8 +86,8 @@ set show_all_tracks=true
 set show_current_bitrate=false
 set show_hidden=false
 set show_playback_position=true
-set show_remaining_time=false
-set shuffle=true
+set show_remaining_time=true
+set shuffle=false
 set skip_track_info=false
 set smart_artist_sort=true
 set softvol=true
