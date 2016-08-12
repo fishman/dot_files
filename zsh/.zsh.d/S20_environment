@@ -37,22 +37,28 @@ export ERL_LIBS=~/git/erlang/libs
 
 export GOPATH=~/git/gocode
 
+export MC_XDG_OPEN=xdg-open
+
+export EMAIL_CONN_TEST=n
+
 export ANDROID_HOME=/opt/android-sdk
 RLWRAP_HOME="$HOME/.rlwrap"
 
 export EnableNuGetPackageRestore=true
 
 if [[ $OS == linux ]]; then
-  path=($HOME/bin $path $HOME/.gem/ruby/2.0.0/bin $GOPATH/bin)
+  path=($HOME/bin $path $HOME/.gem/ruby/2.0.0/bin $GOPATH/bin ./node_modules/.bin)
 elif [[ $OS == osx ]]; then
   PATH="$HOME/bin:$PATH"
   PATH="/opt/local/bin:/opt/local/vim/bin:$PATH"
-  PATH="/usr/local/bin:$PATH"
+  PATH="$GOPATH/bin:$PATH"
+  PATH="/usr/texbin:$PATH"
   PATH="$PATH:/sbin:/usr/sbin"
   PATH="$PATH:/usr/local/sbin"
   PATH="$PATH:/usr/X11R6/bin"
   PATH="$PATH:/opt/local/sloccount/bin"
   PATH="$PATH:/usr/local/clang/bin"
+  PATH="$PATH:./node_modules/.bin"
   export MANPATH=/opt/local/share/man:$MANPATH
 fi
 
