@@ -4,28 +4,31 @@
                                                   markdown
                                                   python
                                                   ruby
-
-
-
                                                   auto-completion
                                                   c-c++
-                                                  flycheck
-                                                  flyspell
+                                                  spell-checking
+                                                  syntax-checking
                                                   rust
                                                   shell
+                                                  tools
                                                   fasd
+                                                  vinegar
                                                   evil-commentary
+                                                  restclient
                                                   ycmd
+                                                  tmux
+                                                  ranger
                                                   dash
                                                   ansible
                                                   git
                                                   github
                                                   version-control
                                                   latex
-
+                                                  osx
                                                   erlang
                                                   elixir
                                                   (org :variables
+                                                       org-enable-reveal-js-support
                                                        org-enable-github-support t)
                                                  ))
 
@@ -40,6 +43,7 @@
 (defun dotspacemacs/user-config ()
 
  
+  (setq-default mac-right-option-modifier nil)
 (setq org-log-done t)
 ;; (setq org-agenda-files (list "~/org/work.org"
 ;;                              "~/org/school.org" 
@@ -69,6 +73,7 @@
   (setq org-mobile-directory "~/Dropbox/MobileOrg")
   (setq org-agenda-files '("~/org"))
   (setq dotspacemacs-version-check-enable 'nil)
+
 
   (setq-default
    ;; js2-mode
@@ -112,16 +117,17 @@
    (setq org-mobile-inbox-for-pull "~/org/flagged.org")
    (setq org-mobile-directory "~/Dropbox/MobileOrg")
    (setq org-agenda-files '("~/org"))
+   (setq-default ycmd-server-command '("python2" "~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
 )
 
 
 (defun dotspacemacs/init ()
   ;;  (spacemacs/load-or-install-package 'sx t)
   ;;  (require 'sx-load)
+   (require 'ox-reveal)
   ;; (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
   (setq-default evil-escape-key-sequence "jk")
   (setq paradox-github-token "7693224097823e845d1f39f82ba5fea5a7ae5531")
-  (setq-default ycmd-server-command '("python2" "~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
   (global-linum-mode 1)
   (add-hook 'c-mode-hook 'ycmd-mode))
 
