@@ -1,0 +1,43 @@
+" ==Vimperator_Color_Scheme==
+" name: RedNS
+" ==RedNS_Color_Scheme==
+hi Hint			font-family: monospace; font-size: 15px; font-weight: normal; color: lightyellow; background-color: rgba(0,0,0,0.6); border-color: ButtonShadow; border-width: 0px; border-style: solid; padding: 0px 5px;
+
+hi HintElem		background-color: rgba(34,34,34,0.2);		color: black;
+hi HintActive   background-color: rgba(0,0,0,1);		color: White;
+" hi HintActive		background-color: Red;	color: white;
+
+" hi StatusLine 		color: #ffffff;	background: rgba(0,0,0,1);	font-weight: normal; font-size: 8pt;
+
+hi Normal 		color: White;	background: rgba(51,51,51,1);	font-size: 8pt;
+hi InfoMsg		color: LightYellow;	background: #333;	font-size: 8pt;
+hi ModeMsg		color: LightYellow;	background: #333;	font-size: 8pt;
+hi MoreMsg		color: LimeGreen;	background: #333;
+hi LineNr		color: Red;	background: #333;	font-size: 8pt;
+hi Question		color: Yellow;		background: #333;	font-size: 8pt;
+hi WarningMsg		color: Red;	background: #333;	font-size: 8pt;
+hi NonText 		background: #333;
+hi Null			color: CornflowerBlue;
+hi Tag			color: CornflowerBlue;
+
+hi CompTitle		color: #ffffff;		background: Black;	font-weight: bold;
+hi CompItem[selected]	color: Red;	background: rgba(34,34,34,0.3)
+hi CompDesc		color: White;
+
+hi Title		color: white;
+hi Indicator		color: DodgerBlue;
+hi String		color: Red;
+hi Number		color: Red;
+hi Object		color: Khaki;
+hi Function		color: SkyBlue;
+hi URL			color: Gray;
+
+hi TabNumber		color: black; font-weight: bold; font-size: 8pt;
+
+
+" for statusline-toolbar.js
+style -name toolbar-background chrome://* #liberator-customize-toolbar { padding-left: 5px !important; -moz-appearance: none !important; }
+
+" for sbmcommentviewer.js
+style -name sbmcommentviewer chrome://* .liberator-sbmcommentsviewer-content { border-color: #ccc !important; }
+

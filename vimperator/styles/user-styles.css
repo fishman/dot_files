@@ -1,0 +1,22 @@
+@-moz-document url-prefix("chrome://") {
+  .tabbrowser-tab[fadein]:not([pinned]) {
+    min-width: 40px !important;
+    max-width: 40px !important; } }
+
+@-moz-document url("http://reader.livedoor.com/reader/") {
+  .item {
+    max-width: 1100px; }
+    .item img {
+      max-width: 100%; } }
+
+@-moz-document url-prefix("chrome://firebug/content/firefox/") {
+  textbox#fbCommandLine,
+  #fbCommandLineCompletion,
+  #fbCommandEditor,
+  #fbCommandToolbar {
+    font-size: 12px !important;
+    font-family: "Source Code Pro" !important; }
+
+  .panelNode-console {
+    font-size: 12px !important;
+    font-family: "Ricty" !important; } }

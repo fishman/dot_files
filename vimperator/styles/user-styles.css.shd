@@ -1,0 +1,56 @@
+// sass -s -t nested --trace
+
+// *
+// 	font-family: 'Ruika-03' !important
+// 
+// // GitHubのアイコン出るようにしたい
+// @-moz-document domain("github.com")
+// 	[class*="octicon"]
+// 		font-family: "github-octicons" !important
+// 
+// // GitLabのアイコン出るようにしたい
+// @-moz-document domain("demo.gitlab.com")
+// 	[class^="icon-"], [class*=" icon-"]
+// 		font-family: FontAwesome !important
+// 
+// // chatworkのアイコン出るようにしたい
+// @-moz-document domain("www.chatwork.com")
+// 	[class^="ico"], [class$="Icon"]
+// 		font-family: "chatwork" !important
+// 
+// // wri.peのアイコン出るようにしたい
+// @-moz-document domain("wri.pe")
+// 	[class^="icon-"], [class*=" icon-"]
+// 		font-family: FontAwesome !important
+
+
+
+// タブの幅を40pxで固定する
+@-moz-document url-prefix("chrome://")
+	.tabbrowser-tab[fadein]:not([pinned])
+		min-width: 40px !important
+		max-width: 40px !important
+
+
+// Livedoor Reader見やすくする
+// via: http://hitode909.hatenablog.com/entry/2014/01/03/162918
+@-moz-document url("http://reader.livedoor.com/reader/")
+	.item
+		max-width: 1100px
+		img
+			max-width: 100%
+
+
+// Firebugのフォント設定
+@-moz-document url-prefix("chrome://firebug/content/firefox/")
+	textbox#fbCommandLine,
+	#fbCommandLineCompletion,
+	#fbCommandEditor,
+	#fbCommandToolbar
+		font-size: 12px !important
+		font-family: "Source Code Pro" !important
+
+	// コンソールログ
+	.panelNode-console
+		font-size: 12px !important
+		font-family: "Ricty" !important

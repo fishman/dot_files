@@ -1,0 +1,382 @@
+
+" let {{{1
+let mapleader = ","
+
+" plugin_loader.js {{{2
+let g:plugin_loader_roots = "~/.vimperator/load/"
+" "let g:plugin_loader_roots = "~/share/vimperator-plugins ~/share/my-vimperator-plugins"
+" }}}
+
+" private browser
+nnoremap <c-s-p> i<c-s-p>
+command! pocketall -js RIL.saveTabs()
+nnoremap <leader>l :lowlight<cr>
+
+" fix uBlock and uMatrix
+style -name ublick * #nav-bar * { visibility: visible;  }
+" set! extensions.umatrix.forceLegacyToolbarButton="true"
+
+com! yd js liberator.execute('silent !start youtube-dl --no-playlist '+buffer.URL)
+com! ag js liberator.execute('silent !start animeget '+buffer.URL)
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" YouTube Direct Download
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"youtube replay mode
+noremap ct y:tabopen<Space>tubereplay<Space><C-v><CR>
+
+"sagi youtube-dl libavcodec-extra-53
+js <<EOM
+commands.addUserCommand(['youtubedl'],
+    'YouTube 2 MP3',
+    function (args){
+          [url] = args;
+          liberator.execute('!youtube-dl --extract-audio --audio-format mp3 \''+url+'\'');
+          liberator.execute('!mv *.mp3 ~/Music/youtube-dl');
+    },
+    {}, 
+    true
+);
+EOM
+
+""""deprecated: dl via v2mp3
+""""noremap cyy y:tabopen<Space>http://www.video2mp3.net/index.php?hq=1&url=<C-v><CR>
+
+noremap cy <silent> y:youtubedl <C-v><CR>
+
+" }}}
+" set {{{1
+
+set complete=shl
+set defsearch=google
+set editor="/usr/local/bin/mvim -f"
+set focuscontent
+set gui=noaddons,nobookmarks,nomenu,nonavigation,tabs
+",nohatenaBookmarks
+"set hintchars=iasdfghjkl
+set hintchars=asonetuhid
+set history=5000
+set newtab=all
+set showstatuslinks=2
+set titlestring=Firefox
+
+" }}}
+" set! {{{1
+
+set! accessibility.tabfocus=2
+set! browser.backspace_action=0
+set! browser.cache.disk.capacity=51200
+set! browser.cache.disk.enable=true
+set! browser.cache.memory.enable=true
+set! browser.cache.memory.capacity=51200
+set! browser.display.use_document_fonts=1
+set! browser.download.manager.retention=1
+set! browser.sessionstore.max_concurrent_tabs=0
+set! browser.sessionstore.max_tabs_undo=20
+set! browser.startup.page=3
+set! browser.tabs.closeButtons=2
+set! browser.zoom.full=true
+set! config.trim_on_minimize=true
+set! dom.disable_window_move_resize=true
+set! dom.event.contextmenu.enabled=false
+set! dom.popup_maximum=2048
+set! font.language.group=ja
+set! font.minimum-size.ja=11
+set! font.name.monospace.ja=Capanito
+set! font.name.sans-serif.ja=Capanito
+set! font.name.serif.ja=Capanito
+set! font.size.fixed.ja=14
+set! font.size.variable.ja=14
+set! font.minimum-size.x-western=11
+set! font.name.monospace.x-western=Capanito
+set! font.name.sans-serif.x-western=Capanito
+set! font.name.serif.x-western=Capanito
+set! font.size.fixed.x-western=14
+set! font.size.variable.x-western=14
+"set! general.useragent.extra.firefox='Firefox/3.6.13'
+"set! general.useragent.locale='ja'
+"" MacTypeがDirectWriteに対応しなくなったので無効化
+"set! gfx.direct2d.disabled=true
+set! gfx.font_rendering.directwrite.enabled=false
+"set! intl.accept_languages='ja,en-us,en'
+"set! intl.charset.default='Shift_JIS'
+"set! middlemouse.paste=true
+" IPv6の無効化
+set! network.dns.disableIPv6=true
+set! network.http.max_connections=32
+set! network.http.max_connections_per_server=8
+set! plugins.hide_infobar_for_missing_plugin=true
+set! privacy.donottrackheader.enabled=true
+set! privacy.donottrackheader.value=1
+set! profilemanager.opt_showProfileName=0
+set! security.dialog_enable_delay=0
+set! security.enable_java=false
+set! ui.key.contentAccessKey=0
+set! ui.key.generalAccessKey=0
+set! xulmigemo.shortcut.manualStart=
+
+" }}}
+" autocmd {{{1
+
+" LDR上では新規タブをバックグラウンドに開く
+autocmd LocationChange .* :set! browser.tabs.loadDivertedInBackground=false
+autocmd LocationChange reader\\.livedwango\\.com/reader :set! browser.tabs.loadDivertedInBackground=true
+autocmd LocationChange fastladder\\.com/(reader|public) :set! browser.tabs.loadDivertedInBackground=true
+
+" }}}
+" Key mappings {{{1
+
+" 邪魔なキーを無効化
+noremap <F1> <Nop>
+noremap! <C-j> <Nop> " これ動かない?
+inoremap <C-j> <Nop>
+cnoremap <C-j> <Nop>
+nnoremap <C-k> <Nop>
+
+nnoremap <C-l> :<C-u>source ~/.vimperatorrc<CR>
+nnoremap <C-,> :preferences<CR>
+
+" noremap ; :
+" noremap : ;
+
+" j/k でのスクロールを3行にした
+nnoremap j 3<C-e>
+nnoremap k 3<C-y>
+" nnoremap h 3h
+" nnoremap l 3l
+
+" インサートモードでの色々
+" inoremap <C-b> <Left>
+" inoremap <C-f> <Right>
+inoremap <C-h> <BS>
+cnoremap <C-h> <BS>
+
+" コマンドモードでの色々
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-p> <S-Tab>
+cnoremap <C-n> <Tab>
+cnoremap <C-v> <S-Insert>
+cnoremap <C-BS> <C-w>
+
+" タブ関係
+" zi / zo / zz とかのズーム関係の2ストロークマッピング消す
+javascript [it.names = [] for (it of mappings.getCandidates(modes.NORMAL, 'z'))] 
+nnoremap z <A-Left>
+nnoremap x <A-Right>
+
+" nnoremap H <C-p>
+" nnoremap L <C-n>
+nmap h <C-p>
+nmap l <C-n>
+nnoremap <Left> :tabmove! -1<CR>
+nnoremap <Right> :tabmove! +1<CR>
+
+" Panorama
+nnoremap <Leader>pc :<C-u>panorama<Space>
+nnoremap <Leader>ps :<C-u>panorama switch<Space>
+nnoremap <Leader>pa :<C-u>panorama add<Space>
+nnoremap <Leader>pl :<C-u>panorama list<CR>
+nnoremap <Leader>pp :<C-u>panorama pushtab<Space>
+nnoremap <Leader>pu :<C-u>panorama pulltab<Space>
+nnoremap <Leader>pr :<C-u>panorama remove<Space>
+
+" }}}
+" Key mappings for Extensions {{{1
+
+" Clearly
+nnoremap ,r :<C-u>js __readable_by_evernote.readable_by_evernote__menu__call(buffer.URL)<CR>
+
+" }}}
+" Key mappings for Plugins {{{1
+
+" copy.js
+nnoremap ,c :<C-u>copy 
+
+" multi_requestor.js
+nnoremap ,h :<C-u>hbsearch<Space>
+
+" multi_requestor.js
+nnoremap ,t :<C-u>mr alc<Space>
+
+" readitlater.js
+nnoremap ,a :<C-u>readitlater add<CR>
+
+" }}}
+" bmark {{{1
+
+bmark -title="Bing Search" -tags=keyword -keyword=bing http://www.bing.com/search?q=%s
+
+bmark -title="東京アメッシュ"                         -keyword=amesh   http://tokyo-ame.jwa.or.jp/
+bmark -title="BitBucket"                              -keyword=bb      https://bitbucket.org/
+bmark -title="Favstar (hamaco)"                       -keyword=favstar http://favstar.fm/users/hamaco/recent
+bmark -title="GitHub Issues"                          -keyword=issue   http://github-issue.herokuapp.com/
+bmark -title="Qiita (hamaco)"                         -keyword=qiita   http://qiita.com/hamaco
+bmark -title="Twilog (hamaco)"                        -keyword=twilog  http://twilog.org/hamaco
+bmark -title="Favolog (hamaco)"                       -keyword=favlog  http://favolog.org/hamaco
+bmark -title="SIGN"                                   -keyword=sign    http://svgn.biz/
+bmark -title="リツイート直後のツイートを表示するやつ" -keyword=rt      https://retweets.azurewebsites.net/
+bmark -title="ツイートした画像を表示するやつ"         -keyword=timg    https://timg.azurewebsites.net/
+
+" }}}
+" QuickMarks {{{1
+
+silent qmark a http://animita.tv/mypage/recent_checkin
+silent qmark A http://analytics.google.com/
+silent qmark b http://reblog.machine.mamemomonga.com/dashboard
+silent qmark B http://b.hatena.ne.jp/hamaco/
+silent qmark c http://calendar.google.com/
+" silent qmark C https://www.chatwork.com/
+silent qmark f http://www.facebook.com/?sk=h_chr
+" silent qmark F https://ja.foursquare.com/
+silent qmark g http://github.com/hamaco
+silent qmark G http://github-issue.herokuapp.com/
+silent qmark h https://web.hackadoll.com/
+" silent qmark I http://sp.pf.mbga.jp/12008305
+silent qmark l http://reader.livedwango.com/reader/
+silent qmark m http://www.gmail.com/
+silent qmark p http://getpocket.com/a/queue/
+silent qmark P http://www.pixiv.net/bookmark_new_illust.php
+silent qmark r http://cloud.feedly.com/#my
+silent qmark R http://www.readability.com/hamaco/reading-list
+silent qmark t https://trello.com/
+silent qmark T https://new.toggl.com/app/
+silent qmark y https://yabumi.cc/me.html
+
+" }}}
+" Styles {{{1
+
+javascript <<EOM
+(function(){
+  let filter = new RegExp('^.*\.css$');
+  let dir = io.File('~/.vimperator/styles')
+  if (dir.exists() && dir.isDirectory() && dir.isReadable()) {
+    let files = dir.readDirectory(true);
+    files.forEach(function (file) {
+      if (filter.test(file.path)) {
+        io.source(file.path, false);
+      }
+    });
+  }
+})();
+EOM
+
+" }}}
+" Plugins {{{1
+
+" copy.js {{{2
+javascript <<EOM
+liberator.globalVariables.copy_templates = [
+  { label: 'markdown',       value: '[%TITLE%](%URL%)' },
+  { label: 'twitter',        value: '"%TITLE%" %URL%' },
+  { label: 'titleAndURL',    value: '%TITLE%\n%URL%' },
+  { label: 'title',          value: '%TITLE%', map: ',y' },
+  { label: 'anchor',         value: '<a href="%URL%">%TITLE%</a>' },
+  { label: 'selanchor',      value: '<a href="%URL%" title="%TITLE%">%SEL%</a>' },
+  { label: 'htmlblockquote', value: '<blockquote cite="%URL%" title="%TITLE%">%HTMLSEL%</blockquote>' },
+  { label: 'ASIN',   value: 'copy ASIN code from Amazon', custom: function(){return content.document.getElementById('ASIN').value;} },
+];
+EOM
+" }}}
+" feedSomeKeys_3.js {{{
+command! -nargs=+ lazy autocmd VimperatorEnter .* <args>
+lazy fmaps -u='mail\.google\.com/mail' -events=vkeydown,keypress,vkeyup j k
+lazy fmaps -u='mail\.google\.com/mail' c n p o u x s r a ? gi gs gt gd ga gc U
+lazy fmaps -u='mail\.google\.com/mail' -p=<Leader> d,# s,! e
+lazy fmaps -u='mail\.google\.com/mail/.*/[0-9a-f]+$' c j,n k,p n,j p,k o u x s r a ? gi gs gt gd ga gc
+lazy fmaps -u='mail\.google\.com/mail/.*/[0-9a-f]+$' -p=<Leader> d,# s,! e
+
+lazy fmaps -u='(fastladder|livedwango)\.com/reader' j k n,s s a p o r v c m i,p J,<Space> K,<S-Space> z b < > q w e,g <Enter>,j
+
+lazy fmaps -u='www\.facebook\.com' -events=vkeydown j k l c <Esc>
+
+lazy fmaps -u='wri\.pe' -events=vkeydown n i d c s h j k l o e
+lazy fmaps -u='trello\.com/b/' -events=vkeydown j k d l e n v w
+
+lazy fmaps -u='reblog\.machine\.mamemomonga\.com/dashboard' j k t l m
+lazy fmaps -u='www\.pixiv\.net/member_illust\.php\?mode=manga' -events=vkeydown j k z 0
+
+lazy fmaps -u='glide\.so' h l
+
+lazy fmaps -u='(www\.|)pplog\.net' -events=vkeydown r,d z h
+" }}}
+
+" }}}
+" keymappings {{{1
+
+
+inoremap <C-v> <S-Insert>
+
+noremap <C-c> <C-v><C-c>
+
+" 選択文字列をGoogleで検索
+noremap <C-g> YP
+noremap s :<C-u>tabopen<Space>google<Space>
+
+" }}}
+
+
+" plugins
+" https://github.com/vimpr/vimperator-plugins
+
+
+nnoremap -urls=www\\.slideshare\\.net l :slideshare next<CR>
+nnoremap -urls=www\\.slideshare\\.net h :slideshare prev<CR>
+
+nnoremap -urls=speakerdeck\\.com l :speakerdeck next<CR>
+nnoremap -urls=speakerdeck\\.com h :speakerdeck prev<CR>
+
+nnoremap -urls=niconare\\.nicovideo\\.jp l :niconare next<CR>
+nnoremap -urls=niconare\\.nicovideo\\.jp h :niconare prev<CR>
+
+nnoremap -urls=youtube\\.com > :ytseek! +10<CR>
+nnoremap -urls=youtube\\.com < :ytseek! -10<CR>
+
+nnoremap -urls=youtube\\.com m :ytvolume 0<CR>
+
+nnoremap -urls=youtube\\.com ,p :ytpause<CR>
+
+" hatenabookmark.js
+javascript if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookmark/content/vimperator/plugin/hatenabookmark.js', {__proto__: this});
+
+" localkeymode.js
+let g:localkeymode_enable = 'true'
+javascript <<EOM
+liberator.globalVariables.localKeyMappings = [
+	[/www\.nicovideo\.jp\/watch/, [
+		['p', ':stplay'],
+		['m', ':stmute'],
+		['a', ':stseek! -15'],
+		['s', ':stseek! +15'],
+		['z', ':stfullscreen']
+	]]
+];
+EOM
+
+" readitlater.js
+let g:readitlater_api_key = "cF1gFw3cpd274Vo7f4T3e86I68AbH0g8"
+
+" refcontrol.js
+let g:refcontrol_enabled = 'true'
+javascript <<EOM
+liberator.globalVariables.refcontrol = {
+	'@DEFAULT'            : '',
+	'fc2.com'             : '@FORGE',
+	'image.itmedia.co.jp' : 'http://www.itmedia.co.jp',
+	'bk.mufg.jp'          : '@NORMAL',
+	'www.nicomimi.net'    : 'http://www.nicomimi.net',
+	'pixiv.net'           : 'http://www.pixiv.net',
+	'hamaco.org'          : '@NORMAL',
+	'www.nicomimi.net'    : '@NORMAL',
+	'yuik.net'            : '@FORGE',
+	'bitbucket.org'       : '@FORGE',
+};
+EOM
+
+colorscheme indigo
+source ~/.vimperatorrc.js
+
+echo "vimperatorrc loaded."
+" END {{{1
+" vim: ft=vimperator sw=2 sts=2 fdm=marker
