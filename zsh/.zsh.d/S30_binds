@@ -3,6 +3,10 @@
 # bindkey -v "^[[3~" delete-char
 # bindkey -v "^[[5~" backward-word
 # bindkey -v "^[[6~" forward-word
+# Accept suggestions without leaving insert mode
+bindkey '^f' vi-forward-word
+# or
+bindkey '^f' vi-forward-blank-word
 
 bindkey "^[[A" history-beginning-search-backward
 bindkey "^[[B" history-beginning-search-forward

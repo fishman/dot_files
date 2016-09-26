@@ -119,7 +119,7 @@ function google() {
 
 function webshare() {
     local SSHHOST=$1
-    local SSHPORT=9999
+    local SSHPORT=8000
 
     python -m SimpleHTTPServer &
     local PID=$!
@@ -147,6 +147,36 @@ hr() { printf '\033(0'; printf 'q%.0s' $(seq $(tput cols)); printf '\033(B'; }
 
 runonce() {
     if [ -z $(pgrep $1) ]; then
-        nohup $@ >/dev/null 2>&1 &
+        nohup $@ >/dev/null 2>&1 &!
     fi
 }
+
+notify() {
+    if [ -n $DISPLAY ]; then
+        dunstify "$1"
+    else
+        /usr/bin/osascript -e "display notification \"$1\" with title \"zsh\"";
+    fi
+
+}
+
+togglewifi() {
+    CURRENT_DEVICE=`/usr/sbin/networksetup -listallhardwareports | /usr/bin/awk '$3=="Wi-Fi" {getline; print $2}'`;
+    if [ -z "$CURRENT_DEVICE" ]; then
+        notify "No Wi-Fi device"
+    elif /usr/sbin/networksetup -getairportpower $CURRENT_DEVICE | /usr/bin/grep ': On'; then
+        /usr/sbin/networksetup -setairportpower $CURRENT_DEVICE off
+        notify "Wi-Fi Off"
+    else
+        /usr/sbin/networksetup -setairportpower $CURRENT_DEVICE on
+        notify "Wi-Fi On"
+    fi
+}
+
+function _midnight {
+    BUFFER="mc"
+    zle accept-line
+}
+
+zle -N _midnight
+bindkey '\e,' _midnight

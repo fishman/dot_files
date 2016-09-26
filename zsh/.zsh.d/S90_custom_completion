@@ -1,15 +1,22 @@
 #!/bin/zsh
 #cheat補完(sudo gem install cheat)
 _cheat () {                                                      
-	mkdir -p ~/.zsh/completion                                     
-	if [ ! -f ~/.zsh/completion/_cheat ]; then                     
-		cheat sheets | grep -v All | sed -e 's/^/compadd /g' > ~/.zsh/completion/_cheat
+	mkdir -p ~/.zsh_cache/completion                                     
+	if [ ! -f ~/.zsh_cache/completion/_cheat ]; then                     
+		cheat sheets | grep -v All | sed -e 's/^/compadd /g' > ~/.zsh_cache/completion/_cheat
 	fi         
 
-	`cat ~/.zsh/completion/_cheat`
+	`cat ~/.zsh_cache/completion/_cheat`
 }
 
 compdef _cheat cheat
+
+zstyle ':completion:*:*:cmus:*' verbose yes
+zstyle ':completion:*:*:cmus:*:descriptions' format '%U%B%d%b%u'
+
+zstyle ':completion:*:*:cmus:*' group-name ''
+compdef _cmus cm=cmus-remote
+
 
 zstyle ':completion:*:*:task:*' verbose yes
 zstyle ':completion:*:*:task:*:descriptions' format '%U%B%d%b%u'
@@ -24,3 +31,4 @@ compdef _task t=task
 
 # use the mplayer completion with mpv/fasd
 compdef _mplayer m=mplayer
+compdef _mplayer mpv=mplayer

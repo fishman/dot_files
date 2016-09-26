@@ -375,10 +375,15 @@ alias sendresume="mutt -a ~/Documents/Resume/ResumeDoc.docx -s Resume"
 
 alias mkvirtualenv2='mkvirtualenv -p `which python2.7`'
 
-if [ -x "$(which nvim)" ]; then
-    alias vim="nvim"
-fi
+# if [ -x "$(which nvim)" ]; then
+#     alias vim="nvim"
+# fi
 
 if [ -x "$(which hub)" ]; then
     eval "$(hub alias -s)"
 fi
+
+alias GET='curl -sk'
+alias DELETE='curl -sk -X DELETE'
+alias PUT='curl -sk -X PUT --data-binary @-'
+alias POST='curl -sk -X POST --data-binary @-'

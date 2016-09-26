@@ -24,3 +24,7 @@ sendattachment(){
     -e "      set visible of theMessage to true         "\
     -e "    end tell                                    "
 }
+
+sendattachment() {
+    mutt -a "$(readlink -f $2)" -s "File Quickshare" -- $1 < /dev/null
+}
