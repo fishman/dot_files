@@ -18,41 +18,57 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     asciidoc
+     python
+     c-c++
      auto-completion
      better-defaults
-     python
-     ruby
-     c-c++
      emacs-lisp
+     javascript
+     html
+     vimscript
+     git
+     github
+     sql
+     markdown
+     xkcd
+     ruby
+     csharp
+     java
+     evil-commentary
+     evil-snipe
+     unimpaired
+     vim-powerline
+     ruby-on-rails
+     yaml
+     react
      spell-checking
      syntax-checking
      rust
      shell
      fasd
      vinegar
-     evil-commentary
      restclient
      ycmd
-     tmux
-     ranger
-     dash
-     ansible
-     git
-     markdown
-     github
+     ;; tmux
+     ;; ranger
+     ;; dash
+     ;; ansible
      latex
-     osx
+     ;; osx
      erlang
-     elixir
+     ;; elixir
      (org :variables
-          org-enable-github-support t)
+          org-enable-github-support t
+          git-magit-status-fullscreen t
+          git-gutter-use-fringe t)
      version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(ox-reveal)
+   dotspacemacs-additional-packages '(ox-reveal ox-gfm org-jira alert org-alert nxml xml-rpc confluence)
 
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -119,11 +135,18 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro for Powerline"
-                               :size 13
+   ;; dotspacemacs-default-font '("Source Code Pro"
+   dotspacemacs-default-font '("Source Code Pro"
+                               :size 18
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
+
+   ;; dotspacemacs-default-font '("Source Code Pro for Powerline Standard"
+   ;;                             :size 18
+   ;;                             :weight normal
+   ;;                             :width normal
+   ;;                             :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -252,39 +275,6 @@ values."
 ;;      git-magit-status-fullscreen t
 ;;      git-enable-github-support t
 ;;      git-gutter-use-fringe t)
-
-(defun dotspacemacs/user-init ()
-  ;;  (spacemacs/load-or-install-package 'sx t)
-  ;;  (require 'sx-load)
-  ;; (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
-  (setq-default evil-escape-key-sequence "jk")
-  (setq paradox-github-token "7693224097823e845d1f39f82ba5fea5a7ae5531")
-  (global-linum-mode 1)
-  (add-hook 'c-mode-hook 'ycmd-mode))
-
- ;;  smyx -> flatland -> stekene-dark ->  firebelly -> subatomic
- ;; wombat
- ;;  nilfheim background color, irblacks green, hemisu green
-;; flatland theme issues: 1. search highlight is to bright 
-;; 2. 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (ox-reveal macrostep elisp-slime-nav auto-compile packed zonokai-theme zenburn-theme zen-and-art-theme yaml-mode xterm-color ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe use-package underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme toml-mode toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme stekene-theme spacemacs-theme spaceline spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smooth-scrolling smeargle shell-pop seti-theme rvm ruby-tools ruby-test-mode ruby-end rubocop rspec-mode robe reverse-theme reveal-in-osx-finder restclient restart-emacs rbenv ranger rainbow-delimiters railscasts-theme racer quelpa pyvenv pytest pyenv-mode py-yapf purple-haze-theme professional-theme popwin planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode pcre2el pbcopy pastels-on-dark-theme paradox page-break-lines osx-trash orgit organic-green-theme org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme neotree naquadah-theme mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme material-theme markdown-toc majapahit-theme magit-gitflow magit-gh-pulls lush-theme lorem-ipsum linum-relative light-soap-theme leuven-theme launchctl jbeans-theme jazz-theme ir-black-theme inkpot-theme info+ indent-guide ido-vertical-mode hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation heroku-theme hemisu-theme help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flyspell helm-flx helm-descbinds helm-dash helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate golden-ratio gnuplot github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md gandalf-theme flycheck-ycmd flycheck-rust flycheck-pos-tip flx-ido flatui-theme flatland-theme firebelly-theme fill-column-indicator fasd farmhouse-theme fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-commentary evil-args evil-anzu eval-sexp-fu espresso-theme eshell-prompt-extras esh-help erlang dracula-theme django-theme disaster diff-hl define-word dash-at-point darktooth-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme company-ycmd company-statistics company-racer company-quickhelp company-c-headers company-auctex company-anaconda colorsarenice-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized cmake-mode clues-theme clean-aindent-mode clang-format chruby cherry-blossom-theme busybee-theme bundler buffer-move bubbleberry-theme bracketed-paste birds-of-paradise-plus-theme badwolf-theme auto-yasnippet auto-highlight-symbol auto-dictionary apropospriate-theme anti-zenburn-theme ansible-doc ansible ample-zen-theme ample-theme alect-themes alchemist aggressive-indent afternoon-theme adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
- '(send-mail-function (quote mailclient-send-it)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:background nil))))
- '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
- '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
-
 (defun dotspacemacs/user-config ()
   "Configuration function.
    This function is called at the very end of Spacemacs initialization after
@@ -297,14 +287,121 @@ values."
   (setq org-mobile-inbox-for-pull "~/org/flagged.org")
   (setq org-mobile-directory "~/Dropbox/MobileOrg")
   (setq org-agenda-files '("~/org"))
-  (setq-default ycmd-server-command '("python2" "~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycmd"))
+  (setq-default ycmd-server-command '("python" "~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycmd"))
   (setq-default mac-right-option-modifier nil)
   (setq org-log-done t)
   ;; (setq org-agenda-files (list "~/org/work.org"
-  ;;                              "~/org/school.org" 
+  ;;                              "~/org/school.org"
   ;;                              "~/org/home.org"))
 
+  (setq org-capture-templates
+        '(("ort/checkitem" "Org Repo Checklist Item" checkitem
+           (file+headline
+            (ort/todo-file)
+            "Checklist"))
+          ("ort/todo" "Org Repo Todo" entry
+           (file+headline
+            (ort/todo-file)
+            "Todos")
+           "* TODO  %?			%T\n %i\n Link: %l\n")
+          ("a" "Appointment" entry
+           (file+headline "~/org/taskdiary.org" "Calendar")
+           "* APPT %^{Description} %^g\n%?\nAdded: %U")
+         ("n" "Notes" entry
+           (file+datetree "~/org/taskdiary.org")
+           "* %^{Description} %^g %?\nAdded: %U")
+          ("t" "Todo" entry
+           (file+headline "~/org/TODO.org" "Tasks")
+           "* TODO %?\n  %i\n  %a")
+          ("T" "Task Diary" entry
+           (file+datetree "~/org/taskdiary.org")
+           "* TODO %^{Description}  %^g\n%?\nAdded: %U")
+          ("j" "Journal entry" plain
+           (file+datetree+prompt "~/org/personal/journal.org")
+           "%K - %a\n%i\n%?\n")
+          ("J" "Work Journal" entry
+           (file+datetree "~/org/workjournal.org")
+           "** %^{Heading}")
+          ("l" "Log Time" entry
+           (file+datetree "~/org/timelog.org")
+           "** %U - %^{Activity}  :TIME:")))
 
+
+  (setq org-agenda-custom-commands
+        '(("x" agenda)
+          ("y" agenda*)
+          ("w" todo "WAITING")
+          ("W" todo-tree "WAITING")
+          ("s" todo "STARTED")
+          ("S" todo-tree "STARTED")
+          ("c" tags "+COMPUTER")
+          ("t" tags "+TELEPHONE")
+          ("o" . "OFFICE tag searches")
+          ("os" tags "+OFFICE+SOREN")
+          ("op" tags "+OFFICE+CARSTEN")
+          ("oc" tags "+OFFICE+COLSTRUP")
+          ("ol" tags "+OFFICE+LUNCHTIME")
+          ("ot" tags "+OFFICE+TELEPHONE")
+          ("or" tags "+OFFICE+RETROSPECTIVE")
+          ("od" tags "+OFFICE+DAILYSCRUM")
+          ("oa" tags "+OFFICE+ASAP")
+          ("h" . "HOME tag searches")
+          ("hi" tags "+HOME+IBEN")
+          ("hc" tags "+HOME+COMPUTER")
+          ("hp" tags "+HOME+TELEPHONE")
+          ("ht" tags "+HOME+TOKE")
+          ("hr" tags "+HOME+RUNA")))
+
+    ; Targets include this file and any file contributing to the agenda - up to 9 levels deep
+    (setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                     (org-agenda-files :maxlevel . 9))))
+
+    ; Use full outline paths for refile targets - we file directly with IDO
+    (setq org-refile-use-outline-path t)
+
+    ; Targets complete directly with IDO
+    (setq org-outline-path-complete-in-steps nil)
+
+    ; Allow refile to create parent tasks with confirmation
+    (setq org-refile-allow-creating-parent-nodes (quote confirm))
+
+    ; Use IDO for both buffer and file completion and ido-everywhere to t
+    (setq org-completion-use-ido t)
+    (setq ido-everywhere t)
+    (setq ido-max-directory-size 100000)
+    (ido-mode (quote both))
+
+    ; Use the current window when visiting files and buffers with ido
+    (setq ido-default-file-method 'selected-window)
+    (setq ido-default-buffer-method 'selected-window)
+
+    ; Use the current window for indirect buffer display
+    (setq org-indirect-buffer-display 'current-window)
+
+;;;; Refile settings
+                                        ; Exclude DONE state tasks from refile targets
+    (defun bh/verify-refile-target ()
+      "Exclude todo keywords with a done state from refile targets"
+      (not (member (nth 2 (org-heading-components)) org-done-keywords)))
+
+    (setq org-refile-target-verify-function 'bh/verify-refile-target)
+
+    ;; active Babel languages
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((R . t)
+       (dot . t)
+       (haskell . t)
+       (java . t)
+       (js . t)
+       (latex . t)
+       (ruby . t)
+       (sh . t)
+       (emacs-lisp . t)
+       (C . t)
+       ))
+    (setq org-confirm-babel-evaluate nil)
+    (setq jiralib-url "http://jira.internal.com")
   "This is were you can ultimately override default Spacemacs configuration.
  This function is called at the very end of Spacemacs initialization."
   ;; use O as org global bindings
@@ -322,7 +419,6 @@ values."
   ;; (setq-default git-magit-status-fullscreen t)
   ;; (setq powerline-default-separator 'arrow))
   ;; (setq powerline-default-separator 'nil))
-
 
   (setq magit-repo-dirs '("~/git/"))
   ;; (setq-default dotspacemacs-themes '(smyx))
@@ -344,5 +440,39 @@ values."
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
-    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))) 
+    (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil)))
   )
+
+(defun dotspacemacs/user-init ()
+  (setq evil-want-fine-undo 't)
+  ;;  (spacemacs/load-or-install-package 'sx t)
+  ;;  (require 'sx-load)
+  ;; (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
+  (setq-default evil-escape-key-sequence "jk")
+  (setq paradox-github-token "7693224097823e845d1f39f82ba5fea5a7ae5531")
+  (global-linum-mode 1)
+  (add-hook 'c-mode-hook 'ycmd-mode))
+
+;;  smyx -> flatland -> stekene-dark ->  firebelly -> subatomic
+;; wombat
+;;  nilfheim background color, irblacks green, hemisu green
+;; flatland theme issues: 1. search highlight is to bright 
+;; 2. 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (rust-mode grizzl ycmd request-deferred deferred auctex anaconda-mode pythonic elixir-mode ox-reveal macrostep elisp-slime-nav auto-compile packed zonokai-theme zenburn-theme zen-and-art-theme yaml-mode xterm-color ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe use-package underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme toml-mode toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme stekene-theme spacemacs-theme spaceline spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smooth-scrolling smeargle shell-pop seti-theme rvm ruby-tools ruby-test-mode ruby-end rubocop rspec-mode robe reverse-theme reveal-in-osx-finder restclient restart-emacs rbenv ranger rainbow-delimiters railscasts-theme racer quelpa pyvenv pytest pyenv-mode py-yapf purple-haze-theme professional-theme popwin planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode pcre2el pbcopy pastels-on-dark-theme paradox page-break-lines osx-trash orgit organic-green-theme org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme neotree naquadah-theme mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme material-theme markdown-toc majapahit-theme magit-gitflow magit-gh-pulls lush-theme lorem-ipsum linum-relative light-soap-theme leuven-theme launchctl jbeans-theme jazz-theme ir-black-theme inkpot-theme info+ indent-guide ido-vertical-mode hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation heroku-theme hemisu-theme help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flyspell helm-flx helm-descbinds helm-dash helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate golden-ratio gnuplot github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md gandalf-theme flycheck-ycmd flycheck-rust flycheck-pos-tip flx-ido flatui-theme flatland-theme firebelly-theme fill-column-indicator fasd farmhouse-theme fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-commentary evil-args evil-anzu eval-sexp-fu espresso-theme eshell-prompt-extras esh-help erlang dracula-theme django-theme disaster diff-hl define-word dash-at-point darktooth-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme company-ycmd company-statistics company-racer company-quickhelp company-c-headers company-auctex company-anaconda colorsarenice-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized cmake-mode clues-theme clean-aindent-mode clang-format chruby cherry-blossom-theme busybee-theme bundler buffer-move bubbleberry-theme bracketed-paste birds-of-paradise-plus-theme badwolf-theme auto-yasnippet auto-highlight-symbol auto-dictionary apropospriate-theme anti-zenburn-theme ansible-doc ansible ample-zen-theme ample-theme alect-themes alchemist aggressive-indent afternoon-theme adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+ '(send-mail-function (quote mailclient-send-it)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:background nil))))
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
+
