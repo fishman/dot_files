@@ -170,7 +170,7 @@ values."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    ;; dotspacemacs-default-font '("Source Code Pro"
-   dotspacemacs-default-font '("Source Code Pro"
+   dotspacemacs-default-font '("Sauce Code Powerline"
                                :size 18
                                :weight normal
                                :width normal
@@ -373,8 +373,8 @@ values."
   (setq org-agenda-files '("~/org"
                            "~/org/wiki"
                            "~/org/wiki/regelwerk"
-                           "~/org/wiki/pe" ))
-  (setq magit-repository-directories '("~/git"))
+                           "~/org/wiki/pe" )
+        (setq magit-repository-directories '("~/git")))
   (setq-default ycmd-server-command '("python" "~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycmd"))
   (setq-default mac-right-option-modifier nil)
   (setq org-log-done t)
@@ -434,7 +434,70 @@ values."
           ("hi" tags "+HOME+MA")
           ("hc" tags "+HOME+COMPUTER")
           ("hp" tags "+HOME+TELEPHONE")
-          ("hr" tags "+HOME+VIKI")))
+          ("hr" tags "+HOME+VIKI")
+          ("W" "Completed and/or deferred tasks from previous week"
+           ((agenda "" ((org-agenda-span 7)
+                        (org-agenda-start-day "-7d")
+                        (org-agenda-entry-types '(:timestamp))
+                        (org-agenda-show-log t)))))))
+
+
+  ;; Common settings for all reviews
+  (setq efs/org-agenda-review-settings
+        '((org-agenda-files '("~/org"
+                              "~/org/wiki"
+                              "~/org/wiki/regelwerk"
+                              "~/org/wiki/pe" ))
+          (org-agenda-show-all-dates t)
+          (org-agenda-start-with-log-mode t)
+          (org-agenda-start-with-clockreport-mode t)
+          (org-agenda-archives-mode t)
+          ;; I don't care if an entry was archived
+          (org-agenda-hide-tags-regexp
+           (concat org-agenda-hide-tags-regexp
+                   "\\|ARCHIVE"))
+          ))
+  ;; Show the agenda with the log turn on, the clock table show and
+  ;; archived entries shown.  These commands are all the same exept for
+  ;; the time period.
+  (add-to-list 'org-agenda-custom-commands
+               `("Rw" "Week in review"
+                 agenda ""
+                 ;; agenda settings
+                 ,(append
+                   efs/org-agenda-review-settings
+                   '((org-agenda-span 'week)
+                     (org-agenda-start-on-weekday 0)
+                     (org-agenda-overriding-header "Week in Review"))
+                   )
+                 ("~/org/review/week.html")
+                 ))
+
+  (add-to-list 'org-agenda-custom-commands
+               `("Rd" "Day in review"
+                 agenda ""
+                 ;; agenda settings
+                 ,(append
+                   efs/org-agenda-review-settings
+                   '((org-agenda-span 'day)
+                     (org-agenda-overriding-header "Week in Review"))
+                   )
+                 ("~/org/review/day.html")
+                 ))
+
+  (add-to-list 'org-agenda-custom-commands
+               `("Rm" "Month in review"
+                 agenda ""
+                 ;; agenda settings
+                 ,(append
+                   efs/org-agenda-review-settings
+                   '((org-agenda-span 'month)
+                     (org-agenda-start-day "01")
+                     (org-read-date-prefer-future nil)
+                     (org-agenda-overriding-header "Month in Review"))
+                   )
+                 ("~/org/review/month.html")
+                 ))
 
     ; Targets include this file and any file contributing to the agenda - up to 9 levels deep
     (setq org-refile-targets (quote ((nil :maxlevel . 9)
@@ -560,12 +623,15 @@ values."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#d2ceda" "#f2241f" "#67b11d" "#b1951d" "#3a81c3" "#a31db1" "#21b8c7" "#655370"])
+ '(evil-want-Y-yank-to-eol t)
  '(org-agenda-files
    (quote
     ("c:/Users/jelveh/org/TODO.org" "c:/Users/jelveh/org/notes.org" "c:/Users/jelveh/org/refile.org" "c:/Users/jelveh/org/regelwerk.org" "c:/Users/jelveh/org/saucelabs.org" "c:/Users/jelveh/org/taskdiary.org" "c:/Users/jelveh/org/timelog.org" "c:/Users/jelveh/org/workjournal.org")))
  '(package-selected-packages
    (quote
-    (wgrep smex ivy-hydra counsel-projectile counsel swiper ivy yapfify uuidgen py-isort ox-gfm org-projectile org-download ob-http mwim livid-mode skewer-mode simple-httpd live-py-mode link-hint github-search with-editor eyebrowse evil-visual-mark-mode evil-unimpaired evil-ediff eshell-z dumb-jump company-emacs-eclim column-enforce-mode cargo csv-mode rust-mode grizzl ycmd request-deferred deferred auctex anaconda-mode pythonic elixir-mode ox-reveal macrostep elisp-slime-nav auto-compile packed zonokai-theme zenburn-theme zen-and-art-theme yaml-mode xterm-color ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe use-package underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme toml-mode toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme stekene-theme spacemacs-theme spaceline spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smooth-scrolling smeargle shell-pop seti-theme rvm ruby-tools ruby-test-mode ruby-end rubocop rspec-mode robe reverse-theme reveal-in-osx-finder restclient restart-emacs rbenv ranger rainbow-delimiters railscasts-theme racer quelpa pyvenv pytest pyenv-mode py-yapf purple-haze-theme professional-theme popwin planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode pcre2el pbcopy pastels-on-dark-theme paradox page-break-lines osx-trash orgit organic-green-theme org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme neotree naquadah-theme mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme material-theme markdown-toc majapahit-theme magit-gitflow magit-gh-pulls lush-theme lorem-ipsum linum-relative light-soap-theme leuven-theme launchctl jbeans-theme jazz-theme ir-black-theme inkpot-theme info+ indent-guide ido-vertical-mode hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation heroku-theme hemisu-theme help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flyspell helm-flx helm-descbinds helm-dash helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate golden-ratio gnuplot github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md gandalf-theme flycheck-ycmd flycheck-rust flycheck-pos-tip flx-ido flatui-theme flatland-theme firebelly-theme fill-column-indicator fasd farmhouse-theme fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-commentary evil-args evil-anzu eval-sexp-fu espresso-theme eshell-prompt-extras esh-help erlang dracula-theme django-theme disaster diff-hl define-word dash-at-point darktooth-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme company-ycmd company-statistics company-racer company-quickhelp company-c-headers company-auctex company-anaconda colorsarenice-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized cmake-mode clues-theme clean-aindent-mode clang-format chruby cherry-blossom-theme busybee-theme bundler buffer-move bubbleberry-theme bracketed-paste birds-of-paradise-plus-theme badwolf-theme auto-yasnippet auto-highlight-symbol auto-dictionary apropospriate-theme anti-zenburn-theme ansible-doc ansible ample-zen-theme ample-theme alect-themes alchemist aggressive-indent afternoon-theme adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (solarized-theme wgrep smex ivy-hydra counsel-projectile counsel swiper ivy yapfify uuidgen py-isort ox-gfm org-projectile org-download ob-http mwim livid-mode skewer-mode simple-httpd live-py-mode link-hint github-search with-editor eyebrowse evil-visual-mark-mode evil-unimpaired evil-ediff eshell-z dumb-jump company-emacs-eclim column-enforce-mode cargo csv-mode rust-mode grizzl ycmd request-deferred deferred auctex anaconda-mode pythonic elixir-mode ox-reveal macrostep elisp-slime-nav auto-compile packed zonokai-theme zenburn-theme zen-and-art-theme yaml-mode xterm-color ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe use-package underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme toml-mode toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme stekene-theme spacemacs-theme spaceline spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smooth-scrolling smeargle shell-pop seti-theme rvm ruby-tools ruby-test-mode ruby-end rubocop rspec-mode robe reverse-theme reveal-in-osx-finder restclient restart-emacs rbenv ranger rainbow-delimiters railscasts-theme racer quelpa pyvenv pytest pyenv-mode py-yapf purple-haze-theme professional-theme popwin planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode pcre2el pbcopy pastels-on-dark-theme paradox page-break-lines osx-trash orgit organic-green-theme org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme neotree naquadah-theme mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme material-theme markdown-toc majapahit-theme magit-gitflow magit-gh-pulls lush-theme lorem-ipsum linum-relative light-soap-theme leuven-theme launchctl jbeans-theme jazz-theme ir-black-theme inkpot-theme info+ indent-guide ido-vertical-mode hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation heroku-theme hemisu-theme help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flyspell helm-flx helm-descbinds helm-dash helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate golden-ratio gnuplot github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md gandalf-theme flycheck-ycmd flycheck-rust flycheck-pos-tip flx-ido flatui-theme flatland-theme firebelly-theme fill-column-indicator fasd farmhouse-theme fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-commentary evil-args evil-anzu eval-sexp-fu espresso-theme eshell-prompt-extras esh-help erlang dracula-theme django-theme disaster diff-hl define-word dash-at-point darktooth-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme company-ycmd company-statistics company-racer company-quickhelp company-c-headers company-auctex company-anaconda colorsarenice-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized cmake-mode clues-theme clean-aindent-mode clang-format chruby cherry-blossom-theme busybee-theme bundler buffer-move bubbleberry-theme bracketed-paste birds-of-paradise-plus-theme badwolf-theme auto-yasnippet auto-highlight-symbol auto-dictionary apropospriate-theme anti-zenburn-theme ansible-doc ansible ample-zen-theme ample-theme alect-themes alchemist aggressive-indent afternoon-theme adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
