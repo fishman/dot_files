@@ -1,4 +1,5 @@
-;; -*- mode: emacs-lisp -*-
+
+
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -31,9 +32,11 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     mu4e
+     lua
      ivy
+     ess
      csv
-     org-jira
      asciidoc
      python
      ipython-notebook
@@ -85,11 +88,13 @@ values."
           org-enable-github-support t
           git-magit-status-fullscreen t
           git-gutter-use-fringe t)
+     org-jira
+     fishman
      ;; spell-checking
      (spell-checking :variables
                      enable-flyspell-auto-completion t
                      spell-checking-enable-by-default nil)
-     ;; fasd
+     fasd
      syntax-checking
      version-control
      )
@@ -97,7 +102,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(spray ox-reveal ox-gfm org-jira org-alert nxml xml-rpc confluence langtool org-jekyll)
+   dotspacemacs-additional-packages '(spray ox-reveal ox-gfm org-alert nxml xml-rpc confluence langtool org-jekyll)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -239,7 +244,7 @@ values."
    ;; Size (in MB) above which spacemacs will prompt to open the large file
    ;; literally to avoid performance issues. Opening a file literally means that
    ;; no major mode or minor modes are active. (default is 1)
-   dotspacemacs-large-file-size 1
+   dotspacemacs-large-file-size 10
    ;; Location where to auto-save files. Possible values are `original' to
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
@@ -386,7 +391,24 @@ values."
    layers configuration."
   (setq dotspacemacs-version-check-enable 'nil)
   (add-to-list 'exec-path "~/bin")
-
+  ;; active Babel languages
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((java . t)
+     ;; (R . t)
+     (dot . t)
+     (haskell . t)
+     (js . t)
+     (latex . t)
+     (ruby . t)
+     (sh . t)
+     (emacs-lisp . t)
+     (C . t)
+     (plantuml . t)
+     (python . t)
+     (ditaa . t)
+     ))
+  (setq org-confirm-babel-evaluate nil)
   (defvar yt-iframe-format
     (concat "<iframe width=\"440\""
             " height=\"335\""
@@ -410,6 +432,61 @@ values."
   ;; ;; (ispell-set-spellchecker-params)
   ;; (setq ispell-hunspell-add-multi-dic "en_US,de_DE")
 
+(add-to-list 'ispell-local-dictionary-alist '(("english"
+                                               "[[:alpha:]]"
+                                               "[^[:alpha:]]"
+                                               "[']"
+                                               t
+                                               ("-d" "en_US")
+                                               nil
+                                               utf-8)))
+(add-to-list 'ispell-local-dictionary-alist '(("german"
+                                               "[[:alpha:]]"
+                                               "[^[:alpha:]]"
+                                               "[']"
+                                               t
+                                               ("-d" "de_DE")
+                                               nil
+                                               utf-8)))
+(setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist)
+
+  ;; (setq ispell-program-name "hunspell"          ; Use hunspell to correct mistakes
+        ;; ispell-dictionary   "german") ; Default dictionary to use
+  (setq ispell-program-name "hunspell")
+  ;; (setq ispell-dictionary "german,english")
+(setq ispell-dictionary "english")
+  ;; ispell-set-spellchecker-params has to be called
+  ;; before ispell-hunspell-add-multi-dic will work
+  (ispell-set-spellchecker-params)
+  ;; (ispell-hunspell-add-multi-dic "german,english")
+  ;; (ispell-hunspell-add-multi-dic "english")
+
+  (setq mu4e-account-alist
+        '(("gmail"
+           (mu4e-sent-messages-behavior delete)
+           (mu4e-sent-folder "/gmail/sent")
+           (mu4e-drafts-folder "/gmail/drafts")
+           (mu4e-trash-folder "/gmail/trash")
+           (user-mail-address "reza.jelveh@gmail.com")
+           (user-full-name "Reza Jelveh"))
+          ("sauce"
+           (mu4e-sent-messages-behavior delete)
+           (mu4e-sent-folder "/sauce/sent")
+           (mu4e-drafts-folder "/sauce/drafts")
+           (mu4e-trash-folder "/sauce/trash")
+           (user-mail-address "reza@saucelabs.com")
+           (user-full-name "Reza Jelveh"))
+          ("jelveh"
+           (mu4e-sent-messages-behavior sent)
+           (mu4e-sent-folder "/jelveh/sent")
+           (mu4e-drafts-folder "/jelveh/drafts")
+           (mu4e-trash-folder "/jelveh/trash")
+           (user-mail-address "reza@jelveh.me")
+           (user-full-name "Reza Jelveh"))))
+  (setq message-send-mail-function 'message-send-mail-with-sendmail
+        sendmail-program "/usr/bin/msmtp"
+        user-full-name "Reza Jelveh")
+  (mu4e/mail-account-reset)
   (setq initial-major-mode 'org-mode)
   (setq org-directory "~/org")
   (setq org-default-notes-file (concat org-directory "/notes.org"))
@@ -604,24 +681,6 @@ values."
 
     (setq org-refile-target-verify-function 'bh/verify-refile-target)
 
-    ;; active Babel languages
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((R . t)
-       (dot . t)
-       (haskell . t)
-       (java . t)
-       (js . t)
-       (latex . t)
-       (ruby . t)
-       (sh . t)
-       (emacs-lisp . t)
-       (C . t)
-       (plantuml . t)
-       (python . t)
-       (ditaa . t)
-       ))
-    (setq org-confirm-babel-evaluate nil)
     (setq jiralib-url "http://jira.internal.com")
     (defvar my-link-search-directory "~/org/wiki")
 
@@ -640,7 +699,7 @@ values."
     "OC" 'helm-org-capture-templates ;requires templates to be defined.
     "Ol" 'org-store-link)
 
-  (setq markdown-command "markdown.exe")
+  (setq markdown-command "markdown")
   ;; (setq markdown-css-dir "~/.emacs.d/markdown-css/")
 
   ;; (setq css-theme (expand-file-name  "~/.emacs.d/markdown-css/css/clearness.css"))
@@ -653,7 +712,8 @@ values."
   ;; (setq markdown-css-theme "clearness")
   ;; (setq-default git-enable-github-support t)
   ;; (setq-default git-magit-status-fullscreen t)
-  ;; (setq powerline-default-separator 'arrow))
+  (setq powerline-default-separator 'arrow)
+  ;; (setq powerline-default-theme 'center)
   ;; (setq powerline-default-separator 'nil))
 
   (setq magit-repo-dirs '("~/git/"))
@@ -665,8 +725,10 @@ values."
 
   (add-to-list 'load-path "~/.emacs.d/org-wiki")
   (add-to-list 'load-path "~/.emacs.d/org-glossary")
-  (require 'org-glossary)
+  (add-to-list 'load-path "~/.emacs.d/ox-cv")
   (require 'org-wiki)
+  (require 'org-glossary)
+  (require 'ox-cv)
   (eval-after-load 'ox '(require 'ox-koma-letter))
   (eval-after-load 'ox '(require 'ox-confluence))
   (require 'ox-extra)
@@ -689,8 +751,18 @@ values."
      \[PACKAGES]
      \[EXTRA]"))
 
-
        (setq org-koma-letter-default-class "my-letter")))
+
+  (eval-after-load 'ox-cv
+    '(progn
+       (add-to-list 'org-latex-classes
+                    '("mymoderncv"
+                      "\\documentclass\{moderncv\}
+\\moderncvtheme[grey]{classic}
+\[NO-DEFAULT-PACKAGES]
+\[NO-PACKAGES]
+\[EXTRA]"))
+       (setq org-export-before-parsing-hook '(ox-cv-export-parse-employment))))
   (ox-extras-activate '(ignore-headlines))
   (setq alert-default-style 'toaster)
   (require 'org-alert)
@@ -771,6 +843,13 @@ values."
 
   (global-set-key [f7] 'cycle-ispell-languages)
   ;; (add-hook 'c-mode-hook 'ycmd-mode))
+  (defun dired-open-file ()
+    "In dired, open the file named on this line."
+    (interactive)
+    (let* ((file (dired-get-filename nil t)))
+      (message "Opening %s..." file)
+      (call-process "xdg-open" nil 0 nil file)
+      (message "Opening %s done" file)))
   )
 
 ;;  smyx -> flatland -> stekene-dark ->  firebelly -> subatomic
@@ -791,7 +870,9 @@ values."
     ("c:/Users/jelveh/org/TODO.org" "c:/Users/jelveh/org/notes.org" "c:/Users/jelveh/org/refile.org" "c:/Users/jelveh/org/regelwerk.org" "c:/Users/jelveh/org/saucelabs.org" "c:/Users/jelveh/org/taskdiary.org" "c:/Users/jelveh/org/timelog.org" "c:/Users/jelveh/org/workjournal.org")))
  '(package-selected-packages
    (quote
-    (vmd-mode org-ref key-chord helm-bibtex biblio parsebib biblio-core pandoc-mode ox-pandoc auctex-latexmk plantuml-mode minitest hide-comnt ein websocket pug-mode org-jekyll langtool flyspell-popup flyspell-correct-ivy flyspell-correct spray solarized-theme wgrep smex ivy-hydra counsel-projectile counsel swiper ivy yapfify uuidgen py-isort ox-gfm org-projectile org-download ob-http mwim livid-mode skewer-mode simple-httpd live-py-mode link-hint github-search with-editor eyebrowse evil-visual-mark-mode evil-unimpaired evil-ediff eshell-z dumb-jump company-emacs-eclim column-enforce-mode cargo csv-mode rust-mode grizzl ycmd request-deferred deferred auctex anaconda-mode pythonic elixir-mode ox-reveal macrostep elisp-slime-nav auto-compile packed zonokai-theme zenburn-theme zen-and-art-theme yaml-mode xterm-color ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe use-package underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme toml-mode toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme stekene-theme spacemacs-theme spaceline spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smooth-scrolling smeargle shell-pop seti-theme rvm ruby-tools ruby-test-mode ruby-end rubocop rspec-mode robe reverse-theme reveal-in-osx-finder restclient restart-emacs rbenv ranger rainbow-delimiters railscasts-theme racer quelpa pyvenv pytest pyenv-mode py-yapf purple-haze-theme professional-theme popwin planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode pcre2el pbcopy pastels-on-dark-theme paradox page-break-lines osx-trash orgit organic-green-theme org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme neotree naquadah-theme mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme material-theme markdown-toc majapahit-theme magit-gitflow magit-gh-pulls lush-theme lorem-ipsum linum-relative light-soap-theme leuven-theme launchctl jbeans-theme jazz-theme ir-black-theme inkpot-theme info+ indent-guide ido-vertical-mode hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation heroku-theme hemisu-theme help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flyspell helm-flx helm-descbinds helm-dash helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate golden-ratio gnuplot github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md gandalf-theme flycheck-ycmd flycheck-rust flycheck-pos-tip flx-ido flatui-theme flatland-theme firebelly-theme fill-column-indicator fasd farmhouse-theme fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-commentary evil-args evil-anzu eval-sexp-fu espresso-theme eshell-prompt-extras esh-help erlang dracula-theme django-theme disaster diff-hl define-word dash-at-point darktooth-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme company-ycmd company-statistics company-racer company-quickhelp company-c-headers company-auctex company-anaconda colorsarenice-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized cmake-mode clues-theme clean-aindent-mode clang-format chruby cherry-blossom-theme busybee-theme bundler buffer-move bubbleberry-theme bracketed-paste birds-of-paradise-plus-theme badwolf-theme auto-yasnippet auto-highlight-symbol auto-dictionary apropospriate-theme anti-zenburn-theme ansible-doc ansible ample-zen-theme ample-theme alect-themes alchemist aggressive-indent afternoon-theme adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (mu4e-maildirs-extension mu4e-alert lua-mode ox-pandoc org-plus-contrib ess-smart-equals ess-R-object-popup ess-R-data-view ctable ess julia-mode powerline spinner parent-mode projectile seq pkg-info epl flx iedit smartparens anzu evil goto-chg undo-tree highlight request diminish bind-key f s helm avy helm-core popup alert log4e gntp markdown-mode gitignore-mode fringe-helper gh logito pcache flyspell-correct-helm magit pos-tip company inf-ruby yasnippet auto-complete vimrc-mode projectile-rails rake inflections git-gutter+ git-gutter feature-mode magit-popup git-commit dash async evil-cleverparens paredit dactyl-mode eclim adoc-mode markup-faces names json-rpc package-build bind-map marshal ht xkcd web-mode web-beautify tagedit sql-indent slim-mode scss-mode sass-mode org-jira org-alert omnisharp less-css-mode json-mode js2-refactor js-doc helm-css-scss evil-snipe emmet-mode confluence company-web company-tern coffee-mode dash-functional tern web-completion-data xml-rpc multiple-cursors js2-mode json-snatcher json-reformat csharp-mode flycheck hydra haml-mode vmd-mode org-ref key-chord helm-bibtex biblio parsebib biblio-core pandoc-mode auctex-latexmk plantuml-mode minitest hide-comnt ein websocket pug-mode org-jekyll langtool flyspell-popup flyspell-correct-ivy flyspell-correct spray solarized-theme wgrep smex ivy-hydra counsel-projectile counsel swiper ivy yapfify uuidgen py-isort ox-gfm org-projectile org-download ob-http mwim livid-mode skewer-mode simple-httpd live-py-mode link-hint github-search with-editor eyebrowse evil-visual-mark-mode evil-unimpaired evil-ediff eshell-z dumb-jump company-emacs-eclim column-enforce-mode cargo csv-mode rust-mode grizzl ycmd request-deferred deferred auctex anaconda-mode pythonic elixir-mode ox-reveal macrostep elisp-slime-nav auto-compile packed zonokai-theme zenburn-theme zen-and-art-theme yaml-mode xterm-color ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe use-package underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme tronesque-theme toxi-theme toml-mode toc-org tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme stekene-theme spacemacs-theme spaceline spacegray-theme soothe-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme smooth-scrolling smeargle shell-pop seti-theme rvm ruby-tools ruby-test-mode ruby-end rubocop rspec-mode robe reverse-theme reveal-in-osx-finder restclient restart-emacs rbenv ranger rainbow-delimiters railscasts-theme racer quelpa pyvenv pytest pyenv-mode py-yapf purple-haze-theme professional-theme popwin planet-theme pip-requirements phoenix-dark-pink-theme phoenix-dark-mono-theme persp-mode pcre2el pbcopy pastels-on-dark-theme paradox page-break-lines osx-trash orgit organic-green-theme org-repo-todo org-present org-pomodoro org-bullets open-junk-file omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme niflheim-theme neotree naquadah-theme mustang-theme multi-term move-text monokai-theme monochrome-theme molokai-theme moe-theme mmm-mode minimal-theme material-theme markdown-toc majapahit-theme magit-gitflow magit-gh-pulls lush-theme lorem-ipsum linum-relative light-soap-theme leuven-theme launchctl jbeans-theme jazz-theme ir-black-theme inkpot-theme info+ indent-guide ido-vertical-mode hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation heroku-theme hemisu-theme help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flyspell helm-flx helm-descbinds helm-dash helm-company helm-c-yasnippet helm-ag hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme google-translate golden-ratio gnuplot github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md gandalf-theme flycheck-ycmd flycheck-rust flycheck-pos-tip flx-ido flatui-theme flatland-theme firebelly-theme fill-column-indicator fasd farmhouse-theme fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-commentary evil-args evil-anzu eval-sexp-fu espresso-theme eshell-prompt-extras esh-help erlang dracula-theme django-theme disaster diff-hl define-word dash-at-point darktooth-theme darkmine-theme darkburn-theme dakrone-theme cython-mode cyberpunk-theme company-ycmd company-statistics company-racer company-quickhelp company-c-headers company-auctex company-anaconda colorsarenice-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized cmake-mode clues-theme clean-aindent-mode clang-format chruby cherry-blossom-theme busybee-theme bundler buffer-move bubbleberry-theme bracketed-paste birds-of-paradise-plus-theme badwolf-theme auto-yasnippet auto-highlight-symbol auto-dictionary apropospriate-theme anti-zenburn-theme ansible-doc ansible ample-zen-theme ample-theme alect-themes alchemist aggressive-indent afternoon-theme adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+ '(paradox-automatically-star t)
+ '(ring-bell-function (quote ignore))
  '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
