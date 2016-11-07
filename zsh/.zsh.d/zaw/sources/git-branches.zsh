@@ -59,6 +59,12 @@ function zaw-src-git-branches-checkout () {
     esac
 }
 
+function zaw-src-git-branches-simple-checkout () {
+    local b_name=${1#(heads|remotes|tags)/}
+    BUFFER="git checkout $b_name"
+    zle accept-line
+}
+
 function zaw-src-git-branches-create () {
     local b_name=${1#(heads|remotes|tags)/}
     LBUFFER="git checkout -b "
@@ -69,6 +75,13 @@ function zaw-src-git-branches-merge () {
     local b_type=${1%%/*}
     local b_name=${1#(heads|remotes|tags)/}
     BUFFER="git merge $b_name"
+    zle accept-line
+}
+
+function zaw-src-git-branches-merge-rebase () {
+    local b_type=${1%%/*}
+    local b_name=${1#(heads|remotes|tags)/}
+    BUFFER="git merge --rebase $b_name"
     zle accept-line
 }
 
@@ -133,6 +146,20 @@ function zaw-src-git-branches-delete () {
     local b_name=${1#(heads|remotes|tags)/}
     if [[ "$b_type" == "heads" ]] ; then
         BUFFER="git branch -d $b_name"
+        zle accept-line
+    elif [[ "$b_type" == "remotes" ]] ; then
+        local b_loc=${b_name%%/*}
+        local b_base=${b_name#$b_loc/}
+        BUFFER="git push $b_loc :$b_base"
+        zle accept-line
+    fi
+}
+
+function zaw-src-git-branches-delete-force () {
+    local b_type=${1%%/*}
+    local b_name=${1#(heads|remotes|tags)/}
+    if [[ "$b_type" == "heads" ]] ; then
+        BUFFER="git branch -D $b_name"
         zle accept-line
     elif [[ "$b_type" == "remotes" ]] ; then
         local b_loc=${b_name%%/*}
