@@ -1,5 +1,5 @@
 #!/bin/zsh
 
 if [[ -x $(which keychain) ]]; then
-    eval `keychain --eval --agents ssh id_dsa`
+    eval `keychain --eval --agents gpg,ssh id_rsa identity_highway61`
 fi

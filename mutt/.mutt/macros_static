@@ -1,8 +1,8 @@
 # have to be sourced on folder hooks
-macro generic "g1" "<c+/gmail/inbox<return>"
-macro generic "g2" "<c+/tuhh/inbox<return>"
+macro generic "g1" "<c+/sauce/inbox<return>"
+macro generic "g2" "<c+/jelveh/inbox<return>"
 macro generic "g3" "<c+/gmx/inbox<return>"
-macro generic "g4" "<c+/jelvehme/inbox<return>"
+macro generic "g4" "<c+/tuhh/inbox<return>"
 macro generic "g5" "<c+/vserver/inbox<return>"
 macro generic "g6" "<c+/louisiana/inbox<return>"
 macro generic "g7" "<c+/pitchme/inbox<return>"
@@ -11,10 +11,31 @@ macro generic "g8" "<c+/team/inbox<return>"
  macro attach W <save-entry><kill-line>~/Downloads/Attachments/
  macro attach E <save-entry><kill-line>~/Downloads/Attachments/<enter>
 # Mu
-# mutt macros for mu
-macro index <F8> "<shell-escape>mu find --clearlinks --format=links --linksdir=~/Mail/search " \
-                  "mu find"
-macro index <F9> "<change-folder-readonly>~/Mail/search<return>" \
-                  "mu find results"
+# # mutt macros for mu
+# macro index <F8> "<shell-escape>mu find --clearlinks --format=links --linksdir=~/Mail/search " \
+#                   "mu find"
+# macro index <F9> "<change-folder-readonly>~/Mail/search<return>" \
+#                   "mu find results"
+
+macro index <F8> \
+  "<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+  <shell-escape>notmuch-mutt -r --prompt search<enter>\
+  <change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+  <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+      "notmuch: search mail"
+
+macro index <F9> \
+  "<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+  <pipe-message>notmuch-mutt -r thread<enter>\
+  <change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+  <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+      "notmuch: reconstruct thread"
+
+macro index <F6> \
+  "<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+  <pipe-message>notmuch-mutt tag -- -inbox<enter>\
+  <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+      "notmuch: remove message from inbox"
+
 
 # vim: syntax=muttrc

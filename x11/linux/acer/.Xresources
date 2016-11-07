@@ -10,12 +10,13 @@ dzen2.background: #1B1D1E
 ! URxvt*background: rgba:1000/5000/5000/dddd
 Emacs*font:     Inconsolata for Powerline-12
 URxvt*font: xft:Terminus:pixelsize=16,xft:Inconsolata for Powerline:16
+! URxvt*font: xft:Terminus:pixelsize=24,xft:Inconsolata for Powerline:24
 ! URxvt*font: xft:Terminus:pixelsize=16
 ! xterm*faceName: Dejavu Sans Mono:8
 xterm*faceName:  terminus:pixelsize=18
 xterm*termName: xterm-256color
 
-Emacs*geometry:     120x40
+Emacs*geometry:     100x40
 
 ! font settings suggested by infinality
 ! Xft.dpi: 110

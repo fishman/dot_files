@@ -5,7 +5,6 @@ alias mmv='noglob zmv -W'
 
 if ( which sudo >/dev/null 2>/dev/null ) ; then
   alias su='export XAUTHORITY=${HOME}/.Xauthority ; sudo -s'
-  alias sudo='export XAUTHORITY=${HOME}/.Xauthority ; sudo'
 fi
 
 # Suffix Aliases ... ain't this one nifty shell?
@@ -73,10 +72,11 @@ if [[ $OS == osx ]]; then
   alias pgstart="pg_ctl start  -l logfile -D '${EPREFIX}/var/lib/postgresql/9.3/data' -o '-D ${EPREFIX}/etc/postgresql-9.3/ --data-directory=${EPREFIX}/var/lib/postgresql/9.3/data'"
   alias pgstop="pg_ctl stop -D '${EPREFIX}/var/lib/postgresql/9.3/data'"
 
+
 else
   #alias vim="vim --servername $PWD"
   alias emacs='emacs -nw' # prefer console version of emacs
-  alias open='xdg-open'
+  alias open='runa -a'
 fi
 alias myip="ifconfig | grep 192.168 || ifconfig | grep 10.32"
 alias psg="ps ax | grep "
@@ -111,6 +111,9 @@ alias lsd='ls -ld *(-/DN)'
 # List only file beginning with "."
 alias lsa='ls -ld .*'
 alias lla='ls -la'
+
+alias ka='killall'
+alias k='kill'
 
 # be faster alias
 alias cd..='cd ..;'
@@ -167,7 +170,6 @@ if [[ $OS == osx ]]; then
 else
   # arch aliases
   alias rc.d="sudo rc.d"
-  alias systemctl="sudo systemctl"
   alias e="emacsclient -t"
   alias emacsquit="emacsclient -t '(let ((last-nonmenu-event nil))(save-buffers-kill-emacs))'"
 fi
@@ -207,6 +209,7 @@ alias holiday="task rc.calendar.holidays:full cal"
 # nbtscan
 
 # tools
+# lnav - log file navigator
 # multitail
 # slurm
 
@@ -379,11 +382,29 @@ alias mkvirtualenv2='mkvirtualenv -p `which python2.7`'
 #     alias vim="nvim"
 # fi
 
-if [ -x "$(which hub)" ]; then
-    eval "$(hub alias -s)"
+# don't use any hub in user directories to avoid nasty behavior
+if [ -x "/usr/bin/hub" ]; then
+    $(hub alias -s)
 fi
 
 alias GET='curl -sk'
 alias DELETE='curl -sk -X DELETE'
 alias PUT='curl -sk -X PUT --data-binary @-'
 alias POST='curl -sk -X POST --data-binary @-'
+alias us="setxkbmap us -option terminate:ctrl_alt_bkspc -option ctrl:nocaps; xmodmap ~/.xmodmap"
+alias dvorak="setxkbmap dvorak -option terminate:ctrl_alt_bkspc -option ctrl:nocaps; xmodmap ~/.xmodmap"
+
+alias tzberlin="timedatectl set-timezone Europe/Berlin"
+alias tzlondon="timedatectl set-timezone Europe/London"
+alias tzpacific="timedatectl set-timezone US/Pacific"
+alias tzcentral="timedatectl set-timezone US/Central"
+
+alias edk2="workon edk; . ./edksetup.sh; build"
+
+alias archwiki="wikicurses --wiki https://wiki.archlinux.org/api.php"
+
+alias telnetssl="openssl s_client -connect"
+
+alias npm-exec='PATH=$(npm bin):$PATH'
+
+alias howdoi="howdoi -a -c "

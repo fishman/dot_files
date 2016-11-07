@@ -18,6 +18,6 @@ __process_settings() {
 
 run_segment() {
         __process_settings
-	head  -n2 "$TMUX_POWERLINE_SEG_AGENDA_FILE" | tail -n1
+	head  -n2 "$TMUX_POWERLINE_SEG_AGENDA_FILE" | tail -n1 | cut -c 1-40
 	return 0
 }

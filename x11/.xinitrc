@@ -105,7 +105,14 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 # trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 10 --transparent true --alpha 1 --tint 0x1b1d1e --height 24  &
 # /usr/lib/notification-daemon-1.0/notification-daemon &
 
-exec ck-launch-session xfce4-session
+# exec ck-launch-session xfce4-session
+export PATH=$PATH:~/bin
+#xcompmgr -c & 
+exec xfce4-session
+# exec awesome
+#exec enlightenment_start
+# exec ck-launch-session dbus-launch --sh-syntax --exit-with-session i3 -V -d all > ~/.i3/i3log-$(date +'%F-%k-%M-%S') 2>&1
+#exec ck-launch-session xmonad
 # exec ck-launch-session awesome
 # ck-launch-session gnome-session --session=awesome
 # ck-launch-session dbus-launch gnome-session

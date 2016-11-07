@@ -1,9 +1,10 @@
 ! font settings suggested by infinality
-! Xft.dpi: 110
-!Xft.antialias: 1
-!Xft.lcdfilter:  lcddefault
-!Xft.hintstyle:  hintfull
-!Xft.rgba: rgb
+Xft.dpi: 110
+!Xft.dpi: 192
+Xft.antialias: 1
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+Xft.rgba: rgb
 
 !Xft.autohint: 1
 !Xft.hinting: 1

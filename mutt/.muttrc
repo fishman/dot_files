@@ -42,7 +42,7 @@ set mbox_type = Maildir
 source ~/.mutt/mailboxes
 
 set folder=$HOME/Mail
-set spoolfile=+gmail/inbox
+set spoolfile=+sauce/inbox
 # mailboxes `cat $HOME/.mutt/mailboxes`
 # mailboxes `$HOME/.mutt/mailboxes.sh`
 
@@ -299,7 +299,7 @@ source ~/.mutt/macros_static
 
 ## Sidebar ##
 #
-source ~/.mutt/sidebar
+# source ~/.mutt/sidebar
 
 ## Colors ##
 #
@@ -317,7 +317,7 @@ source ~/.mutt/mutt-colors-solarized-dark-256.muttrc
 
 # set sendmail="/opt/local/gentoo/usr/share/msmtp/msmtpq/msmtpQ" 
 # queue mails
-set sendmail="/usr/bin/msmtpq" 
+set sendmail="~/bin/msmtpq" 
 set sendmail_wait = -1
 
 set askcc=yes
@@ -326,3 +326,16 @@ set askcc=yes
 set wait_key=no
 
 set quit=ask-yes
+
+set realname="Reza Jelveh"
+
+macro index,pager A \
+    "<pipe-message>mates add | xargs mates edit<enter>" \
+    "add the sender address"
+
+set query_command= "mates mutt-query '%s'"
+
+# Normally you'd have to hit Ctrl-T for completion.
+# This rebinds it to Tab.
+bind editor <Tab> complete-query
+bind editor ^T    complete

@@ -39,7 +39,7 @@
 # ----------------------------------------------------------------------
 
 [global]
-    font = Terminus 24
+# dpi    font = Terminus 12
 
     allow_markup = yes
 
@@ -54,8 +54,8 @@
     ignore_newline = no
 
 # geometry [{width}]x{height}][+/-{x}+/-{y}]
-    geometry = "0-10+40"
-    shrink = no
+    geometry = "600-10+40"
+    shrink = yes
 
     transparency = 0
     idle_threshold = 120

@@ -27,7 +27,7 @@ function zaw-src-applications() {
 
             # Glob common locations anyway since both of previous indexes may
             # be stale or non-existent
-            candidates+=({,~}/Applications{,/Utilities}/*.app(N) /System/Library/CoreServices/*.app(N))
+            candidates+=({,~}/Applications{,/Utilities}/*.app(N^M) /System/Library/CoreServices/*.app(N^M))
 
             candidates=(${(iou)candidates[@]})
             actions=("zaw-callback-launch-macapp" "zaw-callback-append-to-buffer")
@@ -36,7 +36,7 @@ function zaw-src-applications() {
         [Ll]inux*|*[Bb][Ss][Dd]*|[Ss]olaris*|[Ss]un[Oo][Ss]*)
             local d
             local -a match mbegin mend
-            for d in /usr/share/applications/*.desktop; do
+            for d in /usr/share/applications/*.desktop ~/.local/share/applications/*.desktop; do
                 local name="" comment="" exec_="" terminal=0 no_display=0
                 while read line; do
                     case "${line}" in

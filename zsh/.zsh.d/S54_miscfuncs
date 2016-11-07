@@ -173,6 +173,55 @@ togglewifi() {
     fi
 }
 
+runc () {
+  //usr/bin/make -s "${0%.*}" && ./"${0%.*}" "$@"; s=$?; rm ./"${0%.*}"; exit $s
+}
+
+function img { for image in "$@"; do convert -thumbnail $(tput cols) "$image" txt:- | awk -F '[)(,]' '!/^#/{gsub(/ /,"");printf"\033[48;2;"$3";"$4";"$5"m "}'; echo -e "\e[0;0m"; done ;}
+
+function ppgrep() {
+    if [[ $1 == "" ]]; then
+        PERCOL=percol
+    else
+        PERCOL="percol --query $1"
+    fi
+    ps aux | eval $PERCOL | awk '{ print $2 }'
+}
+
+function ppkill() {
+    if [[ $1 =~ "^-" ]]; then
+        QUERY=""            # options only
+    else
+        QUERY=$1            # with a query
+        [[ $# > 0 ]] && shift
+    fi
+    ppgrep $QUERY | xargs kill $*
+}
+
+function pattach() {
+    if [[ $1 == "" ]]; then
+        PERCOL=percol
+    else
+        PERCOL="percol --query $1"
+    fi
+
+    sessions=$(tmux ls)
+    [ $? -ne 0 ] && return
+
+    session=$(echo $sessions | eval $PERCOL | cut -d : -f 1)
+    if [[ -n "$session" ]]; then
+        tmux att -t $session
+    fi
+}
+
+vim-cat() {
+    local tempname="$(mktemp)"
+    for arg ; do
+        tempname="$tempname" screen -D -m -S vim-cat view -c 'Format format csi to $tempname' -c 'qall!' -- $arg
+        cat $tempname
+    done
+}
+
 function _midnight {
     BUFFER="mc"
     zle accept-line

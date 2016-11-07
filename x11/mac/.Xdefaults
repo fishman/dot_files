@@ -1,30 +1,39 @@
 ! *foreground:        White
-URxvt.perl-lib:     /Users/myuser/.urxvt
-URxvt*chdir:        /Users/myuser/git
+URxvt.perl-lib:     $HOME/.urxvt
+URxvt*chdir:        $HOME/git
 
-urxvt*font:         xft:terminus:pixelsize=14,xft:Inconsolata for Powerline:style=Medium
+URxvt*font:         xft:terminus:pixelsize=24,xft:Inconsolata for Powerline:style=Medium
+! URxvt.font: xft:Consolas:size=24, xft:Inconsolata for Powerline
 xterm*faceName:     terminus:pixelsize=18
 
 xpdf.viKeys:        true
 
-#include "/Users/myuser/.dotfiles/x11/colors/tango"
+#include "$HOME/.dotfiles/x11/colors/tango"
 ! #include "/Users/myuser/.dotfiles/x11/colors/jwr"
-#include "/Users/myuser/.dotfiles/x11/modules/font"
-#include "/Users/myuser/.dotfiles/x11/modules/rxvt_perl"
-#include "/Users/myuser/.dotfiles/x11/modules/rxvt_keysym"
-#include "/Users/myuser/.dotfiles/x11/modules/xcalc"
-#include "/Users/myuser/.dotfiles/x11/modules/xmisc"
-#include "/Users/myuser/.dotfiles/x11/modules/osxterm"
+#include "$HOME/.dotfiles/x11/modules/font"
+#include "$HOME/.dotfiles/x11/modules/rxvt_perl"
+#include "$HOME/.dotfiles/x11/modules/rxvt_keysym"
+#include "$HOME/.dotfiles/x11/modules/xcalc"
+#include "$HOME/.dotfiles/x11/modules/xmisc"
+#include "$HOME/.dotfiles/x11/modules/osxterm"
 
-URxvt.url-select.launcher:  /Users/myuser/bin/xdg-open
-URxvt.clipboard.copycmd:    /usr/bin/pbcopy
-URxvt.clipboard.pastecmd:   /usr/bin/pbpaste
+Xft.dpi: 180
+URxvt.url-select.launcher:  /usr/bin/xdg-open
+URxvt.clipboard.copycmd:    /usr/bin/xclip -i -selection clipboard
+URxvt.clipboard.pastecmd:   /usr/bin/xclip -o -selection clipboard
 
-urxvt*termName:             rxvt-unicode
-scratchpad*font:            xft:terminus:pixelsize=14,xft:Inconsolata for Powerline:style=Medium
+urxvt*termName:             rxvt-unicode-256color
+scratchpad*font:            xft:terminus:pixelsize=24,xft:Inconsolata for Powerline:style=Medium
 scratchpad*termName:        rxvt-unicode
 scratchpad*background:      #313031
 scratchpad*foreground:      White
+float*font:                 xft:terminus:pixelsize=14,xft:Inconsolata for Powerline:style=Medium
+float*termName:             rxvt-unicode
+float*background:           #313031
+float*foreground:           White
+float*geometry:             120x28
+scratchpad*shading:         20
+scratchpad*perl-ext-common: url-select,clipboard,keyboard-select,tabbed
 float*font:                 xft:terminus:pixelsize=14,xft:Inconsolata for Powerline:style=Medium
 float*termName:             rxvt-unicode
 float*background:           #313031
@@ -36,9 +45,8 @@ urxvt*background:           #313031
 urxvt*foreground:           White
 urxvt*tintColor:            White
 URxvt*transparent:          true
-! urxvt*shading:              20    !trans, 0=opaque
-urxvt*shading:              20
-! urxvt*fading:               50    !term unfocus
+urxvt*shading:              20    !trans, 0=opaque
+urxvt*fading:               30    !term unfocus
 urxvt*cursorColor:          #d8d8d8
 
 ! URxvt (scrollstyle:  rxvt (default), plain, next, or xterm)

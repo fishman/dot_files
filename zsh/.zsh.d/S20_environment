@@ -46,8 +46,11 @@ RLWRAP_HOME="$HOME/.rlwrap"
 
 export EnableNuGetPackageRestore=true
 
+# export npm_config_prefix=~/.node_modules
+
 if [[ $OS == linux ]]; then
-  path=($HOME/bin $path $HOME/.gem/ruby/2.0.0/bin $GOPATH/bin ./node_modules/.bin)
+  path=($HOME/bin $path $HOME/.gem/ruby/2.0.0/bin $GOPATH/bin $HOME/.node_modules/bin ./node_modules/.bin)
+  export VAGRANT_DEFAULT_PROVIDER=libvirt
 elif [[ $OS == osx ]]; then
   PATH="$HOME/bin:$PATH"
   PATH="/opt/local/bin:/opt/local/vim/bin:$PATH"
@@ -60,6 +63,8 @@ elif [[ $OS == osx ]]; then
   PATH="$PATH:/usr/local/clang/bin"
   PATH="$PATH:./node_modules/.bin"
   export MANPATH=/opt/local/share/man:$MANPATH
+  PATH="$NPM_PACKAGES/bin:$PATH"
+  export MANPATH=$NPM_PACKAGES/share/man:/opt/local/share/man:$MANPATH
 fi
 
 export PATH
@@ -78,3 +83,12 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 # these are the default arguments to exuberant-ctags
 # CTAGS="--c++-kinds=+p --fields=+iaS --extra=+q"
 export WINDOW_MANAGER=awesome
+
+export XAUTHORITY=~/.Xauthority
+
+export QT_STYLE_OVERRIDE="GTK+"
+export QT_DEVICE_PIXEL_RATIO=auto
+export BROWSER=xdg-open
+
+# export DMENU=" dmenu -i -fn '-xos4-terminus-medium-r-*-*-24-*' -nb '#303030' -nf '#909090' -sb '#909090' -sf '#303030'"
+export DMENU="dmenu -i -fn -xos4-terminus-medium-r-*-*-24-* -nb #303030 -nf #909090 -sb #909090 -sf #303030"

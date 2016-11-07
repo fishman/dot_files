@@ -1,3 +1,7 @@
+! Allow us to use Control+Shift key combination without triggering the urxvt
+! keycap insert mode.
+URxvt.iso14755:             false
+URxvt.iso14755_52:          false
 URxvt.perl-ext-common:      url-select,fullscreen,clipboard,keyboard-select
 ! URxvt.perl-ext-common:      url-select,fullscreen,font-size,clipboard,keyboard-select
 *.cutchars:             `"'()*,;<>[]{|}'"
@@ -6,13 +10,11 @@ URxvt.perl-ext-common:      url-select,fullscreen,clipboard,keyboard-select
 ! *.keysym.C-S-Down:      perl:font-size:decglobal
 *.keysym.M-s:           perl:keyboard-select:search
 *.keysym.M-Escape:      perl:keyboard-select:activate
-*.keysym.M-c:           perl:clipboard:copy
-*.keysym.M-v:           perl:clipboard:paste
-*.keysym.M-C-v:         perl:clipboard:paste_escaped
+*.keysym.Control-C:           perl:clipboard:copy
+*.keysym.Control-V:           perl:clipboard:paste
+! *.keysym.M-C-v:         perl:clipboard:paste_escaped
 *.keysym.F11:           perl:fullscreen:switch
 URxvt.url-select.underline: true
-URxvt.iso14755:             false
-URxvt.iso14755_52:          false
 
 ! URxvt.perl-ext: mark-and-yank,macosx-clipboard,matcher
 ! URxvt.keysym.M-C: perl:mark-and-yank:activate_mark_mode

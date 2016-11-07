@@ -15,11 +15,22 @@ function zaw-src-tmux() {
         done
         actions=('zaw-callback-tmux-attach')
         act_descriptions=('attach session')
+        actions+=('zaw-callback-tmux-kill')
+        act_descriptions+=('kill session')
 }
 
 zaw-register-src -n tmux zaw-src-tmux
 
 function zaw-callback-tmux-attach() {
-    BUFFER="tmux attach -t ${(q)1}"
+    if [ -z $TMUX ]; then
+        BUFFER="tmux attach -t ${(q)1}"
+    else
+        BUFFER="tmux switch-client -t ${(q)1}"
+    fi
+    zle accept-line
+}
+
+function zaw-callback-tmux-kill() {
+    BUFFER="tmux kill-session -t ${(q)1}"
     zle accept-line
 }
