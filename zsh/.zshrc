@@ -27,5 +27,3 @@ done
 # PERL_MM_OPT="INSTALL_BASE=/home/timebomb/perl5"; export PERL_MM_OPT;
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-. /etc/profile.d/fzf.zsh
