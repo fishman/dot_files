@@ -1,7 +1,59 @@
-
-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
+
+;; Constants I use to refer to my system
+(defconst tbh-hostname
+  (car (split-string system-name "\\." t))
+  "The hostname for the current system.")
+
+(defconst tbh-home-dir
+  (getenv "HOME")
+  "The full path of the user's home directory.")
+
+(defconst tbh-emacs-d-dir
+  (expand-file-name ".emacs.d/" tbh-home-dir)
+  "Top level directory for local configuration and code.")
+
+(defconst tbh-spacemacs-d-dir
+  (expand-file-name ".spacemacs.d/" tbh-home-dir)
+  "Top level directory for local Spacemacs configuration and code.")
+
+(defconst tbh-private-spacemacs-layers-dir
+  (expand-file-name "layers/" tbh-spacemacs-d-dir)
+  "Directory for storying private Spacemacs layers.")
+
+;; Load system specific config, if it exists
+(let ((tbh-system-specific-config
+       (expand-file-name
+        (concat tbh-hostname ".el") tbh-spacemacs-d-dir)))
+  (if (file-readable-p tbh-system-specific-config)
+      (load-file tbh-system-specific-config)))
+
+;; Set up appropriate function advice
+(defmacro tbh/wrap-func (func)
+  (let ((advice-name (intern (format "%s--advice" func)))
+        (target-name (intern (format "tbh/%s" func))))
+    `(progn
+       (defun ,advice-name (&rest args)
+         (when (fboundp ',target-name)
+           (apply ',target-name args)))
+       (advice-add ',func :after ',advice-name))))
+
+(tbh/wrap-func dotspacemacs/layers)
+(tbh/wrap-func dotspacemacs/init)
+(tbh/wrap-func dotspacemacs/user-init)
+(tbh/wrap-func dotspacemacs/user-config)
+
+;; Generally Useful Functions
+(defun unfill-paragraph ()
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil)))
+
+(defun unfill-region ()
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-region (region-beginning) (region-end) nil)))
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
@@ -32,7 +84,6 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     mu4e
      lua
      ivy
      ess
@@ -96,13 +147,12 @@ values."
      restclient
      ;; ycmd
      ;; tmux
-     ;; dash
-     ;; ansible
+     dash
+     ansible
      gtags
      latex
      bibtex
      ;; osx
-     erlang
      octave
      ;; d12frosted-org
      ;; d12frosted-csharp
@@ -116,7 +166,6 @@ values."
                      enable-flyspell-auto-completion t
                      spell-checking-enable-by-default nil)
      fishman
-     fasd
      syntax-checking
      version-control
      search-engine
@@ -422,8 +471,6 @@ values."
 ;;      git-gutter-use-fringe t)
 (defun dotspacemacs/user-config ()
   (use-package org-glossary)
-  (require 'mu4e-contrib)
-  (setq mu4e-html2text-command 'mu4e-shr2text)
   "Configuration function.
    This function is called at the very end of Spacemacs initialization after
    layers configuration."
@@ -501,33 +548,7 @@ values."
   ;; (ispell-hunspell-add-multi-dic "german,english")
   ;; (ispell-hunspell-add-multi-dic "english")
 
-  (setq mu4e-account-alist
-        '(("gmail"
-           (mu4e-sent-messages-behavior delete)
-           (mu4e-sent-folder "/gmail/sent")
-           (mu4e-drafts-folder "/gmail/drafts")
-           (mu4e-trash-folder "/gmail/trash")
-           (user-mail-address "reza.jelveh@gmail.com")
-           (user-full-name "Reza Jelveh"))
-          ("sauce"
-           (mu4e-sent-messages-behavior delete)
-           (mu4e-sent-folder "/sauce/sent")
-           (mu4e-drafts-folder "/sauce/drafts")
-           (mu4e-trash-folder "/sauce/trash")
-           (user-mail-address "reza@saucelabs.com")
-           (user-full-name "Reza Jelveh"))
-          ("jelveh"
-           (mu4e-sent-messages-behavior sent)
-           (mu4e-sent-folder "/jelveh/sent")
-           (mu4e-drafts-folder "/jelveh/drafts")
-           (mu4e-trash-folder "/jelveh/trash")
-           (user-mail-address "reza@jelveh.me")
-           (user-full-name "Reza Jelveh"))))
-  (setq message-send-mail-function 'message-send-mail-with-sendmail
-        sendmail-program "/usr/bin/msmtp"
-        user-full-name "Reza Jelveh")
-  (mu4e/mail-account-reset)
-  (setq initial-major-mode 'org-mode)
+    (setq initial-major-mode 'org-mode)
   (setq org-directory "~/org")
   (setq org-default-notes-file (concat org-directory "/notes.org"))
   (defun org-ioslide-publish-to-html (plist filename pub-dir)
@@ -962,8 +983,6 @@ Return output file name."
 
   (setq reftex-default-bibliography '("~/org/bibliography/references.bib"))
 
-  (load "~/.spacemacs-secrets.el.gpg")
-
   (defun artist-mode-toggle-emacs-state ()
     (if artist-mode
         (evil-emacs-state)
@@ -974,6 +993,7 @@ Return output file name."
   )
 
 (defun dotspacemacs/user-init ()
+  (load "~/.spacemacs-secrets.el.gpg")
   ;; (golden-ratio-mode 1)
   (setq evil-want-fine-undo 't)
   ;;  (spacemacs/load-or-install-package 'sx t)
@@ -1019,7 +1039,7 @@ Return output file name."
   ;; (set-face-attribute 'default nil :family "NanumGothicCoding")
   ;; (set-face-attribute 'default nil :family "Sauce Code Powerline")
   (set-face-attribute 'default nil :family "Terminus")
-  (set-face-attribute 'default nil :height 120)
+  (set-face-attribute 'default nil :height 160)
   (set-face-attribute 'default nil :weight 'normal)
   )
 
