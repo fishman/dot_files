@@ -963,11 +963,10 @@ values."
         golden-ratio-wide-adjust-factor .9)
 
   (setq reftex-default-bibliography '("~/org/bibliography/references.bib"))
-
-  (load "~/.spacemacs-secrets.el.gpg")
   )
 
 (defun dotspacemacs/user-init ()
+  (load "~/.spacemacs-secrets.el.gpg")
   ;; (golden-ratio-mode 1)
   (setq evil-want-fine-undo 't)
   ;;  (spacemacs/load-or-install-package 'sx t)
@@ -1013,7 +1012,7 @@ values."
   ;; (set-face-attribute 'default nil :family "NanumGothicCoding")
   ;; (set-face-attribute 'default nil :family "Sauce Code Powerline")
   (set-face-attribute 'default nil :family "Terminus")
-  (set-face-attribute 'default nil :height 120)
+  (set-face-attribute 'default nil :height 160)
   (set-face-attribute 'default nil :weight 'normal)
   )
 
