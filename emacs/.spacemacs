@@ -1035,6 +1035,7 @@ Return output file name."
 
 (defun dotspacemacs/user-init ()
   (load "~/.spacemacs-secrets.el.gpg")
+  (setq exec-path-from-shell-check-startup-files nil)
   ;; (golden-ratio-mode 1)
   (setq evil-want-fine-undo 't)
   ;;  (spacemacs/load-or-install-package 'sx t)
