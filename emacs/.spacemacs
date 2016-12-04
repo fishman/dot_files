@@ -23,6 +23,22 @@
   (expand-file-name "layers/" tbh-spacemacs-d-dir)
   "Directory for storying private Spacemacs layers.")
 
+(defun modi/package-dependency-check-ignore (orig-ret)
+  "Remove the `black listed packages' from ORIG-RET."
+  (let ((pkg-black-list '(org))
+        new-ret
+        pkg-name)
+    (dolist (pkg-struct orig-ret)
+      (setq pkg-name (package-desc-name pkg-struct))
+      (if (member pkg-name pkg-black-list)
+          (message (concat "Package `%s' will not be auto-installed. "
+                           "See `modi/package-dependency-check-ignore'.")
+                   pkg-name)
+        ;; (message "Package to be installed: %s" pkg-name)
+        (push pkg-struct new-ret)))
+    new-ret))
+(advice-add 'package-compute-transaction :filter-return #'modi/package-dependency-check-ignore)
+
 ;; Load system specific config, if it exists
 (let ((tbh-system-specific-config
        (expand-file-name
