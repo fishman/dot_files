@@ -507,7 +507,7 @@ values."
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((java . t)
-     ;; (R . t)
+     (R . t)
      (calc . t)
      (http . t)
      (dot . t)
