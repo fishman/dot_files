@@ -173,10 +173,12 @@ values."
      ;; d12frosted-org
      ;; d12frosted-csharp
      ;; elixir
-     (org :variables
-          org-enable-github-support t
-          git-magit-status-fullscreen t
+     (git :variables
+          git-magit-status-fullscreen nil
+          git-enable-github-support t
           git-gutter-use-fringe t)
+     (org :variables
+          org-enable-org-journal-support t)
      ;; spell-checking
      speed-reading
      (spell-checking :variables
