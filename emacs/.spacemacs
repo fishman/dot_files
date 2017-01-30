@@ -178,7 +178,16 @@ values."
           git-enable-github-support t
           git-gutter-use-fringe t)
      (org :variables
-          org-enable-org-journal-support t)
+          org-enable-github-support t
+          org-enable-bootstrap-support t
+          org-enable-reveal-js-support t
+          org-enable-org-journal-support t
+          org-journal-dir "~/org/journal/"
+          org-journal-file-format "%Y-%m-%d.org"
+          org-journal-date-prefix "#+TITLE: "
+          org-journal-date-format "%A, %B %d %Y"
+          org-journal-time-prefix "* "
+          org-journal-time-format "")
      ;; spell-checking
      speed-reading
      (spell-checking :variables
@@ -204,7 +213,7 @@ values."
                                       helm-youtube
                                       (org-glossary :location (recipe :fetcher github :repo "jagrg/org-glossary"))
                                       org-drill-table
-                                      w3m xwidgete spray ox-reveal ox-ioslide ox-gfm org-alert nxml xml-rpc confluence langtool org-jekyll)
+                                      w3m xwidgete spray ox-ioslide org-alert nxml xml-rpc confluence langtool org-jekyll)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
