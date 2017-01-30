@@ -378,9 +378,9 @@ alias sendresume="mutt -a ~/Documents/Resume/ResumeDoc.docx -s Resume"
 
 alias mkvirtualenv2='mkvirtualenv -p `which python2.7`'
 
-# if [ -x "$(which nvim)" ]; then
-#     alias vim="nvim"
-# fi
+if [ -x "$(which nvim)" ]; then
+    alias vim="nvim"
+fi
 
 # don't use any hub in user directories to avoid nasty behavior
 if [ -x "/usr/bin/hub" ]; then
