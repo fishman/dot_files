@@ -28,7 +28,9 @@ export INPUTRC="~/.inputrc"
 # export MAIL="${HOME}/mail/inbox"
 
 export RLWRAP_HOME=~/.cache/rlwrap/
-export GTK_IM_MODULE=xim
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
 
 export LC_MESSAGES=C
 export LC_ALL=en_US.UTF-8
@@ -87,8 +89,10 @@ export MC_SKIN=$HOME/.mc/skins/candy256.ini
 
 export XAUTHORITY=~/.Xauthority
 
-export QT_STYLE_OVERRIDE="GTK+"
-export QT_DEVICE_PIXEL_RATIO=auto
+# export QT_STYLE_OVERRIDE="GTK+"
+# export QT_STYLE_OVERRIDE="GTK+"
+[ "$XDG_CURRENT_DESKTOP" = "KDE" ] || [ "$XDG_CURRENT_DESKTOP" = "GNOME" ] || export QT_QPA_PLATFORMTHEME="qt5ct"
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
 export BROWSER=xdg-open
 
 # export DMENU=" dmenu -i -fn '-xos4-terminus-medium-r-*-*-24-*' -nb '#303030' -nf '#909090' -sb '#909090' -sf '#303030'"
