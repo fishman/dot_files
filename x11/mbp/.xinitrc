@@ -1,6 +1,7 @@
 #!/bin/bash
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 [[ -f ~/.Xdefaults ]] && xrdb -merge ~/.Xdefaults
+[[ -f ~/.Xmodmap ]] && xmodmap ~/.Xmodmap
 
 if [ -z "$XDG_CONFIG_HOME" ]; then
 	export XDG_CONFIG_HOME="$HOME/.config"
@@ -38,8 +39,7 @@ urxvtd -q -o -f
 ./.xinitrc-keyboard
 dunst&
 mpd &
-conky &
-xmodmap ~/.xmodmap
+# conky &
 
 export XDG_MENU_PREFIX="lxde-"
 export XDG_CURRENT_DESKTOP="mimeo"
