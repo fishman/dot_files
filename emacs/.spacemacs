@@ -553,6 +553,7 @@ values."
   (global-git-commit-mode t)
   (setq langtool-language-tool-jar "~/LanguageTool/languagetool-commandline.jar")
   (setq org-plantuml-jar-path "~/.emacs.d/plantuml.jar")
+  (setq org-ditaa-jar-path "~/.emacs.d/ditaa.jar")
 
 
   ;; (setq ispell-hunspell-dict-paths-alist '("c:/msys64/mingw64/share"))
