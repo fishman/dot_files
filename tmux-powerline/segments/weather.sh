@@ -84,7 +84,7 @@ __yahoo_weather() {
 	fi
 
 	if [ -z "$degree" ]; then
-		weather_data=$(curl --max-time 4 -s "http://weather.yahooapis.com/forecastrss?w=${TMUX_POWERLINE_SEG_WEATHER_LOCATION}&u=${TMUX_POWERLINE_SEG_WEATHER_UNIT}")
+		weather_data=$(curl --max-time 4 -s "http://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid=${TMUX_POWERLINE_SEG_WEATHER_LOCATION} AND u='${TMUX_POWERLINE_SEG_WEATHER_UNIT}'")
 		if [ "$?" -eq "0" ]; then
 			error=$(echo "$weather_data" | grep "problem_cause\|DOCTYPE");
 			if [ -n "$error" ]; then
