@@ -158,3 +158,5 @@ packer -S postgresql
 USER=`whoami`
 gpasswd -a $USER dba
 sudo pacman -S udiskie
+
+pacman -S sxiv

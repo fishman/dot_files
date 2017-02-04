@@ -47,6 +47,8 @@ export ANDROID_HOME=/opt/android-sdk
 RLWRAP_HOME="$HOME/.rlwrap"
 
 export EnableNuGetPackageRestore=true
+export TMUX_POWERLINE_THEME=fishman
+export TMUX_POWERLINE_SEG_WEATHER_LOCATION="656958"
 
 # export npm_config_prefix=~/.node_modules
 

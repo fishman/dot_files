@@ -76,7 +76,10 @@ if [[ $OS == osx ]]; then
 else
   #alias vim="vim --servername $PWD"
   alias emacs='emacs -nw' # prefer console version of emacs
-  alias open='runa -a'
+  if [ -x "$(which nvim)" ]; then
+    alias open='runa -a'
+  fi
+  alias mc='. /usr/lib/mc/mc-wrapper.sh'
 fi
 alias myip="ifconfig | grep 192.168 || ifconfig | grep 10.32"
 alias psg="ps ax | grep "

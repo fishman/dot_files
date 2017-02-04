@@ -47,6 +47,7 @@ export XDG_CURRENT_DESKTOP="mimeo"
 autocutsel -fork &
 autocutsel -selection PRIMARY -fork &
 /usr/bin/xscreensaver -no-splash &
+udiskie &
 xset r rate 200 30
 syndaemon -t -k -i 2 &
 blueman-applet &
