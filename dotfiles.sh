@@ -54,7 +54,6 @@ packer -S connman-ui-git
 
 pacman -S hub
 
-pacman -S python-neovim python2-neovim dos2unix
 # wakeonlan
 pacman -S wol
 packer -S ht-editor
@@ -63,7 +62,6 @@ pacman -S vagrant
 pacman -S qemu qemu-block-iscsi
 pacman -S emacs
 pacman -S anthy
-pacman -S ruby
 pacman -S pandoc
 pacman -S texlive-core
 pacman -S jdk8-openjdk t1utils ghostscript biber ed 
@@ -74,7 +72,11 @@ pacman -S openssh
 pacman -S openmpi
 pacman -S rust go elixir clang r gnuplot
 pacman -S nodejs npm
+pacman -S ruby
 pacman -S rsync
+
+pacman -S python-neovim python2-neovim dos2unix
+gem install neovim
 
 git clone https://github.com/arsv/xcubiclight
 xorg-xkill xautolock go-tools mercurial
