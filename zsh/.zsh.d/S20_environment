@@ -87,7 +87,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 # these are the default arguments to exuberant-ctags
 # CTAGS="--c++-kinds=+p --fields=+iaS --extra=+q"
 export WINDOW_MANAGER=awesome
-export MC_SKIN=$HOME/.mc/skins/candy256.ini
+export MC_SKIN=$HOME/.config/mc/skins/candy256.ini
 
 export XAUTHORITY=~/.Xauthority
 

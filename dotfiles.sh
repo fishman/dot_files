@@ -162,3 +162,13 @@ gpasswd -a $USER dba
 sudo pacman -S udiskie
 
 pacman -S sxiv
+
+# cantarell is terrible for my eyes. ubunt is much better
+pacman -S ttf-ubuntu-font-family ttf-dejavu
+packer -S ttf-iosevka
+
+
+##### 
+## Media
+#####
+pacman -S mps-youtube
