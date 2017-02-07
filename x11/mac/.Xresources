@@ -1,0 +1,122 @@
+! *foreground:        White
+URxvt.perl-lib:     $HOME/.urxvt
+URxvt*chdir:        $HOME/git
+
+! URxvt*font:         xft:terminus:pixelsize=12:antialias=off,xft:Source Code Pro for Powerline:pixelsize=6 */
+/* URxvt.font:         fixed-terminus-r-*-*-14-*-*-*-*-*-*-15,xft:Inconsolata for Powerline:style=Medium */
+/* URxvt.font:         -xos4-terminus-medium-r-normal--18-*-*-*-*-*-iso10646-1 */
+/* URxvt.boldFont:     -xos4-terminus-bold-r-normal--18-*-*-*-*-*-iso10646-1 */
+URxvt.font:         xft:terminus:pixelsize=18
+/* URxvt.font:         *-terminus-r-normal-*-14-*-*-*-*-*-iso10646-* */
+/* URxvt.font:         xft:terminus:pixelsize=14,-*-fixed-medium-r-*-*-24-*-*-*-*-*-iso10646-1,xft:Inconsolata for Powerline:style=Medium */
+URxvt*termName:     rxvt-unicode-256color
+! URxvt.font:         xft:terminus:pixelsize=24,-*-fixed-medium-r-*-*-18-*-*-*-*-*-iso10646-1,xft:Inconsolata for Powerline:style=Medium
+/* URxvt.font:         xft:terminus:pixelsize=14,-*-fixed-medium-r-*-*-24-*-*-*-*-*-iso10646-1,xft:Inconsolata for Powerline:style=Medium */
+! URxvt.font: xft:Nanum Pen Script:pixelsize=24
+st*font:            terminus:pixelsize=25
+! URxvt.font: xft:Consolas:size=24, xft:Inconsolata for Powerline
+UXterm*faceName:     terminus:pixelsize=18
+
+xpdf.viKeys:        true
+! Pangoterm.font:         xft:terminus:pixelsize=24,-*-fixed-medium-r-*-*-18-*-*-*-*-*-iso10646-1,xft:Inconsolata for Powerline:style=Medium
+
+Xft.dpi: 120
+*dpi: 120
+#include "$HOME/.dotfiles/x11/colors/tango"
+! #include "$HOME/.dotfiles/x11/colors/zen"
+! #include "$HOME/.dotfiles/x11/colors/jwr"
+! #include "$HOME/.dotfiles/x11/modules/font"
+#include "$HOME/.dotfiles/x11/modules/rxvt_perl"
+#include "$HOME/.dotfiles/x11/modules/rxvt_keysym"
+#include "$HOME/.dotfiles/x11/modules/xcalc"
+#include "$HOME/.dotfiles/x11/modules/xmisc"
+#include "$HOME/.dotfiles/x11/modules/xscreensaver"
+#include "$HOME/.dotfiles/x11/modules/osxterm"
+
+URxvt.url-select.launcher:  /usr/bin/xdg-open
+URxvt.clipboard.copycmd:    /usr/bin/xsel -ib -t1
+URxvt.clipboard.pastecmd:   /usr/bin/xsel -ob -t1
+
+/* scratchpad*font:            xft:terminus:pixelsize=24,xft:Inconsolata for Powerline:style=Medium */
+! scratchpad*font:            xft:terminus:pixelsize=14,xft:Inconsolata for Powerline:style=Medium
+scratchpad.font:         -xos4-terminus-medium-r-normal--14-*-*-*-*-*-iso10646-1
+scratchpad.boldFont:         -xos4-terminus-bold-r-normal--14-*-*-*-*-*-iso10646-1
+! scratchpad*font:            xft:Inconsolata for Powerline:style=Medium
+scratchpad*perl-ext-common: url-select,clipboard,keyboard-select
+bashrun*perl-ext-common:    url-select,clipboard,keyboard-select
+bashrun*geometry:           80x10
+float*font:                 xft:terminus:pixelsize=14,xft:Inconsolata for Powerline:style=Medium
+float*geometry:             120x28
+
+*background:                #212021
+! URxvt*depth:                32
+/* URxvt*background:           black */
+URxvt*depth:                24
+URxvt*foreground:           White
+URxvt*tintColor:            White
+URxvt*cursorColor:          #d8d8d8
+URxvt*transparent:          false
+urxvt*shading:              20    !trans, 0=opaque
+urxvt*fading:               30    !term unfocus
+urxvt*background:           [95]#212021
+
+! URxvt (scrollstyle:  rxvt (default), plain, next, or xterm)
+! URxvt*title:             Terminal
+URxvt.saveLines:         1500
+URxvt*scrollBar:         false
+URxvt*scrollColor:       #2A2A2A
+URxvt*scrollstyle:       plain
+URxvt*scrollBar_right:   true
+URxvt.scrollKey:         true
+URxvt.scrollWithBuffer:  true
+URxvt.scrollBack:        true
+URxvt.jumpScroll:        true
+URxvt.skipScroll:        true
+URxvt.urgentOnBell:      true
+URxvt.trippleclickwords: true
+URxvt.colorIT:           #605D5D
+URxvt.colorBD:           #F9F9F9
+URxvt.colorUL:           #FFA905
+URxvt.colorRV:           #16596A
+URxvt*cursorBlink:       false
+URxvt*cursorUnderline:   false
+
+
+! Colorscheme based on the gvim colorscheme desert
+! xterm*termName:     xterm-256color
+UXTerm*geometry: 140x36
+!XTerm*underLine: on
+UXTerm*customization: -color
+!XTerm*visualBell: true
+UXTerm*colorMode: on
+UXTerm*colorBD: lightyellow
+!XTerm*colorBDMode: off
+UXTerm*colorUL: yellow
+UXTerm*colorULMode: on
+UXTerm*dynamicColors: off
+UXTerm*highlightSelection: true
+
+! Colorscheme based on the gvim colorscheme desert
+/* UXTerm*background: #313031 */
+/* UXTerm*background: BLack */
+UXTerm*foreground: White
+
+emacs*font:  terminus:pixelsize=18
+
+
+!set the font, and fond size
+! this also uses a antialias/scalable font
+!xterm*faceName: Bitstream Vera Sans Mono
+! xterm*faceName: Terminus
+! xterm*faceSize: 10
+! xterm*font:     xft:terminus:pixelsize=18
+! xterm*font : -*-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-15
+!
+!!!!!!!!!!!!!!! UNUSED !!!!!!!!!!!!!
+! URxvt*background:           #1C1C1C
+! URxvt*foreground:           #B4B4B4 
+! URxvt*borderWidth:          0
+! URxvt*visualBell:           true
+! URxvt*inheritPixmap:        true
+! URxvt*reverseVideo:         true
+! URxvt.depth:                32
