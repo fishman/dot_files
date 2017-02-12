@@ -179,3 +179,6 @@ systemctl enable rfkill-block@bluetooth.service
 echo 'kernel.nmi_watchdog = 0' > /etc/sysctl.d/disable_watchdog.conf
 echo 'vm.laptop_mode = 5' > /etc/sysctl.d/laptop.conf
 pacman -S iptraf-ng
+
+## japanese
+pacman -S ibus-skk otf-ipafont
