@@ -129,7 +129,7 @@ pacman -S gptfdisk ntfs-3g dosfstools exfat-utils
 # qt5
 pacman -S phonon-qt5-gstreamer oxygen oxygen-icons qt5ct numix-themes feh
 pacman -S breeze-icons breeze breeze-gtk cantarell-fonts
-pacman -S lxqt-policykit lxqt-session lxqt-config  sddm polkit-qt5 polkit-gnome lxqt-openssh-askpass lxappearence-gtk  libcanberra
+pacman -S sddm polkit-qt5 polkit-gnome  lxappearence-gtk  libcanberra
 
 #
 packer -S plantuml
