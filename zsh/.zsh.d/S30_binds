@@ -52,6 +52,9 @@ bindkey -s '\eu' '^Ucd ..; ls^M'
 # If AUTO_PUSHD is set, Meta-p pops the dir stack
 bindkey -s '\ep' '^Upopd >/dev/null; dirs -v^M'
 
+bindkey '^R' zaw-history
+bindkey '^T' zaw-fasd
+
 # open editor with v
 autoload -U edit-command-line
 zle -N edit-command-line

@@ -401,6 +401,7 @@ alias tzberlin="timedatectl set-timezone Europe/Berlin"
 alias tzlondon="timedatectl set-timezone Europe/London"
 alias tzpacific="timedatectl set-timezone US/Pacific"
 alias tzcentral="timedatectl set-timezone US/Central"
+alias tziran="timedatectl set-timezone Asia/Tehran"
 
 alias edk2="workon edk; . ./edksetup.sh; build"
 
@@ -411,3 +412,5 @@ alias telnetssl="openssl s_client -connect"
 alias npm-exec='PATH=$(npm bin):$PATH'
 
 alias howdoi="howdoi -a -c "
+
+alias eledger="gpg --batch -d -q $LEDGER_FILE | ledger -f - "

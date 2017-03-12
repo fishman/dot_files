@@ -99,3 +99,4 @@ export BROWSER=xdg-open
 
 # export DMENU=" dmenu -i -fn '-xos4-terminus-medium-r-*-*-24-*' -nb '#303030' -nf '#909090' -sb '#909090' -sf '#303030'"
 export DMENU="dmenu -i -fn -xos4-terminus-medium-r-*-*-24-* -nb #303030 -nf #909090 -sb #909090 -sf #303030"
+export LEDGER_FILE="~/Documents/Tax/ledger/default.ledger"
