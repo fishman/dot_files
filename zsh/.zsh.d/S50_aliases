@@ -411,3 +411,13 @@ alias telnetssl="openssl s_client -connect"
 alias npm-exec='PATH=$(npm bin):$PATH'
 
 alias howdoi="howdoi -a -c "
+
+alias mirror='wget \
+     --recursive \
+     --no-clobber \
+     --page-requisites \
+     --html-extension \
+     --convert-links \
+     --restrict-file-names=windows \
+     --no-parent \
+     $1'
