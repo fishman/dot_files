@@ -34,29 +34,51 @@ sources
 
 currently these sources are available:
 
-  - ack
-  - applications
-  - bookmark
-  - git-branches
-  - git-recent-all-branches
-  - git-recent-branches
-  - git-files
-  - git-files-legacy
-  - git-status
-  - history
-  - open-file
-  - perldoc
-  - process
-  - screens
-  - ssh-hosts
-  - tmux
-  - fasd
-  - fasd-directories
-  - fasd-files
+- aliases
+- applications
+- bookmark
+- cdr (needs cdr enabled.  Google it or use `this packaged version <https://github.com/willghatch/zsh-cdr>`_)
+- commands
+- command-output
+- fasd
+- fasd-directories
+- fasd-files
+- functions
+- git-branches
+- git-recent-all-branches
+- git-recent-branches
+- git-files
+- git-files-legacy
+- git-log
+- git-reflog
+- git-status
+- history
+- locate
+- open-file
+- perldoc
+- process
+- programs
+- screens
+- searcher (ag/ack)
+- ssh-hosts
+- tmux
+- widgets
 
 (Note: git-files-legacy is an alternative for git-files.
 git-files classifies modified files, git-files-legacy doesn't do it for
 performance reason.)
+
+Additional sources can be installed as third-party plugins.  Here is a list of all
+the ones we know about.  Please let us know about any more you find or make!
+Installation is easiest with a plugin manager such as 
+`zgen <https://github.com/tarjoilija/zgen>`_.  Otherwise you can just source the
+.zsh file that contains the source.
+
+- calibre source: https://github.com/junkblocker/calibre-zaw-source
+- MPD source: https://github.com/willghatch/zsh-zaw-mpd
+- `pass <http://www.passwordstore.org>`_ source: https://gist.github.com/f440/9992963
+- systemd source: https://github.com/termoshtt/zaw-systemd
+- `todoman <https://github.com/hobarrera/todoman>`_ source: https://github.com/willghatch/zsh-zaw-todoman
 
 shortcut widgets
 ================
@@ -130,6 +152,8 @@ and these zstyles to customize styles::
   ':filter-select' rotate-list
   ':filter-select' case-insensitive
   ':filter-select' extended-search
+  ':filter-select' hist-find-no-dups
+  ':filter-select' escape-descriptions
 
   example:
     zstyle ':filter-select:highlight' matched fg=yellow,standout
@@ -138,6 +162,8 @@ and these zstyles to customize styles::
     zstyle ':filter-select' rotate-list yes # enable rotation for filter-select
     zstyle ':filter-select' case-insensitive yes # enable case-insensitive search
     zstyle ':filter-select' extended-search yes # see below
+    zstyle ':filter-select' hist-find-no-dups yes # ignore duplicates in history source
+    zstyle ':filter-select' escape-descriptions no # display literal newlines, not \n, etc
 
   extended-search:
       If this style set to be true value, the searching bahavior will be
@@ -158,6 +184,21 @@ ZAW_EDITOR_JUMP_PARAM   open editor command with line params.
                         %LINE% is replaced by line number.
                         %FILE% is replaced by file path.
                         default +%LINE% %FILE%
+
+
+making sources
+==============
+
+If you want to make another source, please do!  Look at https://github.com/termoshtt/zaw-systemd
+as an example of how to make a source repo.  Note that it uses the <name>.plugin.zsh
+convention that plugin managers like zgen and antigen expect for its main file.
+The sources directory contains the files for the actual sources.  All the sources
+in this repository's ``sources`` directory are good references as well for what
+the source files should look like.  They tend to be quite simple.
+If your source requires any additional configuration or dependencies, be sure to
+list all of that in your project's README file.
+
+Let us know when you make new plugins so we can add them to our list!
 
 license
 =======

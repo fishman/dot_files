@@ -77,11 +77,11 @@ setopt hash_dirs            # hash directories holding commands too
 setopt hash_list_all        # verify path hash on completion
 setopt hist_allow_clobber   # add | to redirections in history
 setopt no_hist_beep         # don't beep on history expansion errors
-#setopt hist_expire_dups_first
+setopt hist_expire_dups_first
 setopt hist_find_no_dups    # don't show dups even if not contiguous
 setopt hist_ignore_all_dups # ignore all -- even non contiguous -- dups
-#setopt hist_ignore_dups     # ignore contiguous dups
-setopt no_hist_ignore_space # historify commands with spaces too
+setopt hist_ignore_dups     # ignore contiguous dups
+setopt hist_ignore_space    # don't historify commands with spaces
 setopt hist_no_functions    # don't save functions defs in history
 setopt hist_no_store        # remove hists access cmds from hist
 setopt hist_reduce_blanks   # remove superfluous blanks

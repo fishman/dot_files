@@ -66,13 +66,13 @@ function zaw-register-src() {
 
     # define shortcut function
     widget_name="zaw-${(L)name// /-}"
-    eval "function ${widget_name} { zle zaw ${func} }"
+    eval "function ${widget_name} { zle zaw ${func} \$@ }"
     eval "zle -N ${widget_name}"
 }
 
 
 function zaw() {
-    local action ret
+    local action ret func
     local -a reply candidates actions act_descriptions options selected cand_descriptions
     local -A cands_assoc
 
@@ -100,20 +100,20 @@ function zaw() {
 
     reply=()
 
-    if (( $#cand_descriptions )); then
+    if (( ${#cand_descriptions} )); then
         options=("-d" "cand_descriptions" "${(@)options}")
     fi
     # TODO: cand_descriptions_assoc
 
     # call filter-select to allow user select item
-    if (( $#cands_assoc )); then
+    if (( ${#cands_assoc} )); then
         filter-select -e select-action -A cands_assoc "${(@)options}"
     else
         filter-select -e select-action "${(@)options}" -- "${(@)candidates}"
     fi
 
     if [[ $? == 0 ]]; then
-        if (( $#reply_marked > 0 )); then
+        if (( ${#reply_marked} > 0 )); then
             selected=("${(@)reply_marked}")
         else
             selected=("${reply[2]}")
@@ -207,7 +207,9 @@ function zaw-callback-edit-file() {
 setopt local_options extended_glob
 local src_dir="${cur_dir}/sources" f
 if [[ -d "${src_dir}" ]]; then
-    for f ("${src_dir}"/^*.zwc) source "${f}"
+    for f in "${src_dir}"/^*.zwc; do
+        source "${f}"
+    done
 fi
 
 # dummy function
