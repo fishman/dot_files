@@ -18,7 +18,7 @@ pacman -S gnooki modem-manager-gui
 pacman -S iso-codes
 pacman -S xorg-server xorg-xdpyinfo xorg-xinit xorg-xset xterm rxvt-unicode xorg-xbacklight xorg-xinput
 pacman -S tmux screen
-pacman -S libx264 noto-fonts firefox opera
+pacman -S libx264 noto-fonts firefox opera qutebrowser qt5-webengine
 pacman -S aria2 upower 
 pacman -S wget
 pacman -S jshon
@@ -182,4 +182,8 @@ echo 'vm.laptop_mode = 5' > /etc/sysctl.d/laptop.conf
 pacman -S iptraf-ng
 
 ## japanese
-pacman -S ibus-skk otf-ipafont
+pacman -S ibus-kkc ibus-qt ibus-typingbooster ibus-m17n otf-ipafont
+
+pacman -S xdotool pass srm
+
+packer -S rofi-pass passed-git autopass-git
