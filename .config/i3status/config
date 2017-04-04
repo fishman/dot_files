@@ -1,0 +1,42 @@
+general {
+ # output_format = "dzen2"
+  colors = true
+  interval = 5
+}
+
+order += "ipv4"
+order += "run_watch DHCP"
+order += "wireless wlp109s0"
+order += "disk /"
+order += "volume master"
+order += "battery 0"
+order += "cpu_temperature 0"
+order += "load"
+order += "tztime berlin"
+
+load {
+  format = "load: %1min, %5min, %15min"
+}
+disk "/" {
+  format = "%avail"
+}
+tztime berlin {
+  format = "time: %time"
+  format_time = "%H:%M %Z"
+  timezone = "Europe/Berlin"
+}
+cpu_temperature 0 {
+  format = "T: %degrees °C"
+  path = "/sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input"
+}
+battery 0 {
+  format = "%status %remaining (%emptytime %consumption)"
+  path = "/sys/class/power_supply/BAT%d/uevent"
+}
+volume master {
+  format = "♪: %volume"
+  format_muted = "♪: muted (%volume)"
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
+}
