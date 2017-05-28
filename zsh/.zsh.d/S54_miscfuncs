@@ -229,3 +229,7 @@ function _midnight {
 
 zle -N _midnight
 bindkey '\e,' _midnight
+
+tokindle () {
+  k2pdfopt $* -dev kpw -mode fw -wrap -hy -ws 0.375 -ls-
+}
