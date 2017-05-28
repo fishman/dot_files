@@ -23,21 +23,21 @@
   (expand-file-name "layers/" tbh-spacemacs-d-dir)
   "Directory for storying private Spacemacs layers.")
 
-(defun modi/package-dependency-check-ignore (orig-ret)
-  "Remove the `black listed packages' from ORIG-RET."
-  (let ((pkg-black-list '(org))
-        new-ret
-        pkg-name)
-    (dolist (pkg-struct orig-ret)
-      (setq pkg-name (package-desc-name pkg-struct))
-      (if (member pkg-name pkg-black-list)
-          (message (concat "Package `%s' will not be auto-installed. "
-                           "See `modi/package-dependency-check-ignore'.")
-                   pkg-name)
-        ;; (message "Package to be installed: %s" pkg-name)
-        (push pkg-struct new-ret)))
-    new-ret))
-(advice-add 'package-compute-transaction :filter-return #'modi/package-dependency-check-ignore)
+;; (defun modi/package-dependency-check-ignore (orig-ret)
+;;   "Remove the `black listed packages' from ORIG-RET."
+;;   (let ((pkg-black-list '(org))
+;;         new-ret
+;;         pkg-name)
+;;     (dolist (pkg-struct orig-ret)
+;;       (setq pkg-name (package-desc-name pkg-struct))
+;;       (if (member pkg-name pkg-black-list)
+;;           (message (concat "Package `%s' will not be auto-installed. "
+;;                            "See `modi/package-dependency-check-ignore'.")
+;;                    pkg-name)
+;;         ;; (message "Package to be installed: %s" pkg-name)
+;;         (push pkg-struct new-ret)))
+;;     new-ret))
+;; (advice-add 'package-compute-transaction :filter-return #'modi/package-dependency-check-ignore)
 
 ;; Load system specific config, if it exists
 (let ((tbh-system-specific-config
@@ -101,6 +101,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     spacemacs-org
      lua
      ivy
      ess
@@ -139,7 +140,7 @@ values."
      ;; unimpaired
      ;; vim-powerline
      finance
-     nlinum
+     ;; nlinum
      (ranger :variables
              ranger-override-dired t
              ranger-show-preview t
@@ -193,6 +194,7 @@ values."
                      enable-flyspell-auto-completion t
                      spell-checking-enable-by-default nil)
      fishman
+     common-lisp
      syntax-checking
      version-control
      search-engine
@@ -207,11 +209,14 @@ values."
    dotspacemacs-additional-packages '(
                                       evil-replace-with-register
                                       (org-glossary :location (recipe :fetcher github :repo "jagrg/org-glossary"))
+                                      org-caldav
                                       password-generator
                                       tldr
+                                      bbdb
                                       focus
                                       helm-youtube
                                       org-drill-table
+                                      simple-mpc
                                       (ox-ioslide :location (recipe :fetcher github :repo "fishman/org-ioslide"))
                                       w3m xwidgete spray org-alert nxml xml-rpc confluence langtool org-jekyll)
    ;; A list of packages that cannot be updated.
@@ -277,7 +282,8 @@ values."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
    dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+                                (projects . 7)
+                                (agenda . 2))
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
    ;; Default major mode of the scratch buffer (default `text-mode')
@@ -286,9 +292,11 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         base16-monokai
-                         darktooth
                          wombat
+                         darktooth
+                         smyx
+                         zenburn
+                         base16-monokai
                          misterioso
                          monokai
                          spacemacs-dark
@@ -296,8 +304,7 @@ values."
                          solarized-light
                          solarized-dark
                          leuven
-                         zenburn
-                         smyx)
+                         )
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
@@ -444,14 +451,14 @@ values."
    ;; `text-mode' derivatives. If set to `relative', line numbers are relative.
    ;; This variable can also be set to a property list for finer control:
    dotspacemacs-line-numbers 'relative
-   ;; dotspacemacs-line-numbers '(:relative t
-   ;;   :disabled-for-modes dired-mode
-   ;;                       doc-view-mode
-   ;;                       markdown-mode
-   ;;                       org-mode
-   ;;                       pdf-view-mode
-   ;;                       text-mode
-   ;;   :size-limit-kb 1000)
+   dotspacemacs-line-numbers '(:relative t
+     :disabled-for-modes dired-mode
+                         doc-view-mode
+                         markdown-mode
+                         org-mode
+                         pdf-view-mode
+                         text-mode
+     :size-limit-kb 1000)
    ;; (default nil)
    ;; dotspacemacs-line-numbers 'relative
    ;; Code folding method. Possible values are `evil' and `origami'.
@@ -529,6 +536,9 @@ values."
 ;;      git-enable-github-support t
 ;;      git-gutter-use-fringe t)
 (defun dotspacemacs/user-config ()
+  ;; Set the Emacs customization file path. Must be done here in user-init.
+  (setq custom-file "~/.spacemacs.d/custom.el")
+
   (use-package org-glossary)
   "Configuration function.
    This function is called at the very end of Spacemacs initialization after
@@ -536,27 +546,6 @@ values."
   (setq dotspacemacs-version-check-enable 'nil)
   (setq nlinum-relative-redisplay-delay 0.1)
   (add-to-list 'exec-path "~/bin")
-  ;; active Babel languages
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((java . t)
-     (R . t)
-     (ledger . t)
-     (calc . t)
-     (http . t)
-     (dot . t)
-     (haskell . t)
-     (js . t)
-     (latex . t)
-     (ruby . t)
-     (sh . t)
-     (emacs-lisp . t)
-     (C . t)
-     (plantuml . t)
-     (python . t)
-     (ditaa . t)
-     ))
-
   (setq restclient-use-org t)
   (setq org-confirm-babel-evaluate nil)
   (defvar yt-iframe-format
@@ -582,36 +571,36 @@ values."
   ;; ;; (ispell-set-spellchecker-params)
   ;; (setq ispell-hunspell-add-multi-dic "en_US,de_DE")
 
-;;   (add-to-list 'ispell-local-dictionary-alist '(("english"
-;;                                                  "[[:alpha:]]"
-;;                                                  "[^[:alpha:]]"
-;;                                                  "[']"
-;;                                                  t
-;;                                                  ("-d" "en_US")
-;;                                                  nil
-;;                                                  utf-8)))
-;;   (add-to-list 'ispell-local-dictionary-alist '(("german"
-;;                                                  "[[:alpha:]]"
-;;                                                  "[^[:alpha:]]"
-;;                                                  "[']"
-;;                                                  t
-;;                                                  ("-d" "de_DE")
-;;                                                  nil
-;;                                                  utf-8)))
-;;   (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist)
-;; 
-;;   ;; (setq ispell-program-name "hunspell"          ; Use hunspell to correct mistakes
-;;   ;; ispell-dictionary   "german") ; Default dictionary to use
-;;   (setq ispell-program-name "hunspell")
-;;   ;; (setq ispell-dictionary "german,english")
-;;   (setq ispell-dictionary "english")
-;;   ;; ispell-set-spellchecker-params has to be called
-;;   ;; before ispell-hunspell-add-multi-dic will work
-;;   (ispell-set-spellchecker-params)
-;;   ;; (ispell-hunspell-add-multi-dic "german,english")
-;;   ;; (ispell-hunspell-add-multi-dic "english")
+  ;;   (add-to-list 'ispell-local-dictionary-alist '(("english"
+  ;;                                                  "[[:alpha:]]"
+  ;;                                                  "[^[:alpha:]]"
+  ;;                                                  "[']"
+  ;;                                                  t
+  ;;                                                  ("-d" "en_US")
+  ;;                                                  nil
+  ;;                                                  utf-8)))
+  ;;   (add-to-list 'ispell-local-dictionary-alist '(("german"
+  ;;                                                  "[[:alpha:]]"
+  ;;                                                  "[^[:alpha:]]"
+  ;;                                                  "[']"
+  ;;                                                  t
+  ;;                                                  ("-d" "de_DE")
+  ;;                                                  nil
+  ;;                                                  utf-8)))
+  ;;   (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist)
+  ;; 
+  ;;   ;; (setq ispell-program-name "hunspell"          ; Use hunspell to correct mistakes
+  ;;   ;; ispell-dictionary   "german") ; Default dictionary to use
+  ;;   (setq ispell-program-name "hunspell")
+  ;;   ;; (setq ispell-dictionary "german,english")
+  ;;   (setq ispell-dictionary "english")
+  ;;   ;; ispell-set-spellchecker-params has to be called
+  ;;   ;; before ispell-hunspell-add-multi-dic will work
+  ;;   (ispell-set-spellchecker-params)
+  ;;   ;; (ispell-hunspell-add-multi-dic "german,english")
+  ;;   ;; (ispell-hunspell-add-multi-dic "english")
 
-    (setq initial-major-mode 'org-mode)
+  (setq initial-major-mode 'org-mode)
   (setq org-directory "~/org")
   (setq org-default-notes-file (concat org-directory "/notes.org"))
   (defun org-ioslide-publish-to-html (plist filename pub-dir)
@@ -695,12 +684,60 @@ Return output file name."
     (replace-regexp-in-string
      "^file:" "mpv:"
      (org-file-complete-link arg)
-      t t))
+     t t))
 
   (org-link-set-parameters
    "mpv"
    :follow #'mpv-play
    :complete #'org-mpv-complete-link)
+
+  (use-package simple-mpc
+    ;;(when (fboundp 'evil-mode)
+    ;;  (general-nmap :prefix belak/evil-leader
+    ;;                "m" 'simple-mpc))
+    :config
+    (progn
+      ;; (spacemacs/set-leader-keys
+      ;;   "oa" 'simple-mpc)
+      (when (fboundp 'evil-mode)
+        (add-hook 'simple-mpc-mode-hook 'evil-emacs-state))
+
+      (defun my-simple-mpc/state ()
+        (propertize "" 'face '(:foreground "#b262af")))
+
+      (defun my-simple-mpc/title (offset)
+        (let* ((idx (simple-mpc-get-current-playlist-position))
+               (pos (+ idx offset))
+               (songs (split-string (shell-command-to-string "mpc playlist") "\n"))
+               (title (when (> pos 0) (nth-value (1- pos) songs))))
+          (propertize (or title "") 'face (when (/= offset 0) '(:foreground "#868dd9")))))
+
+      (defhydra hydra-simple-mpc
+        (:body-pre (setq hydra-is-helpful t)
+                   :post (setq hydra-is-helpful nil)
+                   :hint nil
+                   :color amaranth)
+        (concat "\n"
+                "%s(my-simple-mpc/title -1)" "\n"
+                "    %s(my-simple-mpc/state) %s(my-simple-mpc/title 0)" "\n"
+                "%s(my-simple-mpc/title 1)" "\n")
+
+        ("<down>" simple-mpc-next)
+
+        ("<up>" simple-mpc-prev)
+
+        ("<left>" simple-mpc-seek-backward)
+
+        ("<right>" simple-mpc-seek-forward)
+
+        ;; this is the default simple-mpc keybind
+        ("c" simple-mpc-view-current-playlist :color blue)
+        ("s" simple-mpc-query :color blue)
+        ("t" simple-mpc-toggle)
+        ("SPC" simple-mpc-toggle :color blue)
+
+        ("q" nil :color blue))
+      ))
 
   (let ((org-time-stamp-custom-formats
          '("<%A, %B %d, %Y>" . "<%A, %B %d, %Y %H:%M>"))
@@ -912,7 +949,7 @@ Return output file name."
   ;; (setq markdown-css-theme "clearness")
   ;; (setq-default git-enable-github-support t)
   ;; (setq-default git-magit-status-fullscreen t)
-  (setq powerline-default-separator 'arrow)
+  (setq powerline-default-separator 'bar)
   ;; (setq powerline-default-theme 'center)
   ;; (setq powerline-default-separator 'nil))
 
@@ -1082,6 +1119,28 @@ Return output file name."
   ;; change default key bindings (if you want) HERE
   (setq evil-replace-with-register-key (kbd "gr"))
   (evil-replace-with-register-install)
+  ;; active Babel languages
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((java . t)
+     ;; (R . t)
+     (ledger . t)
+     (calc . t)
+     (http . t)
+     (dot . t)
+     (haskell . t)
+     (js . t)
+     (latex . t)
+     (ruby . t)
+     (sh . t)
+     (emacs-lisp . t)
+     (C . t)
+     (plantuml . t)
+     (gnuplot . t)
+     (python . t)
+     (ditaa . t)
+     ))
+
   )
 
 (defun dotspacemacs/user-init ()
@@ -1127,6 +1186,11 @@ Return output file name."
   (server-start)
   (add-hook 'org-mode-hook (lambda ()
                              (push '(?s . ("#+BEGIN_SRC sh" . "#+END_SRC")) evil-surround-pairs-alist)))
+
+  (setq org-caldav-url "https://box.jelveh.me/cloud/remote.php/caldav/calendars/reza@jelveh.me")
+  (setq org-caldav-calendars
+        '((:calendar-id "workkvh" :files ("~/org/work.org")
+                        :inbox "~/org/fromwork.org")))
   ;; Font
   ;; (set-face-attribute 'default nil :family "mononoki")
   ;; (set-face-attribute 'default nil :family "NanumGothicCoding")
@@ -1146,10 +1210,16 @@ Return output file name."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (makey window-numbering spacemacs-theme ido-vertical-mode quelpa package-build zenburn-theme zeal-at-point yapfify yaml-mode xwidgete xterm-color xkcd ws-butler winum which-key wgrep web-mode web-beautify w3m volatile-highlights vmd-mode vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package unfill toml-mode toc-org tldr tagedit systemd sql-indent spray spaceline solarized-theme smyx-theme smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv ranger rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin plantuml-mode pip-requirements persp-mode password-generator paradox pandoc-mode ox-twbs ox-reveal ox-pandoc ox-ioslide ox-gfm ox-cv orgit org-wiki org-ref org-projectile org-present org-pomodoro org-journal org-jira org-jekyll org-glossary org-gcal org-drill-table org-download org-bullets org-alert open-junk-file omnisharp ob-restclient ob-http ob-elixir nlinum-relative neotree mwim multi-term mu4e-maildirs-extension mu4e-alert mpv move-text monokai-theme mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lua-mode lorem-ipsum livid-mode live-py-mode link-hint less-css-mode ledger-mode langtool json-mode js2-refactor js-doc jinja2-mode ivy-purpose ivy-hydra info+ indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-youtube helm-make google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md ggtags fuzzy focus flyspell-popup flyspell-correct-ivy flycheck-ycmd flycheck-rust flycheck-pos-tip flycheck-mix flycheck-ledger flycheck-credo flx-ido fill-column-indicator feature-mode fasd fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-replace-with-register evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-object-popup ess-R-data-view eshell-z eshell-prompt-extras esh-help erlang engine-mode emmet-mode elisp-slime-nav ein dumb-jump disaster diff-hl deft define-word darktooth-theme dactyl-mode cython-mode csv-mode counsel-projectile counsel-dash confluence company-ycmd company-web company-tern company-statistics company-restclient company-quickhelp company-emacs-eclim company-c-headers company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby cargo calfw bundler base16-theme auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile auctex-latexmk ansible-doc ansible alchemist aggressive-indent adoc-mode adaptive-wrap ace-window ace-link ac-ispell))))
+    (linum-relative org-caldav diminish paredit with-editor gh restclient f s shut-up seq log4e sauron bbdb org markdown-mode helm-bibtex parsebib csharp-mode projectile eclim rust-mode bind-key packed elixir-mode avy auto-complete google-maps anaconda-mode auctex tern counsel swiper helm-dash ess julia-mode iedit smartparens bind-map highlight evil ycmd flycheck ivy flyspell-correct helm helm-core yasnippet multiple-cursors skewer-mode js2-mode simple-httpd pcache magit magit-popup git-commit async org-plus-contrib request deferred alert hydra inf-ruby haml-mode company slime-company slime common-lisp-snippets makey window-numbering spacemacs-theme ido-vertical-mode quelpa package-build zenburn-theme zeal-at-point yapfify yaml-mode xwidgete xterm-color xkcd ws-butler winum which-key wgrep web-mode web-beautify w3m volatile-highlights vmd-mode vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package unfill toml-mode toc-org tldr tagedit systemd sql-indent spray spaceline solarized-theme smyx-theme smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv ranger rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin plantuml-mode pip-requirements persp-mode password-generator paradox pandoc-mode ox-twbs ox-reveal ox-pandoc ox-ioslide ox-gfm ox-cv orgit org-wiki org-ref org-projectile org-present org-pomodoro org-journal org-jira org-jekyll org-glossary org-gcal org-drill-table org-download org-bullets org-alert open-junk-file omnisharp ob-restclient ob-http ob-elixir nlinum-relative neotree mwim multi-term mu4e-maildirs-extension mu4e-alert mpv move-text monokai-theme mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lua-mode lorem-ipsum livid-mode live-py-mode link-hint less-css-mode ledger-mode langtool json-mode js2-refactor js-doc jinja2-mode ivy-purpose ivy-hydra info+ indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-youtube helm-make google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md ggtags fuzzy focus flyspell-popup flyspell-correct-ivy flycheck-ycmd flycheck-rust flycheck-pos-tip flycheck-mix flycheck-ledger flycheck-credo flx-ido fill-column-indicator feature-mode fasd fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-replace-with-register evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-object-popup ess-R-data-view eshell-z eshell-prompt-extras esh-help erlang engine-mode emmet-mode elisp-slime-nav ein dumb-jump disaster diff-hl deft define-word darktooth-theme dactyl-mode cython-mode csv-mode counsel-projectile counsel-dash confluence company-ycmd company-web company-tern company-statistics company-restclient company-quickhelp company-emacs-eclim company-c-headers company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby cargo calfw bundler base16-theme auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile auctex-latexmk ansible-doc ansible alchemist aggressive-indent adoc-mode adaptive-wrap ace-window ace-link ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization.")
+

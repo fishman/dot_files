@@ -10,6 +10,7 @@ source '~/.mutt/profiles/bindings'
 # Macro to open mailbox index
 macro 	index 	<left> 	"<change-folder>?<toggle-mailboxes>" 	"Open mailbox list"
 macro 	pager 	<left> 	"<change-folder>?<toggle-mailboxes>" 	"Open mailbox list"
+
 # Coming from the pager, pressing left arrow quit the browser and get back
 macro 	browser	<left> 	"<exit>"			 	"exit"
 
@@ -22,17 +23,28 @@ macro 	attach 	l 	"<pipe-entry>less\n" "View attachment using less"
 # Addressbook
 
 # start
-macro 	generic	\ca 	"!abook\n" "start abook"
-macro 	index 	\ca 	"!abook\n" "start abook"
-macro 	pager 	\ca 	"!abook\n" "start abook"
+# macro 	generic	\ca 	"!abook\n" "start abook"
+# macro 	index 	\ca 	"!abook\n" "start abook"
+# macro 	pager 	\ca 	"!abook\n" "start abook"
 
 # add address
-macro 	index 	A 	"|abook --add-email\n" "add sender to abook"
-macro 	pager 	A 	"|abook --add-email\n" "add sender to abook"
+# macro 	index 	A 	"|abook --add-email\n" "add sender to abook"
+# macro 	pager 	A 	"|abook --add-email\n" "add sender to abook"
+
+# Normally you'd have to hit Ctrl-T for completion.
+# This rebinds it to Tab.
+bind editor <Tab> complete-query
+bind editor ^T    complete
+# macro index,pager A \
+#     "<pipe-message>mates add | xargs mates edit<enter>" \
+#     "add the sender address"
+macro index,pager A \
+    "<pipe-message>khard -a 'contacts' add-email<return>" \
+    "add the sender email address to khard"
 
 # open url
-macro	index,pager	\cb "<pipe-message> urlview<Enter>" "call urlscan to extract URLs out of a message"
-macro	attach,compose	\cb "<pipe-entry> urlview<Enter>" "call urlscan to extract URLs out of a message"
+macro	index,pager	\cb "<pipe-message> urlscan -d<Enter>" "call urlscan to extract URLs out of a message"
+macro	attach,compose	\cb "<pipe-entry> urlscan -d<Enter>" "call urlscan to extract URLs out of a message"
 
 # reload configuration
 macro	index	\cr	":source ~/.mutt/muttrc\n" "Reload configuration"
@@ -40,6 +52,25 @@ macro	index	\cr	":source ~/.mutt/muttrc\n" "Reload configuration"
 
 ## Bindings ##
 #
+# open a different virtual folder
+bind    index,pager X change-vfolder
+
+# read entire thread of the current message
+bind    index,pager + entire-thread
+
+# modify (notmuch) tags
+bind    index,pager \` modify-labels
+
+# modify (notmuch) tag non-interactively.
+# bind    index,pager tt "<modify-labels>!todo\n"
+
+# generate virtual folder from query
+bind    index,pager \eX vfolder-from-query
+
+# generate virtual folder from query with time window
+# bind    index,pager < vfolder-window-backward
+# bind    index,pager > vfolder-window-forward
+
 
 # Unbind ctrl-d
 bind 	pager,index	\cd 	"noop"
