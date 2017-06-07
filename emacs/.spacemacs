@@ -1058,6 +1058,8 @@ Return output file name."
   (ox-extras-activate '(ignore-headlines))
   (setq alert-default-style 'toaster)
   (require 'org-alert)
+  ;; convert websites to org mode
+  (require 'org-eww)
   ;; (org-alert-enable)
   (setq org-wiki/location "~/org/wiki")
 
@@ -1111,6 +1113,7 @@ Return output file name."
 
   (unless (eq dotspacemacs-editing-style 'emacs)
     (add-hook 'artist-mode-hook #'artist-mode-toggle-emacs-state))
+
   ;; (defun nolinum ()
   ;;   (global-nlinum-mode 0)
   ;;   )
@@ -1140,6 +1143,7 @@ Return output file name."
      (python . t)
      (ditaa . t)
      ))
+
 
   )
 
