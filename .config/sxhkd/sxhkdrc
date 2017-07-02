@@ -44,6 +44,9 @@ alt + @button{1-3}
 shift + Print
     scrot
 
+super + v
+  xdo activate -n keepassxc || keepassxc
+
 # super + m
 #     amixer set Master toggle
 
@@ -110,7 +113,7 @@ super + @space
 	bspc desktop -l next
 
 # if the current node is automatic, send it to the last manual, otherwise pull the last leaf
-super + y
+super + Return
 	bspc query -N -n focused.automatic && bspc node -n last.!automatic || bspc node last.leaf -n focused
 
 # swap the current node and the biggest node

@@ -49,7 +49,7 @@ font-2 = "Wuncon Siji:pixelsize=10;1"
 
 modules-left = bspwm
 ; modules-left = ewmh
-modules-center = mpd
+modules-center = mpd pomodoro
 modules-right = filesystem xbacklight volume xkeyboard memory cpu wlan eth battery temperature date powermenu
 
 tray-position = right
@@ -284,6 +284,8 @@ type = internal/network
 interface = wlp3s0
 interval = 3.0
 
+click-left = cmst
+
 format-connected = <ramp-signal> <label-connected>
 format-connected-underline = #9f78e1
 label-connected = %essid%
@@ -444,5 +446,21 @@ screenchange-reload = true
 [global/wm]
 margin-top = 5
 margin-bottom = 5
+
+[module/pomodoro]
+type = custom/script
+; Use pomodoro glyphs in Nerd fonts
+; exec = pymodoro --break-prefix " " --pomodoro-prefix " " --pomodoro  --empty  --break  --length 5
+; Use default symbols
+exec = pymodoro --length 5
+label = %output%
+tail = true
+interval = 0
+; Start or reset the timer
+click-left = if [ -e ~/.pomodoro_session ]; then rm ~/.pomodoro_session; else echo "25 5" > ~/.pomodoro_session; fi
+; Increase pomodoro time
+click-right = echo "$((`cut .pomodoro_session -d ' ' -f 1`+5)) 5" > .pomodoro_session
+; Reduce pomodoro time
+click-middle = echo "$((`cut .pomodoro_session -d ' ' -f 1`-5)) 5" > .pomodoro_session
 
 ; vim:ft=dosini
