@@ -7,20 +7,12 @@ alt + b
     bspc desktop -B
 
 # Rotate windows 90 degrees
-alt + Tab
-    bspc desktop -R 90
-
-# Move window into a presel
-alt + grave
-    bspc window -w last.manual
+# alt + Tab
+#     bspc desktop -R 90
 
 # Swap current window with the biggest
 alt + m
     bspc window -s biggest
-
-# Focus/Move around
-alt + {_,shift + }{Left,Down,Up,Right}
-    bspc window -{f,s} {left,down,up,right}
 
 # Create a presel
 alt + ctrl + {Left,Down,Up,Right}
@@ -128,6 +120,11 @@ super + g
 super + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
+# super + f
+#     state=fullscreen; \
+#     bspc query -W -w "focused.$state" && state=$(bspc query -T -w | jshon -e client -e lastState -u); \
+#     bspc window -t "$state"
+
 # set the node flags
 super + ctrl + {x,y,z}
 	bspc node -g {locked,sticky,private}
@@ -139,6 +136,13 @@ super + ctrl + {x,y,z}
 # focus the node in the given direction
 super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
+
+# auto_cancel
+# super + ctrl + {h,j,k,l}
+# 		dir={left,down,up,right}; \
+# 		cur=$(bspc query -T -w focused.!automatic | jshon -e splitDir -u 2>&-); \
+# 		[ "$dir" = "$cur" ] && dir=cancel; \
+# 		bspc window -p "$dir"
 
 # focus the node for the given path jump
 super + {p,b,comma,period}
@@ -166,6 +170,12 @@ super + {o,i}
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '^{1-9,10}'
 
+# auto alternate
+# super + {_,alt + }{1-9,0}
+# 		kind={desktop,monitor}; \
+# 		item="^{1-9,10}"; \
+# 		bspc query --"$kind"s --"$kind" "$\{item\}.focused" > /dev/null && item=last; \
+# 		bspc "$kind" -f "$item"
 #
 # preselect
 #
@@ -201,3 +211,8 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+super + F12
+  xdotool search --onlyvisible --classname URxvtQuake windowunmap \
+  || xdotool search --classname URxvtQuake windowmap \
+  || urxvt -name URxvtQuake -geometry 110x20+297+1

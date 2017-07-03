@@ -187,3 +187,5 @@ pacman -S ibus-kkc ibus-qt ibus-typingbooster ibus-m17n otf-ipafont
 pacman -S xdotool pass srm
 
 packer -S rofi-pass passed-git autopass-git
+
+packer -S xdo
