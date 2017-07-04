@@ -213,6 +213,6 @@ super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
 super + F12
-  xdotool search --onlyvisible --classname URxvtQuake windowunmap \
-  || xdotool search --classname URxvtQuake windowmap \
-  || urxvt -name URxvtQuake -geometry 110x20+297+1
+  xdotool search --onlyvisible --classname scratchpad windowunmap \
+  || xdotool search --classname scratchpad windowmap \
+  || urxvt -name scratchpad -geometry 110x20+297+1
