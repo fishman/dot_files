@@ -32,3 +32,7 @@ compdef _task t=task
 # use the mplayer completion with mpv/fasd
 compdef _mplayer m=mplayer
 compdef _mplayer mpv=mplayer
+
+. ~/.zsh.d/zsh-functions/_docker
+zstyle ':completion:*:*:docker:*' option-stacking yes
+zstyle ':completion:*:*:docker-*:*' option-stacking yes

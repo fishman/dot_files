@@ -110,7 +110,7 @@ bsp() {
     feh  --bg-fill "$HOME/.config/awesome/themes/steamburn/wall.png" 
     polybar example&
     blueshift-tray&
-    # sxhkd -s "$SXHKD_FIFO" &
+    sxhkd -s "$SXHKD_FIFO" &
 
     autocutsel -fork &
     autocutsel -selection PRIMARY -fork &
