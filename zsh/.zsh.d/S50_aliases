@@ -395,7 +395,7 @@ alias DELETE='curl -sk -X DELETE'
 alias PUT='curl -sk -X PUT --data-binary @-'
 alias POST='curl -sk -X POST --data-binary @-'
 alias de="setxkbmap de"
-alias us="setxkbmap us -option terminate:ctrl_alt_bkspc -option ctrl:nocaps; xmodmap ~/.Xmodmap"
+alias us="setxkbmap us"
 alias dvorak="setxkbmap dvorak -option lv3:rwin_switch -option apple:badmap -option ctrl:nocaps; xmodmap ~/.Xmodmap"
 
 alias tzberlin="timedatectl set-timezone Europe/Berlin"
