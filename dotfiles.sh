@@ -188,4 +188,8 @@ pacman -S xdotool pass srm
 
 packer -S rofi-pass passed-git autopass-git
 
+<<<<<<< HEAD
 packer -S docker lxc dnsmasq lua-alt-getopt lua-filesystem
+=======
+packer -S xdo
+>>>>>>> f5d3c6922ce5cb5fd99ef2eee852f42ce21bfea4

@@ -49,8 +49,16 @@ set spoolfile=+sauce/inbox
 # Postponed folder
 set postponed = $HOME/mail/postponed
 
-# Cache maildir headers
-set header_cache = "~/.mutt/headers"
+# Store message headers locally to speed things up.
+# If hcache is a folder, Mutt will create sub cache folders for each account which may speeds things up even more.
+set header_cache = ~/.cache/mutt
+
+# Store messages locally to speed things up, like searching message bodies.
+# Can be the same folder as header_cache.
+# This will cost important disk usage according to your e-mail amount.
+set message_cachedir = "~/.cache/mutt"
+
+
 # On my systems mutt is the only program which plays with my
 # emails, so there's no reason to spend a stat system call for
 # each mail
@@ -210,8 +218,11 @@ set reverse_name
 set envelope_from=yes
 
 # Addressbook
-set query_command = "abook --mutt-query '%s'"
-macro index,pager A "<pipe-message>abook --add-email-quiet<return>" "add the sender address to abook"
+# set query_command = "abook --mutt-query '%s'"
+# set query_command= "mates mutt-query '%s'"
+set query_command= "khard email --parsable %s"
+
+# macro index,pager A "<pipe-message>abook --add-email-quiet<return>" "add the sender address to abook"
 # set query_command="lbdbq %s"  # little brother talks to address book
 
 # Forward mail attachments
@@ -299,14 +310,15 @@ source ~/.mutt/macros_static
 
 ## Sidebar ##
 #
-# source ~/.mutt/sidebar
+source ~/.mutt/sidebar
 
 ## Colors ##
 #
 # source ~/.mutt/colors-blackback
-# source ~/.mutt/colors-zenburn
-source ~/.mutt/mutt-colors-solarized-dark-256.muttrc
-# source ~/.mutt/colors-256
+source ~/.mutt/colors-zenburn
+#source ~/.mutt/mailcap
+#source ~/.mutt/colors-256dark
+#source ~/.mutt/colors-nm
 #source ~/.mutt/colors
 #source ~/.mutt/colors-whiteback
 #source ~/.mutt/colors-slrn-like

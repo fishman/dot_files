@@ -65,3 +65,35 @@ color quoted7    color116 color237
 color quoted8    color247 color237
 color quoted9    color108 color237
 
+color index_subject color190 default '~T' # tagged messages 
+
+# new/unread email
+color index_author color178 default '~Y unread'
+# new/unread email received today
+color index_author brightcolor178 default '~Y unread ~d <1d'
+#color index_author brightcolor178 default '~(~d <1d ~Y unread)'
+
+color index_collapsed color193 default
+color index_date color88 default
+#color index_label
+color index_number color240 default
+#color index_size
+color index_tags color43 default
+
+color index_flags color238 default '~A'
+color index_flags brightcolor127 default '~Q'
+color index_flags brightcolor39 default '~N'
+color index_flags brightcolor196 default '~D'
+color index_flags brightcolor208 default '~F'
+color index_flags brightcolor190 default '~T'
+
+color index_tag color99 default inbox
+color index_tag color99 default archive
+color index_tag color124 default unread
+color index_tag brightcolor208 default flagged
+color index_tag brightcolor171 default invites
+color index_tag color69 default attachment
+color index_tag color40 default clearquest
+color index_tag color45 default perforce
+
+# vim: filetype=muttrc

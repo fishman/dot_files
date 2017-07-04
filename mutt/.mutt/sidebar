@@ -9,8 +9,7 @@ bind  pager   \Cp      sidebar-prev
 bind  pager   \Cn      sidebar-next
 bind  pager   \Cd      sidebar-open
 
-macro index   i   ':toggle sidebar_visible^M'
-macro pager   i   ':toggle sidebar_visible^M'
+macro index,pager   \\\\   ':toggle sidebar_visible^M'
 color sidebar_new green black
 
 # vim: syntax=muttrc
