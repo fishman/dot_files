@@ -30,3 +30,4 @@ bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
 bspc rule -a Emacs state=tiled
 bspc rule -a URxvt:scratchpad state=floating sticky=on
+bspc rule -a Corebird state=floating sticky=on
