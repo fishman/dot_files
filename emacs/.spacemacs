@@ -2,6 +2,53 @@
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
+(cl-defun ap/org-capture-web-page-with-eww-readable
+      (&optional url
+                 (filter-fns '(remove-dos-crlf  ; This function should always be first and should always be included
+                               ap/org-remove-html-blocks-from-string)))
+    (let* ((url (or url (ap/get-first-url-in-kill-ring)))
+           (html (ap/url-html url))
+           (result (ap/eww-readable html))
+           (title (cdr result))
+           (title-linked (org-make-link-string url title))
+           (content (with-temp-buffer
+                      (insert (car result))
+                      ;; Convert to Org with Pandoc
+                      (unless (= 0 (call-process-region (point-min) (point-max)
+                                                        "pandoc" t t nil "--no-wrap"
+                                                        "-f" "html" "-t" "org"))
+                        (error "Pandoc failed."))
+                      ;; Demote page headings in capture buffer to below the
+                      ;; top-level Org heading and "Article" 2nd-level heading
+                      (save-excursion
+                        (goto-char (point-min))
+                        (while (re-search-forward (rx bol (1+ "*") (1+ space)) nil t)
+                          (beginning-of-line)
+                          (insert "**")
+                          (end-of-line)))
+                      (buffer-string)))
+           (timestamp (format-time-string (concat "[" (substring (cdr org-time-stamp-formats) 1 -1) "]"))))
+      (when filter-fns
+        (dolist (fn filter-fns)
+          (setq content (funcall fn content))))
+      (concat title-linked " :website:\n\n" timestamp "\n\n** Article\n\n" content)))
+
+(defun remove-dos-crlf (&optional s)
+  "Remove all DOS CRLF (^M) in buffer or in string S."
+  (interactive)
+  (if s
+      (replace-regexp-in-string (string ?\C-m) "" s
+                                'fixedcase 'literal)
+    (save-excursion
+      (goto-char (point-min))
+      (while (search-forward (string ?\C-m) nil t)
+        (replace-match "")))))
+
+(defun ap/org-remove-html-blocks-from-string (s)
+    "Remove \"#+BEGIN_HTML...#+END_HTML\" blocks from Org-formatted string S."
+    (replace-regexp-in-string (rx (optional "\n") "#+BEGIN_HTML" (minimal-match (1+ anything)) "#+END_HTML" (optional "\n"))
+                              "" s 'fixedcase 'literal))
+
 (defun org-mpv-complete-link (&optional arg)
   (replace-regexp-in-string
    "^file:" "mpv:"
