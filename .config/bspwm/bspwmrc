@@ -1,6 +1,10 @@
 #! /bin/sh
 
-# sxhkd &
+if ps aux | grep -q "sxhkd"; then
+    sxhkd -s "$SXHKD_FIFO" &
+fi
+
+wmname LG3D
 
 bspc config border_width		1
 bspc config window_gap			12
@@ -31,3 +35,8 @@ bspc rule -a Screenkey manage=off
 bspc rule -a Emacs state=tiled
 bspc rule -a URxvt:scratchpad state=floating sticky=on
 bspc rule -a Corebird state=floating sticky=on
+bspc rule -a Gufw.py state=floating
+bspc rule -a Connman-gtk state=floating
+bspc rule -a Pinentry state=floating
+bspc rule -a smplayer state=floating
+bspc rule -a Blueman-manager state=floating
