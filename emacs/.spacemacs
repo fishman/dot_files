@@ -450,9 +450,6 @@ Return output file name."
 
   ;; convert websites to org mode
   (use-package org-eww)
-  (require 'org-protocol)
-  (use-package org-protocol-capture-html)
-  ;; (require 'org-protocol-capture-html)
   ;; (use-package org-web-tools)
   ;; (require 'org-web-tools)
 
@@ -721,28 +718,25 @@ This function should only modify configuration layer settings."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(
+   dotspacemacs-additional-packages '(evil-replace-with-register
                                        hledger-mode
-                                      evil-replace-with-register
-                                      (org-glossary :location (recipe :fetcher github :repo "jagrg/org-glossary"))
-                                      (toc-org :location (recipe :fetcher github :repo "snosov1/toc-org"))
-                                      org-caldav
-                                      ;; org-board
-                                      ;; (org-web-tools :location (recipe :fetcher github
-                                      ;;                                              :repo alphapapa/org-web-tools))
-                                      (org-protocol-capture-html :location (recipe :fetcher github
-                                                                                   :repo fishman/org-protocol-capture-html))
-                                      password-generator
-                                      bbdb
-                                      tldr
-                                      focus
-                                      helm-youtube
-                                      ob-ipython
-                                      org-drill-table
-                                      simple-mpc
-                                      ox-asciidoc
-                                      (ox-ioslide :location (recipe :fetcher github :repo "fishman/org-ioslide"))
-                                      w3m xwidgete spray org-alert nxml xml-rpc confluence langtool org-jekyll)
+                                       (org-glossary :location (recipe :fetcher github :repo "jagrg/org-glossary"))
+                                       (toc-org :location (recipe :fetcher github :repo "snosov1/toc-org"))
+                                       org-caldav
+                                       ;; org-board
+                                       ;; (org-web-tools :location (recipe :fetcher github
+                                       ;;                                              :repo alphapapa/org-web-tools))
+                                       password-generator
+                                       bbdb
+                                       tldr
+                                       focus
+                                       helm-youtube
+                                       ob-ipython
+                                       org-drill-table
+                                       simple-mpc
+                                       ox-asciidoc
+                                       (ox-ioslide :location (recipe :fetcher github :repo "fishman/org-ioslide"))
+                                       w3m xwidgete spray org-alert nxml xml-rpc confluence langtool org-jekyll)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
