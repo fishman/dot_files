@@ -88,7 +88,7 @@ Return output file name."
 
 (defun init-org-export()
   (eval-after-load 'ox
-    '(progn 
+    '(progn
        (require 'ox-koma-letter)
        (require 'ox-confluence)
        (require 'ox-deck)
@@ -132,7 +132,7 @@ Return output file name."
           ;; (file+olp "~/org/ff-notes.org" "Web")
           ;; "* %c :website:\n%U %?%:initial")
           ("w" "Web site" entry
-           (file "")
+           (file "~/org/ff-notes.org")
             "* %a :website:\n\n%U %?\n\n%:initial")
           ;; ("w" "Firefox Capture Template" entry
           ;;   (file+headline "ff-notes.org" "Firefox")
@@ -420,7 +420,7 @@ Return output file name."
      '((java . t)
        (ipython . t)
        ;; (R . t)
-       (ledger . t)
+       ;; (ledger . t)
        (calc . t)
        (http . t)
        (dot . t)
@@ -452,7 +452,9 @@ Return output file name."
   (use-package org-eww)
   (require 'org-protocol)
   (use-package org-protocol-capture-html)
-  (require 'org-protocol-capture-html)
+  ;; (require 'org-protocol-capture-html)
+  ;; (use-package org-web-tools)
+  ;; (require 'org-web-tools)
 
   ;; (use-package org-board)
 
@@ -491,7 +493,7 @@ Return output file name."
   ;; (add-to-list 'ispell-local-dictionary-alist
   ;;              '(("german" "[[:alpha:]]" "[^[:alpha:]]" "[']" t ("-d" "de_DE") nil utf-8)))
   ;; (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist)
-  
+
     ;; (setq ispell-program-name "hunspell"          ; Use hunspell to correct mistakes
     ;; ispell-dictionary   "german") ; Default dictionary to use
     ;; (setq ispell-program-name "hunspell")
@@ -720,16 +722,19 @@ This function should only modify configuration layer settings."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
+                                       hledger-mode
                                       evil-replace-with-register
-                                      (org-glossary :location (recipe :fetcher github :repo "jagrg/org-glossary")) 
+                                      (org-glossary :location (recipe :fetcher github :repo "jagrg/org-glossary"))
                                       (toc-org :location (recipe :fetcher github :repo "snosov1/toc-org"))
                                       org-caldav
                                       ;; org-board
+                                      ;; (org-web-tools :location (recipe :fetcher github
+                                      ;;                                              :repo alphapapa/org-web-tools))
                                       (org-protocol-capture-html :location (recipe :fetcher github
-                                                                                   :repo alphapapa/org-protocol-capture-html))
+                                                                                   :repo fishman/org-protocol-capture-html))
                                       password-generator
-                                      tldr
                                       bbdb
+                                      tldr
                                       focus
                                       helm-youtube
                                       ob-ipython
@@ -843,7 +848,7 @@ It should only modify the values of Spacemacs settings."
    ;;                             :weight normal
    ;;                             :width normal
    ;;                             :powerline-scale 1.1)
-   ;; 
+   ;;
    ;; dotspacemacs-default-font '("Source Code Pro for Powerline Standard"
    ;;                             :size 18
    ;;                             :weight normal
@@ -1376,7 +1381,7 @@ It should only modify the values of Spacemacs settings."
       (call-process "xdg-open" nil 0 nil file)
       (message "Opening %s done" file)))
   (server-start)
-  (init-local-org)
+  ; (init-local-org)
   (init-spellcheck)
   ;; Font
   ;; (set-face-attribute 'default nil :family "mononoki")
@@ -1416,7 +1421,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (powerline simple-mpc rake inflections pcre2el spinner pdf-tools key-chord tablist ob-ipython gntp names json-snatcher json-reformat parent-mode hackernews fringe-helper git-gutter+ git-gutter marshal logito ht flx eww-lnum anzu goto-chg undo-tree ctable xml-rpc request-deferred web-completion-data dash-functional know-your-http-well pos-tip biblio biblio-core pythonic pkg-info epl markup-faces popup autothemer symon string-inflection ruby-refactor restclient-helm realgud test-simple loc-changes load-relative org-brain meghanada ghub+ apiwrap ghub window-purpose imenu-list impatient-mode helm-pydoc helm-gtags helm-gitignore helm-css-scss helm-company helm-c-yasnippet groovy-mode groovy-imports gradle-mode evil-org evil-lion ensime sbt-mode scala-mode editorconfig company-lua browse-at-remote websocket let-alist dash linum-relative org-caldav diminish paredit with-editor gh restclient f s shut-up seq log4e sauron bbdb org markdown-mode helm-bibtex parsebib csharp-mode projectile eclim rust-mode bind-key packed elixir-mode avy auto-complete google-maps anaconda-mode auctex tern counsel swiper helm-dash ess julia-mode iedit smartparens bind-map highlight evil ycmd flycheck ivy flyspell-correct helm helm-core yasnippet multiple-cursors skewer-mode js2-mode simple-httpd pcache magit magit-popup git-commit async org-plus-contrib request deferred alert hydra inf-ruby haml-mode company slime-company slime common-lisp-snippets makey window-numbering spacemacs-theme ido-vertical-mode quelpa package-build zenburn-theme zeal-at-point yapfify yaml-mode xwidgete xterm-color xkcd ws-butler winum which-key wgrep web-mode web-beautify w3m volatile-highlights vmd-mode vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package unfill toml-mode toc-org tldr tagedit systemd sql-indent spray spaceline solarized-theme smyx-theme smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv ranger rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin plantuml-mode pip-requirements persp-mode password-generator paradox pandoc-mode ox-twbs ox-reveal ox-pandoc ox-ioslide ox-gfm ox-cv orgit org-wiki org-ref org-projectile org-present org-pomodoro org-journal org-jira org-jekyll org-glossary org-gcal org-drill-table org-download org-bullets org-alert open-junk-file omnisharp ob-restclient ob-http ob-elixir nlinum-relative neotree mwim multi-term mu4e-maildirs-extension mu4e-alert mpv move-text monokai-theme mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lua-mode lorem-ipsum livid-mode live-py-mode link-hint less-css-mode ledger-mode langtool json-mode js2-refactor js-doc jinja2-mode ivy-purpose ivy-hydra info+ indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-youtube helm-make google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md ggtags fuzzy focus flyspell-popup flyspell-correct-ivy flycheck-ycmd flycheck-rust flycheck-pos-tip flycheck-mix flycheck-ledger flycheck-credo flx-ido fill-column-indicator feature-mode fasd fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-replace-with-register evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-object-popup ess-R-data-view eshell-z eshell-prompt-extras esh-help erlang engine-mode emmet-mode elisp-slime-nav ein dumb-jump disaster diff-hl deft define-word darktooth-theme dactyl-mode cython-mode csv-mode counsel-projectile counsel-dash confluence company-ycmd company-web company-tern company-statistics company-restclient company-quickhelp company-emacs-eclim company-c-headers company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby cargo calfw bundler base16-theme auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile auctex-latexmk ansible-doc ansible alchemist aggressive-indent adoc-mode adaptive-wrap ace-window ace-link ac-ispell))))
+    (org-protocol-capture-html org-category-capture cmake-ide levenshtein powerline simple-mpc rake inflections pcre2el spinner pdf-tools key-chord tablist ob-ipython gntp names json-snatcher json-reformat parent-mode hackernews fringe-helper git-gutter+ git-gutter marshal logito ht flx eww-lnum anzu goto-chg undo-tree ctable xml-rpc request-deferred web-completion-data dash-functional know-your-http-well pos-tip biblio biblio-core pythonic pkg-info epl markup-faces popup autothemer symon string-inflection ruby-refactor restclient-helm realgud test-simple loc-changes load-relative org-brain meghanada ghub+ apiwrap ghub window-purpose imenu-list impatient-mode helm-pydoc helm-gtags helm-gitignore helm-css-scss helm-company helm-c-yasnippet groovy-mode groovy-imports gradle-mode evil-org evil-lion ensime sbt-mode scala-mode editorconfig company-lua browse-at-remote websocket let-alist dash linum-relative org-caldav diminish paredit with-editor gh restclient f s shut-up seq log4e sauron bbdb org markdown-mode helm-bibtex parsebib csharp-mode projectile eclim rust-mode bind-key packed elixir-mode avy auto-complete google-maps anaconda-mode auctex tern counsel swiper helm-dash ess julia-mode iedit smartparens bind-map highlight evil ycmd flycheck ivy flyspell-correct helm helm-core yasnippet multiple-cursors skewer-mode js2-mode simple-httpd pcache magit magit-popup git-commit async org-plus-contrib request deferred alert hydra inf-ruby haml-mode company slime-company slime common-lisp-snippets makey window-numbering spacemacs-theme ido-vertical-mode quelpa package-build zenburn-theme zeal-at-point yapfify yaml-mode xwidgete xterm-color xkcd ws-butler winum which-key wgrep web-mode web-beautify w3m volatile-highlights vmd-mode vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package unfill toml-mode toc-org tldr tagedit systemd sql-indent spray spaceline solarized-theme smyx-theme smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv ranger rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin plantuml-mode pip-requirements persp-mode password-generator paradox pandoc-mode ox-twbs ox-reveal ox-pandoc ox-ioslide ox-gfm ox-cv orgit org-wiki org-ref org-projectile org-present org-pomodoro org-journal org-jira org-jekyll org-glossary org-gcal org-drill-table org-download org-bullets org-alert open-junk-file omnisharp ob-restclient ob-http ob-elixir nlinum-relative neotree mwim multi-term mu4e-maildirs-extension mu4e-alert mpv move-text monokai-theme mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lua-mode lorem-ipsum livid-mode live-py-mode link-hint less-css-mode ledger-mode langtool json-mode js2-refactor js-doc jinja2-mode ivy-purpose ivy-hydra info+ indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-youtube helm-make google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md ggtags fuzzy focus flyspell-popup flyspell-correct-ivy flycheck-ycmd flycheck-rust flycheck-pos-tip flycheck-mix flycheck-ledger flycheck-credo flx-ido fill-column-indicator feature-mode fasd fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-replace-with-register evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-object-popup ess-R-data-view eshell-z eshell-prompt-extras esh-help erlang engine-mode emmet-mode elisp-slime-nav ein dumb-jump disaster diff-hl deft define-word darktooth-theme dactyl-mode cython-mode csv-mode counsel-projectile counsel-dash confluence company-ycmd company-web company-tern company-statistics company-restclient company-quickhelp company-emacs-eclim company-c-headers company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby cargo calfw bundler base16-theme auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile auctex-latexmk ansible-doc ansible alchemist aggressive-indent adoc-mode adaptive-wrap ace-window ace-link ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
