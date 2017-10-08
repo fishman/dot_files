@@ -1090,6 +1090,7 @@ It should only modify the values of Spacemacs settings."
 ;;      git-gutter-use-fringe t)
 (defun dotspacemacs/user-config ()
   ;; Set the Emacs customization file path. Must be done here in user-init.
+  (setq dotspacemacs-mode-line-unicode-symbols nil)
   (setq custom-file "~/.spacemacs.d/custom.el")
   ;; (setq org-src-tab-acts-natively t)
 
