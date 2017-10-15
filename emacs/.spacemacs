@@ -420,7 +420,7 @@ Return output file name."
      '((java . t)
        (ipython . t)
        ;; (R . t)
-       ;; (ledger . t)
+       ;; (hledger . t)
        (calc . t)
        (http . t)
        (dot . t)
@@ -1087,7 +1087,10 @@ It should only modify the values of Spacemacs settings."
   (setq dotspacemacs-mode-line-unicode-symbols nil)
   (setq custom-file "~/.spacemacs.d/custom.el")
   ;; (setq org-src-tab-acts-natively t)
-
+  ;; Required to use hledger instead of ledger itself.
+  (setq ledger-mode-should-check-version nil
+    ledger-report-links-in-register nil
+    ledger-binary-path "hledger")
   (config-org)
   (init-org-templates)
   "Configuration function.

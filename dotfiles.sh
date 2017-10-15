@@ -23,6 +23,7 @@ pacman -S aria2 upower
 pacman -S wget
 pacman -S jshon
 pacman -S mpd ncmpcpp rtmpdump mpv atomicparsley baka-mplayer beets
+packer -S mpd-sima clerk
 pacman -S alsa-utils
 pacman -S redshift dunst autocutsel blueman
 ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf /etc/fonts/conf.d
