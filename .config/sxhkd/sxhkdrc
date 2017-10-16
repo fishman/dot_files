@@ -230,6 +230,10 @@ super + alt + m
   clerk
   # /home/timebomb/bin/mpdmenu
 
+# screenshots
+super + F3
+  /home/timebomb/bin/slip
+
 # hide current node, or restore a queried hidden node
 # super + {_,shift} + minus
 #   bspc node {,$(bspc query -N -d -n .hidden | head -n 1)} -g hidden
