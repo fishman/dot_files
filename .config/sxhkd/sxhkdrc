@@ -227,7 +227,8 @@ super + F4
   /home/timebomb/bin/layout_switch.sh
 
 super + alt + m
-  /home/timebomb/bin/mpdmenu
+  clerk
+  # /home/timebomb/bin/mpdmenu
 
 # hide current node, or restore a queried hidden node
 # super + {_,shift} + minus
