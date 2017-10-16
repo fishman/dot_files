@@ -961,7 +961,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil show the color guide hint for transient state keys. (default t)
    dotspacemacs-show-transient-state-color-guide t
    ;; If non-nil unicode symbols are displayed in the mode line. (default t)
-   dotspacemacs-mode-line-unicode-symbols t
+   dotspacemacs-mode-line-unicode-symbols nil
    ;; If non-nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
@@ -1084,7 +1084,6 @@ It should only modify the values of Spacemacs settings."
 ;;      git-gutter-use-fringe t)
 (defun dotspacemacs/user-config ()
   ;; Set the Emacs customization file path. Must be done here in user-init.
-  (setq dotspacemacs-mode-line-unicode-symbols nil)
   (setq custom-file "~/.spacemacs.d/custom.el")
   ;; (setq org-src-tab-acts-natively t)
   ;; Required to use hledger instead of ledger itself.
@@ -1356,6 +1355,10 @@ It should only modify the values of Spacemacs settings."
 
   (setq ob-ipython-command "ipython3")
 
+  (add-hook 'ruby-mode-hook
+    (lambda ()
+      (set (make-local-variable 'compile-command)
+        (concat "ruby " buffer-file-name))))
 
   )
 
