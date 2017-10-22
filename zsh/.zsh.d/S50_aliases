@@ -426,3 +426,4 @@ alias mirror='wget \
 
 alias eledger="gpg --batch -d -q $LEDGER_FILE | ledger -f - "
 alias dockerip="docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "
+alias n=nnn
