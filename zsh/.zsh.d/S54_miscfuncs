@@ -247,3 +247,15 @@ fda() {
   local dir;
   dir=$(fd -t d 2> /dev/null | fzf +m) && cd "$dir";
 }
+
+# fuzzy grep open via ag
+vg() {
+  local file
+
+  file="$(rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" $@ | fzf -0 -1 | awk -F: '{print $1}')"
+
+  if [[ -n $file ]]
+  then
+     vim $file
+  fi
+}
