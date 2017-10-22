@@ -227,13 +227,18 @@ super + F4
   /home/timebomb/bin/layout_switch.sh
 
 super + alt + m
-  clerk
+  clerk --no-tmux-ui -t
   # /home/timebomb/bin/mpdmenu
 
 # screenshots
 super + F3
   /home/timebomb/bin/slip
 
+XF86LaunchA
+  /home/timebomb/bin/grfkill
+
+super + u
+  /home/timebomb/bin/urgentjump
 # hide current node, or restore a queried hidden node
 # super + {_,shift} + minus
 #   bspc node {,$(bspc query -N -d -n .hidden | head -n 1)} -g hidden
