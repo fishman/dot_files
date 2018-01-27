@@ -286,7 +286,7 @@ Return output file name."
 
 (defun config-org ()
   ;; (org-alert-enable)
-  (setq org-wiki/location "~/org/wiki")
+  (setq org-wiki-location "~/org/wiki")
   (setq org-log-done t)
   (setq org-latex-pdf-process (list "latexmk -f -pdf %f"))
   (setq org-directory "~/org")
@@ -502,7 +502,7 @@ Return output file name."
     ;; (ispell-set-spellchecker-params)
     ;; (ispell-hunspell-add-multi-dic "german,english")
 
-  (let ((langs '("American" "german")))
+  (let ((langs '("english" "german")))
     (setq lang-ring (make-ring (length langs)))
     (dolist (elem langs) (ring-insert lang-ring elem)))
 
@@ -612,15 +612,15 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
-     spacemacs-org
+    '(nginx
+       spacemacs-org
      confluence
      lua
      ivy
      ess
      csv
      asciidoc
-     python
+     (python :variables python-enable-yapf-format-on-save t)
      ipython-notebook
      (c-c++ :variables
             c-c++-enable-clang-support t
@@ -639,6 +639,9 @@ This function should only modify configuration layer settings."
      vimscript
      git
      github
+     (go :variables go-use-gometalinter t
+        gofmt-command "goimports"
+        go-tab-width 4)
      sql
      ;; markdown
      (markdown :variables markdown-live-preview-engine 'vmd)
@@ -656,6 +659,7 @@ This function should only modify configuration layer settings."
      ;; vim-powerline
      finance
      ;; nlinum
+     treemacs
      (ranger :variables
              ranger-override-dired t
              ranger-show-preview t
@@ -681,7 +685,9 @@ This function should only modify configuration layer settings."
      dash
      ansible
      gtags
-     latex
+      (latex :variables
+        latex-build-command "LatexMk"
+        latex-enable-folding t)
      bibtex
      ;; osx
      octave
@@ -736,10 +742,11 @@ This function should only modify configuration layer settings."
                                        ob-ipython
                                        org-drill-table
                                        kaolin-themes
+                                       gruvbox-theme
                                        simple-mpc
                                        ox-asciidoc
                                        (ox-ioslide :location (recipe :fetcher github :repo "fishman/org-ioslide"))
-                                       w3m xwidgete spray org-alert nxml xml-rpc confluence langtool org-jekyll)
+                                       w3m xwidgete spray org-alert nxml xml-rpc confluence langtool)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -1078,10 +1085,12 @@ It should only modify the values of Spacemacs settings."
 ;;      git-enable-github-support t
 ;;      git-gutter-use-fringe t)
 (defun dotspacemacs/user-config ()
+  (add-hook 'doc-view-mode-hook 'auto-revert-mode)
   ;; Set the Emacs customization file path. Must be done here in user-init.
   (setq custom-file "~/.spacemacs.d/custom.el")
   ;; (setq org-src-tab-acts-natively t)
   ;; Required to use hledger instead of ledger itself.
+  (setq evil-search-module 'isearch)
   (setq ledger-mode-should-check-version nil
     ledger-report-links-in-register nil
     ledger-binary-path "hledger")
@@ -1289,35 +1298,36 @@ It should only modify the values of Spacemacs settings."
 
 
   (setq-default
-   ;; js2-mode
-   js2-basic-offset 2
-   js2-indent-switch-body t
-   js-indent-level 2
-   js2-include-node-externs t
+    ;; js2-mode
+    js2-basic-offset 2
+    js2-indent-switch-body t
+    js-indent-level 2
+    js2-include-node-externs t
 
-   ;; web-mode
-   css-indent-level 2
-   css-indent-offset 2
-   web-mode-markup-indent-offset 2
-   web-mode-css-indent-offset 2
-   web-mode-code-indent-offset 2
-   web-mode-attr-indent-offset 2
-   tab-width 2
-   evil-shift-width 2
-   js-indent-level 2
-   ruby-indent-level 2
-   html-indent-level 2
-   indent-tabs-mode nil
+    ;; web-mode
+    css-indent-level 2
+    css-indent-offset 2
+    web-mode-markup-indent-offset 2
+    web-mode-css-indent-offset 2
+    web-mode-code-indent-offset 2
+    web-mode-attr-indent-offset 2
+    js-indent-level 2
+    ruby-indent-level 2
+    html-indent-level 2
 
-   web-mode-code-indent-offset 2
-   web-mode-css-indent-offset 2
-   web-mode-enable-auto-indentation t
-   web-mode-indent-style 2
-   web-mode-markup-indent-offset 2
-   web-mode-sql-indent-offset 2
-   web-mode-code-indent-offset 2
-   web-mode-markup-indent-offset 2
-   )
+    web-mode-code-indent-offset 2
+    web-mode-css-indent-offset 2
+    web-mode-enable-auto-indentation t
+    web-mode-indent-style 2
+    web-mode-markup-indent-offset 2
+    web-mode-sql-indent-offset 2
+    web-mode-code-indent-offset 2
+    web-mode-markup-indent-offset 2
+    python-indent-offset 4
+    ;; tab-width 2
+    ;; evil-shift-width 2
+    ;; indent-tabs-mode nil
+    )
   ;; Setting and showing the 80-character column width
   ;; (setq mac-option-modifier 'none)
   ;; (set-fill-column 80)
