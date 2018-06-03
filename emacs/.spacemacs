@@ -86,6 +86,66 @@ Return output file name."
    pub-dir))
 
 
+(defun init-org-agenda()
+  ;; Common settings for all reviews
+  (setq efs/org-agenda-review-settings
+    '((org-agenda-files '("~/org"
+                           "~/Calendars"))
+       ;; "~/org/wiki"
+       ;; "~/org/wiki/regelwerk"
+       ;; "~/org/wiki/pe" ))
+       (org-agenda-show-all-dates t)
+       (org-agenda-start-with-log-mode t)
+       (org-agenda-start-with-clockreport-mode t)
+       (org-agenda-archives-mode t)
+       ;; I don't care if an entry was archived
+       (org-agenda-hide-tags-regexp
+         (concat org-agenda-hide-tags-regexp
+           "\\|ARCHIVE"))
+       ))
+  ;; Show the agenda with the log turn on, the clock table show and
+  ;; archived entries shown.  These commands are all the same exept for
+  ;; the time period.
+  (add-to-list 'org-agenda-custom-commands
+               `("Rw" "Week in review"
+                 agenda ""
+                 ;; agenda settings
+                 ,(append
+                   efs/org-agenda-review-settings
+                   '((org-agenda-span 'week)
+                     (org-agenda-start-on-weekday 0)
+                     (org-agenda-overriding-header "Week in Review"))
+                   )
+                 ("~/org/review/week.html")
+                 ))
+
+  (add-to-list 'org-agenda-custom-commands
+               `("Rd" "Day in review"
+                 agenda ""
+                 ;; agenda settings
+                 ,(append
+                   efs/org-agenda-review-settings
+                   '((org-agenda-span 'day)
+                     (org-agenda-overriding-header "Week in Review"))
+                   )
+                 ("~/org/review/day.html")
+                 ))
+
+  (add-to-list 'org-agenda-custom-commands
+               `("Rm" "Month in review"
+                 agenda ""
+                 ;; agenda settings
+                 ,(append
+                   efs/org-agenda-review-settings
+                   '((org-agenda-span 'month)
+                     (org-agenda-start-day "01")
+                     (org-read-date-prefer-future nil)
+                     (org-agenda-overriding-header "Month in Review"))
+                   )
+                 ("~/org/review/month.html")
+                 ))
+  )
+
 (defun init-org-export()
   (eval-after-load 'ox
     '(progn
@@ -286,7 +346,10 @@ Return output file name."
 
 (defun config-org ()
   ;; (org-alert-enable)
-  (setq org-wiki-location "~/org/wiki")
+  (setq org-wiki-location-list
+    '(
+       "~/org/wiki"    ;; First wiki (root directory) is the default.
+       ))
   (setq org-log-done t)
   (setq org-latex-pdf-process (list "latexmk -f -pdf %f"))
   (setq org-directory "~/org")
@@ -296,8 +359,8 @@ Return output file name."
   ;; cancel above settings only for 'docx' format
   (setq org-pandoc-options-for-docx '((standalone . nil)))
   ;; special settings for beamer-pdf and latex-pdf exporters
-  (setq org-pandoc-options-for-beamer-pdf '((latex-engine . "xelatex")))
-  (setq org-pandoc-options-for-latex-pdf '((latex-engine . "xelatex")))
+  (setq org-pandoc-options-for-beamer-pdf '((pdf-engine . "xelatex")))
+  (setq org-pandoc-options-for-latex-pdf '((pdf-engine . "xelatex")))
 
   (setq org-publish-project-alist
         '(("html"
@@ -340,9 +403,6 @@ Return output file name."
           ("all" :components ("html" "pdf"))))
   (setq org-mobile-inbox-for-pull (concat org-directory "/flagged.org"))
   (setq org-mobile-directory "~/Dropbox/MobileOrg")
-  (setq org-agenda-files '("~/org"
-                           "~/org/wiki/pe"
-                           "~/Calendars"))
   (setq org-plantuml-jar-path "~/.emacs.d/plantuml.jar")
   (setq org-ditaa-jar-path "~/.emacs.d/ditaa.jar")
   (setq org-caldav-url "https://box.jelveh.me/cloud/remote.php/caldav/calendars/reza@jelveh.me")
@@ -395,26 +455,26 @@ Return output file name."
   (let ((org-time-stamp-custom-formats
          '("<%A, %B %d, %Y>" . "<%A, %B %d, %Y %H:%M>"))
         (org-display-custom-times 't)))
-  ;; (org-link-set-parameters
-  ;;  "yt"
-  ;;  :follow (lambda (handle)
-  ;;    (browse-url
-  ;;     (concat "https://www.youtube.com/embed/" handle)))
-  ;;  :export (lambda (path desc backend)
-  ;;    (cl-case backend
-  ;;      (html (format yt-iframe-format
-  ;;                    path (or desc "")))
-  ;;      (latex (format "\href{%s}{%s}"
-  ;;                     path (or desc "video"))))))
+  (org-link-set-parameters
+   "yt"
+   :follow (lambda (handle)
+     (browse-url
+      (concat "https://www.youtube.com/embed/" handle)))
+   :export (lambda (path desc backend)
+     (cl-case backend
+       (html (format yt-iframe-format
+                     path (or desc "")))
+       (latex (format "\href{%s}{%s}"
+                      path (or desc "video"))))))
   (with-eval-after-load 'org
     ;; (use-package org-protocol)
     (add-to-list 'org-modules 'org-protocol)
+    (add-to-list 'org-modules 'org-protocol-capture-html)
     (setq org-confirm-babel-evaluate nil)
-    (use-package org-glossary)
     (use-package ox-asciidoc)
     (advice-add 'org-timer-item :around
                 #'org-timer-item--mpv-insert-playback-position)
-    (add-hook 'org-open-at-point-functions #'mpv-seek-to-position-at-point)
+    ;; (add-hook 'org-open-at-point-functions #'mpv-seek-to-position-at-point)
     ;; active Babel languages
     (org-babel-do-load-languages
      'org-babel-load-languages
@@ -429,7 +489,7 @@ Return output file name."
        (js . t)
        (latex . t)
        (ruby . t)
-       (sh . t)
+       ;; (sh . t)
        (emacs-lisp . t)
        (C . t)
        (plantuml . t)
@@ -439,6 +499,7 @@ Return output file name."
        ))
     )
 
+  (init-org-agenda)
   (init-org-export))
 
 (defun init-local-org ()
@@ -451,8 +512,10 @@ Return output file name."
 
   ;; convert websites to org mode
   (use-package org-eww)
-  ;; (use-package org-web-tools)
-  ;; (require 'org-web-tools)
+  (use-package org-web-tools)
+  (require 'org-web-tools)
+  (require 'eww)
+  (require 'org-protocol-capture-html)
 
   ;; (use-package org-board)
 
@@ -589,176 +652,178 @@ Return output file name."
   "Layer configuration:
 This function should only modify configuration layer settings."
   (setq-default
-   ;; Base distribution to use. This is a layer contained in the directory
-   ;; `+distribution'. For now available distributions are `spacemacs-base'
-   ;; or `spacemacs'. (default 'spacemacs)
-   dotspacemacs-distribution 'spacemacs
-   ;; Lazy installation of layers (i.e. layers are installed only when a file
-   ;; with a supported type is opened). Possible values are `all', `unused'
-   ;; and `nil'. `unused' will lazy install only unused layers (i.e. layers
-   ;; not listed in variable `dotspacemacs-configuration-layers'), `all' will
-   ;; lazy install any layer that support lazy installation even the layers
-   ;; listed in `dotspacemacs-configuration-layers'. `nil' disable the lazy
-   ;; installation feature and you have to explicitly list a layer in the
-   ;; variable `dotspacemacs-configuration-layers' to install it.
-   ;; (default 'unused)
-   dotspacemacs-enable-lazy-installation 'unused
-   ;; If non-nil then Spacemacs will ask for confirmation before installing
-   ;; a layer lazily. (default t)
-   dotspacemacs-ask-for-lazy-installation t
-   ;; If non-nil layers with lazy install support are lazy installed.
-   ;; List of additional paths where to look for configuration layers.
-   ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '()
-   ;; List of configuration layers to load.
-   dotspacemacs-configuration-layers
+    ;; Base distribution to use. This is a layer contained in the directory
+    ;; `+distribution'. For now available distributions are `spacemacs-base'
+    ;; or `spacemacs'. (default 'spacemacs)
+    dotspacemacs-distribution 'spacemacs
+    ;; Lazy installation of layers (i.e. layers are installed only when a file
+    ;; with a supported type is opened). Possible values are `all', `unused'
+    ;; and `nil'. `unused' will lazy install only unused layers (i.e. layers
+    ;; not listed in variable `dotspacemacs-configuration-layers'), `all' will
+    ;; lazy install any layer that support lazy installation even the layers
+    ;; listed in `dotspacemacs-configuration-layers'. `nil' disable the lazy
+    ;; installation feature and you have to explicitly list a layer in the
+    ;; variable `dotspacemacs-configuration-layers' to install it.
+    ;; (default 'unused)
+    dotspacemacs-enable-lazy-installation 'unused
+    ;; If non-nil then Spacemacs will ask for confirmation before installing
+    ;; a layer lazily. (default t)
+    dotspacemacs-ask-for-lazy-installation t
+    ;; If non-nil layers with lazy install support are lazy installed.
+    ;; List of additional paths where to look for configuration layers.
+    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
+    dotspacemacs-configuration-layer-path '()
+    ;; List of configuration layers to load.
+    dotspacemacs-configuration-layers
     '(nginx
        spacemacs-org
-     confluence
-     lua
-     ivy
-     ess
-     csv
-     asciidoc
-     (python :variables python-enable-yapf-format-on-save t)
-     ipython-notebook
-     (c-c++ :variables
-            c-c++-enable-clang-support t
-            c-c++-default-mode-for-headers
-            'c++-mode)
-     (auto-completion :variables
-                      auto-completion-enable-help-tooltip t
-                      auto-completion-complete-with-key-sequence-delay 0.04
-                      auto-completion-enable-sort-by-usage t
-                      auto-completion-enable-snippets-in-popup t)
-     better-defaults
-     emacs-lisp
-     javascript
-     typescript
-     html
-     vimscript
-     git
-     github
-     (go :variables go-use-gometalinter t
-        gofmt-command "goimports"
-        go-tab-width 4)
-     sql
-     ;; markdown
-     (markdown :variables markdown-live-preview-engine 'vmd)
-     xkcd
-     ruby
-     pdf-tools
-     csharp
-     java
-     pandoc
-     plantuml
-     evil-commentary
-     evil-cleverparens
-     evil-snipe
-     ;; unimpaired
-     ;; vim-powerline
-     finance
-     ;; nlinum
-     treemacs
-     (ranger :variables
-             ranger-override-dired t
-             ranger-show-preview t
-             ranger-cleanup-eagerly t)
-     ;; wakatime
-     ;; semantic
-     (shell :variables
-            shell-default-height 30
-            shell-enable-smart-eshell t
-            shell-default-position 'bottom
-            shell-protect-eshell-prompt t
-            shell-default-shell 'ansi-term
-            shell-pop-autocd-to-working-dir nil
-            shell-default-term-shell "zsh")
-     ruby-on-rails
-     yaml
-     react
-     rust
-     shell
-     vinegar
-     restclient
-     ;; tmux
-     dash
-     ansible
-     gtags
-      (latex :variables
-        latex-build-command "LatexMk"
-        latex-enable-folding t)
-     bibtex
-     ;; osx
-     octave
-     ;; d12frosted-org
-     ;; d12frosted-csharp
-     ;; elixir
-     (git :variables
-          git-magit-status-fullscreen nil
-          git-enable-github-support t
-          git-gutter-use-fringe t)
-     (org :variables
-          org-enable-github-support t
-          org-enable-bootstrap-support t
-          org-enable-reveal-js-support t
-          org-want-todo-bindings t
-          org-enable-org-journal-support t
-          org-journal-dir "~/org/journal/"
-          org-journal-file-format "%Y-%m-%d.org"
-          org-journal-date-prefix "#+TITLE: "
-          org-journal-date-format "%A, %B %d %Y"
-          org-journal-time-prefix "* "
-          org-journal-time-format "")
-     speed-reading
-     (spell-checking :variables
-                     enable-flyspell-auto-completion t
-                     spell-checking-enable-by-default nil)
-     fishman
-     common-lisp
-     syntax-checking
-     version-control
-     search-engine
-     dash
-     deft
-     )
-   ;; List of additional packages that will be installed without being
-   ;; wrapped in a layer. If you need some configuration for these
-   ;; packages, then consider creating a layer. You can also put the
-   ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(evil-replace-with-register
-                                       hledger-mode
-                                       (org-glossary :location (recipe :fetcher github :repo "jagrg/org-glossary"))
-                                       (toc-org :location (recipe :fetcher github :repo "snosov1/toc-org"))
-                                       org-caldav
-                                       ;; org-board
-                                       ;; (org-web-tools :location (recipe :fetcher github
-                                       ;;                                              :repo alphapapa/org-web-tools))
-                                       password-generator
-                                       bbdb
-                                       tldr
-                                       focus
-                                       helm-youtube
-                                       ob-ipython
-                                       org-drill-table
-                                       kaolin-themes
-                                       gruvbox-theme
-                                       simple-mpc
-                                       ox-asciidoc
-                                       (ox-ioslide :location (recipe :fetcher github :repo "fishman/org-ioslide"))
-                                       w3m xwidgete spray org-alert nxml xml-rpc confluence langtool)
-   ;; A list of packages that cannot be updated.
-   dotspacemacs-frozen-packages '()
-   ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
-   ;; Defines the behaviour of Spacemacs when installing packages.
-   ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
-   ;; `used-only' installs only explicitly used packages and deletes any unused
-   ;; packages as well as their unused dependencies. `used-but-keep-unused'
-   ;; installs only the used packages but won't delete unused ones. `all'
-   ;; installs *all* packages supported by Spacemacs and never uninstalls them.
-   ;; (default is `used-only')
-   dotspacemacs-install-packages 'used-only))
+       confluence
+       lua
+       ivy
+       ess
+       csv
+       asciidoc
+       ;; (python :variables
+       ;;   python-enable-yapf-format-on-save t
+       ;;   python-sort-imports-on-save t)
+       ipython-notebook
+       (c-c++ :variables
+         c-c++-enable-clang-support t
+         c-c++-default-mode-for-headers
+         'c++-mode)
+       (auto-completion :variables
+         auto-completion-enable-help-tooltip t
+         auto-completion-complete-with-key-sequence-delay 0.04
+         auto-completion-enable-sort-by-usage t
+         auto-completion-enable-snippets-in-popup t)
+       better-defaults
+       emacs-lisp
+       javascript
+       react
+       typescript
+       html
+       vimscript
+       (git :variables
+         git-magit-status-fullscreen nil
+         git-enable-github-support t)
+         ;; git-gutter-use-fringe t)
+       github
+       (go :variables go-use-gometalinter t
+         gofmt-command "goimports"
+         go-tab-width 4)
+       sql
+       ;; markdown
+       (markdown :variables markdown-live-preview-engine 'vmd)
+       xkcd
+       ruby
+       pdf-tools
+       csharp
+       java
+       pandoc
+       plantuml
+       evil-commentary
+       ;; evil-cleverparens
+       evil-snipe
+       ;; unimpaired
+       ;; vim-powerline
+       finance
+       ;; nlinum
+       ;; treemacs
+       (ranger :variables
+         ranger-override-dired t
+         ranger-show-preview t
+         ranger-cleanup-eagerly t)
+       ;; wakatime
+       ;; semantic
+       (shell :variables
+         shell-default-height 30
+         shell-enable-smart-eshell t
+         shell-default-position 'bottom
+         shell-protect-eshell-prompt t
+         shell-default-shell 'ansi-term
+         shell-pop-autocd-to-working-dir nil
+         shell-default-term-shell "zsh")
+       ruby-on-rails
+       yaml
+       ;; rust
+       vinegar
+       restclient
+       ;; ;; tmux
+       dash
+       ;; ansible
+       ;; gtags
+       ;; (latex :variables
+       ;;   latex-build-command "LatexMk"
+       ;;   latex-enable-folding t)
+       ;; bibtex
+       ;; ;; osx
+       ;; octave
+       ;; d12frosted-org
+       ;; d12frosted-csharp
+       ;; elixir
+       (org :variables
+         org-enable-github-support t
+         org-enable-bootstrap-support t
+         org-enable-reveal-js-support t
+         org-enable-hugo-support t
+         org-want-todo-bindings t
+         org-enable-org-journal-support t
+         org-journal-dir "~/org/journal/"
+         org-journal-file-format "%Y-%m-%d.org"
+         org-journal-date-prefix "#+TITLE: "
+         org-journal-date-format "%A, %B %d %Y"
+         org-journal-time-prefix "* "
+         org-journal-time-format "")
+       speed-reading
+       (spell-checking :variables
+         enable-flyspell-auto-completion t
+         spell-checking-enable-by-default nil)
+       fishman
+       ;; common-lisp
+       ;; syntax-checking
+       (version-control :variables
+         version-control-diff-tool 'diff-hl)
+       ;; search-engine
+       ;; deft
+       )
+    ;; List of additional packages that will be installed without being
+    ;; wrapped in a layer. If you need some configuration for these
+    ;; packages, then consider creating a layer. You can also put the
+    ;; configuration in `dotspacemacs/user-config'.
+    dotspacemacs-additional-packages '(evil-replace-with-register
+                                        ;; hledger-mode
+                                        ;; (org-glossary :location (recipe :fetcher github :repo "jagrg/org-glossary"))
+                                        (toc-org :location (recipe :fetcher github :repo "snosov1/toc-org"))
+                                        (org-protocol-capture-html :location (recipe :fetcher github :repo "alphapapa/org-protocol-capture-html"))
+                                        org-caldav
+                                        ;; org-board
+                                        org-web-tools
+                                        ;; (org-web-tools :location (recipe :fetcher github :repo alphapapa/org-web-tools))
+                                        password-generator
+                                        bbdb
+                                        tldr
+                                        focus
+                                        helm-youtube
+                                        ;; ob-ipython
+                                        org-drill-table
+                                        kaolin-themes
+                                        gruvbox-theme
+                                        simple-mpc
+                                        ox-asciidoc
+                                        (ox-ioslide :location (recipe :fetcher github :repo "fishman/org-ioslide"))
+                                        w3m xwidgete spray org-alert nxml xml-rpc confluence langtool)
+    ;; A list of packages that cannot be updated.
+    dotspacemacs-frozen-packages '()
+    ;; A list of packages that will not be installed and loaded.
+    dotspacemacs-excluded-packages '()
+    ;; Defines the behaviour of Spacemacs when installing packages.
+    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
+    ;; `used-only' installs only explicitly used packages and deletes any unused
+    ;; packages as well as their unused dependencies. `used-but-keep-unused'
+    ;; installs only the used packages but won't delete unused ones. `all'
+    ;; installs *all* packages supported by Spacemacs and never uninstalls them.
+    ;; (default is `used-only')
+    dotspacemacs-install-packages 'used-only))
 
 (defun dotspacemacs/init ()
   "Initialization:
@@ -778,6 +843,9 @@ It should only modify the values of Spacemacs settings."
    ;; Maximum allowed time in seconds to contact an ELPA repository.
    ;; (default 5)
    dotspacemacs-elpa-timeout 5
+   ;; If non-nil then verify the signature for downloaded Spacelpa archives.
+   ;; (default nil)
+   dotspacemacs-verify-spacelpa-archives nil
    ;; If non-nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. Note that checking for
    ;; new versions works via git commands, thus it calls GitHub services
@@ -785,7 +853,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-check-for-update nil
    ;; If non-nil, a form that evaluates to a package directory. For example, to
    ;; use different package directories for different Emacs versions, set this
-   ;; to `emacs-version'. (default nil)
+   ;; to `emacs-version'. (default 'emacs-version)
    dotspacemacs-elpa-subdirectory nil
    ;; One of `vim', `emacs' or `hybrid'.
    ;; `hybrid' is like `vim' except that `insert state' is replaced by the
@@ -803,6 +871,7 @@ It should only modify the values of Spacemacs settings."
    ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed. (default 'official)
    dotspacemacs-startup-banner 'official
+
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
@@ -814,25 +883,34 @@ It should only modify the values of Spacemacs settings."
                                 (agenda . 2))
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
+
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'text-mode
+
+    ;; Initial message in the scratch buffer, such as "Welcome to Spacemacs!"
+    ;; (default nil)
+    dotspacemacs-initial-scratch-message nil
+
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                          ;; (kaolin-dark :location (recipe :fetcher github
+                          ;;                          :repo "ogdenwebb/emacs-kaolin-themes"))
+                         monokai
                          wombat
                          darktooth
                          smyx
                          zenburn
                          base16-monokai
                          misterioso
-                         monokai
                          spacemacs-dark
                          spacemacs-light
                          solarized-light
                          solarized-dark
                          leuven
                          )
+    dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
    dotspacemacs-colorize-cursor-according-to-state t
@@ -1086,10 +1164,43 @@ It should only modify the values of Spacemacs settings."
 ;;      git-gutter-use-fringe t)
 (defun dotspacemacs/user-config ()
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+  (custom-set-faces
+    '(ein:cell-input-area ((t (:background "#646464"))))
+     '(ein:cell-input-prompt ((t (:inherit header-line :background "#484848" :foreground "dimgray" :height 0.8)))))
   ;; Set the Emacs customization file path. Must be done here in user-init.
   (setq custom-file "~/.spacemacs.d/custom.el")
   ;; (setq org-src-tab-acts-natively t)
   ;; Required to use hledger instead of ledger itself.
+  (defun copy-to-clipboard ()
+    "Copies selection to x-clipboard."
+    (interactive)
+    (if (display-graphic-p)
+      (progn
+        (message "Yanked region to x-clipboard!")
+        (call-interactively 'clipboard-kill-ring-save)
+        )
+      (if (region-active-p)
+        (progn
+          (shell-command-on-region (region-beginning) (region-end) "xsel -i -b")
+          (message "Yanked region to clipboard!")
+          (deactivate-mark))
+        (message "No region active; can't yank to clipboard!")))
+    )
+
+  (defun paste-from-clipboard ()
+    "Pastes from x-clipboard."
+    (interactive)
+    (if (display-graphic-p)
+      (progn
+        (clipboard-yank)
+        (message "graphics active")
+        )
+      (insert (shell-command-to-string "xsel -o -b"))
+      )
+    )
+  (evil-leader/set-key "o y" 'copy-to-clipboard)
+  (evil-leader/set-key "o p" 'paste-from-clipboard)
+
   (setq evil-search-module 'isearch)
   (setq ledger-mode-should-check-version nil
     ledger-report-links-in-register nil
@@ -1109,7 +1220,7 @@ It should only modify the values of Spacemacs settings."
 
 
   (setq magit-repository-directories '("~/git"))
-  ;; (setq-default ycmd-server-command '("python" "~/.vim/plugged/YouCompleteMe/third_party/ycmd/ycmd"))
+  (setq-default ycmd-server-command '("python" "~/.vim/pack/default/YouCompleteMe/third_party/ycmd/ycmd"))
   (setq-default mac-right-option-modifier nil)
   (use-package simple-mpc
     ;;(when (fboundp 'evil-mode)
@@ -1162,62 +1273,6 @@ It should only modify the values of Spacemacs settings."
 
 
 
-  ;; Common settings for all reviews
-  (setq efs/org-agenda-review-settings
-        '((org-agenda-files '("~/org"
-                              "~/org/wiki"
-                              "~/org/wiki/regelwerk"
-                              "~/org/wiki/pe" ))
-          (org-agenda-show-all-dates t)
-          (org-agenda-start-with-log-mode t)
-          (org-agenda-start-with-clockreport-mode t)
-          (org-agenda-archives-mode t)
-          ;; I don't care if an entry was archived
-          (org-agenda-hide-tags-regexp
-           (concat org-agenda-hide-tags-regexp
-                   "\\|ARCHIVE"))
-          ))
-  ;; Show the agenda with the log turn on, the clock table show and
-  ;; archived entries shown.  These commands are all the same exept for
-  ;; the time period.
-  (add-to-list 'org-agenda-custom-commands
-               `("Rw" "Week in review"
-                 agenda ""
-                 ;; agenda settings
-                 ,(append
-                   efs/org-agenda-review-settings
-                   '((org-agenda-span 'week)
-                     (org-agenda-start-on-weekday 0)
-                     (org-agenda-overriding-header "Week in Review"))
-                   )
-                 ("~/org/review/week.html")
-                 ))
-
-  (add-to-list 'org-agenda-custom-commands
-               `("Rd" "Day in review"
-                 agenda ""
-                 ;; agenda settings
-                 ,(append
-                   efs/org-agenda-review-settings
-                   '((org-agenda-span 'day)
-                     (org-agenda-overriding-header "Week in Review"))
-                   )
-                 ("~/org/review/day.html")
-                 ))
-
-  (add-to-list 'org-agenda-custom-commands
-               `("Rm" "Month in review"
-                 agenda ""
-                 ;; agenda settings
-                 ,(append
-                   efs/org-agenda-review-settings
-                   '((org-agenda-span 'month)
-                     (org-agenda-start-day "01")
-                     (org-read-date-prefer-future nil)
-                     (org-agenda-overriding-header "Month in Review"))
-                   )
-                 ("~/org/review/month.html")
-                 ))
 
     ; Targets include this file and any file contributing to the agenda - up to 9 levels deep
     (setq org-refile-targets (quote ((nil :maxlevel . 9)
@@ -1323,7 +1378,9 @@ It should only modify the values of Spacemacs settings."
     web-mode-sql-indent-offset 2
     web-mode-code-indent-offset 2
     web-mode-markup-indent-offset 2
-    python-indent-offset 4
+
+
+    ;; python-indent-offset 4
     ;; tab-width 2
     ;; evil-shift-width 2
     ;; indent-tabs-mode nil
@@ -1332,6 +1389,24 @@ It should only modify the values of Spacemacs settings."
   ;; (setq mac-option-modifier 'none)
   ;; (set-fill-column 80)
   ;; (auto-fill-mode t)
+  (add-hook 'groovy-mode-hook
+    (lambda ()
+      (setq c-basic-offset 4
+        tab-width 4)))
+
+  (add-hook 'java-mode-hook
+    (lambda ()
+      (setq c-basic-offset 4
+        tab-width 4)))
+
+  ;; python hooks
+  (add-hook 'python-mode-hook
+    (lambda ()
+      ;; enable fill column indicator
+      ;; (fci-mode t)
+      (setq python-indent-offset 4)
+      ;; enable automatic line wrapping at fill column
+      (auto-fill-mode t)))
   (with-eval-after-load 'web-mode
     (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
     (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
@@ -1354,67 +1429,154 @@ It should only modify the values of Spacemacs settings."
   ;;   )
   ;; (add-hook 'org-mode-hook 'nolinum)
 
-  ;; change default key bindings (if you want) HERE
+  ;; change default key bindings (if you want) here
   (setq evil-replace-with-register-key (kbd "gr"))
   (evil-replace-with-register-install)
-
-  (setq ob-ipython-command "ipython3")
 
   (add-hook 'ruby-mode-hook
     (lambda ()
       (set (make-local-variable 'compile-command)
         (concat "ruby " buffer-file-name))))
 
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . react-mode))
+  (setq exec-path-from-shell-check-startup-files nil)
+  (setq-default evil-escape-key-sequence "jk")
+  (setq paradox-github-token "7693224097823e845d1f39f82ba5fea5a7ae5531")
+  (set-face-attribute 'default nil :family "xos4 terminus")
+
+  (load "~/.spacemacs-secrets.el.gpg")
+  )
+
+(defun term-init ()
+  ;; (add-hook 'term-setup-hook
+  ;;   '(lambda ()
+       (if (getenv "tmux")
+         ;; (define-key input-decode-map "\e[1;3A" [M-up])
+         ;; (define-key input-decode-map "\e[1;3B" [M-down])
+         (define-key input-decode-map "\e[1;3C" [M-right])
+         (define-key input-decode-map "\e[1;3D" [M-left])
+         (progn
+           (let ((x 2) (tkey ""))
+             (while (<= x 8)
+                    ;; shift
+                    (if (= x 2)
+                      (setq tkey "s-"))
+                    ;; alt
+                    (if (= x 3)
+                      (setq tkey "m-"))
+                    ;; alt + shift
+                    (if (= x 4)
+                      (setq tkey "m-s-"))
+                    ;; ctrl
+                    (if (= x 5)
+                      (setq tkey "c-"))
+                    ;; ctrl + shift
+                    (if (= x 6)
+                      (setq tkey "c-s-"))
+                    ;; ctrl + alt
+                    (if (= x 7)
+                      (setq tkey "c-m-"))
+                    ;; ctrl + alt + shift
+                    (if (= x 8)
+                      (setq tkey "c-m-s-"))
+
+                    ;; arrows
+                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d a" x)) (kbd (format "%s<up>" tkey)))
+                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d b" x)) (kbd (format "%s<down>" tkey)))
+                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d c" x)) (kbd (format "%s<right>" tkey)))
+                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d d" x)) (kbd (format "%s<left>" tkey)))
+                    ;; home
+                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d h" x)) (kbd (format "%s<home>" tkey)))
+                    ;; end
+                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d f" x)) (kbd (format "%s<end>" tkey)))
+                    ;; page up
+                    (define-key key-translation-map (kbd (format "m-[ 5 ; %d ~" x)) (kbd (format "%s<prior>" tkey)))
+                    ;; page down
+                    (define-key key-translation-map (kbd (format "m-[ 6 ; %d ~" x)) (kbd (format "%s<next>" tkey)))
+                    ;; insert
+                    (define-key key-translation-map (kbd (format "m-[ 2 ; %d ~" x)) (kbd (format "%s<delete>" tkey)))
+                    ;; delete
+                    (define-key key-translation-map (kbd (format "m-[ 3 ; %d ~" x)) (kbd (format "%s<delete>" tkey)))
+                    ;; f1
+                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d p" x)) (kbd (format "%s<f1>" tkey)))
+                    ;; f2
+                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d q" x)) (kbd (format "%s<f2>" tkey)))
+                    ;; f3
+                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d r" x)) (kbd (format "%s<f3>" tkey)))
+                    ;; f4
+                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d s" x)) (kbd (format "%s<f4>" tkey)))
+                    ;; f5
+                    (define-key key-translation-map (kbd (format "m-[ 15 ; %d ~" x)) (kbd (format "%s<f5>" tkey)))
+                    ;; f6
+                    (define-key key-translation-map (kbd (format "m-[ 17 ; %d ~" x)) (kbd (format "%s<f6>" tkey)))
+                    ;; f7
+                    (define-key key-translation-map (kbd (format "m-[ 18 ; %d ~" x)) (kbd (format "%s<f7>" tkey)))
+                    ;; f8
+                    (define-key key-translation-map (kbd (format "m-[ 19 ; %d ~" x)) (kbd (format "%s<f8>" tkey)))
+                    ;; f9
+                    (define-key key-translation-map (kbd (format "m-[ 20 ; %d ~" x)) (kbd (format "%s<f9>" tkey)))
+                    ;; f10
+                    (define-key key-translation-map (kbd (format "m-[ 21 ; %d ~" x)) (kbd (format "%s<f10>" tkey)))
+                    ;; f11
+                    (define-key key-translation-map (kbd (format "m-[ 23 ; %d ~" x)) (kbd (format "%s<f11>" tkey)))
+                    ;; f12
+                    (define-key key-translation-map (kbd (format "m-[ 24 ; %d ~" x)) (kbd (format "%s<f12>" tkey)))
+                    ;; f13
+                    (define-key key-translation-map (kbd (format "m-[ 25 ; %d ~" x)) (kbd (format "%s<f13>" tkey)))
+                    ;; f14
+                    (define-key key-translation-map (kbd (format "m-[ 26 ; %d ~" x)) (kbd (format "%s<f14>" tkey)))
+                    ;; f15
+                    (define-key key-translation-map (kbd (format "m-[ 28 ; %d ~" x)) (kbd (format "%s<f15>" tkey)))
+                    ;; f16
+                    (define-key key-translation-map (kbd (format "m-[ 29 ; %d ~" x)) (kbd (format "%s<f16>" tkey)))
+                    ;; f17
+                    (define-key key-translation-map (kbd (format "m-[ 31 ; %d ~" x)) (kbd (format "%s<f17>" tkey)))
+                    ;; f18
+                    (define-key key-translation-map (kbd (format "m-[ 32 ; %d ~" x)) (kbd (format "%s<f18>" tkey)))
+                    ;; f19
+                    (define-key key-translation-map (kbd (format "m-[ 33 ; %d ~" x)) (kbd (format "%s<f19>" tkey)))
+                    ;; f20
+                    (define-key key-translation-map (kbd (format "m-[ 34 ; %d ~" x)) (kbd (format "%s<f20>" tkey)))
+
+                    (setq x (+ x 1))
+                    ))
+           )
+         )
+         ;;))
   )
 
 (defun dotspacemacs/user-init ()
-  (load "~/.spacemacs-secrets.el.gpg")
-  (setq exec-path-from-shell-check-startup-files nil)
+  (term-init)
+  ;; (setq configuration-layer--elpa-archives
+  ;;       '(("melpa"    . "melpa.org/packages/")
+  ;;         ("org"      . "orgmode.org/elpa/")
+          ;; ("gnu"      . "elpa.gnu.org/packages/")))
+
   ;; (golden-ratio-mode 1)
-  (setq evil-want-fine-undo 't)
+  ;; (setq evil-want-fine-undo 't)
   ;;  (spacemacs/load-or-install-package 'sx t)
   ;;  (require 'sx-load)
   ;; (setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
-  (setq-default evil-escape-key-sequence "jk")
-  (setq paradox-github-token "7693224097823e845d1f39f82ba5fea5a7ae5531")
 
   ;; (add-hook 'c-mode-hook 'ycmd-mode))
   (defun dired-open-file ()
-    "In dired, open the file named on this line."
+    "in dired, open the file named on this line."
     (interactive)
     (let* ((file (dired-get-filename nil t)))
-      (message "Opening %s..." file)
+      (message "opening %s..." file)
       (call-process "xdg-open" nil 0 nil file)
-      (message "Opening %s done" file)))
+      (message "opening %s done" file)))
   (server-start)
-  ; (init-local-org)
-  (init-spellcheck)
-  ;; Font
+  ;; (init-local-org)
+  ;; (init-spellcheck)
+  ;; font
   ;; (set-face-attribute 'default nil :family "mononoki")
-  ;; (set-face-attribute 'default nil :family "NanumGothicCoding")
-  ;; (set-face-attribute 'default nil :family "Sauce Code Powerline")
-  (set-face-attribute 'default nil :family "xos4 terminus")
+  ;; (set-face-attribute 'default nil :family "nanumgothiccoding")
+  ;; (set-face-attribute 'default nil :family "sauce code powerline")
   ;; (set-face-attribute 'default nil :height 120)
   ;; (set-face-attribute 'default nil :weight 'normal)
 
   )
-
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (org-protocol-capture-html calfw org-board eww-lnum pdf-tools websocket let-alist dash linum-relative org-caldav diminish paredit with-editor gh restclient f s shut-up seq log4e sauron bbdb org markdown-mode helm-bibtex parsebib csharp-mode projectile eclim rust-mode bind-key packed elixir-mode avy auto-complete google-maps anaconda-mode auctex tern counsel swiper helm-dash ess julia-mode iedit smartparens bind-map highlight evil ycmd flycheck ivy flyspell-correct helm helm-core yasnippet multiple-cursors skewer-mode js2-mode simple-httpd pcache magit magit-popup git-commit async org-plus-contrib request deferred alert hydra inf-ruby haml-mode company slime-company slime common-lisp-snippets makey window-numbering spacemacs-theme ido-vertical-mode quelpa package-build zenburn-theme zeal-at-point yapfify yaml-mode xwidgete xterm-color xkcd ws-butler winum which-key wgrep web-mode web-beautify w3m volatile-highlights vmd-mode vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package unfill toml-mode toc-org tldr tagedit systemd sql-indent spray spaceline solarized-theme smyx-theme smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv ranger rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin plantuml-mode pip-requirements persp-mode password-generator paradox pandoc-mode ox-twbs ox-reveal ox-pandoc ox-ioslide ox-gfm ox-cv orgit org-wiki org-ref org-projectile org-present org-pomodoro org-journal org-jira org-jekyll org-glossary org-gcal org-drill-table org-download org-bullets org-alert open-junk-file omnisharp ob-restclient ob-http ob-elixir nlinum-relative neotree mwim multi-term mu4e-maildirs-extension mu4e-alert mpv move-text monokai-theme mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lua-mode lorem-ipsum livid-mode live-py-mode link-hint less-css-mode ledger-mode langtool json-mode js2-refactor js-doc jinja2-mode ivy-purpose ivy-hydra info+ indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-youtube helm-make google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md ggtags fuzzy focus flyspell-popup flyspell-correct-ivy flycheck-ycmd flycheck-rust flycheck-pos-tip flycheck-mix flycheck-ledger flycheck-credo flx-ido fill-column-indicator feature-mode fasd fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-replace-with-register evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-object-popup ess-R-data-view eshell-z eshell-prompt-extras esh-help erlang engine-mode emmet-mode elisp-slime-nav ein dumb-jump disaster diff-hl deft define-word darktooth-theme dactyl-mode cython-mode csv-mode counsel-projectile counsel-dash confluence company-ycmd company-web company-tern company-statistics company-restclient company-quickhelp company-emacs-eclim company-c-headers company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby cargo bundler base16-theme auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile auctex-latexmk ansible-doc ansible alchemist aggressive-indent adoc-mode adaptive-wrap ace-window ace-link ac-ispell))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
@@ -1427,7 +1589,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (kaolin-themes quickrun org-protocol-capture-html org-category-capture cmake-ide levenshtein powerline simple-mpc rake inflections pcre2el spinner pdf-tools key-chord tablist ob-ipython gntp names json-snatcher json-reformat parent-mode hackernews fringe-helper git-gutter+ git-gutter marshal logito ht flx eww-lnum anzu goto-chg undo-tree ctable xml-rpc request-deferred web-completion-data dash-functional know-your-http-well pos-tip biblio biblio-core pythonic pkg-info epl markup-faces popup autothemer symon string-inflection ruby-refactor restclient-helm realgud test-simple loc-changes load-relative org-brain meghanada ghub+ apiwrap ghub window-purpose imenu-list impatient-mode helm-pydoc helm-gtags helm-gitignore helm-css-scss helm-company helm-c-yasnippet groovy-mode groovy-imports gradle-mode evil-org evil-lion ensime sbt-mode scala-mode editorconfig company-lua browse-at-remote websocket let-alist dash linum-relative org-caldav diminish paredit with-editor gh restclient f s shut-up seq log4e sauron bbdb org markdown-mode helm-bibtex parsebib csharp-mode projectile eclim rust-mode bind-key packed elixir-mode avy auto-complete google-maps anaconda-mode auctex tern counsel swiper helm-dash ess julia-mode iedit smartparens bind-map highlight evil ycmd flycheck ivy flyspell-correct helm helm-core yasnippet multiple-cursors skewer-mode js2-mode simple-httpd pcache magit magit-popup git-commit async org-plus-contrib request deferred alert hydra inf-ruby haml-mode company slime-company slime common-lisp-snippets makey window-numbering spacemacs-theme ido-vertical-mode quelpa package-build zenburn-theme zeal-at-point yapfify yaml-mode xwidgete xterm-color xkcd ws-butler winum which-key wgrep web-mode web-beautify w3m volatile-highlights vmd-mode vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package unfill toml-mode toc-org tldr tagedit systemd sql-indent spray spaceline solarized-theme smyx-theme smex smeargle slim-mode shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv ranger rainbow-delimiters racer pyvenv pytest pyenv-mode py-isort pug-mode projectile-rails popwin plantuml-mode pip-requirements persp-mode password-generator paradox pandoc-mode ox-twbs ox-reveal ox-pandoc ox-ioslide ox-gfm ox-cv orgit org-wiki org-ref org-projectile org-present org-pomodoro org-journal org-jira org-jekyll org-glossary org-gcal org-drill-table org-download org-bullets org-alert open-junk-file omnisharp ob-restclient ob-http ob-elixir nlinum-relative neotree mwim multi-term mu4e-maildirs-extension mu4e-alert mpv move-text monokai-theme mmm-mode minitest markdown-toc magithub magit-gitflow magit-gh-pulls macrostep lua-mode lorem-ipsum livid-mode live-py-mode link-hint less-css-mode ledger-mode langtool json-mode js2-refactor js-doc jinja2-mode ivy-purpose ivy-hydra info+ indent-guide hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-youtube helm-make google-translate golden-ratio gnuplot gitignore-mode github-search github-clone github-browse-file gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md ggtags fuzzy focus flyspell-popup flyspell-correct-ivy flycheck-ycmd flycheck-rust flycheck-pos-tip flycheck-mix flycheck-ledger flycheck-credo flx-ido fill-column-indicator feature-mode fasd fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-replace-with-register evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu ess-smart-equals ess-R-object-popup ess-R-data-view eshell-z eshell-prompt-extras esh-help erlang engine-mode emmet-mode elisp-slime-nav ein dumb-jump disaster diff-hl deft define-word darktooth-theme dactyl-mode cython-mode csv-mode counsel-projectile counsel-dash confluence company-ycmd company-web company-tern company-statistics company-restclient company-quickhelp company-emacs-eclim company-c-headers company-auctex company-ansible company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format chruby cargo calfw bundler base16-theme auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile auctex-latexmk ansible-doc ansible alchemist aggressive-indent adoc-mode adaptive-wrap ace-window ace-link ac-ispell))))
+    (tide solarized-theme restart-emacs ox-hugo org-journal magithub ghub+ apiwrap kaolin-themes helm-make groovy-mode git-link ein dumb-jump helm helm-core magit git-commit projectile imenu-list which-key zenburn-theme zeal-at-point yasnippet-snippets yaml-mode xwidgete xterm-color xkcd ws-butler winum wgrep websocket web-mode web-beautify w3m volatile-highlights vmd-mode vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package unfill typescript-mode toc-org tldr tagedit systemd symon sunshine string-inflection sql-indent spray spaceline-all-the-icons smyx-theme smex smeargle slim-mode simple-mpc shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe rjsx-mode rbenv ranger rainbow-delimiters pug-mode projectile-rails popwin plantuml-mode persp-mode pdf-tools password-generator paradox pandoc-mode ox-twbs ox-reveal ox-pandoc ox-ioslide ox-gfm ox-cv ox-asciidoc overseer orgit org-wiki org-web-tools org-projectile org-present org-pomodoro org-mime org-drill-table org-download org-caldav org-bullets org-brain org-alert open-junk-file omnisharp ob-restclient ob-ipython ob-http ob-elixir nginx-mode neotree nameless mwim mvn multi-term mu4e-maildirs-extension mu4e-alert move-text monokai-theme mmm-mode minitest meghanada maven-test-mode markdown-toc magit-svn magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode link-hint less-css-mode ledger-mode langtool json-navigator json-mode js2-refactor js-doc ivy-xref ivy-rtags ivy-purpose ivy-hydra indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-youtube gruvbox-theme groovy-imports gradle-mode google-translate google-c-style golden-ratio godoctor go-tag go-rename go-guru go-eldoc gnuplot gitignore-mode github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe git-gutter-fringe+ gist ghub gh-md fuzzy font-lock+ focus flyspell-popup flyspell-correct-ivy flycheck-mix flycheck-credo flx-ido fill-column-indicator feature-mode fasd fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-replace-with-register evil-org evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu ess-R-data-view eshell-z eshell-prompt-extras esh-help erlang ensime emmet-mode elisp-slime-nav editorconfig disaster diminish diff-hl define-word darktooth-theme dactyl-mode csv-mode counsel-projectile counsel-dash counsel-css confluence company-ycmd company-web company-tern company-statistics company-rtags company-restclient company-quickhelp company-lua company-go company-emacs-eclim company-c-headers column-enforce-mode clean-aindent-mode clang-format chruby centered-cursor-mode bundler browse-at-remote bbdb base16-theme auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile alchemist aggressive-indent adoc-mode ace-window ace-link ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
