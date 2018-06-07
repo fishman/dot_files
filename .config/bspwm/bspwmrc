@@ -4,6 +4,8 @@ if ps aux | grep -q "sxhkd"; then
     sxhkd -s "$SXHKD_FIFO" &
 fi
 
+bspc control --adopt-orphans
+bspc config wm_name LG3D
 wmname LG3D
 
 bspc config border_width		1
@@ -19,24 +21,42 @@ bspc config focused_border_color	'#66d9ef'
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 bspc monitor -d term web code irssi video 6
+# bspc config focus_by_distance    true
 
 bspc rule -a Chromium desktop=^2
 bspc rule -a Opera desktop=^2
+bspc rule -a "Pale moon" desktop=^2 state=floating
 bspc rule -a Firefox desktop=^2
+bspc rule -a Navigator desktop=^2 state=tiled
+bspc rule -a Pidgin desktop=^4
+bspc rule -a Wire desktop=^4
+bspc rule -a Slack desktop=^4
 bspc rule -a Kodi desktop=^5
 bspc rule -a keepassxc desktop=^6 follow=on
+bspc rule -a "Jameica 2.6.6" desktop=^6 follow=on
 bspc rule -a crx_nckgahadagoaajjgafhacjanaoiihapd floating=true
 bspc rule -a Skype floating=on desktop=^10
+bspc rule -a Simple-scan floating=on
 bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a mplayer2 state=floating
 bspc rule -a mpv state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
-bspc rule -a Emacs state=tiled
+bspc rule -a Emacs state=tiled desktop=^1
 bspc rule -a URxvt:scratchpad state=floating sticky=on
+bspc rule -a URxvt:clerk state=floating sticky=on
+bspc rule -a Ibus-ui-gtk3 state=floating
+bspc rule -a Scp-dbus-service.py state=floating
 bspc rule -a Corebird state=floating sticky=on
 bspc rule -a Gufw.py state=floating
 bspc rule -a Connman-gtk state=floating
 bspc rule -a Pinentry state=floating
 bspc rule -a smplayer state=floating
 bspc rule -a Blueman-manager state=floating
+bspc rule -a libreoffice state=tiled
+bspc rule -a jetbrains-pycharm desktop=^3
+bspc rule -a jetbrains-idea desktop=^3
+bspc rule -a jetbrains-idea-ce desktop=^3
+bspc rule -a Eclipse desktop=^3
+bspc rule -a electrum state=floating sticky=on
+bspc rule -a 'in.multico.Main' state=floating sticky=on
