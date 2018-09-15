@@ -18,14 +18,17 @@ alt + b
 alt + ctrl + {Left,Down,Up,Right}
     bspc window -p {left,down,up,right}
 
-# ~button1
-#     bspc pointer -g focus
+~button1
+    bspc pointer -g focus
 
 # alt + button{1-3}
 #     bspc pointer -g {move,resize_side,resize_corner}
 
 # alt + !button{1-3}
 #     bspc pointer -t %i %i
+
+alt + !button{1-3}
+    bspc pointer -t %i %i
 
 # alt + @button{1-3}
 #     bspc pointer -u
@@ -42,7 +45,7 @@ super + v
 # super + m
 #     amixer set Master toggle
 
-super + r 
+super + r
     rofi -sidebar-mode -lines 10 -combi-modi window,drun -show combi -modi combi,run,ssh
 
 # make sxhkd reload its configuration files:
@@ -62,13 +65,18 @@ XF86Sleep
 	pm-suspend
 
 XF86AudioPlay
-	playerctl play-pause || mpc toggle
-	
+  if mpc status | grep playing >/dev/null; \
+  then \
+    mpc toggle; \
+  else \
+    playerctl play-pause || mpc toggle; \
+  fi
+
 XF86AudioNext
 	playerctl next || mpc next
 
 XF86AudioPrev
-  playerctl previous || mpc previous
+  playerctl previous || mpc prev
 
 
 #
@@ -221,13 +229,16 @@ super + {Left,Down,Up,Right}
 super + F12
   xdotool search --onlyvisible --classname scratchpad windowunmap \
   || xdotool search --classname scratchpad windowmap \
-  || urxvt -name scratchpad -geometry 110x20+297+1
+  || urxvt -name scratchpad -geometry 110x20+297+1 -e tmux-scratchpad
 
 super + F4
   /home/timebomb/bin/layout_switch.sh
 
 super + alt + m
-  clerk --no-tmux-ui -t
+  xdotool search --onlyvisible --classname clerk windowunmap \
+  || xdotool search --classname clerk windowmap \
+  || urxvt -name clerk -geometry 110x20 -e clerk
+  # clerk --no-tmux-ui -t
   # /home/timebomb/bin/mpdmenu
 
 # screenshots
@@ -239,6 +250,18 @@ XF86LaunchA
 
 super + u
   /home/timebomb/bin/urgentjump
+
+super + p
+  /usr/bin/rofi-pass
+
+super + control + p
+  /usr/bin/rofi-pass --insert
+
+super + c
+  /home/timebomb/bin/gpaste-menu
+
+super + control + s
+  gpaste-client delete history-size
 # hide current node, or restore a queried hidden node
 # super + {_,shift} + minus
 #   bspc node {,$(bspc query -N -d -n .hidden | head -n 1)} -g hidden
