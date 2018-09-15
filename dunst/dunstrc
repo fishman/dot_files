@@ -1,16 +1,106 @@
+[global]
+    monitor = 0
+# geometry [{width}]x{height}][+/-{x}+/-{y}]
+
+    follow = none
+    geometry = "600-10+40"
+    indicate_hidden = yes
+    shrink = yes
+    transparency = 0
+    # notification_height = 0
+    # separator_height = 2
+    # padding = 8
+
+    separator_height = 1
+    padding = 8
+    horizontal_padding = 8
+    # frame_width = 3
+    # frame_color = "#aaaaaa"
+    frame_width = 1
+    frame_color = "6092BE"
+    separator_color = frame
+
+    sort = yes
+    idle_threshold = 120
+    # font = Terminus 12
+    line_height = 0
+    markup = full
+    format = "<b>%s</b>\n%b"
+    alignment = left
+
+    bounce_freq = 0
+    show_age_threshold = 60
+    word_wrap = yes
+    ellipsize = middle
+    ignore_newline = no
+
+
+
+    show_indicators = yes
+    sticky_history = yes
+    history_length = 20
+    dmenu = /usr/bin/dmenu -p dunst:
+    browser = /usr/bin/firefox -new-tab
+    always_run_script = true
+    title = Dunst
+    class = Dunst
+    startup_notification = false
+    force_xinerama = false
+
+[experimental]
+    per_monitor_dpi = true
+
+[shortcuts]
+    close = ctrl+space
+    close_all = ctrl+shift+space
+    history = ctrl+grave
+    context = ctrl+shift+period
+
+[urgency_low]
+    background = "#2D303B"
+    foreground = "#C4CBD4"
+    # background = "#6092BE"
+    # foreground = "#FFFFFF"
+    # background = "#222222"
+    # foreground = "#888888"
+    timeout = 5
+
+[urgency_normal]
+    background = "#2D303B"
+    foreground = "#C4CBD4"
+    # background = "#6092BE"
+    # foreground = "#FFFFFF"
+#background = "#222222"
+#foreground = "#888888"
+    timeout = 5
+
+[urgency_critical]
+    background = "#1D1F21"
+    foreground = "#CC6664"
+    # background = "#801515"
+    # foreground = "#D46A6A"
+#background = "#900000"
+#foreground = "#ffffff"
+    timeout = 0
+
 #[espeak]
 #    summary = "*"
 #    script = dunst_espeak.sh
- 
+
 #[script-test]
 #    summary = "*script*"
 #    script = dunst_test.sh
- 
+
 #[ignore]
-## This notification will not be displayed
+#    # This notification will not be displayed
 #    summary = "foobar"
 #    format = ""
- 
+
+#[history-ignore]
+#    # This notification will not be saved in history
+#    summary = "foobar"
+#    history_ignore = yes
+
 #[signed_on]
 #    appname = Pidgin
 #    summary = "*signed on*"
@@ -31,79 +121,4 @@
 #    summary = *twitter.com*
 #    urgency = normal
 #
-# ----------------------------------------------------------------------
-# file:     ~/.config/dunst/dunstrc
-# author:   moparx     - http://moparx.com/configs
-# last mod: 08/16/2014 - 10:55 EDT
-# vim: set ai et fenc=utf-8 ft=conf nu si sts=0 sw=4 ts=8 tw=0 :
-# ----------------------------------------------------------------------
-
-[global]
-# dpi    font = Terminus 12
-
-    allow_markup = yes
-
-    format = "<b>%s</b>\n%b"
-    sort = yes
-    indicate_hidden = yes
-    alignment = left
-
-    bounce_freq = 0
-    show_age_threshold = 60
-    word_wrap = yes
-    ignore_newline = no
-
-# geometry [{width}]x{height}][+/-{x}+/-{y}]
-    geometry = "600-10+40"
-    shrink = yes
-
-    transparency = 0
-    idle_threshold = 120
-    monitor = 0
-
-    follow = none
-    sticky_history = yes
-    history_length = 20
-    show_indicators = yes
-    line_height = 0
-    separator_height = 1
-    padding = 8
-    horizontal_padding = 8
-    separator_color = frame
-
-    startup_notification = false
-
-    dmenu = /usr/bin/dmenu -p dunst:
-    browser = /usr/bin/firefox -new-tab
-
-[frame]
-    width = 1
-    color = "6092BE"
-#color = "#6C6C6C"
-
-[shortcuts]
-    close = ctrl+space
-    close_all = ctrl+shift+space
-    history = ctrl+grave
-    context = ctrl+shift+period
-
-[urgency_low]
-    background = "#6092BE"
-    foreground = "#FFFFFF"
-    # background = "#222222"
-    # foreground = "#888888"
-    timeout = 5
-
-[urgency_normal]
-    background = "#6092BE"
-    foreground = "#FFFFFF"
-#background = "#222222"
-#foreground = "#888888"
-    timeout = 5
-
-    [urgency_critical]
-    background = "#801515"
-    foreground = "#D46A6A"
-#background = "#900000"
-#foreground = "#ffffff"
-    timeout = 0
+# vim: ft=cfg
