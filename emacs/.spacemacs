@@ -180,7 +180,7 @@ Return output file name."
            (file+datetree "~/org/taskdiary.org")
            "* TODO %^{Description}  %^g\n%?\nAdded: %U")
           ("j" "Journal entry" plain
-           (file+datetree+prompt "~/org/personal/journal.org")
+           (file+otp+datetree+prompt "~/org/personal/journal.org")
            "%K - %a\n%i\n%?\n")
           ("J" "Work Journal" entry
            (file+datetree "~/org/workjournal.org")
@@ -195,7 +195,7 @@ Return output file name."
             (file "~/org/articles.org")
             "%(org-web-tools--url-as-readable-org)")
           ("w" "Web site" entry
-           (file "~/org/ff-notes.org")
+            (file "~/org/ff-notes.org")
             "* %a :website:\n\n%U %?\n\n%:initial")
           ;; ("w" "Firefox Capture Template" entry
           ;;   (file+headline "ff-notes.org" "Firefox")
@@ -230,7 +230,7 @@ Return output file name."
        (add-to-list 'org-latex-classes
                     '("mymoderncv"
                       "\\documentclass\{moderncv\}
-\\moderncvtheme[grey]{classic}
+\\moderncvtheme[blue]{banking}
 \[NO-DEFAULT-PACKAGES]
 \[NO-PACKAGES]
 \[EXTRA]"))
@@ -675,17 +675,20 @@ This function should only modify configuration layer settings."
     dotspacemacs-configuration-layer-path '()
     ;; List of configuration layers to load.
     dotspacemacs-configuration-layers
-    '(nginx
+    '(windows-scripts
+       nginx
        spacemacs-org
        confluence
        lua
        ivy
        ess
        csv
+       lsp
        asciidoc
-       ;; (python :variables
-       ;;   python-enable-yapf-format-on-save t
-       ;;   python-sort-imports-on-save t)
+       (python :variables
+         python-enable-yapf-format-on-save t
+         python-backend 'lsp
+         python-sort-imports-on-save t)
        ipython-notebook
        (c-c++ :variables
          c-c++-enable-clang-support t
@@ -693,16 +696,23 @@ This function should only modify configuration layer settings."
          'c++-mode)
        (auto-completion :variables
          auto-completion-enable-help-tooltip t
-         auto-completion-complete-with-key-sequence-delay 0.04
-         auto-completion-enable-sort-by-usage t
-         auto-completion-enable-snippets-in-popup t)
+         auto-completion-return-key-behavior 'complete
+         auto-completion-tab-key-behavior 'cycle
+         auto-completion-complete-with-key-sequence nil
+         auto-completion-complete-with-key-sequence-delay 0.1
+         auto-completion-idle-delay 0.2
+         ;; auto-completion-enable-snippets-in-popup t
+         auto-completion-private-snippets-directory nil)
        better-defaults
        emacs-lisp
        javascript
+       json
+       web-beautify
        react
        typescript
        html
        vimscript
+       (terraform :variables terraform-auto-format-on-save t)
        (git :variables
          git-magit-status-fullscreen nil
          git-enable-github-support t)
@@ -710,13 +720,15 @@ This function should only modify configuration layer settings."
        github
        (go :variables go-use-gometalinter t
          gofmt-command "goimports"
+         go-use-gocheck-for-testing t
          go-tab-width 4)
+       protobuf
        sql
        ;; markdown
        (markdown :variables markdown-live-preview-engine 'vmd)
        xkcd
-       ruby
-       pdf-tools
+       (ruby :variables ruby-test-runner 'rspec)
+       pdf
        csharp
        java
        pandoc
@@ -744,13 +756,14 @@ This function should only modify configuration layer settings."
          shell-pop-autocd-to-working-dir nil
          shell-default-term-shell "zsh")
        ruby-on-rails
+       shell-scripts
        yaml
        ;; rust
        vinegar
        restclient
        ;; ;; tmux
        dash
-       ;; ansible
+       ansible
        ;; gtags
        ;; (latex :variables
        ;;   latex-build-command "LatexMk"
@@ -778,11 +791,13 @@ This function should only modify configuration layer settings."
        (spell-checking :variables
          enable-flyspell-auto-completion t
          spell-checking-enable-by-default nil)
+       (version-control :variables
+         version-control-diff-tool 'diff-hl
+         version-control-diff-side 'left
+         version-control-global-margin 't)
        fishman
        ;; common-lisp
        ;; syntax-checking
-       (version-control :variables
-         version-control-diff-tool 'diff-hl)
        ;; search-engine
        ;; deft
        )
@@ -897,7 +912,8 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-themes '(
                           ;; (kaolin-dark :location (recipe :fetcher github
                           ;;                          :repo "ogdenwebb/emacs-kaolin-themes"))
-                         monokai
+                          monokai
+                         gruvbox-dark-hard
                          wombat
                          darktooth
                          smyx
@@ -1162,8 +1178,18 @@ It should only modify the values of Spacemacs settings."
 ;;      git-magit-status-fullscreen t
 ;;      git-enable-github-support t
 ;;      git-gutter-use-fringe t)
+(defun increment-number-at-point ()
+  (interactive)
+  (skip-chars-backward "0-9")
+  (or (looking-at "[0-9]+")
+    (error "No number at point"))
+  (replace-match (number-to-string (1+ (string-to-number (match-string 0))))))
+
 (defun dotspacemacs/user-config ()
+  (global-set-key (kbd "C-a") 'increment-number-at-point)
+
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
   (custom-set-faces
     '(ein:cell-input-area ((t (:background "#646464"))))
      '(ein:cell-input-prompt ((t (:inherit header-line :background "#484848" :foreground "dimgray" :height 0.8)))))
@@ -1205,6 +1231,7 @@ It should only modify the values of Spacemacs settings."
   (setq ledger-mode-should-check-version nil
     ledger-report-links-in-register nil
     ledger-binary-path "hledger")
+  (setq org-wiki-location "~/org/wiki")
   (config-org)
   (init-org-templates)
   "Configuration function.
@@ -1352,6 +1379,7 @@ It should only modify the values of Spacemacs settings."
   (setq alert-default-style 'toaster)
 
 
+  (setq go-format-before-save t)
   (setq-default
     ;; js2-mode
     js2-basic-offset 2
@@ -1445,16 +1473,81 @@ It should only modify the values of Spacemacs settings."
   (set-face-attribute 'default nil :family "xos4 terminus")
 
   (load "~/.spacemacs-secrets.el.gpg")
+
+  ;; (with-eval-after-load 'python
+  ;;   (add-hook 'python-mode-hook (lambda () (setq python-shell-interpreter "python3"))))
+
+  ;; (defadvice js-jsx-indent-line (after js-jsx-indent-line-after-hack activate)
+  ;;   "Workaround sgml-mode and follow airbnb component style."
+  ;;   (let* ((cur-line (buffer-substring-no-properties
+  ;;                      (line-beginning-position)
+  ;;                      (line-end-position))))
+  ;;     (if (string-match "^\\( +\\)\/?> *$" cur-line)
+  ;;       (let* ((empty-spaces (match-string 1 cur-line)))
+  ;;         (replace-regexp empty-spaces
+  ;;           (make-string (- (length empty-spaces) sgml-basic-offset) 32)
+  ;;           nil
+  ;;           (line-beginning-position) (line-end-position))))))
+  (defun js-jsx-indent-line-align-closing-bracket ()
+    "Workaround sgml-mode and align closing bracket with opening bracket"
+    (save-excursion
+      (beginning-of-line)
+      (when (looking-at-p "^ +\/?> *$")
+        (delete-char sgml-basic-offset))))
+  (advice-add #'js-jsx-indent-line :after #'js-jsx-indent-line-align-closing-bracket)
+
+
+  )
+
+(defun evil-init ()
+  (defun kbd+ (keyrep &optional need-vector)
+    (if (vectorp keyrep) keyrep (edmacro-parse-keys keyrep need-vector)))
+
+  (defun gmap (keyrep defstr)
+    "Vim-style global keybinding. Uses the `global-set-key' binding function."
+    (global-set-key (kbd+ keyrep) (edmacro-parse-keys defstr t)))
+
+  (defun fmap (keybind-fn keyrep defstr)
+    "Vim-style keybinding using the key binding function KEYBIND-FN."
+    (call keybind-fn (kbd+ keyrep) (edmacro-parse-keys defstr t)))
+
+  (defun xmap (keymap keyrep defstr)
+    "Vim-style keybinding in KEYMAP. Uses the `define-key' binding function."
+    (define-key keymap (kbd+ keyrep) (edmacro-parse-keys defstr t)))
+
+  (defun nmap (keyrep defstr) "Vim-style keybinding for `evil-normal-state.' Uses the `define-key' binding function."
+    (xmap evil-normal-state-map keyrep defstr))
+  (defun imap (keyrep defstr) "Vim-style keybinding for `evil-insert-state'. Uses the `define-key' binding function."
+    (xmap evil-insert-state-map keyrep defstr))
+  (defun vmap (keyrep defstr) "Vim-style keybinding for `evil-visual-state'. Uses the `define-key' binding function."
+    (xmap evil-visual-state-map keyrep defstr))
+  (defun mmap (keyrep defstr) "Vim-style keybinding for `evil-motion-state'. Uses the `define-key' binding function."
+    (xmap evil-motion-state-map keyrep defstr))
+
+  (nmap "X" "ci\"")
   )
 
 (defun term-init ()
   ;; (add-hook 'term-setup-hook
   ;;   '(lambda ()
        (if (getenv "tmux")
-         ;; (define-key input-decode-map "\e[1;3A" [M-up])
-         ;; (define-key input-decode-map "\e[1;3B" [M-down])
+         (define-key input-decode-map "\e[1;3A" [M-up])
+         (define-key input-decode-map "\e[1;3B" [M-down])
          (define-key input-decode-map "\e[1;3C" [M-right])
          (define-key input-decode-map "\e[1;3D" [M-left])
+         (define-key input-decode-map "\e[1;2A" [S-up])
+         (define-key input-decode-map "\e[1;2B" [S-down])
+         (define-key input-decode-map "\e[1;2C" [S-right])
+         (define-key input-decode-map "\e[1;2D" [S-left])
+         (define-key input-decode-map "\e[1;4A" [M-S-up])
+         (define-key input-decode-map "\e[1;4B" [M-S-down])
+         (define-key input-decode-map "\e[1;4C" [M-S-right])
+         (define-key input-decode-map "\e[1;4D" [M-S-left])
+         (define-key input-decode-map "\e[1;7A" [C-M-up])
+         (define-key input-decode-map "\e[1;7B" [C-M-down])
+         (define-key input-decode-map "\e[1;7C" [C-M-S-right])
+         (define-key input-decode-map "\e[1;7D" [C-M-left])
+
          (progn
            (let ((x 2) (tkey ""))
              (while (<= x 8)
@@ -1547,10 +1640,11 @@ It should only modify the values of Spacemacs settings."
 
 (defun dotspacemacs/user-init ()
   (term-init)
+  ;; (evil-init)
   ;; (setq configuration-layer--elpa-archives
   ;;       '(("melpa"    . "melpa.org/packages/")
   ;;         ("org"      . "orgmode.org/elpa/")
-          ;; ("gnu"      . "elpa.gnu.org/packages/")))
+  ;; ("gnu"      . "elpa.gnu.org/packages/")))
 
   ;; (golden-ratio-mode 1)
   ;; (setq evil-want-fine-undo 't)
@@ -1589,7 +1683,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (tide solarized-theme restart-emacs ox-hugo org-journal magithub ghub+ apiwrap kaolin-themes helm-make groovy-mode git-link ein dumb-jump helm helm-core magit git-commit projectile imenu-list which-key zenburn-theme zeal-at-point yasnippet-snippets yaml-mode xwidgete xterm-color xkcd ws-butler winum wgrep websocket web-mode web-beautify w3m volatile-highlights vmd-mode vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package unfill typescript-mode toc-org tldr tagedit systemd symon sunshine string-inflection sql-indent spray spaceline-all-the-icons smyx-theme smex smeargle slim-mode simple-mpc shell-pop scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe rjsx-mode rbenv ranger rainbow-delimiters pug-mode projectile-rails popwin plantuml-mode persp-mode pdf-tools password-generator paradox pandoc-mode ox-twbs ox-reveal ox-pandoc ox-ioslide ox-gfm ox-cv ox-asciidoc overseer orgit org-wiki org-web-tools org-projectile org-present org-pomodoro org-mime org-drill-table org-download org-caldav org-bullets org-brain org-alert open-junk-file omnisharp ob-restclient ob-ipython ob-http ob-elixir nginx-mode neotree nameless mwim mvn multi-term mu4e-maildirs-extension mu4e-alert move-text monokai-theme mmm-mode minitest meghanada maven-test-mode markdown-toc magit-svn magit-gitflow magit-gh-pulls macrostep lorem-ipsum livid-mode link-hint less-css-mode ledger-mode langtool json-navigator json-mode js2-refactor js-doc ivy-xref ivy-rtags ivy-purpose ivy-hydra indent-guide impatient-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-youtube gruvbox-theme groovy-imports gradle-mode google-translate google-c-style golden-ratio godoctor go-tag go-rename go-guru go-eldoc gnuplot gitignore-mode github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-gutter-fringe git-gutter-fringe+ gist ghub gh-md fuzzy font-lock+ focus flyspell-popup flyspell-correct-ivy flycheck-mix flycheck-credo flx-ido fill-column-indicator feature-mode fasd fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-search-highlight-persist evil-replace-with-register evil-org evil-numbers evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu ess-R-data-view eshell-z eshell-prompt-extras esh-help erlang ensime emmet-mode elisp-slime-nav editorconfig disaster diminish diff-hl define-word darktooth-theme dactyl-mode csv-mode counsel-projectile counsel-dash counsel-css confluence company-ycmd company-web company-tern company-statistics company-rtags company-restclient company-quickhelp company-lua company-go company-emacs-eclim company-c-headers column-enforce-mode clean-aindent-mode clang-format chruby centered-cursor-mode bundler browse-at-remote bbdb base16-theme auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile alchemist aggressive-indent adoc-mode ace-window ace-link ac-ispell))))
+    (dired zoom-frm xkcd-mode tmux spacemacs-whitespace-cleanup spacemacs-theme spacemacs-purpose-popwin spaceline-config pylookup org-expiry org-agenda ob nose mu4e lsp-ui-imenu lsp-imenu java-mode ivy-spacemacs-help info+ image-mode ido-vertical-mode hide-comnt help-fns+ ess-site dos dired-x hybrid-mode holy-mode evil-evilified-state scimax rjsx-mode prettier-js ox-hugo lsp-java kaolin-themes ivy-xref impatient-mode evil-matchit editorconfig counsel-projectile counsel ess magit ghub projectile ivy flycheck org-plus-contrib zenburn-theme zeal-at-point yasnippet-snippets yapfify yaml-mode xwidgete xterm-color xkcd ws-butler winum which-key wgrep web-mode web-beautify w3m volatile-highlights vmd-mode vimrc-mode vi-tilde-fringe vagrant-tramp vagrant uuidgen use-package unfill toc-org tldr tide tagedit systemd symon swiper sunshine string-inflection sql-indent spray spaceline-all-the-icons solarized-theme smyx-theme smex smeargle slim-mode simple-mpc shell-pop seeing-is-believing scss-mode sass-mode rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocop rspec-mode robe restart-emacs rbenv ranger rainbow-delimiters pyvenv pytest pyenv-mode py-isort pug-mode protobuf-mode projectile-rails powershell popwin plantuml-mode pippel pipenv pip-requirements persp-mode pdf-tools password-generator paradox pandoc-mode ox-twbs ox-reveal ox-pandoc ox-ioslide ox-gfm ox-asciidoc overseer orgit org-wiki org-web-tools org-protocol-capture-html org-projectile org-present org-pomodoro org-mime org-journal org-drill-table org-download org-caldav org-bullets org-brain org-alert open-junk-file omnisharp ob-restclient ob-ipython ob-http ob-elixir nginx-mode neotree nameless mwim mvn multi-term mu4e-maildirs-extension mu4e-alert move-text monokai-theme mmm-mode minitest meghanada maven-test-mode markdown-toc magithub magit-svn magit-gitflow magit-gh-pulls macrostep lsp-ui lsp-python lsp-javascript-typescript lsp-go lorem-ipsum livid-mode live-py-mode link-hint langtool json-navigator json-mode js2-refactor js-doc jinja2-mode ivy-yasnippet ivy-rtags ivy-purpose ivy-hydra insert-shebang indent-guide importmagic hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-youtube helm-make gruvbox-theme groovy-mode groovy-imports gradle-mode google-translate google-c-style golden-ratio godoctor go-tag go-rename go-impl go-guru go-gen-test go-fill-struct go-eldoc gnuplot gitignore-templates gitignore-mode github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy font-lock+ focus flyspell-popup flyspell-correct-ivy flycheck-mix flycheck-credo flycheck-bashate flx-ido fish-mode fill-column-indicator feature-mode fasd fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-snipe evil-replace-with-register evil-org evil-numbers evil-mc evil-magit evil-lisp-state evil-lion evil-ledger evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-commentary evil-cleverparens evil-args evil-anzu eval-sexp-fu ess-R-data-view eshell-z eshell-prompt-extras esh-help erlang ensime emmet-mode elisp-slime-nav ein dumb-jump dotenv-mode disaster diminish diff-hl define-word darktooth-theme dactyl-mode cython-mode csv-mode counsel-dash counsel-css confluence company-ycmd company-web company-terraform company-tern company-statistics company-shell company-rtags company-restclient company-quickhelp company-lua company-lsp company-go company-emacs-eclim company-c-headers company-ansible company-anaconda column-enforce-mode clean-aindent-mode clang-format chruby centered-cursor-mode bundler browse-at-remote bbdb base16-theme auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile ansible-doc ansible alchemist aggressive-indent adoc-mode ace-window ace-link ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
