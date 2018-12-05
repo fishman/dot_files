@@ -480,6 +480,7 @@ Return output file name."
      'org-babel-load-languages
      '((java . t)
        (ipython . t)
+        (python . t)
        ;; (R . t)
        ;; (hledger . t)
        (calc . t)
@@ -494,11 +495,11 @@ Return output file name."
        (C . t)
        (plantuml . t)
        (gnuplot . t)
-       (python . t)
        (ditaa . t)
        ))
     )
 
+  (setq org-reveal-root (concat "file:///" (expand-file-name "~/git/reveal.js")))
   (init-org-agenda)
   (init-org-export))
 
@@ -542,28 +543,28 @@ Return output file name."
 (defun init-spellcheck ()
   ;; (setq ispell-hunspell-dict-paths-alist '("c:/msys64/mingw64/share"))
   (setq ispell-program-name "hunspell"
-        ispell-dictionary "de_DE")
+    ispell-dictionary "de_DE")
   (setq ispell-local-dictionary-alist
-        '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
-          ("de_DE" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)))
-  (ispell-set-spellchecker-params)
+    '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)
+       ("de_DE" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil nil nil utf-8)))
+  ;; (ispell-set-spellchecker-params)
+
+  (add-to-list 'ispell-local-dictionary-alist
+    '(("english" "[[:alpha:]]" "[^[:alpha:]]" "[']" t ("-d" "en_US") nil utf-8)))
+  (add-to-list 'ispell-local-dictionary-alist
+    '(("german" "[[:alpha:]]" "[^[:alpha:]]" "[']" t ("-d" "de_DE") nil utf-8)))
+  (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist)
   (setq ispell-hunspell-add-multi-dic "en_US,de_DE")
 
-  ;; (add-to-list 'ispell-local-dictionary-alist
-  ;;              '(("english" "[[:alpha:]]" "[^[:alpha:]]" "[']" t ("-d" "en_US") nil utf-8)))
-  ;; (add-to-list 'ispell-local-dictionary-alist
-  ;;              '(("german" "[[:alpha:]]" "[^[:alpha:]]" "[']" t ("-d" "de_DE") nil utf-8)))
-  ;; (setq ispell-hunspell-dictionary-alist ispell-local-dictionary-alist)
-
-    ;; (setq ispell-program-name "hunspell"          ; Use hunspell to correct mistakes
-    ;; ispell-dictionary   "german") ; Default dictionary to use
-    ;; (setq ispell-program-name "hunspell")
-    ;; (setq ispell-dictionary "german,english")
-    ;; (setq ispell-dictionary "english")
-    ;; ispell-set-spellchecker-params has to be called
-    ;; before ispell-hunspell-add-multi-dic will work
-    ;; (ispell-set-spellchecker-params)
-    ;; (ispell-hunspell-add-multi-dic "german,english")
+  ;; (setq ispell-program-name "hunspell"          ; Use hunspell to correct mistakes
+  ;; ispell-dictionary   "german") ; Default dictionary to use
+  ;; (setq ispell-program-name "hunspell")
+  ;; (setq ispell-dictionary "german,english")
+  ;; (setq ispell-dictionary "english")
+  ;; ispell-set-spellchecker-params has to be called
+  ;; before ispell-hunspell-add-multi-dic will work
+  ;; (ispell-set-spellchecker-params)
+  ;; (ispell-hunspell-add-multi-dic "german,english")
 
   (let ((langs '("english" "german")))
     (setq lang-ring (make-ring (length langs)))
@@ -675,7 +676,8 @@ This function should only modify configuration layer settings."
     dotspacemacs-configuration-layer-path '()
     ;; List of configuration layers to load.
     dotspacemacs-configuration-layers
-    '(windows-scripts
+    '(php
+       windows-scripts
        nginx
        spacemacs-org
        confluence
@@ -685,9 +687,11 @@ This function should only modify configuration layer settings."
        csv
        lsp
        asciidoc
+       django
        (python :variables
          python-enable-yapf-format-on-save t
-         python-backend 'lsp
+         ;; python-backend 'lsp
+         ;; (company-anaconda :toggle (configuration-layer/package-used-p 'company))
          python-sort-imports-on-save t)
        ipython-notebook
        (c-c++ :variables
@@ -705,6 +709,7 @@ This function should only modify configuration layer settings."
          auto-completion-private-snippets-directory nil)
        better-defaults
        emacs-lisp
+       haskell
        javascript
        json
        web-beautify
@@ -716,7 +721,7 @@ This function should only modify configuration layer settings."
        (git :variables
          git-magit-status-fullscreen nil
          git-enable-github-support t)
-         ;; git-gutter-use-fringe t)
+       ;; git-gutter-use-fringe t)
        github
        (go :variables go-use-gometalinter t
          gofmt-command "goimports"
@@ -740,7 +745,8 @@ This function should only modify configuration layer settings."
        ;; vim-powerline
        finance
        ;; nlinum
-       ;; treemacs
+       fasd
+       treemacs
        (ranger :variables
          ranger-override-dired t
          ranger-show-preview t
@@ -1470,7 +1476,8 @@ It should only modify the values of Spacemacs settings."
   (setq exec-path-from-shell-check-startup-files nil)
   (setq-default evil-escape-key-sequence "jk")
   (setq paradox-github-token "7693224097823e845d1f39f82ba5fea5a7ae5531")
-  (set-face-attribute 'default nil :family "xos4 terminus")
+  (set-face-attribute 'default nil :family "xos4 Terminess Powerline")
+  ; (set-fontset-font "fontset-default" 'unicode (font-spec :name "Symbola") nil 'append)
 
   (load "~/.spacemacs-secrets.el.gpg")
 
@@ -1497,7 +1504,23 @@ It should only modify the values of Spacemacs settings."
   (advice-add #'js-jsx-indent-line :after #'js-jsx-indent-line-align-closing-bracket)
 
 
+  ;; Temporary fix for M-RET bug : https://github.com/syl20bnr/spacemacs/issues/9603#issuecomment-332128487
+  (org-defkey org-mode-map [(meta return)] 'org-meta-return)
+  ;; (add-hook 'org-mode-hook (lambda()
+  ;;                            (define-key
+  ;;                              evil-normal-state-local-map
+  ;;                              (kbd "M-RET")
+  ;;                              #'org-meta-return)
+  ;;                            (define-key
+  ;;                              evil-insert-state-local-map
+  ;;                              (kbd "M-RET")
+  ;;                              #'org-meta-return)))
+
+
+  (term-init)
+  (evil-init)
   )
+
 
 (defun evil-init ()
   (defun kbd+ (keyrep &optional need-vector)
@@ -1528,119 +1551,144 @@ It should only modify the values of Spacemacs settings."
   )
 
 (defun term-init ()
+  ;; http://www.reddit.com/r/emacs/comments/123lbu/there_must_be_a_better_way_to_switch_between/c6rzl48
+  ;; As of this writing, emacs does not correctly recognize some xterm
+  ;; key sequences.  Add code to deal with these.
+  (defun add-escape-key-mapping-alist (escape-prefix key-prefix
+                                        suffix-alist)
+    "Add mappings for up, down, left and right keys for a given list
+ of escape sequences and list of keys."
+    (while suffix-alist
+      (let ((escape-suffix (car (car suffix-alist)))
+             (key-suffix (cdr (car suffix-alist))))
+        (define-key input-decode-map (concat escape-prefix escape-suffix)
+          (read-kbd-macro (concat key-prefix key-suffix))))
+      (setq suffix-alist (cdr suffix-alist))))
+
+  (setq nav-key-pair-alist
+    '(("A" . "<up>") ("B" . "<down>") ("C" . "<right>") ("D" . "<left>")
+       ("H" . "<home>") ("F" . "<end>") ("I" . "<tab>") ("s" . "\"")
+       ("l" . ",") ("n" . ";") ("^" . "<return>")))
+
+  (add-escape-key-mapping-alist "\e[1;2" "S-" nav-key-pair-alist)
+  (add-escape-key-mapping-alist "\e[1;3" "M-" nav-key-pair-alist)
+  (add-escape-key-mapping-alist "\e[1;4" "M-S-" nav-key-pair-alist)
+  (add-escape-key-mapping-alist "\e[1;5" "C-" nav-key-pair-alist)
+  (add-escape-key-mapping-alist "\e[1;6" "C-S-" nav-key-pair-alist)
+  (add-escape-key-mapping-alist "\e[1;7" "M-C-" nav-key-pair-alist)
+  (add-escape-key-mapping-alist "\e[1;8" "M-C-S-" nav-key-pair-alist)
+
   ;; (add-hook 'term-setup-hook
   ;;   '(lambda ()
-       (if (getenv "tmux")
-         (define-key input-decode-map "\e[1;3A" [M-up])
-         (define-key input-decode-map "\e[1;3B" [M-down])
-         (define-key input-decode-map "\e[1;3C" [M-right])
-         (define-key input-decode-map "\e[1;3D" [M-left])
-         (define-key input-decode-map "\e[1;2A" [S-up])
-         (define-key input-decode-map "\e[1;2B" [S-down])
-         (define-key input-decode-map "\e[1;2C" [S-right])
-         (define-key input-decode-map "\e[1;2D" [S-left])
-         (define-key input-decode-map "\e[1;4A" [M-S-up])
-         (define-key input-decode-map "\e[1;4B" [M-S-down])
-         (define-key input-decode-map "\e[1;4C" [M-S-right])
-         (define-key input-decode-map "\e[1;4D" [M-S-left])
-         (define-key input-decode-map "\e[1;7A" [C-M-up])
-         (define-key input-decode-map "\e[1;7B" [C-M-down])
-         (define-key input-decode-map "\e[1;7C" [C-M-S-right])
-         (define-key input-decode-map "\e[1;7D" [C-M-left])
+  ;;      (if (getenv "TMUX")
+  ;;        (define-key input-decode-map "\e[1;3A" [M-up])
+  ;;        (define-key input-decode-map "\e[1;3B" [M-down])
+  ;;        (define-key input-decode-map "\e[1;3C" [M-right])
+  ;;        (define-key input-decode-map "\e[1;3D" [M-left])
+  ;;        (define-key input-decode-map "\e[1;2A" [S-up])
+  ;;        (define-key input-decode-map "\e[1;2B" [S-down])
+  ;;        (define-key input-decode-map "\e[1;2C" [S-right])
+  ;;        (define-key input-decode-map "\e[1;2D" [S-left])
+  ;;        (define-key input-decode-map "\e[1;4A" [M-S-up])
+  ;;        (define-key input-decode-map "\e[1;4B" [M-S-down])
+  ;;        (define-key input-decode-map "\e[1;4C" [M-S-right])
+  ;;        (define-key input-decode-map "\e[1;4D" [M-S-left])
+  ;;        (define-key input-decode-map "\e[1;7A" [C-M-up])
+  ;;        (define-key input-decode-map "\e[1;7B" [C-M-down])
+  ;;        (define-key input-decode-map "\e[1;7C" [C-M-S-right])
+  ;;        (define-key input-decode-map "\e[1;7D" [C-M-left])
 
-         (progn
-           (let ((x 2) (tkey ""))
-             (while (<= x 8)
-                    ;; shift
-                    (if (= x 2)
-                      (setq tkey "s-"))
-                    ;; alt
-                    (if (= x 3)
-                      (setq tkey "m-"))
-                    ;; alt + shift
-                    (if (= x 4)
-                      (setq tkey "m-s-"))
-                    ;; ctrl
-                    (if (= x 5)
-                      (setq tkey "c-"))
-                    ;; ctrl + shift
-                    (if (= x 6)
-                      (setq tkey "c-s-"))
-                    ;; ctrl + alt
-                    (if (= x 7)
-                      (setq tkey "c-m-"))
-                    ;; ctrl + alt + shift
-                    (if (= x 8)
-                      (setq tkey "c-m-s-"))
+  ;;        (progn
+  ;;          (let ((x 2) (tkey ""))
+  ;;            (while (<= x 8)
+  ;;              ;; shift
+  ;;              (if (= x 2)
+  ;;                (setq tkey "s-"))
+  ;;              ;; alt
+  ;;              (if (= x 3)
+  ;;                (setq tkey "m-"))
+  ;;              ;; alt + shift
+  ;;              (if (= x 4)
+  ;;                (setq tkey "m-s-"))
+  ;;              ;; ctrl
+  ;;              (if (= x 5)
+  ;;                (setq tkey "c-"))
+  ;;              ;; ctrl + shift
+  ;;              (if (= x 6)
+  ;;                (setq tkey "c-s-"))
+  ;;              ;; ctrl + alt
+  ;;              (if (= x 7)
+  ;;                (setq tkey "c-m-"))
+  ;;              ;; ctrl + alt + shift
+  ;;              (if (= x 8)
+  ;;                (setq tkey "c-m-s-"))
 
-                    ;; arrows
-                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d a" x)) (kbd (format "%s<up>" tkey)))
-                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d b" x)) (kbd (format "%s<down>" tkey)))
-                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d c" x)) (kbd (format "%s<right>" tkey)))
-                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d d" x)) (kbd (format "%s<left>" tkey)))
-                    ;; home
-                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d h" x)) (kbd (format "%s<home>" tkey)))
-                    ;; end
-                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d f" x)) (kbd (format "%s<end>" tkey)))
-                    ;; page up
-                    (define-key key-translation-map (kbd (format "m-[ 5 ; %d ~" x)) (kbd (format "%s<prior>" tkey)))
-                    ;; page down
-                    (define-key key-translation-map (kbd (format "m-[ 6 ; %d ~" x)) (kbd (format "%s<next>" tkey)))
-                    ;; insert
-                    (define-key key-translation-map (kbd (format "m-[ 2 ; %d ~" x)) (kbd (format "%s<delete>" tkey)))
-                    ;; delete
-                    (define-key key-translation-map (kbd (format "m-[ 3 ; %d ~" x)) (kbd (format "%s<delete>" tkey)))
-                    ;; f1
-                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d p" x)) (kbd (format "%s<f1>" tkey)))
-                    ;; f2
-                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d q" x)) (kbd (format "%s<f2>" tkey)))
-                    ;; f3
-                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d r" x)) (kbd (format "%s<f3>" tkey)))
-                    ;; f4
-                    (define-key key-translation-map (kbd (format "m-[ 1 ; %d s" x)) (kbd (format "%s<f4>" tkey)))
-                    ;; f5
-                    (define-key key-translation-map (kbd (format "m-[ 15 ; %d ~" x)) (kbd (format "%s<f5>" tkey)))
-                    ;; f6
-                    (define-key key-translation-map (kbd (format "m-[ 17 ; %d ~" x)) (kbd (format "%s<f6>" tkey)))
-                    ;; f7
-                    (define-key key-translation-map (kbd (format "m-[ 18 ; %d ~" x)) (kbd (format "%s<f7>" tkey)))
-                    ;; f8
-                    (define-key key-translation-map (kbd (format "m-[ 19 ; %d ~" x)) (kbd (format "%s<f8>" tkey)))
-                    ;; f9
-                    (define-key key-translation-map (kbd (format "m-[ 20 ; %d ~" x)) (kbd (format "%s<f9>" tkey)))
-                    ;; f10
-                    (define-key key-translation-map (kbd (format "m-[ 21 ; %d ~" x)) (kbd (format "%s<f10>" tkey)))
-                    ;; f11
-                    (define-key key-translation-map (kbd (format "m-[ 23 ; %d ~" x)) (kbd (format "%s<f11>" tkey)))
-                    ;; f12
-                    (define-key key-translation-map (kbd (format "m-[ 24 ; %d ~" x)) (kbd (format "%s<f12>" tkey)))
-                    ;; f13
-                    (define-key key-translation-map (kbd (format "m-[ 25 ; %d ~" x)) (kbd (format "%s<f13>" tkey)))
-                    ;; f14
-                    (define-key key-translation-map (kbd (format "m-[ 26 ; %d ~" x)) (kbd (format "%s<f14>" tkey)))
-                    ;; f15
-                    (define-key key-translation-map (kbd (format "m-[ 28 ; %d ~" x)) (kbd (format "%s<f15>" tkey)))
-                    ;; f16
-                    (define-key key-translation-map (kbd (format "m-[ 29 ; %d ~" x)) (kbd (format "%s<f16>" tkey)))
-                    ;; f17
-                    (define-key key-translation-map (kbd (format "m-[ 31 ; %d ~" x)) (kbd (format "%s<f17>" tkey)))
-                    ;; f18
-                    (define-key key-translation-map (kbd (format "m-[ 32 ; %d ~" x)) (kbd (format "%s<f18>" tkey)))
-                    ;; f19
-                    (define-key key-translation-map (kbd (format "m-[ 33 ; %d ~" x)) (kbd (format "%s<f19>" tkey)))
-                    ;; f20
-                    (define-key key-translation-map (kbd (format "m-[ 34 ; %d ~" x)) (kbd (format "%s<f20>" tkey)))
+  ;;              ;; arrows
+  ;;              (define-key key-translation-map (kbd (format "m-[ 1 ; %d a" x)) (kbd (format "%s<up>" tkey)))
+  ;;              (define-key key-translation-map (kbd (format "m-[ 1 ; %d b" x)) (kbd (format "%s<down>" tkey)))
+  ;;              (define-key key-translation-map (kbd (format "m-[ 1 ; %d c" x)) (kbd (format "%s<right>" tkey)))
+  ;;              (define-key key-translation-map (kbd (format "m-[ 1 ; %d d" x)) (kbd (format "%s<left>" tkey)))
+  ;;              ;; home
+  ;;              (define-key key-translation-map (kbd (format "m-[ 1 ; %d h" x)) (kbd (format "%s<home>" tkey)))
+  ;;              ;; end
+  ;;              (define-key key-translation-map (kbd (format "m-[ 1 ; %d f" x)) (kbd (format "%s<end>" tkey)))
+  ;;              ;; page up
+  ;;              (define-key key-translation-map (kbd (format "m-[ 5 ; %d ~" x)) (kbd (format "%s<prior>" tkey)))
+  ;;              ;; page down
+  ;;              (define-key key-translation-map (kbd (format "m-[ 6 ; %d ~" x)) (kbd (format "%s<next>" tkey)))
+  ;;              ;; insert
+  ;;              (define-key key-translation-map (kbd (format "m-[ 2 ; %d ~" x)) (kbd (format "%s<delete>" tkey)))
+  ;;              ;; delete
+  ;;              (define-key key-translation-map (kbd (format "m-[ 3 ; %d ~" x)) (kbd (format "%s<delete>" tkey)))
+  ;;              ;; f1
+  ;;              (define-key key-translation-map (kbd (format "m-[ 1 ; %d p" x)) (kbd (format "%s<f1>" tkey)))
+  ;;              ;; f2
+  ;;              (define-key key-translation-map (kbd (format "m-[ 1 ; %d q" x)) (kbd (format "%s<f2>" tkey)))
+  ;;              ;; f3
+  ;;              (define-key key-translation-map (kbd (format "m-[ 1 ; %d r" x)) (kbd (format "%s<f3>" tkey)))
+  ;;              ;; f4
+  ;;              (define-key key-translation-map (kbd (format "m-[ 1 ; %d s" x)) (kbd (format "%s<f4>" tkey)))
+  ;;              ;; f5
+  ;;              (define-key key-translation-map (kbd (format "m-[ 15 ; %d ~" x)) (kbd (format "%s<f5>" tkey)))
+  ;;              ;; f6
+  ;;              (define-key key-translation-map (kbd (format "m-[ 17 ; %d ~" x)) (kbd (format "%s<f6>" tkey)))
+  ;;              ;; f7
+  ;;              (define-key key-translation-map (kbd (format "m-[ 18 ; %d ~" x)) (kbd (format "%s<f7>" tkey)))
+  ;;              ;; f8
+  ;;              (define-key key-translation-map (kbd (format "m-[ 19 ; %d ~" x)) (kbd (format "%s<f8>" tkey)))
+  ;;              ;; f9
+  ;;              (define-key key-translation-map (kbd (format "m-[ 20 ; %d ~" x)) (kbd (format "%s<f9>" tkey)))
+  ;;              ;; f10
+  ;;              (define-key key-translation-map (kbd (format "m-[ 21 ; %d ~" x)) (kbd (format "%s<f10>" tkey)))
+  ;;              ;; f11
+  ;;              (define-key key-translation-map (kbd (format "m-[ 23 ; %d ~" x)) (kbd (format "%s<f11>" tkey)))
+  ;;              ;; f12
+  ;;              (define-key key-translation-map (kbd (format "m-[ 24 ; %d ~" x)) (kbd (format "%s<f12>" tkey)))
+  ;;              ;; f13
+  ;;              (define-key key-translation-map (kbd (format "m-[ 25 ; %d ~" x)) (kbd (format "%s<f13>" tkey)))
+  ;;              ;; f14
+  ;;              (define-key key-translation-map (kbd (format "m-[ 26 ; %d ~" x)) (kbd (format "%s<f14>" tkey)))
+  ;;              ;; f15
+  ;;              (define-key key-translation-map (kbd (format "m-[ 28 ; %d ~" x)) (kbd (format "%s<f15>" tkey)))
+  ;;              ;; f16
+  ;;              (define-key key-translation-map (kbd (format "m-[ 29 ; %d ~" x)) (kbd (format "%s<f16>" tkey)))
+  ;;              ;; f17
+  ;;              (define-key key-translation-map (kbd (format "m-[ 31 ; %d ~" x)) (kbd (format "%s<f17>" tkey)))
+  ;;              ;; f18
+  ;;              (define-key key-translation-map (kbd (format "m-[ 32 ; %d ~" x)) (kbd (format "%s<f18>" tkey)))
+  ;;              ;; f19
+  ;;              (define-key key-translation-map (kbd (format "m-[ 33 ; %d ~" x)) (kbd (format "%s<f19>" tkey)))
+  ;;              ;; f20
+  ;;              (define-key key-translation-map (kbd (format "m-[ 34 ; %d ~" x)) (kbd (format "%s<f20>" tkey)))
 
-                    (setq x (+ x 1))
-                    ))
-           )
-         )
-         ;;))
+  ;;              (setq x (+ x 1))
+  ;;              ))
+  ;;          )
+  ;;        )
+  ;;      ))
   )
 
 (defun dotspacemacs/user-init ()
-  (term-init)
-  ;; (evil-init)
   ;; (setq configuration-layer--elpa-archives
   ;;       '(("melpa"    . "melpa.org/packages/")
   ;;         ("org"      . "orgmode.org/elpa/")
@@ -1662,15 +1710,15 @@ It should only modify the values of Spacemacs settings."
       (message "opening %s done" file)))
   (server-start)
   ;; (init-local-org)
-  ;; (init-spellcheck)
+  (init-spellcheck)
   ;; font
   ;; (set-face-attribute 'default nil :family "mononoki")
   ;; (set-face-attribute 'default nil :family "nanumgothiccoding")
   ;; (set-face-attribute 'default nil :family "sauce code powerline")
   ;; (set-face-attribute 'default nil :height 120)
   ;; (set-face-attribute 'default nil :weight 'normal)
-
   )
+
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
