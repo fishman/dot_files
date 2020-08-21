@@ -1,0 +1,143 @@
+map global user 'k' ': e ~/.config/kak/kakrc<ret>' -docstring "load kakrc"
+
+source "%val{config}/plugins/plug.kak/rc/plug.kak"
+plug "delapouite/kakoune-text-objects" %{
+	text-object-map
+}
+
+plug "andreyorst/kakoune-snippet-collection"
+plug "occivink/kakoune-vertical-selection"
+plug "occivink/kakoune-sudo-write"
+plug "alexherbo2/auto-pairs.kak" %{
+    map global user 's' ': auto-pairs-surround<ret>' -docstring "surround selection"
+}
+
+# plug "andreyorst/kakoune-snippets" branch "auto-discard" config %{
+#     set-option -add global snippets_directories "%opt{plug_install_dir}/kakoune-snippet-collection/snippets"
+#     set-option global snippets_auto_expand false
+#     map global insert '<tab>' "<a-;>: expand-or-jump-or-key tab<ret>"
+#     map global insert '<ret>' "<a-;>: expand-or-jump-or-key ret<ret>"
+#     map global normal '<tab>' ":      expand-or-jump-or-key tab<ret>"
+#     map global normal '<ret>' ":      expand-or-jump-or-key ret<ret>"
+# 
+#     define-command -docstring "expand-or-jump-or-key <key>: expand snippet or jump to the placeholder or execute <key>" \
+#     expand-or-jump-or-key -params 1 %{
+#         try %{ snippets-expand-trigger %{
+#             set-register / "%opt{snippets_triggers_regex}\z"
+#                 execute-keys 'hGhs<ret>'
+#         }} catch %{
+#             snippets-select-next-placeholders
+#         } catch %sh{
+#             printf "%s\n" "execute-keys -with-hooks <$1>"
+#         }
+#     }
+# }
+
+plug "https://gitlab.com/Screwtapello/kakoune-inc-dec" config %{
+    map global normal <c-a> \
+        ': inc-dec-modify-numbers + %val{count}<ret>'
+
+    map global normal <c-x> \
+        ': inc-dec-modify-numbers - %val{count}<ret>'
+
+}
+
+#plug "ul/kak-lsp" do %{
+#    cargo install --locked --force --path .
+#} config %{
+#    eval %sh{kak-lsp --kakoune -s $kak_session}
+#    hook global WinSetOption filetype=(rust|python|go|javascript|typescript|c|cpp) %{
+#        lsp-enable-window
+#    }
+#}
+plug "ul/kak-lsp" do %{
+    cargo build --release --locked
+    cargo install --force --path .
+} config %{
+    define-command lsp-restart -docstring 'restart the language server' %{ lsp-stop; lsp-start }
+}
+
+hook global WinSetOption filetype=(rust|python|go|javascript|typescript|c|cpp) %{
+    map window user 'l' ': enter-user-mode lsp<ret>' -docstring 'enter lsp mode'
+    map window lsp 'R' ': lsp-rename-prompt<ret>' -docstring 'rename the symbol beneath the cursor'
+    lsp-enable-window
+}
+
+hook global WinSetOption filetype=(rust) %{
+    set-option buffer lsp_server_configuration rust.clippy_preference="on"
+}
+
+hook global KakEnd .* lsp-exit
+
+plug "alexherbo2/kakoune-dracula-theme" theme config %{
+    colorscheme dracula
+}
+
+plug "andreyorst/base16-gruvbox.kak" theme config %{
+#colorscheme base16-gruvbox-dark-soft
+}
+plug "andreyorst/fzf.kak" config %{
+#map -docstring 'fzf mode' global normal '<c-p>' ': fzf-mode<ret>'
+#    map -docstring 'fzf mode' global normal 'f' ': fzf-mode<ret>'
+map global user 'f' ': fzf-mode<ret>' -docstring 'enter fzf mode'
+} defer "fzf" %{
+set-option global fzf_file_command 'rg' # 'ag', 'fd', or 'find'
+                set-option global fzf_highlight_command 'bat'
+}
+plug "andreyorst/powerline.kak" defer powerline %{
+#        set-option global powerline_format 'git bufname filetype mode_info line_column position'
+    powerline-theme gruvbox
+} config %{
+    powerline-start
+}
+
+plug "andreyorst/smarttab.kak" defer smarttab %{
+    # when `backspace' is pressed, 4 spaces are deleted at once
+    set-option global softtabstop 4
+} config %{
+    # these languages will use `expandtab' behavior
+    hook global WinSetOption filetype=(rust|markdown|kak|lisp|scheme|sh|perl|javascript|json) expandtab
+    # these languages will use `noexpandtab' behavior
+    hook global WinSetOption filetype=(makefile|gas) noexpandtab
+    # these languages will use `smarttab' behavior
+    hook global WinSetOption filetype=(c|cpp) smarttab
+}
+
+plug "occivink/kakoune-snippets" config %{
+    # unmap global insert '<c-i>'
+    map global insert '<a-i>' '<a-;>: snippets-select-next-placeholders<ret>'
+    filetype-hook rust|python %{
+        set-option buffer snippets_auto_expand true
+    }
+}
+
+plug "evanrelf/number-toggle.kak"
+plug "andreyorst/tagbar.kak" defer tagbar %{
+    set-option global tagbar_sort false
+    set-option global tagbar_size 40
+    set-option global tagbar_display_anon false
+} config %{
+    map global user 't' ": tagbar-toggle<ret>" -docstring "toggle tagbar panel"
+    hook global WinSetOption filetype=(python|ruby|c|cpp|rust|gas|markdown) %{
+        tagbar-enable
+    }
+    hook global WinSetOption filetype=tagbar %{
+        remove-highlighter buffer/numbers
+        remove-highlighter buffer/matching
+        remove-highlighter buffer/wrap
+        remove-highlighter buffer/show-whitespaces
+    }
+}
+
+# 4-space tabs
+set global indentwidth 4
+set global tabstop 4
+hook global BufSetOption filetype=.*?(haskell|ruby) %{
+set buffer tabstop 2
+set buffer indentwidth 2
+}
+
+hook global WinSetOption filetype=python %{
+	set global lintcmd kak_pylint
+		lint-enable
+}

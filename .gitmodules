@@ -10,3 +10,6 @@
 [submodule "urxvt/urxvt-font-size"]
 	path = urxvt/urxvt-font-size
 	url = https://github.com/majutsushi/urxvt-font-size
+[submodule "zsh/.zsh.d/z.lua"]
+	path = zsh/.zsh.d/z.lua
+	url = https://github.com/skywind3000/z.lua
