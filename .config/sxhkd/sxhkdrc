@@ -39,6 +39,9 @@ alt + !button{1-3}
 shift + Print
     scrot
 
+super + alt + b
+  rofi-bluetooth
+
 super + v
   xdo activate -n keepassxc || keepassxc
 
@@ -46,11 +49,22 @@ super + v
 #     amixer set Master toggle
 
 super + r
-    rofi -sidebar-mode -lines 10 -combi-modi window,drun -show combi -modi combi,run,ssh
+    rofi -sidebar-mode -combi-modi window,drun -show combi -modi "combi,run,ssh,calc,clipboard:greenclip print"
+    #rofi -sidebar-mode -lines 10 -combi-modi window,drun -show combi -modi combi,run,ssh,calc
+	#rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
+    #XDG_CURRENT_DESKTOP=MATE rofi -sidebar-mode -lines 10 -combi-modi window,drun -show combi -modi combi,run,ssh
 
 # make sxhkd reload its configuration files:
 super + Escape
     pkill -USR1 -x sxhkd
+
+XF86MonBrightnessDown
+    xbacklight -time 0 -dec 5
+    # pkexec brillo -A 5
+
+XF86MonBrightnessUp
+    xbacklight -time 0 -inc 5
+    # pkexec brillo -U 5
 
 XF86AudioRaiseVolume
 	pamixer -i 4 --sink $(pactl list sinks short | grep -i 'RUNNING'| cut -f 2)
@@ -62,21 +76,27 @@ XF86AudioMute
 	pamixer -t --sink $(pactl list sinks short | grep -i 'RUNNING'| cut -f 2)
 
 XF86Sleep
-	pm-suspend
+	systemctl hybrid-sleep
 
-XF86AudioPlay
-  if mpc status | grep playing >/dev/null; \
+# XF86AudioPlay
+super + F9
+  if mpc status | grep -q playing; \
   then \
     mpc toggle; \
   else \
     playerctl play-pause || mpc toggle; \
   fi
+    # playerctl --player playerctld play-pause || mpc toggle; \
 
-XF86AudioNext
-	playerctl next || mpc next
+# XF86AudioNext
+super + F11
+  playerctl next || mpc next
+	# playerctl --player playerctld next || mpc next
 
-XF86AudioPrev
+# XF86AudioPrev
+super + F10
   playerctl previous || mpc prev
+  # playerctl --player playerctld previous || mpc prev
 
 
 #
@@ -85,8 +105,8 @@ XF86AudioPrev
 
 # terminal emulator
 super + shift + Return
-	urxvtc
-	# termite
+    kitty --single-instance
+    # alacritty
 
 # program launcher
 # super + @space
@@ -117,6 +137,18 @@ super + shift + BackSpace
 # super + @space
 super + m
 	bspc desktop -l next
+
+# hide current node/ minimize
+# super + alt + n
+#     bspc node -g hidden
+#
+# # un-hide all nodes
+# super + shift + n
+#     bspc query -N -n .hidden | xargs -I winID bspc node winID -g hidden=off
+
+#super + shift + n
+#    bspc node $(bspc query -N -n .hidden | tail -n1) -g hidden=off)
+
 
 # if the current node is automatic, send it to the last manual, otherwise pull the last leaf
 super + Return
@@ -169,6 +201,9 @@ super + {_,shift + }n
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
+
+super + {comma,period}
+	bspc monitor -f {prev,next}
 
 # focus the last node/desktop
 super + {grave,Tab}
@@ -229,8 +264,14 @@ super + {Left,Down,Up,Right}
 super + F12
   xdotool search --onlyvisible --classname scratchpad windowunmap \
   || xdotool search --classname scratchpad windowmap \
-  || urxvt -name scratchpad -geometry 110x20+297+1 -e tmux-scratchpad
+  || urxvt -name scratchpad -geometry 100+240+1 -e ~/bin/tmux-scratchpad
 
+super + equal
+  xdotool search --onlyvisible --classname scratchpad windowunmap \
+  || xdotool search --classname scratchpad windowmap \
+  || urxvt -name scratchpad -geometry 100+240+1 -e ~/bin/tmux-scratchpad
+
+# tdrop -ma -w -4 -y "$PANEL_HEIGHT" -s Scratchpad --wm bspwm alacritty 
 super + F4
   /home/timebomb/bin/layout_switch.sh
 
@@ -240,6 +281,10 @@ super + alt + m
   || urxvt -name clerk -geometry 110x20 -e clerk
   # clerk --no-tmux-ui -t
   # /home/timebomb/bin/mpdmenu
+  #
+  #
+# super + alt + d
+#     clerk --no-tmux-ui -t
 
 # screenshots
 super + F3
@@ -257,11 +302,36 @@ super + p
 super + control + p
   /usr/bin/rofi-pass --insert
 
+super + d
+  /home/timebomb/bin/opendownloads
+
 super + c
-  /home/timebomb/bin/gpaste-menu
+  rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
+  # copyq toggle
+  # rofi -modi "clipboard:greenclip print" -show clipboard -run-command "{cmd}"
+  # /usr/bin/clipmenu
+  # /home/timebomb/bin/gpaste-menu
+
+super + alt + s
+  /home/timebomb/bin/menu-surfraw
+
+super + alt + n
+  /home/timebomb/bin/networkmanager_dmenu
 
 super + control + s
   gpaste-client delete history-size
+
+super + alt + l
+  /usr/bin/xfce4-session-logout
+
+  #termite --name=launcher -e "bash -c 'compgen -c | grep -v fzf | sort -u | fzf --layout=reverse | xargs -r swaymsg -t command exec'" for_window '[app_id="^launcher$"]' floating enable, border none, opacity 0.8
+  #
+  #
+alt + super + e
+  rofimoji
+
 # hide current node, or restore a queried hidden node
 # super + {_,shift} + minus
 #   bspc node {,$(bspc query -N -d -n .hidden | head -n 1)} -g hidden
+#super + e
+#  xprop > ~/xprop.out
