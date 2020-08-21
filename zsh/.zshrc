@@ -27,3 +27,16 @@ done
 # PERL_MM_OPT="INSTALL_BASE=/home/timebomb/perl5"; export PERL_MM_OPT;
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+# if which ruby >/dev/null && which gem >/dev/null; then
+#   PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+# fi
+
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# [[ -s "$HOME/.local/share/marker/marker.sh" ]] && source "$HOME/.local/share/marker/marker.sh"
+
+
+. $HOME/.asdf/asdf.sh
+
+. $HOME/.asdf/completions/asdf.bash
