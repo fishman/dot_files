@@ -1,4 +1,8 @@
+map global normal '<left>' ":      bp<ret>"
+map global normal '<right>' ":     bn<ret>"
+map global user 'S' ': send-text<ret>' -docstring "send text to repl"
 map global user 'k' ': e ~/.config/kak/kakrc<ret>' -docstring "load kakrc"
+map global user 'd' ': delete-buffer<ret>' -docstring "delete buffer"
 
 source "%val{config}/plugins/plug.kak/rc/plug.kak"
 plug "delapouite/kakoune-text-objects" %{
@@ -6,10 +10,23 @@ plug "delapouite/kakoune-text-objects" %{
 }
 
 plug "andreyorst/kakoune-snippet-collection"
-plug "occivink/kakoune-vertical-selection"
+plug "occivink/kakoune-vertical-selection" %{
+    map global user v     ': vertical-selection-down<ret>' -docstring "vertical selection down"
+    map global user <a-v> ': vertical-selection-up<ret>' -docstring "vertical selection up"
+    map global user V     ': vertical-selection-up-and-down<ret>' -docstring "vertical selection up and down"
+}
 plug "occivink/kakoune-sudo-write"
 plug "alexherbo2/auto-pairs.kak" %{
-    map global user 's' ': auto-pairs-surround<ret>' -docstring "surround selection"
+#    map global user 's' ': auto-pairs-surround<ret>' -docstring "surround selection"
+}
+
+plug "alexherbo2/surround.kak" %{
+    map global user s ': surround<ret>' -docstring 'Enter surround mode'
+    map global user S ': surround _ _ * *<ret>' -docstring 'Enter surround mode with extra surrounding pairs'
+
+    # Optional
+    set-option global surround_begin auto-pairs-disable
+    set-option global surround_end auto-pairs-enable
 }
 
 # plug "andreyorst/kakoune-snippets" branch "auto-discard" config %{
@@ -77,12 +94,29 @@ plug "andreyorst/base16-gruvbox.kak" theme config %{
 #colorscheme base16-gruvbox-dark-soft
 }
 plug "andreyorst/fzf.kak" config %{
-#map -docstring 'fzf mode' global normal '<c-p>' ': fzf-mode<ret>'
-#    map -docstring 'fzf mode' global normal 'f' ': fzf-mode<ret>'
-map global user 'f' ': fzf-mode<ret>' -docstring 'enter fzf mode'
+    #map -docstring 'fzf mode' global normal '<c-p>' ': fzf-mode<ret>'
+    #    map -docstring 'fzf mode' global normal 'f' ': fzf-mode<ret>'
+    map global user 'f' ': fzf-mode<ret>' -docstring 'enter fzf mode'
 } defer "fzf" %{
-set-option global fzf_file_command 'rg' # 'ag', 'fd', or 'find'
-                set-option global fzf_highlight_command 'bat'
+    set-option global fzf_file_command 'rg' # 'ag', 'fd', or 'find'
+    set-option global fzf_highlight_command 'bat'
+
+    map global fzf -docstring "open recents" 'r' '<esc>: fzf-recent<ret>'
+
+    define-command -hidden fzf-recent %{ evaluate-commands %sh{
+        buffers=$(cat $kak_opt_recentf_file)
+        message="Set buffer to edit in current client.
+    <ret>: switch to selected buffer.
+    $kak_opt_fzf_window_map: open buffer in new window"
+        [ ! -z "${kak_client_env_TMUX}" ] && tmux_keybindings="
+    $kak_opt_fzf_horizontal_map: open buffer in horizontal split
+    $kak_opt_fzf_vertical_map: open buffer in vertical split"
+        printf "%s\n" "info -title 'fzf buffer' '$message$tmux_keybindings'"
+        [ ! -z "${kak_client_env_TMUX}" ] && additional_flags="--expect $kak_opt_fzf_vertical_map --expect $kak_opt_fzf_horizontal_map"
+
+        printf "%s\n" "fzf -kak-cmd %{edit -existing} -items-cmd %{printf \"%s\n\" \"$buffers\"} -fzf-args %{--expect $kak_opt_fzf_window_map $additional_flags}"
+    }}
+
 }
 plug "andreyorst/powerline.kak" defer powerline %{
 #        set-option global powerline_format 'git bufname filetype mode_info line_column position'
@@ -138,6 +172,48 @@ set buffer indentwidth 2
 }
 
 hook global WinSetOption filetype=python %{
-	set global lintcmd kak_pylint
-		lint-enable
+    set global lintcmd kak_pylint
+    lint-enable
+}
+
+plug "lePerdu/kakboard" %{
+    hook global WinCreate .* %{ kakboard-enable }
+}
+
+hook global BufOpenFile .* recentf-add-file
+hook global BufWritePost .* recentf-add-file
+
+declare-option str recentf_file "%val{config}/.recentf"
+declare-option int max_recentf_files 45
+
+define-command -hidden recentf-add-file %{ nop %sh{
+    if ! grep -q "${kak_buffile}" "${kak_opt_recentf_file}"; then
+        printf "%s\n%s\n" "${kak_buffile}" "$(cat ${kak_opt_recentf_file})" > ${kak_opt_recentf_file}
+        printf "%s\n" "$(head -${kak_opt_max_recentf_files} ${kak_opt_recentf_file})" > ${kak_opt_recentf_file}
+    fi
+}}
+
+define-command recentf -params 1 -shell-script-candidates %{ cat ${kak_opt_recentf_file} } %{ edit -existing %arg{1} }
+
+define-command rofi-buffers \
+-docstring 'Select an open buffer using Rofi' %{ evaluate-commands %sh{
+    BUFFER=$(printf "%s\n" "${kak_buflist}" | tr " " "\n" | rofi -dmenu | tr -d \')
+    if [ -n "$BUFFER" ]; then
+        printf "%s\n" "buffer ${BUFFER}"
+    fi
+} }
+
+define-command -docstring "vsplit [<commands>]: split tmux vertically" \
+vsplit -params .. -command-completion %{
+    tmux-terminal-horizontal kak -c %val{session} -e "%arg{@}"
+}
+
+define-command -docstring "split [<commands>]: split tmux horizontally" \
+split -params .. -command-completion %{
+    tmux-terminal-vertical kak -c %val{session} -e "%arg{@}"
+}
+
+define-command -docstring "tabnew [<commands>]: create new tmux window" \
+tabnew -params .. -command-completion %{
+    tmux-terminal-window kak -c %val{session} -e "%arg{@}"
 }
