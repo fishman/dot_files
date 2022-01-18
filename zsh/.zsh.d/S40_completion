@@ -21,7 +21,7 @@ zstyle ':completion:*:warnings' format "%B$fg[red]%}---- no match for: $fg[white
 zstyle ':completion:*' group-name ''
 
 #[ Kill ]#######################################################################
-if [[ $OS == osx ]]; then
+if [[ $OS == Darwin ]]; then
   zstyle ':completion:*:processes' command 'ps -au$USER -o pid,time,command|grep -v "ps -au$USER -o pid,time,command"'
 else
   zstyle ':completion:*:processes' command 'ps -au$USER -o pid,time,cmd|grep -v "ps -au$USER -o pid,time,cmd"'

@@ -1,0 +1,6 @@
+#!/bin/zsh
+if [[ $OS == Darwin ]]; then
+    runonce remind -z -k"terminal-notifier -sound default -title Reminder -message %s" ~/.reminders
+else
+    runonce remind -z -k'gxmessage -default OK %s' ~/.reminders
+fi

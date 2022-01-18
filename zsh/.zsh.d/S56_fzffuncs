@@ -1,0 +1,223 @@
+#!/usr/bin/env zsh
+
+# cdf - cd into the directory of the selected file
+cdf() {
+  local file
+  local dir
+  file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
+}
+
+# fkill - kill process
+fkill() {
+  local pid
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    echo $pid | xargs kill -${1:-9}
+  fi
+}
+
+# fbr - checkout git branch (including remote branches)
+fbr() {
+  local branches branch
+  branches=$(git branch --all | grep -v HEAD) &&
+    branch=$(echo "$branches" |
+    fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+    git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
+# fjrnl - Search JRNL headlines
+fjrnl() {
+  title=$(jrnl --short | fzf --tac --no-sort) &&
+    jrnl -on "$(echo $title | cut -c 1-16)" $1
+}
+
+# ftpane - switch pane (@george-b)
+ftpane() {
+  local panes current_window current_pane target target_window target_pane
+  panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
+  current_pane=$(tmux display-message -p '#I:#P')
+  current_window=$(tmux display-message -p '#I')
+
+  target=$(echo "$panes" | grep -v "$current_pane" | fzf +m --reverse) || return
+
+  target_window=$(echo $target | awk 'BEGIN{FS=":|-"} {print$1}')
+  target_pane=$(echo $target | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
+
+  if [[ $current_window -eq $target_window ]]; then
+    tmux select-pane -t ${target_window}.${target_pane}
+  else
+    tmux select-pane -t ${target_window}.${target_pane} &&
+      tmux select-window -t $target_window
+  fi
+}
+
+fm() {
+  local file
+  file=$(find -L ~/Downloads ~/Music -iname "*mp3" -o -iname "*.flac" \
+    -o -iname "*.wav" -o -iname "*.m4a" -o -iname "*.mp4" 2> /dev/null | fzf) &&
+  mpv "$file" && fm
+}
+
+# In tmux.conf
+# bind-key 0 run "tmux split-window -l 12 'bash -ci ftpane'"
+
+# Install one or more versions of specified language
+# e.g. `vmi rust` # => fzf multimode, tab to mark, enter to install
+# if no plugin is supplied (e.g. `vmi<CR>`), fzf will list them for you
+# Mnemonic [V]ersion [M]anager [I]nstall
+vmi() {
+  local lang=${1}
+
+  if [[ ! $lang ]]; then
+    lang=$(asdf plugin-list | fzf)
+  fi
+
+  if [[ $lang ]]; then
+    local versions=$(asdf list-all $lang | fzf -m)
+    if [[ $versions ]]; then
+      for version in $(echo $versions);
+      do; asdf install $lang $version; done;
+    fi
+  fi
+}
+
+# Remove one or more versions of specified language
+# e.g. `vmi rust` # => fzf multimode, tab to mark, enter to remove
+# if no plugin is supplied (e.g. `vmi<CR>`), fzf will list them for you
+# Mnemonic [V]ersion [M]anager [C]lean
+vmc() {
+  local lang=${1}
+
+  if [[ ! $lang ]]; then
+    lang=$(asdf plugin-list | fzf)
+  fi
+
+  if [[ $lang ]]; then
+    local versions=$(asdf list $lang | fzf -m)
+    if [[ $versions ]]; then
+      for version in $(echo $versions);
+      do; asdf uninstall $lang $version; done;
+    fi
+  fi
+}
+
+## c - browse chrome history
+fc() {
+  local cols sep google_history open
+  cols=$(( COLUMNS / 3 ))
+  sep='{::}'
+
+  if [ "$(uname)" = "Darwin" ]; then
+    google_history="$HOME/Library/Application Support/Google/Chrome/Default/History"
+    open=open
+  else
+    google_history="$HOME/.config/google-chrome/Default/History"
+    open=xdg-open
+  fi
+  cp -f "$google_history" /tmp/h
+  sqlite3 -separator $sep /tmp/h \
+    "select substr(title, 1, $cols), url
+  from urls order by last_visit_time desc" |
+    awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
+    fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs $open > /dev/null 2> /dev/null
+}
+
+fmpc() {
+  local song_position
+  song_position=$(mpc -f "%position%) %artist% - %title%" playlist | \
+    fzf-tmux --query="$1" --reverse --select-1 --exit-0 | \
+    sed -n 's/^\([0-9]\+\)).*/\1/p') || return 1
+  [ -n "$song_position" ] && mpc -q play $song_position
+}
+
+fpaper () {
+  local DIR open
+  declare -A already
+  DIR="${HOME}/.cache/pdftotext"
+  mkdir -p "${DIR}"
+  if [ "$(uname)" = "Darwin" ]; then
+    open=open
+  else
+    open="gio open"
+  fi
+
+  {
+    ag -g ".pdf$"; # fast, without pdftotext
+    ag -g ".pdf$" \
+      | while read -r FILE; do
+      local EXPIRY HASH CACHE
+      HASH=$(md5sum "$FILE" | cut -c 1-32)
+      # Remove duplicates (file that has same hash as already seen file)
+      [ ${already[$HASH]+abc} ] && continue # see https://stackoverflow.com/a/13221491
+      already[$HASH]=$HASH
+      EXPIRY=$(( 86400 + $RANDOM * 20 )) # 1 day (86400 seconds) plus some random
+      CMD="pdftotext -f 1 -l 1 '$FILE' - 2>/dev/null | tr \"\n\" \"_\" "
+      CACHE="$DIR/$HASH"
+      test -f "${CACHE}" && [ $(expr $(date +%s) - $(date -r "$CACHE" +%s)) -le $EXPIRY ] || eval "$CMD" > "${CACHE}"
+      echo -e "$FILE\t$(cat ${CACHE})"
+    done
+  } | fzf -e  -d '\t' \
+    --preview-window up:75% \
+    --preview '
+  v=$(echo {q} | tr " " "|");
+  echo {1} | grep -E "^|$v" -i --color=always;
+  pdftotext -f 1 -l 1 {1} - | grep -E "^|$v" -i --color=always' \
+    | awk 'BEGIN {FS="\t"; OFS="\t"}; {print "\""$1"\""}' \
+    | xargs $open > /dev/null 2> /dev/null
+}
+
+# Host
+common_host() {
+  if [[ -n $SSH_CONNECTION ]]; then
+    me="%n@%m"
+  elif [[ $LOGNAME != $USER ]]; then
+    me="%n"
+  fi
+  if [[ -n $me ]]; then
+    echo "%{$fg[$COMMON_COLORS_HOST_ME]%}$me%{$reset_color%}:"
+  fi
+  if [[ $AWS_VAULT ]]; then
+    echo "%{$fg[$COMMON_COLORS_HOST_AWS_VAULT]%}$AWS_VAULT%{$reset_color%} "
+  fi
+}
+
+# Current directory
+common_current_dir() {
+  echo -n "%{$fg[$COMMON_COLORS_CURRENT_DIR]%}%c "
+}
+
+# Prompt symbol
+common_return_status() {
+  echo -n "%(?.%F{$COMMON_COLORS_RETURN_STATUS_TRUE}.%F{$COMMON_COLORS_RETURN_STATUS_FALSE})$COMMON_PROMPT_SYMBOL%f "
+}
+
+# Git status
+common_git_status() {
+    local message=""
+    local message_color="%F{$COMMON_COLORS_GIT_STATUS_DEFAULT}"
+
+    # https://git-scm.com/docs/git-status#_short_format
+    local staged=$(git status --porcelain 2>/dev/null | grep -e "^[MADRCU]")
+    local unstaged=$(git status --porcelain 2>/dev/null | grep -e "^[MADRCU? ][MADRCU?]")
+
+    if [[ -n ${staged} ]]; then
+        message_color="%F{$COMMON_COLORS_GIT_STATUS_STAGED}"
+    elif [[ -n ${unstaged} ]]; then
+        message_color="%F{$COMMON_COLORS_GIT_STATUS_UNSTAGED}"
+    fi
+
+    local branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    if [[ -n ${branch} ]]; then
+        message+="${message_color}${branch}%f"
+    fi
+
+    echo -n "${message}"
+}
+
+# Background Jobs
+common_bg_jobs() {
+  bg_status="%{$fg[$COMMON_COLORS_BG_JOBS]%}%(1j.↓%j .)"
+  echo -n $bg_status
+}

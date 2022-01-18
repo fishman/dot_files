@@ -9,7 +9,7 @@ function zaw-src-movies() {
     setopt local_options extended_glob null_glob
     # Glob common locations anyway since both of previous indexes may
     # be stale or non-existent
-    candidates+=({,~}/Movies/Anime/*.{flv,mp4}(N) ~/Downloads/Torrents/**/*.mp4(N))
+    candidates+=({,~}/{Movies,Videos}/**/*{flv,mp4}(N) ~/Downloads/**/*.{flv,mp4}(N))
 
     candidates=(${(iou)candidates[@]})
     actions=("zaw-callback-launch-mpv" "zaw-callback-append-to-buffer")

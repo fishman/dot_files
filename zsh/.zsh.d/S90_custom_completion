@@ -23,6 +23,7 @@ zstyle ':completion:*:*:task:*:descriptions' format '%U%B%d%b%u'
 
 zstyle ':completion:*:*:task:*' group-name ''
 
+alias tw=timew
 alias t=task
 proj () {
     t proj:$@
@@ -33,6 +34,6 @@ compdef _task t=task
 compdef _mplayer m=mplayer
 compdef _mplayer mpv=mplayer
 
-. ~/.zsh.d/zsh-functions/_docker
-zstyle ':completion:*:*:docker:*' option-stacking yes
-zstyle ':completion:*:*:docker-*:*' option-stacking yes
+# . ~/.zsh.d/zsh-functions/_docker
+# zstyle ':completion:*:*:docker:*' option-stacking yes
+# zstyle ':completion:*:*:docker-*:*' option-stacking yes

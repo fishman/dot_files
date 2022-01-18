@@ -58,7 +58,7 @@ bindkey '^T' zaw-fasd
 # search for file and open in vim
 bindkey -s '^p' 'vg^M'
 # cd to folder
-bindkey -s '\ec' 'fda^M'
+# bindkey -s '\ec' 'fda^M'
 
 # open editor with v
 autoload -U edit-command-line

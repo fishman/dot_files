@@ -1,0 +1,18 @@
+# alias p='(cd ~/git/openwns ; ./playground.py install )'
+alias p=./playground.py
+alias scstew="sc -x https://$STEW_SAUCE_HOST:4444/rest/v1 -k $STEW_SAUCE_ACCESS_KEY -u $STEW_SAUCE_USERNAME -vv"
+alias btkeyboard="bluez-test-input connect C8:E0:EB:12:D1:F5 ; dvorak"
+alias btmouse="bluez-test-input connect 1C:1A:C0:D9:06:3A"
+alias btscan="hcitool scan"
+alias vpnhetzner="nmcli c up priv"
+alias vpntalkyoo="nmcli c up talkyoo"
+alias vpndisable="nmcli c down talkyoo ; nmcli c down priv"
+
+
+# export __LINUX__=1
+# export PATH=~/idasdk/bin:$PATH
+# alias m='idamake.pl 2>&1'
+# alias mm='__EA64__=1 idamake.pl 2>&1'
+# alias mx='__X64__=1 idamake.pl 2>&1'
+
+# alias velour="ssh -t -L 5050:localhost:5050 sauce@reza.dev.saucelabs.net \". ~/setenv.sh && cd ~/sauce/cloud/velour; pkill -f '^python velour\.py$'; python velour.py\""

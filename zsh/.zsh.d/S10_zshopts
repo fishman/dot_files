@@ -143,7 +143,8 @@ setopt no_rm_star_silent    # ask user before rm foo/*
 setopt no_rm_star_wait      # dont't idle 10 seconds
 
 #[ s-z ]########################################################################
-setopt no_share_history     # traditional bash-history
+# setopt no_share_history     # traditional bash-history
+setopt share_history        # share history
 setopt no_sh_file_expansion # dont expand filnames first
 setopt no_sh_glob           # allow globbing with [(|)<]
 #setopt shin_stdin           #
@@ -212,7 +213,13 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_SAVE_NO_DUPS
 # setopt HIST_VERIFY
 
-fpath=(~/.zsh.d/zsh-completions ~/.zsh.d/zsh-functions $fpath)
+fpath=(~/.zsh.d/zsh-completions ~/.zsh.d/zsh-functions  ~/.zsh.d/pure ~/.zsh.d/kube-ps1 $fpath)
+# fpath=(~/.zsh.d/zsh-completions ~/.zsh.d/zsh-functions ~/.zsh.d/zsh-async ~/.zsh.d/pure ~/.zsh.d/kube-ps1 $fpath)
+
+autoload -U promptinit; promptinit
+
+autoload -Uz kube-ps1
+kube-ps1
 
 autoload -Uz git-escape-magic
 git-escape-magic
@@ -224,6 +231,8 @@ autoload -U deer
 zle -N deer
 bindkey '\ek' deer
 
+zmodload zsh/zpty
+
 # autoload predict-on
 # predict-toggle() {
 #     ((predict_on=1-predict_on)) && predict-on || predict-off
@@ -232,14 +241,14 @@ bindkey '\ek' deer
 # bindkey '^Z'   predict-toggle
 # zstyle ':predict' toggle true
 # zstyle ':predict' verbose true
-# Setup zsh-autosuggestions
-# source "$HOME/.zsh.d/zsh-autosuggestions/autosuggestions.zsh"
+#Setup zsh-autosuggestions
+source "$HOME/.zsh.d/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
-# # Enable autosuggestions automatically
-# zle-line-init() {
-#     zle autosuggest-start
-# }
+# Enable autosuggestions automatically
+zle-line-init() {
+    zle autosuggest-start
+}
 
 # zle -N zle-line-init
 
-# bindkey '^Z' autosuggest-toggle
+bindkey '^Z' autosuggest-toggle

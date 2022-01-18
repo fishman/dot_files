@@ -101,7 +101,6 @@ ranger-cd() {
     fi
     rm -f -- "$tempfile"
 }
-
 # bind Ctrl-O to ranger-cd:
 zle -N ranger-cd
 bindkey '^o' ranger-cd
@@ -258,4 +257,42 @@ vg() {
   then
      vim $file
   fi
+}
+
+export NNN_TMPFILE="/tmp/nnn"
+
+n()
+{
+    nnn -a "$@"
+
+    if [ -f $NNN_TMPFILE ]; then
+        . $NNN_TMPFILE
+        rm $NNN_TMPFILE
+    fi
+}
+
+bashcompletion()
+{
+     autoload -Uz bashcompinit
+     bashcompinit -i
+     complete -C aws_completer aws
+ }
+
+function kube-toggle() {
+  if (( ${+POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND} )); then
+    unset POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND
+  else
+    POWERLEVEL9K_KUBECONTEXT_SHOW_ON_COMMAND='kubectl|helm|kubens|kubectx|oc|istioctl|kogito|k9s|helmfile'
+  fi
+  p10k reload
+  if zle; then
+    zle push-input
+    zle accept-line
+  fi
+}
+
+function def() {
+    sdcv -n --utf8-output --color "$@" 2>&1 | \
+    fold --width=$(tput cols) | \
+    less -FRX
 }

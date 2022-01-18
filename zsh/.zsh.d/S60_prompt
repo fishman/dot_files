@@ -1,5 +1,4 @@
 #!/usr/bin/env zsh
-
-fpath+=$HOME/.zsh.d/pure
-autoload -U promptinit; promptinit
-prompt pure
+# [[ ! -f ~/.zsh.d/p10k.zsh ]] || source ~/.zsh.d/p10k.zsh
+# source "$HOME/.zsh.d/powerlevel10k/powerlevel10k.zsh-theme"
+# prompt pure

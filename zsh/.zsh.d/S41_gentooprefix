@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-if [[ $OS == osx ]]; then
+if [[ $OS == Darwin ]]; then
   export EPREFIX="$HOME/Gentoo"
   PATH_BACK=$PATH
 

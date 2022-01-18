@@ -8,8 +8,8 @@ fi
 if [ ! -z $VENVWRAP ]; then
     # virtualenvwrapper -------------------------------------------
     # make sure env directory exists; else create it
-    [ -d "${HOME}/venv" ] || mkdir -p "${HOME}/venv"
-    export WORKON_HOME="${HOME}/venv"
+    [ -d "${HOME}/.cache/pypoetry/virtualenvs" ] || mkdir -p "${HOME}/.cache/pypoetry/virtualenvs"
+    export WORKON_HOME="${HOME}/.cache/pypoetry/virtualenvs"
     source $VENVWRAP
 
     # virtualenv --------------------------------------------------
@@ -17,7 +17,7 @@ if [ ! -z $VENVWRAP ]; then
 
     # pip ---------------------------------------------------------
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
-    export PIP_REQUIRE_VIRTUALENV=true
+    export PIP_REQUIRE_VIRTUALENV=false
     export PIP_RESPECT_VIRTUALENV=true
     export PIP_DOWNLOAD_CACHE="${HOME}/.pip/cache"
 fi

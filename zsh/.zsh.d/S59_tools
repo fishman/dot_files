@@ -52,7 +52,7 @@ if [ "$PS1" ]; then
         }
         
         #function v() { $@ | vim -R - ; }
-        function v() { $@ | least ; }
+        # function v() { $@ | least ; }
         function vv() { $@ | vim -R - ; }
 
         function maxhead() { head -n `echo $LINES - 2|bc` ; }

@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-if [[ $OS == 'osx' && $EPREFIX == '' ]] then
+if [[ $OS == Darwin && $EPREFIX == '' ]] then
   # no dircolors on osx
   export CLICOLOR=1
   export LSCOLORS=ExFxCxDxBxegedabagacad

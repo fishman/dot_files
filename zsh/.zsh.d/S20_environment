@@ -8,6 +8,8 @@ if [ x"$HOSTNAME" = x ] ; then
   export HOSTNAME=$(hostname)
 fi
 
+export OS="$(uname)"
+
 export FULLNAME="Reza Jelveh"
 
 #export DEBEMAIL=$EMAIL
@@ -28,9 +30,6 @@ export INPUTRC="~/.inputrc"
 # export MAIL="${HOME}/mail/inbox"
 
 export RLWRAP_HOME=~/.cache/rlwrap/
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
 
 export LC_MESSAGES=C
 export LC_ALL=en_US.UTF-8
@@ -52,10 +51,10 @@ export TMUX_POWERLINE_SEG_WEATHER_LOCATION="656958"
 
 # export npm_config_prefix=~/.node_modules
 
-if [[ $OS == linux ]]; then
-  path=($HOME/bin $path $HOME/.gem/ruby/2.0.0/bin $GOPATH/bin $HOME/.node_modules/bin ./node_modules/.bin)
+if [[ $OS == Linux ]]; then
+  path=($HOME/bin $path $GOPATH/bin $HOME/.node_modules/bin $HOME/.local/bin $HOME/.kube/plugins/jordanwilson230 $HOME/.kube/plugins/local /opt/depot_tools $HOME/.cargo/bin ${HOME}/.krew/bin)
   export VAGRANT_DEFAULT_PROVIDER=libvirt
-elif [[ $OS == osx ]]; then
+elif [[ $OS == Darwin ]]; then
   PATH="$HOME/bin:$PATH"
   PATH="/opt/local/bin:/opt/local/vim/bin:$PATH"
   PATH="$GOPATH/bin:$PATH"
@@ -65,7 +64,7 @@ elif [[ $OS == osx ]]; then
   PATH="$PATH:/usr/X11R6/bin"
   PATH="$PATH:/opt/local/sloccount/bin"
   PATH="$PATH:/usr/local/clang/bin"
-  PATH="$PATH:./node_modules/.bin"
+  # PATH="$PATH:./node_modules/.bin"
   export MANPATH=/opt/local/share/man:$MANPATH
   PATH="$NPM_PACKAGES/bin:$PATH"
   export MANPATH=$NPM_PACKAGES/share/man:/opt/local/share/man:$MANPATH
@@ -93,14 +92,52 @@ export XAUTHORITY=~/.Xauthority
 
 # export QT_STYLE_OVERRIDE="GTK+"
 # export QT_STYLE_OVERRIDE="GTK+"
-[ "$XDG_CURRENT_DESKTOP" = "KDE" ] || [ "$XDG_CURRENT_DESKTOP" = "GNOME" ] || export QT_QPA_PLATFORMTHEME="qt5ct"
-export QT_AUTO_SCREEN_SCALE_FACTOR=1
+[ "$XDG_CURRENT_DESKTOP" = "GNOME" ] && export QT_QPA_PLATFORMTHEME="qt5ct"
+# export QT_AUTO_SCREEN_SCALE_FACTOR=1
+# export QT_STYLE_OVERRIDE=kvantum
 export BROWSER=xdg-open
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 # export DMENU=" dmenu -i -fn '-xos4-terminus-medium-r-*-*-24-*' -nb '#303030' -nf '#909090' -sb '#909090' -sf '#303030'"
 # export DMENU="dmenu -i -fn -xos4-terminus-medium-r-*-*-24-* -nb #303030 -nf #909090 -sb #909090 -sf #303030"
-export LEDGER_FILE="~/Documents/Tax/ledger/default.ledger"
+export LEDGER_FILE="$HOME/Documents/Tax/ledger/default.ledger"
 export ANDROID_SDK_ROOT="$HOME/.local/share/android-sdk"
 export MATES_DIR=~/.contacts/
+export SXHKD_FIFO=~/.sxhkd_fifo
+
+
+export BROWSER="xdg-open"
+
+# x11
+export PANEL_FIFO=~/.bspwm_fifo
+export PANEL_FIFO_SECOND=~/.bspwm_fifo_2
+#
+# Enable GTK+2 integration for OpenOffice.org, if available.
+export SAL_USE_VCLPLUGIN=gtk
+
+export RXVT_SOCKET=$HOME/.rxvt_socket
+
+export VDPAU_DRIVER=va_gl
+export LIBVA_DRIVER_NAME=iHD
+
+export SPP_COMMON="$HOME/git/toptal/seismic/seismic-processing-platform/common"
+
+export CM_IGNORE_WINDOW="keepassxc"
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*" --no-messages'
+
+export NNN_USE_EDITOR=1
+export NNN_DE_FILE_MANAGER=doublecmd
+export NNN_COPIER=~/bin/copier.sh
+export NNN_BMS='d:~/Documents;n:~/Nextcloud;g:~/git;s:~/git/toptal/seismic'
+export NNN_NOTE="$HOME/.note"
+export NNN_COLORS="2136"
+export NNN_FCOLORS='c1e2272e006033f7c6d6abc4'
+export NNN_ARCHIVE="\\.(7z|a|ace|alz|arc|arj|bz|bz2|cab|cpio|deb|gz|jar|lha|lz|lzh|lzma|lzo|rar|rpm|rz|t7z|tar|tbz|tbz2|tgz|tlz|txz|tZ|tzo|war|xpi|xz|Z|zip|zst)$"
+export NNN_PLUG='o:fzopen;m:nmount;x:_chmod +x $nnn;p:preview-tui;P:pdfread;R:git-changes'
+export NNN_FIFO="$HOME/nnn.fifo"
+# export NNN_FIFO="$HOME/cache/nnn.fifo"
+# export NNN_OPENER="/path/to/custom/opener"
+
+export STARDICT_DATA_DIR=~/Documents/Dictionaries
+export IDEA_JDK=/usr/lib/jvm/jdk-jetbrains
