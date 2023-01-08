@@ -1,0 +1,7 @@
+# set $term foot
+set $term kitty
+set $browser firefox
+set $editor nvim
+set $launcher rofi -release -sidebar-mode -show combi --release
+set $exit nwg-bar -p center -a middle -i 48 -s preset-0.css
+set $scratchpad alacritty --config-file ~/.config/alacritty/alacritty_scratchpad.yml -t scratchpad

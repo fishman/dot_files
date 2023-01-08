@@ -1,0 +1,16 @@
+exec rm /tmp/nwg-shell-check-update.lock
+exec wlsunset -l 25.0375 -L 121.5637 -t 4500 -T 6500 -g 1.0
+exec swaync -s /home/timebomb/.config/swaync/preset-0.css
+exec_always nwg-autotiling
+exec_always nwg-drawer -r -c 6 -is 64 -fscol 2 -s preset-0.css -term foot
+exec waybar
+#exec_always nwg-panel -c preset-0 -s preset-0.css
+exec_always nwg-shell-check-updates
+#exec swayidle timeout 1200 '"swaylock -i ~/bin/lock.png"' timeout 1800 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' 
+exec swayidle timeout 1200 nwg-lock timeout 1800 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' 
+exec eval $(gnome-keyring-daemon --start)
+exec $scratchpad
+exec blueman-applet
+exec nm-applet --indicator
+exec solaar --window=hide
+exec copyq

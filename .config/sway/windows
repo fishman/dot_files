@@ -1,0 +1,50 @@
+############    application settings   ############
+
+# focus, floating, & sticky
+for_window [app_id="(?i)(?:blueman-manager|azote|gnome-disks)"] floating enable
+for_window [app_id="(?i)(?:pavucontrol|nm-connection-editor|gsimplecal|galculator)"] floating enable
+for_window [app_id="(?i)(?:firefox|chromium)"] border none
+for_window [title="(?i)(?:copying|deleting|moving)"] floating enable
+for_window [app_id="Alacritty"  title="scratchpad"] sticky enable; floating enable; move container to scratchpad
+
+popup_during_fullscreen smart
+# Wayland default floats
+for_window [app_id="gnome-(power-statistics)"] floating enable
+for_window [app_id="org.gnome.(Calculator|Calendar|Settings|Nautilus|Weather)"] floating enable
+for_window [app_id="(pavucontrol|psensor)"] floating enable
+for_window [app_id="evolution-alarm-notify"] floating enable
+for_window [app_id="nemo"] floating enable
+for_window [app_id="solaar"] floating enable
+for_window [app_id="evolution" title="Compose Message"] floating enable
+for_window [app_id="evolution" title="Re(.*)"] floating enable
+for_window [app_id="evolution" title="Fwd(.*)"] floating enable
+for_window [app_id="mpv"] floating enable; sticky enable
+for_window [app_id="mpv"] resize set 960 540
+for_window [app_id="mpv"] border pixel 0
+for_window [app_id="firefox" title="Pushbullet"] floating enable
+for_window [app_id="firefox" title="Firefox — Sharing Indicator"] floating enable
+for_window [app_id="firefox" title="Picture-in-Picture"] floating enable; sticky enable
+for_window [app_id="firefox" title="Pushbullet – Mozilla Firefox"] floating enable
+for_window [app_id="firefox" title="About Mozilla Firefox"] floating enable
+for_window [app_id="firefox"] layout tabbed
+assign [app_id="firefox"] workspace 3
+assign [app_id="org.keepassxc.KeePassXC"] workspace 5
+
+# Brave, chrome, chromium
+for_window [title="Picture-in-picture"] floating enable
+
+# Jetbrains popup float fixes
+for_window [class="jetbrains-(.*)" title="Go to Line/Column"] floating enable
+for_window [class="jetbrains-(.*)" title="Rename"] floating enable
+for_window [class="jetbrains-(.*)" title="Open Project"] floating enable
+for_window [class="jetbrains-(.*)" title="splash"] floating enable
+for_window [shell="xwayland" title=".*Emulator.*"] floating enable
+
+# Ensure authy has borders, otherwise it can be hard to see if the bottom app has a clear background
+for_window [title="Twilio Authy"] border pixel 2
+assign [class="zoom"] workspace 3
+assign [class="discord"] workspace 3
+assign [class="Signal"] workspace 3
+assign [class="Slack"] workspace 3
+
+for_window [app_id="copyq"] floating enable, sticky enable, resize set height 600px width 550px, move position cursor, move down 330

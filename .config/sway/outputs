@@ -1,0 +1,2 @@
+output "*" bg ~/.dotfiles/wallpapers/wall.png fill
+output eDP-1 scale 1.3

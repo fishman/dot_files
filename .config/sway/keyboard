@@ -1,0 +1,9 @@
+input "type:keyboard" {
+  xkb_layout us
+  xkb_variant dvorak
+  repeat_delay 250
+  repeat_rate 60
+  xkb_capslock disabled
+  xkb_numlock disabled
+  xkb_options ctrl:nocaps
+}
