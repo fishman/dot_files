@@ -1,0 +1,139 @@
+* {
+    font-family: "Fira Sans SemiBold";
+    font-size: 12px;
+    min-height: 22px;
+}
+
+window#waybar {
+  border: none;
+  background: rgba(0, 0, 0, 0.87);
+  border-color: #5f27cd;
+  border-style: solid;
+  border-radius: 0px;
+}
+
+button.focused {
+    background-color: #5f27cd;
+}
+
+#workspaces {
+    border-radius: 0px 0px 0px 6px;
+    margin-left: -9px;
+}
+
+#workspaces button:nth-child(1) .visible {
+    border-radius: 0px 0px 0px 6px;
+}
+
+#workspaces button {
+    padding: 5px 15px 5px 10px;
+    color: #bbc2cf;
+    margin: 1px 0;
+}
+
+
+button:hover,
+#workspaces button:hover {
+    background: #2b125d;
+}
+
+button {
+    border: 0px;
+    margin: 2px 0;
+}
+
+button:hover {
+    border-radius: 0;
+    box-shadow: none;
+    border-width: 0px;
+}
+
+#workspaces button.visible {
+    color: #bbc2cf;
+    background-color: #2b125d;
+    border-radius: 0;
+    box-shadow: none;
+    border-width: 0px;
+}
+
+#workspaces button.focused.current_output {
+    color: #ffffff;
+    background-color: #5f27cd;
+    border-radius: 0px;
+}
+
+#workspaces button.urgent {
+    color: #6d4774;
+    background-color: #7bc275;
+    border-radius: 0px;
+}
+
+#workspaces button.focused:hover {
+    color: white;
+    background-color: #2b125d;
+}
+
+
+#clock,
+#backlight,
+#battery,
+#cpu,
+#custom-cpu_speed,
+#custom-mail,
+#custom-media,
+#custom-powermenu,
+#custom-spotify,
+#custom-storage,
+#custom-weather,
+#idle_inhibitor,
+#language,
+#memory,
+#mode,
+#network,
+#pulseaudio,
+#temperature,
+#tray,
+#window,
+#workspaces {
+    padding: 1px 10px;
+}
+
+#battery {
+    color: #7bc275;
+}
+
+#battery.charging {
+    color: #7bc275;
+}
+
+#battery.warning:not(.charging) {
+    background-color: #2a2e38;
+    color: #FCCE7B;
+}
+
+#custom-cpu_speed {
+    color: #C57BDB;
+    border-radius: 0px 0px 0px 0px;
+}
+
+#pulseaudio {
+    color: #4db5bd;
+}
+
+#custom-recorder {
+    font-size: 18px;
+    margin: 2px 7px 0px 7px;
+    color: #c9545d;
+}
+
+#custom-powermenu {
+    color: lightcoral;
+}
+
+#temperature {
+    color: lightpink;
+}
+
+#temperature.critical {
+    background: #eb4d4b;
+}
