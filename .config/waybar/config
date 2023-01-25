@@ -98,7 +98,8 @@
             "default": ["", "", "", ""]
         },
         "scroll-step": 2,
-        "on-click": "gnome-control-center sound",
+        "on-click": "pavucontrol",
+        "ignored-sinks": ["Easy Effects Sink"],
         "tooltip": false
     },
     "custom/storage": {
@@ -119,7 +120,7 @@
     },
     "temperature": {
         "format": "<span font='Font Awesome 5 Free 9'></span> {temperatureC:3}°C",
-        "hwmon-path": "/sys/class/thermal/thermal_zone10/temp",
+        "hwmon-path": "/sys/class/thermal/thermal_zone0/temp",
         "on-click": "terminator -e 'watch -n1 sensors'"
     },
     "custom/weather": {
@@ -155,5 +156,17 @@
         "tooltip-format": "{title}",
         "on-click": "activate",
         "on-click-middle": "close"
+    },
+    "mpris": {
+      "format": "DEFAULT: {player_icon} {dynamic}",
+      "format-paused": "DEFAULT: {status_icon} <i>{dynamic}</i>",
+      "player-icons": {
+        "default": "▶",
+        "mpv": "🎵"
+      },
+      "status-icons": {
+        "paused": "⏸"
+      },
+      // "ignored-players": ["firefox"]
     }
 }
