@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=ExpressVPN Agent
+Exec=/usr/bin/expressvpn-agent --daemon
+Icon=/usr/lib/expressvpn/icon.png
+Terminal=false
+X-MATE-Autostart-enabled=false

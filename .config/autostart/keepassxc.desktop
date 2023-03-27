@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=KeePassXC
+Comment=KeePassXC
+Exec=/usr/bin/keepassxc
+# OnlyShowIn=GNOME;Unity;MATE;Cinnamon;
+X-GNOME-Autostart-Phase=PreDisplayServer
+X-GNOME-AutoRestart=true
+X-GNOME-Autostart-Notify=true
