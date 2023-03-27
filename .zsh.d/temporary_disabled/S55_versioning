@@ -60,13 +60,6 @@ __svn_dir() {
 # ----------------------------------------------------------------------
 # various git scripts
 
-gitize() {
-        git init \
-        && git add . \
-        && git commit -a -m"initial commit" \
-        && git gc
-}
-
 # ----------------------------------------------------------------------
 # The following implements a caching mechanism for git information.
 # The RPROMPT executes get_git_bprompt_info() and include the output...

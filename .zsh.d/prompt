@@ -1,0 +1,34 @@
+# https://github.com/jackharrisonsherlock/common
+
+# Prompt symbol
+COMMON_PROMPT_SYMBOL="❯"
+
+# Colors
+COMMON_COLORS_HOST_ME=green
+COMMON_COLORS_HOST_AWS_VAULT=yellow
+COMMON_COLORS_CURRENT_DIR=blue
+COMMON_COLORS_RETURN_STATUS_TRUE=magenta
+COMMON_COLORS_RETURN_STATUS_FALSE=yellow
+COMMON_COLORS_GIT_STATUS_DEFAULT=green
+COMMON_COLORS_GIT_STATUS_STAGED=red
+COMMON_COLORS_GIT_STATUS_UNSTAGED=yellow
+COMMON_COLORS_GIT_PROMPT_SHA=green
+COMMON_COLORS_BG_JOBS=yellow
+
+# Left Prompt
+ PROMPT='$(common_host)$(common_current_dir)$(common_bg_jobs)$(common_return_status)'
+
+# Right Prompt
+ RPROMPT='$(common_git_status)'
+
+# Enable redrawing of prompt variables
+ setopt promptsubst
+
+# Prompt with current SHA
+# PROMPT='$(common_host)$(common_current_dir)$(common_bg_jobs)$(common_return_status)'
+# RPROMPT='$(common_git_status) $(git_prompt_short_sha)'
+
+# Git prompt SHA
+ZSH_THEME_GIT_PROMPT_SHA_BEFORE="%{%F{$COMMON_COLORS_GIT_PROMPT_SHA}%}"
+ZSH_THEME_GIT_PROMPT_SHA_AFTER="%{$reset_color%} "
+
