@@ -9,17 +9,19 @@ include workspaces
 include keyboard
 include pointer
 include touchpad
+include colors
 
 # nwg-shell sway config
 # Read `man 5 sway` for reference.
 
 # border & title
-for_window [title="^.*"] border pixel 1, title_format "<b> %class >> %title </b>"
-default_border pixel 1
+# for_window [title="^.*"] border pixel 1, title_format "<b> %class >> %title </b>"
+default_border none
+default_floating_border normal
 
 # gaps
-gaps inner 4
-gaps outer 0
+gaps inner 6
+gaps outer 2
 smart_gaps on
 
 # font
@@ -56,20 +58,22 @@ bindsym $Mod+Shift+c kill
 
 # core applications
 bindsym $Mod+Return       exec $term
-bindsym Mod1+Shift+Return exec $term
 # bindsym Control+Shift+t   exec $term
 bindsym $Mod+t            exec $term
 bindsym $Mod+F2           exec $term
-bindsym $Mod+s            exec nwg-shell-config
+# bindsym $Mod+s            exec nwg-shell-config
 bindsym $Mod+d            exec $dock
 bindsym $Mod+e            exec $editor
 bindsym $Mod+w            exec $browser
-bindsym Control+space     exec $launcher
+# bindsym Control+space     exec $launcher
 bindsym $Mod+r            exec $launcher
 bindsym $Mod+f            exec $filemanager
 bindsym $Mod+c            exec swaync-client -t
 bindsym Mod1+l            exec swaylock -i ~/bin/lock.png
 bindsym $Mod+F1           exec nwg-shell-help
+bindsym $Mod+Shift+o      exec ~/bin/opendownloads
+bindsym $Mod+m            exec pactl set-default-sink $(pactl list short sinks |awk '{print $2}' |rofi $rofi_args -dmenu)
+
 
 # Exit menu
 bindsym $Mod+x exec $exit
@@ -78,7 +82,8 @@ bindsym $Mod+x exec $exit
 bindsym $Mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
 # screenshot
-bindsym Print exec screenshot fullscreen
+# bindsym Print exec screenshot fullscreen
+bindsym Print exec hyprshot -o ~/Screenshots -m region
 bindsym Control+Print exec screenshot display
 bindsym Shift+Control+Print exec grim -g "$(slurp)" - | swappy -f -
 bindsym $Mod+Shift+Control+Print exec screenshot focused
@@ -88,19 +93,33 @@ bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86AudioStop exec playerctl stop
-bindsym XF86AudioMute exec pamixer -t
-bindsym XF86AudioRaiseVolume exec pamixer -i 2
-bindsym XF86AudioLowerVolume exec pamixer -d 2
+bindsym $Mod+F9       exec playerctl play-pause
+bindsym $Mod+F10      exec playerctl previous
+bindsym $Mod+F11      exec playerctl next
+bindsym XF86AudioRaiseVolume exec volumectl -u up
+bindsym XF86AudioLowerVolume exec volumectl -u down
+bindsym XF86AudioMute exec volumectl toggle-mute
+bindsym XF86AudioMicMute exec volumectl -m toggle-mute
+# bindsym XF86AudioMute exec pamixer -t
+# bindsym XF86AudioRaiseVolume exec pamixer -i 2
+# bindsym XF86AudioLowerVolume exec pamixer -d 2
 
 # backlight
-bindsym XF86MonBrightnessUp exec light -A 5
-bindsym XF86MonBrightnessDown exec light -U 5
+bindsym XF86MonBrightnessUp exec lightctl up
+bindsym XF86MonBrightnessDown exec lightctl down
+# bindsym XF86MonBrightnessUp exec light -A 5
+# bindsym XF86MonBrightnessDown exec light -U 5
 
 # Reload the configuration file
 bindsym $Mod+Control+r reload
 bindsym $Mod+Control+p restart
 
 ###########          Workspace Bindings          ###############
+# Move workspaces
+bindsym Ctrl+$Mod+Left  move workspace to output left
+bindsym Ctrl+$Mod+Right move workspace to output right
+bindsym Ctrl+$Mod+Up    move workspace to output up
+bindsym Ctrl+$Mod+Down  move workspace to output down
 
 # switch to workspace
 bindsym $Mod+1 workspace number 1
@@ -261,4 +280,8 @@ bindsym $Mod+equal               swaymsg '[title="scratchpad"] scratchpad show'
 # bindgesture swipe:3:right        workspace next
 
 bindsym $Mod+Mod1+c              exec copyq toggle
-bindsym $Mod+v                   exec keepassxc
+bindsym $Mod+v                   exec bash -c 'swaymsg "[app_id=org.keepassxc.KeePassXC] focus" || exec keepassxc'
+
+bindsym $Mod+Mod1+b              exec rofi-bluetooth
+bindsym $Mod+Mod1+n              exec ~/bin/networkmanager_dmenu
+bindsym $Mod+Mod1+o              exec ~/bin/ocr_wayland

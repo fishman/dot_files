@@ -1,11 +1,18 @@
 ############    application settings   ############
 
 # focus, floating, & sticky
+for_window [app_id="q4wine"] floating enable
+for_window [app_id="org.kde.kdeconnect.app"] floating enable
+for_window [app_id="com.nextcloud.desktopclient.nextcloud"] floating enable
 for_window [app_id="(?i)(?:blueman-manager|azote|gnome-disks)"] floating enable
 for_window [app_id="(?i)(?:pavucontrol|nm-connection-editor|gsimplecal|galculator)"] floating enable
 for_window [app_id="(?i)(?:firefox|chromium)"] border none
 for_window [title="(?i)(?:copying|deleting|moving)"] floating enable
-for_window [app_id="Alacritty"  title="scratchpad"] sticky enable; floating enable; move container to scratchpad
+for_window [title="(?i)(?:copying|deleting|moving)"] floating enable
+for_window [app_id="gnome-next-meeting-applet"] sticky enable; floating enable
+for_window [app_id="Alacritty" title="scratchpad"] sticky enable; floating enable; move container to scratchpad
+for_window [app_id="org.telegram.desktop" title="TelegramDesktop"] sticky enable; floating enable
+for_window [app_id="Waydroid"] floating enable
 
 popup_during_fullscreen smart
 # Wayland default floats
@@ -18,9 +25,13 @@ for_window [app_id="solaar"] floating enable
 for_window [app_id="evolution" title="Compose Message"] floating enable
 for_window [app_id="evolution" title="Re(.*)"] floating enable
 for_window [app_id="evolution" title="Fwd(.*)"] floating enable
+for_window [app_id="thunderbird" title="(.*)Reminder"] floating enable
 for_window [app_id="mpv"] floating enable; sticky enable
 for_window [app_id="mpv"] resize set 960 540
 for_window [app_id="mpv"] border pixel 0
+for_window [app_id="org.gnome.Settings"] border 0
+for_window [app_id="com.usebottles.bottles"] border none
+for_window [app_id="bottles"] border none
 for_window [app_id="firefox" title="Pushbullet"] floating enable
 for_window [app_id="firefox" title="Firefox — Sharing Indicator"] floating enable
 for_window [app_id="firefox" title="Picture-in-Picture"] floating enable; sticky enable
@@ -29,6 +40,16 @@ for_window [app_id="firefox" title="About Mozilla Firefox"] floating enable
 for_window [app_id="firefox"] layout tabbed
 assign [app_id="firefox"] workspace 3
 assign [app_id="org.keepassxc.KeePassXC"] workspace 5
+
+# default floating
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+# for_window [con_mark="floating_con"] floating enable
+for_window [instance="update_installer"] floating enable	
 
 # Brave, chrome, chromium
 for_window [title="Picture-in-picture"] floating enable
@@ -46,5 +67,10 @@ assign [class="zoom"] workspace 3
 assign [class="discord"] workspace 3
 assign [class="Signal"] workspace 3
 assign [class="Slack"] workspace 3
+
+# eclipse
+for_window [class="Eclipse"] floating enable
+for_window [class="Eclipse" title="eclipse-workspace(.*)"] floating disable
+
 
 for_window [app_id="copyq"] floating enable, sticky enable, resize set height 600px width 550px, move position cursor, move down 330

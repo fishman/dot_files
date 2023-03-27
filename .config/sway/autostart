@@ -1,16 +1,33 @@
+# comments
 exec rm /tmp/nwg-shell-check-update.lock
+# exec wlsunset -l 37.7749 -L "-122.4194" -t 4500 -T 6500 -g 1.0
 exec wlsunset -l 25.0375 -L 121.5637 -t 4500 -T 6500 -g 1.0
 exec swaync -s /home/timebomb/.config/swaync/preset-0.css
 exec_always nwg-autotiling
 exec_always nwg-drawer -r -c 6 -is 64 -fscol 2 -s preset-0.css -term foot
-exec waybar
+exec --no-startup-id "/usr/bin/env bash -c '[[ -f $HOME/bin/launch-waybar ]] && . $HOME/bin/launch-waybar &>> $HOME/autostart.log'"
 #exec_always nwg-panel -c preset-0 -s preset-0.css
 exec_always nwg-shell-check-updates
-#exec swayidle timeout 1200 '"swaylock -i ~/bin/lock.png"' timeout 1800 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' 
-exec swayidle timeout 1200 nwg-lock timeout 1800 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' 
+#exec swayidle timeout 1200 '"swaylock -i ~/bin/lock.png"' timeout 1800 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' 
+# exec swayidle timeout 300 nwg-lock \
+#   timeout 600 'swaymsg "output * power off"' \
+#   resume 'swaymsg "output * power on"' \
+#   before-sleep nwg-lock
+
+exec swayidle -w \
+	timeout 300 'swaylock -i "$HOME/bin/lockhi.png" -f -c 000000' \
+	timeout 600 'swaymsg "output * power off"' \
+		resume 'swaymsg "output * power on"' \
+	before-sleep 'swaylock -i "$HOME/bin/lockhi.png" -f -c 000000'
+
 exec eval $(gnome-keyring-daemon --start)
-exec $scratchpad
+# exec --no-startup-id kwalletd5
+exec --no-startup-id $scratchpad
 exec blueman-applet
 exec nm-applet --indicator
 exec solaar --window=hide
+exec --no-startup-id udiskie --appindicator --no-automount
+exec --no-startup-id fcitx5 -d
 exec copyq
+exec avizo-service
+exec /usr/lib/goa-daemon --replace

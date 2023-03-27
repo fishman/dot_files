@@ -1,6 +1,6 @@
 input "type:keyboard" {
-  xkb_layout us
-  xkb_variant dvorak
+  xkb_layout us,de
+  xkb_variant dvorak,
   repeat_delay 250
   repeat_rate 60
   xkb_capslock disabled

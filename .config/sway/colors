@@ -1,0 +1,16 @@
+set $bg-color            #77555d
+set $inactive-bg-color   #2b303b
+set $text-color          #c0c5ce
+set $inactive-text-color #9da3ad
+set $urgent-bg-color     #E53935
+
+set $indicator-color-focused	#77555d
+set $indicator-color           #2b303b
+set $separator           #757575
+
+# window colors
+#                       border              background         text                 indicator        child_border
+client.focused          $bg-color           $bg-color          $text-color          $indicator-color-focused $bg-color
+client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color $indicator-color $inactive-bg-color
+client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color $indicator-color $inactive-bg-color
+client.urgent $urgent-bg-color $urgent-bg-color $text-color $indicator-color $bg-color
