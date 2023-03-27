@@ -13,17 +13,18 @@ bindkey "^[[B" history-beginning-search-forward
 # bindkey "^[[A"  up-line-or-search       # cursor up
 # bindkey "^[[B"  down-line-or-search     # <ESC>-
 
-bindkey -v "^A" beginning-of-line
-bindkey -v "^E" end-of-line
-bindkey -v "^K" kill-line
-bindkey -v "^L" clear-screen
-# bindkey -v "^R" history-incremental-search-backward
-bindkey -v "^U" kill-whole-line
-bindkey -v "^V" quoted-insert
-#bindkey -v "^W" backward-kill-word
+# bindkey -v "^A" beginning-of-line
+# bindkey -v "^E" end-of-line
+# bindkey -v "^K" kill-line
+# bindkey -v "^L" clear-screen
+# bindkey -v "^U" kill-whole-line
+# bindkey -v "^N" down-history
+# bindkey -v "^P" up-history
 
-bindkey -v "^N" down-history
-bindkey -v "^P" up-history
+
+# bindkey -v "^R" history-incremental-search-backward
+# bindkey -v "^V" quoted-insert
+#bindkey -v "^W" backward-kill-word
 
 #  bindkey -v "^[H" run-help
 #  bindkey -v "^[h" run-help
@@ -63,4 +64,5 @@ bindkey -s '^p' 'vg^M'
 # open editor with v
 autoload -U edit-command-line
 zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
+bindkey '^v' edit-command-line
+# bindkey -M vicmd v edit-command-line

@@ -20,10 +20,12 @@ export RXVT_SOCKET=$HOME/.rxvt_socket
 export CVS_RSH="ssh"
 export CVSREAD=yes
 export MANWIDTH=80
-export EDITOR=vim
-export GIT_EDITOR=vim
+export EDITOR='emacsclient -t -a=""'
+export GIT_EDITOR='emacsclient -t -a=""'
+# export EDITOR=nvim
+# export GIT_EDITOR=nvim
 export VIEW=open
-export VISUAL=vim
+export VISUAL=nvim
 #export CCACHE_DIR=$HOME/.ccache
 
 export INPUTRC="~/.inputrc"
@@ -92,7 +94,18 @@ export XAUTHORITY=~/.Xauthority
 
 # export QT_STYLE_OVERRIDE="GTK+"
 # export QT_STYLE_OVERRIDE="GTK+"
-[ "$XDG_CURRENT_DESKTOP" = "GNOME" ] && export QT_QPA_PLATFORMTHEME="qt5ct"
+# [ "$XDG_CURRENT_DESKTOP" = "GNOME" ] && export QT_QPA_PLATFORMTHEME="qt5ct"
+export XDG_CURRENT_DESKTOP="sway"
+export QT_QPA_PLATFORMTHEME="qt5ct"
+if [[ $XDG_CURRENT_DESKTOP = "sway" ]] ; then 
+  # Fixes issues on jetbrains ides
+  export _JAVA_AWT_WM_NONREPARENTING=1
+  # Force firefox into wayland
+  export MOZ_ENABLE_WAYLAND=1
+  export MOZ_WAYLAND_USE_VAAPI=1
+  export QT_QPA_PLATFORM=wayland
+  export XDG_SESSION_DESKTOP=sway
+fi
 # export QT_AUTO_SCREEN_SCALE_FACTOR=1
 # export QT_STYLE_OVERRIDE=kvantum
 export BROWSER=xdg-open
@@ -141,3 +154,9 @@ export NNN_FIFO="$HOME/nnn.fifo"
 
 export STARDICT_DATA_DIR=~/Documents/Dictionaries
 export IDEA_JDK=/usr/lib/jvm/jdk-jetbrains
+
+export NB_DIR=~/Nextcloud/nb
+export NB_DEFAULT_EXTENSION=org
+
+export AGKOZAK_MULTILINE=0
+export ASDF_DATA_DIR="$HOME/.asdf"

@@ -87,7 +87,7 @@ alias grep='egrep'
 alias mutt='TERM=xterm-256color mutt'
 alias irssi='screen -S irssi -d -R irssi'
 # color for stuff
-alias flux='xflux -l 53.5559 -q 9.98766'
+# alias flux='xflux -l 53.5559 -q 9.98766'
 
 # ls alias
 if [[ $OS == Darwin  &&  $EPREFIX == '' ]]; then
@@ -430,3 +430,5 @@ alias dockerip="docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddre
 alias macgenerator='printf "00:60:2F:%02X:%02X:%02X\n" $[RANDOM%256] $[RANDOM%256] $[RANDOM%256]'
 alias rmselect='fzf -m --print0 | xargs -0 -p rm'
 alias ssh="TERM=xterm-256color ssh"
+alias updatemirrors="sudo reflector --latest 10 --protocol http,https --sort rate --save /etc/pacman.d/mirrorlist"
+alias dotfiles='/usr/bin/git --git-dir=/home/timebomb/.dotfiles/ --work-tree=/home/timebomb'
