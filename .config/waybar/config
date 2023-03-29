@@ -1,172 +1,182 @@
 {
-    "layer": "top",
-    "position": "top",
-    "modules-left": ["sway/workspaces", "wlr/taskbar", "sway/mode", "sway/window"],
-    "modules-center": ["clock"],
-    "modules-right": ["custom/recorder","sway/language", "tray", "idle_inhibitor", "pulseaudio", "temperature", "custom/cpu_speed", "battery", "custom/powermenu"],
-    "sway/mode": {
-        "format": " {}"
+  "ipc": true,
+  "position": "top",
+  "modules-left": [
+    "idle_inhibitor",
+    "sway/workspaces",
+    "temperature",
+    "memory",
+    "cpu",
+    "custom/gnma",
+  ],
+  "modules-center": [
+    "clock",
+  ],
+  "modules-right": [
+    "pulseaudio",
+    "network",
+    "bluetooth",
+    "battery",
+    "tray",
+    /* "sway/scratchpad", */
+    "custom/powermenu",
+  ],
+  "sway/workspaces": {
+    "disable-scroll-wraparound": true,
+    "format": " {icon} ",
+    "format-icons": {
+      "urgent": "",
+      "focused": "",
+      "default": ""
     },
-    "sway/workspaces": {
-        "disable-scroll": true,
-        "disable-markup": false,
-        "format": "{icon}",
-        "format-icons": {
-            "1": "1 <span font='Font Awesome 5 Free 11'> </span>",
-            "2": "2 <span font='Font Awesome 5 Free 11'> </span>",
-            "3": "3 <span font='Font Awesome 5 Free 11'> </span>",
-            "4": "4 <span font='Font Awesome 5 Free 11'> </span>",
-            "5": "5 <span font='Font Awesome 5 Free 11'> </span>",
-            "6": "6 <span font='Font Awesome 5 Free 11'> </span>"
-        }
+    "smooth-scrolling-threshold": 4.5
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": ""
     },
-    "sway/window": {
-        "max-length": 60,
-        "tooltip": false
+    "tooltip": true
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-muted": "婢",
+    "format-icons": {
+      "headphone": [" ", " ", " "],
+      "headset": ["﫽 ", "﫽 ", "﫽 "],
+      "hands-free": [" ", " ", " "],
+      "default": ["", "", ""]
     },
-    "clock": {
-        "format": "{:%a %d %b - %H:%M}",
-        "on-click": "gnome-calendar"
+    "states": {
+      "warning": 95,
     },
-    "hyprland/window": {
-        "format": "👉 {}",
-        "separate-outputs": true
+    "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%- && wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2*100}' > $WOBSOCK",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ && wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print $2*100}' > $WOBSOCK",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "pavucontrol",
+    "smooth-scrolling-threshold": 1.5,
+    "tooltip": false,
+  },
+  "battery": {
+    "interval": 10,
+    "states": {
+      "warning": 25,
+      "critical": 10
     },
-    "custom/cpu_speed": {
-        "interval": 10,
-        "return-type": "json",
-        "exec": "~/.config/waybar/modules/cpu_speed.sh",
-        "format": "<span font='Font Awesome 5 Free 11'>{icon}</span>  {}",
-        "format-icons": [""],
-        "escape": true,
-        "on-click": "terminator -e htop"
+    "format": "{capacity}% {icon}",
+    "format-icons": ["", "", "", "", "", "", "", "", ""],
+    "format-plugged": " ",
+    "format-charging": " {icon}",
+    "tooltip-format-plugged": "",
+    "tooltip-format-charging": "  Charged in {time} ({capacity}%)",
+    "tooltip-format-discharging": "  Empty in {time} ({capacity}%)",
+    "tooltip": true
+  },
+  "custom/gnma": {
+    "format": " {} ",
+    "interval": 10,
+    /* "exec": "gnome-next-meeting-applet dbus get_event | cut -c -35", */
+    "exec": "echo $(gnome-next-meeting-applet dbus get_event_json | jq -r .timeto | cut -c -10) - $(gnome-next-meeting-applet dbus get_event_json | jq -r .title | cut -c -17 )",
+    "exec-if": "pgrep -f gnome-next-meeting-applet",
+    "max-length": 50,
+    "min-length": 1,
+    "on-click": "gnome-next-meeting-applet dbus open_event_url",
+  },
+  "clock": {
+    "on-click-right": "gnome-calendar &",
+    "format": "{:%H:%M}",
+    "tooltip": true,
+    "locale": "de_DE.UTF-8",
+    "format-calendar-weekdays": "<span foreground='#B5E8E0'><b>{}</b></span>",
+    "format-calendar-weeks": "<span foreground='#DDB6F2'><b>{:%V}</b></span>",
+    "calendar-weeks-pos": "right",
+    "tooltip-format": "{:%A, %d %b %Y}\n<tt>{calendar}</tt>",
+  },
+  "memory": {
+    "interval": 4,
+    "format": "﬙ {percentage:2}%",
+    "states": {
+      "warning": 85,
     },
-    "sway/language": {
-        "format": "<span font='Font Awesome 5 Free 9'>🏳️</span> {}",
-        "tooltip-format": "{long}",
-        "on-click": "swaymsg input 'type:keyboard' xkb_switch_layout next"
+  },
+  "cpu": {
+    "interval": 4,
+    "format": " {usage:2}%"
+  },
+  "mpd": {
+    "max-length": 25,
+    "format": "<span foreground='#bb9af7'></span> {title}",
+    "format-paused": " {title}",
+    "format-stopped":"<span foreground='#bb9af7'></span>",
+    "format-disconnected": "",
+    "on-click": "mpc --quiet toggle",
+    "on-click-right": "mpc ls | mpc add",
+    "on-click-middle": "kitty ncmpcpp",
+    "on-scroll-up": "mpc --quiet prev",
+    "on-scroll-down": "mpc --quiet next",
+    "smooth-scrolling-threshold":5,
+    "tooltip-format": "{title} - {artist} ({elapsedTime:%M:%S}/{totalTime:%H:%M:%S})"
+  },
+  "network": {
+    "interval": 4,
+    "format-wifi": "說 {essid}",
+    "format-ethernet": "  {ifname}",
+    "format-linked": "說 {essid} (No IP)",
+    "format-disconnected": "說 Disconnected",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)\n  {ipaddr}\n  {gwaddr}/{cidr}",
+    "tooltip-format-ethernet": "  {ipaddr}\n  {gwaddr}/{cidr}",
+    "tooltip-format-disconnected": "Disconnected",
+    "on-click": "networkmanager_dmenu",
+    "on-click-right": "nmtui",
+    "max-length": 30,
+    "tooltip": true
+  },
+  "bluetooth": {
+  	"format-on": "",
+    "format-disabled": "",
+    "format-off": "",
+  	"format-connected": " {num_connections}",
+  	"tooltip-format": "{controller_alias}\t{controller_address}",
+  	"tooltip-format-connected": "{device_enumerate}",
+  	"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+  	"tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+    "on-click": "blueman-manager"
+  },
+  "temperature": {
+    "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
+    "critical-threshold": 90,
+    "tooltip": false,
+    "format": " {temperatureC}°C"
+  },
+  "sway/scratchpad": {
+    "format": "{icon} {count}",
+    "show-empty": false,
+    "format-icons": ["", ""],
+    "on-click": "swaymsg 'scratchpad show'",
+    "on-click-right": "swaymsg 'move scratchpad'",
+    "tooltip": true,
+    "tooltip-format": "{app}: {title}"
+  },
+  "custom/powermenu": {
+    "format": "",
+    "on-click": "~/bin/wofi_power",
+    "tooltip": false
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 8
+  },
+  "mpris": {
+    "format": "{player_icon} {dynamic}",
+    "format-paused": "{status_icon} <i>{dynamic}</i>",
+    "player-icons": {
+      "default": "▶",
+      "mpv": "🎵"
     },
-    "custom/powermenu": {
-        "return-type": "json",
-        "exec": "~/.config/waybar/modules/powermenu.sh",
-        "format": "<span font='Font Awesome 5 Free 9'>{icon}</span>  {}",
-        "format-icons": [""],
-        "interval": 3600,
-        "escape": true,
-        "on-click": "~/sway/scripts/powermenu"
+    "status-icons": {
+      "paused": "⏸"
     },
-    "custom/recorder": {
-		"format": "",
-		"return-type": "json",
-		"interval": 4,
-		"exec": "echo '{\"class\": \"recording\"}'",
-		"exec-if": "pgrep wf-recorder"
-	},
-    "battery": {
-        "format": "<span font='Font Awesome 5 Free 11'>{icon}</span>  {capacity}% - {time}",
-        "format-icons": ["", "", "", "", ""],
-        "format-time": "{H}h{M}m",
-        "format-charging": "<span font='Font Awesome 5 Free'></span>  <span font='Font Awesome 5 Free 11'>{icon}</span>  {capacity}% - {time}",
-        "format-full": "<span font='Font Awesome 5 Free'></span>  <span font='Font Awesome 5 Free 11'>{icon}</span>  Charged",
-        "interval": 30,
-        "states": {
-            "warning": 25,
-            "critical": 10
-        },
-        "tooltip": false,
-        "on-click": "gnome-power-statistics"
-    },
-    "network": {
-        "format": "{icon}",
-        "format-alt": "{ipaddr}/{cidr} {icon}",
-        "format-alt-click": "click-right",
-        "format-wifi": "<span font='Font Awesome 5 Free 10'></span>  {essid} ({signalStrength}%)",
-        "format-ethernet": " {ifname}",
-        "format-disconnected": "⚠ Disconnected",
-        "on-click": "terminator -e ~/sway/scripts/network-manager",
-        // "on-click": "gnome-control-center wifi",
-        "tooltip": false
-    },
-    "pulseaudio": {
-        "format": "<span font='Font Awesome 5 Free 11'>{icon:2}</span> {volume:4}% - {desc}",
-        "format-bluetooth": "<span font='Font Awesome 5 Free 11'> {icon:2}</span> {volume:4}% - {desc}",
-        "format-alt": "<span font='Font Awesome 5 Free 11'>{icon:2}</span> {volume:4}%",
-        "format-alt-click": "click-right",
-        "format-muted": "<span font='Font Awesome 5 Free 11'></span>",
-        "format-icons": {
-            "headphone": [" ", " ", " ", " "],
-            "default": ["", "", "", ""]
-        },
-        "scroll-step": 2,
-        "on-click": "pavucontrol",
-        "ignored-sinks": ["Easy Effects Sink"],
-        "tooltip": false
-    },
-    "custom/storage": {
-        "format": "{} ",
-        "format-alt": "{percentage}% ",
-        "format-alt-click": "click-right",
-        "return-type": "json",
-        "interval": 60,
-        "exec": "~/.config/waybar/modules/storage.sh"
-    },
-    "backlight": {
-        "format": "{icon}",
-        "format-alt": "{percent}% {icon}",
-        "format-alt-click": "click-right",
-        "format-icons": ["", ""],
-        "on-scroll-down": "light -A 1",
-        "on-scroll-up": "light -U 1"
-    },
-    "temperature": {
-        "format": "<span font='Font Awesome 5 Free 9'></span> {temperatureC:3}°C",
-        "hwmon-path": "/sys/class/thermal/thermal_zone0/temp",
-        "on-click": "terminator -e 'watch -n1 sensors'"
-    },
-    "custom/weather": {
-        "format": "{}",
-        "format-alt": "{alt}: {}",
-        "format-alt-click": "click-right",
-        "interval": 1800,
-        "return-type": "json",
-        "exec": "~/.config/waybar/modules/weather.sh",
-        "exec-if": "ping wttr.in -c1",
-        // "on-click": "terminator -p Small -e 'bash -c \"curl -s https://en.wttr.in; read line\"'"
-        "on-click": "gnome-weather"
-    },
-    "idle_inhibitor": {
-        "format": "{icon}",
-        "format-alt": "{icon} idle {status}",
-        "format-alt-click": "click-right",
-        "format-icons": {
-            "activated": "<span font='Font Awesome 5 Free 9'></span>",
-            "deactivated": "<span font='Font Awesome 5 Free 9'></span>"
-        },
-        "tooltip": false
-    },
-
-    "tray": {
-        "icon-size": 18,
-        "spacing": 18
-    },
-    "wlr/taskbar": {
-        "format": "{icon}",
-        "icon-size": 14,
-        "icon-theme": "Flat-Remix-Violet-Dark",
-        "tooltip-format": "{title}",
-        "on-click": "activate",
-        "on-click-middle": "close"
-    },
-    "mpris": {
-      "format": "DEFAULT: {player_icon} {dynamic}",
-      "format-paused": "DEFAULT: {status_icon} <i>{dynamic}</i>",
-      "player-icons": {
-        "default": "▶",
-        "mpv": "🎵"
-      },
-      "status-icons": {
-        "paused": "⏸"
-      },
-      // "ignored-players": ["firefox"]
-    }
+    "ignored-players": ["firefox"]
+  },
 }

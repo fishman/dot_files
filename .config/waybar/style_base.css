@@ -1,0 +1,156 @@
+* {
+  font-family: "Hack Nerd Font";
+  font-size: 11pt;
+  font-weight: 600;
+  min-height: 0;
+}
+
+#waybar {
+  background-color: @base;
+}
+
+#workspaces {
+  background-color: @surface0;
+  border-radius: 0px 1rem 1rem 0px;
+  margin: 5px;
+  margin-left: 0px;
+}
+
+#workspaces button {
+  color: @lavender;
+  border-radius: 1rem;
+  padding: 0.4rem;
+}
+
+#workspaces button.focused {
+  color: @sky;
+  border-radius: 1rem;
+}
+
+#workspaces button:hover {
+  background-color: @pink;
+  color: @sapphire;
+  border-radius: 1rem;
+}
+
+tooltip {
+  background: @surface1;
+  border-radius: 8px;
+}
+
+tooltip label {
+  color: @text;
+}
+
+#custom-launcher {
+  color: @blue;
+}
+#scratchpad, #mode, #clock, #tray, #memory, #temperature,#cpu,#mpd, #idle_inhibitor, #backlight, #pulseaudio, #bluetooth, #network, #battery, #custom-powermenu, #custom-cava-internal, #custom-launcher, #custom-theme_toggle {
+  padding: 0.4rem 1rem;
+  margin: 5px 0;
+}
+
+#scratchpad {
+  color: @text
+}
+
+#tray {
+  margin: 0 8px;
+}
+
+#memory {
+  color: @sky;
+}
+
+#cpu {
+  color: @rosewater;
+}
+
+#custom-theme_toggle {
+  padding-right: 0.8rem;
+}
+
+#custom-theme_toggle.dark {
+  color: @mauve;
+}
+#custom-theme_toggle.light {
+  color: @peach;
+}
+#custom-theme_toggle:hover {
+  color: @surface2;
+}
+#custom-theme_toggle {
+  border-radius: 1rem 0px 0px 1rem;
+  background-color: @surface0;
+}
+#clock {
+  /* border-radius: 1rem 1rem 1rem 1rem; */
+  /* background-color: @surface0; */
+  padding-left: 0px;
+  color: @text;
+}
+#idle_inhibitor {
+  border-radius: 1rem 0px 0px 1rem;
+  background-color: @surface0;
+  color: @mauve;
+}
+#temperature {
+  color: @teal;
+}
+
+#temperature.critical {
+  color: @red;
+}
+
+#backlight {
+  background-color: @surface0;
+  color: @peach;
+}
+#pulseaudio {
+  background-color: @surface0;
+  border-radius: 1rem 0px 0px 1rem;
+  color: @flamingo;
+}
+
+#bluetooth {
+  padding-left: 0px;
+  background-color: @surface0;
+  color: @sky;
+}
+
+#network {
+  padding-left: 0px;
+  background-color: @surface0;
+  color: @green;
+}
+#network.disconnected {
+  color: @text;
+}
+#battery {
+  padding-left: 0px;
+  border-radius: 0px 1rem 1rem 0px;
+  background-color: @surface0;
+}
+
+#battery.charging, #battery.full, #battery.discharging {
+  color: @rosewater;
+}
+#battery.plugged {
+  color: @sapphire;
+}
+#battery.critical:not(.charging) {
+  color: @red;
+}
+#custom-powermenu {
+  color: @flamingo;
+}
+#mpd.paused {
+  color: #414868;
+  font-style: italic;
+}
+#mpd.stopped {
+  background: transparent;
+}
+#mpd {
+  color: #c0caf5;
+}
