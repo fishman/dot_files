@@ -1,1 +1,0 @@
-mpris/mpv.lua
