@@ -1,0 +1,3582 @@
+#compdef solo2
+
+autoload -U is-at-least
+
+_solo2() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'-V[Print version]' \
+'--version[Print version]' \
+":: :_solo2_commands" \
+"*::: :->solo2" \
+&& ret=0
+    case $state in
+    (solo2)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-command-$line[1]:"
+        case $line[1] in
+            (app)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_solo2__app_commands" \
+"*::: :->app" \
+&& ret=0
+
+    case $state in
+    (app)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-command-$line[1]:"
+        case $line[1] in
+            (admin)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_solo2__app__admin_commands" \
+"*::: :->admin" \
+&& ret=0
+
+    case $state in
+    (admin)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-admin-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(locked)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(maintenance)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(restart)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(uuid)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(version)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(wink)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__admin__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-admin-help-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(locked)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(maintenance)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(restart)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(uuid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(version)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(wink)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(fido)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_solo2__app__fido_commands" \
+"*::: :->fido" \
+&& ret=0
+
+    case $state in
+    (fido)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-fido-command-$line[1]:"
+        case $line[1] in
+            (init)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(wink)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__fido__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-fido-help-command-$line[1]:"
+        case $line[1] in
+            (init)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(wink)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(ndef)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_solo2__app__ndef_commands" \
+"*::: :->ndef" \
+&& ret=0
+
+    case $state in
+    (ndef)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-ndef-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(capabilities)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(data)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__ndef__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-ndef-help-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(capabilities)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(data)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(oath)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_solo2__app__oath_commands" \
+"*::: :->oath" \
+&& ret=0
+
+    case $state in
+    (oath)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-oath-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':label -- Label of credential:' \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(register)
+_arguments "${_arguments_options[@]}" \
+'-i+[(optional) issuer to use for the OATH credential, e.g., example.com]:ISSUER: ' \
+'--issuer=[(optional) issuer to use for the OATH credential, e.g., example.com]:ISSUER: ' \
+'-a+[]:ALGORITHM:(sha1 sha256)' \
+'--algorithm=[]:ALGORITHM:(sha1 sha256)' \
+'-k+[]:KIND:(hotp totp)' \
+'--kind=[]:KIND:(hotp totp)' \
+'-c+[(only HOTP) initial counter to use for HOTPs]:COUNTER: ' \
+'--counter=[(only HOTP) initial counter to use for HOTPs]:COUNTER: ' \
+'-d+[number of digits to output]:DIGITS: ' \
+'--digits=[number of digits to output]:DIGITS: ' \
+'-p+[(only TOTP) period in seconds for which a TOTP is valid]:PERIOD: ' \
+'--period=[(only TOTP) period in seconds for which a TOTP is valid]:PERIOD: ' \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':label -- label to use for the OATH secret, e.g. alice@trussed.dev:' \
+':secret -- the actual OATH seed, e.g. JBSWY3DPEHPK3PXPJBSWY3DPEHPK3PXP:' \
+&& ret=0
+;;
+(reset)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(totp)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':label -- Label of credential:' \
+'::timestamp -- timestamp to use to generate the OTP, as seconds since the UNIX epoch:' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__oath__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-oath-help-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(register)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(reset)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(totp)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(piv)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_solo2__app__piv_commands" \
+"*::: :->piv" \
+&& ret=0
+
+    case $state in
+    (piv)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-piv-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__piv__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-piv-help-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(provision)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_solo2__app__provision_commands" \
+"*::: :->provision" \
+&& ret=0
+
+    case $state in
+    (provision)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-provision-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(generate-ed255-key)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(generate-p256-key)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(generate-x255-key)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(store-ed255-cert)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':der -- Certificate in DER format:' \
+&& ret=0
+;;
+(store-p256-cert)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':der -- Certificate in DER format:' \
+&& ret=0
+;;
+(store-x255-cert)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':der -- Certificate in DER format:' \
+&& ret=0
+;;
+(store-t1-pubkey)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':bytes -- Ed255 public key (raw, 32 bytes):' \
+&& ret=0
+;;
+(store-fido-batch-cert)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':cert -- Attestation certificate:' \
+&& ret=0
+;;
+(store-fido-batch-key)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':bytes -- P256 private key in internal format:' \
+&& ret=0
+;;
+(reformat-filesystem)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(write-file)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':data -- binary data file:' \
+':path -- path in internal filesystem:' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__provision__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-provision-help-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(generate-ed255-key)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(generate-p256-key)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(generate-x255-key)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-ed255-cert)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-p256-cert)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-x255-cert)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-t1-pubkey)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-fido-batch-cert)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-fido-batch-key)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(reformat-filesystem)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(write-file)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(qa)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_solo2__app__qa_commands" \
+"*::: :->qa" \
+&& ret=0
+
+    case $state in
+    (qa)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-qa-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__qa__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-qa-help-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-help-command-$line[1]:"
+        case $line[1] in
+            (admin)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__help__admin_commands" \
+"*::: :->admin" \
+&& ret=0
+
+    case $state in
+    (admin)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-help-admin-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(locked)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(maintenance)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(restart)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(uuid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(version)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(wink)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(fido)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__help__fido_commands" \
+"*::: :->fido" \
+&& ret=0
+
+    case $state in
+    (fido)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-help-fido-command-$line[1]:"
+        case $line[1] in
+            (init)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(wink)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(ndef)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__help__ndef_commands" \
+"*::: :->ndef" \
+&& ret=0
+
+    case $state in
+    (ndef)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-help-ndef-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(capabilities)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(data)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(oath)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__help__oath_commands" \
+"*::: :->oath" \
+&& ret=0
+
+    case $state in
+    (oath)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-help-oath-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(register)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(reset)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(totp)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(piv)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__help__piv_commands" \
+"*::: :->piv" \
+&& ret=0
+
+    case $state in
+    (piv)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-help-piv-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(provision)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__help__provision_commands" \
+"*::: :->provision" \
+&& ret=0
+
+    case $state in
+    (provision)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-help-provision-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(generate-ed255-key)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(generate-p256-key)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(generate-x255-key)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-ed255-cert)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-p256-cert)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-x255-cert)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-t1-pubkey)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-fido-batch-cert)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-fido-batch-key)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(reformat-filesystem)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(write-file)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(qa)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__app__help__qa_commands" \
+"*::: :->qa" \
+&& ret=0
+
+    case $state in
+    (qa)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-app-help-qa-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(bootloader)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_solo2__bootloader_commands" \
+"*::: :->bootloader" \
+&& ret=0
+
+    case $state in
+    (bootloader)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-bootloader-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(reboot)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__bootloader__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-bootloader-help-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(reboot)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(completion)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_solo2__completion_commands" \
+"*::: :->completion" \
+&& ret=0
+
+    case $state in
+    (completion)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-completion-command-$line[1]:"
+        case $line[1] in
+            (bash)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(fish)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(power-shell)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(zsh)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__completion__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-completion-help-command-$line[1]:"
+        case $line[1] in
+            (bash)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(fish)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(power-shell)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(zsh)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(list)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(pki)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_solo2__pki_commands" \
+"*::: :->pki" \
+&& ret=0
+
+    case $state in
+    (pki)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-pki-command-$line[1]:"
+        case $line[1] in
+            (ca)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_solo2__pki__ca_commands" \
+"*::: :->ca" \
+&& ret=0
+
+    case $state in
+    (ca)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-pki-ca-command-$line[1]:"
+        case $line[1] in
+            (fetch-certificate)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':authority -- Name of authority, e.g. R1, T1, S3, etc:' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__pki__ca__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-pki-ca-help-command-$line[1]:"
+        case $line[1] in
+            (fetch-certificate)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(dev)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_solo2__pki__dev_commands" \
+"*::: :->dev" \
+&& ret=0
+
+    case $state in
+    (dev)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-pki-dev-command-$line[1]:"
+        case $line[1] in
+            (fido)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':key -- Output file for private P256 key in binary format:' \
+':cert -- Output file for self-signed certificate in DER format:' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__pki__dev__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-pki-dev-help-command-$line[1]:"
+        case $line[1] in
+            (fido)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(web)
+_arguments "${_arguments_options[@]}" \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'(-u --uuid)--all[Interact with all applicable Solo 2 devices]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__pki__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-pki-help-command-$line[1]:"
+        case $line[1] in
+            (ca)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__pki__help__ca_commands" \
+"*::: :->ca" \
+&& ret=0
+
+    case $state in
+    (ca)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-pki-help-ca-command-$line[1]:"
+        case $line[1] in
+            (fetch-certificate)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(dev)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__pki__help__dev_commands" \
+"*::: :->dev" \
+&& ret=0
+
+    case $state in
+    (dev)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-pki-help-dev-command-$line[1]:"
+        case $line[1] in
+            (fido)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(web)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(update)
+_arguments "${_arguments_options[@]}" \
+'-w+[Update to a specific firmware secure boot file (.sb2)]:WITH: ' \
+'--with=[Update to a specific firmware secure boot file (.sb2)]:WITH: ' \
+'-u+[Specify UUID of a Solo 2 device]:UUID: ' \
+'--uuid=[Specify UUID of a Solo 2 device]:UUID: ' \
+'-n[Just show the version that would be installed]' \
+'--dry-run[Just show the version that would be installed]' \
+'-y[DANGER! Proceed with major updates without prompt]' \
+'--yes[DANGER! Proceed with major updates without prompt]' \
+'-a[Update all connected SoloKeys Solo 2 devices]' \
+'--all[Update all connected SoloKeys Solo 2 devices]' \
+'--ctap[Prefer CTAP transport]' \
+'--pcsc[Prefer PCSC transport]' \
+'*-v[More output per occurrence]' \
+'*--verbose[More output per occurrence]' \
+'(-v --verbose)*-q[Less output per occurrence]' \
+'(-v --verbose)*--quiet[Less output per occurrence]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-help-command-$line[1]:"
+        case $line[1] in
+            (app)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__help__app_commands" \
+"*::: :->app" \
+&& ret=0
+
+    case $state in
+    (app)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-help-app-command-$line[1]:"
+        case $line[1] in
+            (admin)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__help__app__admin_commands" \
+"*::: :->admin" \
+&& ret=0
+
+    case $state in
+    (admin)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-help-app-admin-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(locked)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(maintenance)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(restart)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(uuid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(version)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(wink)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(fido)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__help__app__fido_commands" \
+"*::: :->fido" \
+&& ret=0
+
+    case $state in
+    (fido)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-help-app-fido-command-$line[1]:"
+        case $line[1] in
+            (init)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(wink)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(ndef)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__help__app__ndef_commands" \
+"*::: :->ndef" \
+&& ret=0
+
+    case $state in
+    (ndef)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-help-app-ndef-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(capabilities)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(data)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(oath)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__help__app__oath_commands" \
+"*::: :->oath" \
+&& ret=0
+
+    case $state in
+    (oath)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-help-app-oath-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(delete)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(register)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(reset)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(totp)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(piv)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__help__app__piv_commands" \
+"*::: :->piv" \
+&& ret=0
+
+    case $state in
+    (piv)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-help-app-piv-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(provision)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__help__app__provision_commands" \
+"*::: :->provision" \
+&& ret=0
+
+    case $state in
+    (provision)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-help-app-provision-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(generate-ed255-key)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(generate-p256-key)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(generate-x255-key)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-ed255-cert)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-p256-cert)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-x255-cert)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-t1-pubkey)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-fido-batch-cert)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(store-fido-batch-key)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(reformat-filesystem)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(write-file)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(qa)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__help__app__qa_commands" \
+"*::: :->qa" \
+&& ret=0
+
+    case $state in
+    (qa)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-help-app-qa-command-$line[1]:"
+        case $line[1] in
+            (aid)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(bootloader)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__help__bootloader_commands" \
+"*::: :->bootloader" \
+&& ret=0
+
+    case $state in
+    (bootloader)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-help-bootloader-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(reboot)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(completion)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__help__completion_commands" \
+"*::: :->completion" \
+&& ret=0
+
+    case $state in
+    (completion)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-help-completion-command-$line[1]:"
+        case $line[1] in
+            (bash)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(fish)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(power-shell)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(zsh)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(list)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(pki)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__help__pki_commands" \
+"*::: :->pki" \
+&& ret=0
+
+    case $state in
+    (pki)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-help-pki-command-$line[1]:"
+        case $line[1] in
+            (ca)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__help__pki__ca_commands" \
+"*::: :->ca" \
+&& ret=0
+
+    case $state in
+    (ca)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-help-pki-ca-command-$line[1]:"
+        case $line[1] in
+            (fetch-certificate)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(dev)
+_arguments "${_arguments_options[@]}" \
+":: :_solo2__help__pki__dev_commands" \
+"*::: :->dev" \
+&& ret=0
+
+    case $state in
+    (dev)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:solo2-help-pki-dev-command-$line[1]:"
+        case $line[1] in
+            (fido)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(web)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(update)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+}
+
+(( $+functions[_solo2_commands] )) ||
+_solo2_commands() {
+    local commands; commands=(
+'app:Interact with on-device applications' \
+'bootloader:Interact with bootloader' \
+'completion:Generate shell completion scripts' \
+'list:List all available devices' \
+'ls:List all available devices' \
+'pki:PKI-related' \
+'update:Update to latest firmware published by SoloKeys. Warns on Major updates' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin_commands] )) ||
+_solo2__app__admin_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'locked:Is device locked? (not available in early firmware)' \
+'maintenance:Switch device to maintenance mode (reboot into LPC 55 bootloader)' \
+'restart:Reboot device (as Solo 2)' \
+'uuid:Return device UUID (not available over CTAP in early firmware)' \
+'version:Return device firmware version' \
+'wink:Wink the device' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app admin commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__admin_commands] )) ||
+_solo2__app__help__admin_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'locked:Is device locked? (not available in early firmware)' \
+'maintenance:Switch device to maintenance mode (reboot into LPC 55 bootloader)' \
+'restart:Reboot device (as Solo 2)' \
+'uuid:Return device UUID (not available over CTAP in early firmware)' \
+'version:Return device firmware version' \
+'wink:Wink the device' \
+    )
+    _describe -t commands 'solo2 app help admin commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__admin_commands] )) ||
+_solo2__help__app__admin_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'locked:Is device locked? (not available in early firmware)' \
+'maintenance:Switch device to maintenance mode (reboot into LPC 55 bootloader)' \
+'restart:Reboot device (as Solo 2)' \
+'uuid:Return device UUID (not available over CTAP in early firmware)' \
+'version:Return device firmware version' \
+'wink:Wink the device' \
+    )
+    _describe -t commands 'solo2 help app admin commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__aid_commands] )) ||
+_solo2__app__admin__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__help__aid_commands] )) ||
+_solo2__app__admin__help__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin help aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__admin__aid_commands] )) ||
+_solo2__app__help__admin__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help admin aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__ndef__aid_commands] )) ||
+_solo2__app__help__ndef__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help ndef aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__oath__aid_commands] )) ||
+_solo2__app__help__oath__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help oath aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__piv__aid_commands] )) ||
+_solo2__app__help__piv__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help piv aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__provision__aid_commands] )) ||
+_solo2__app__help__provision__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help provision aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__qa__aid_commands] )) ||
+_solo2__app__help__qa__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help qa aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__ndef__aid_commands] )) ||
+_solo2__app__ndef__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app ndef aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__ndef__help__aid_commands] )) ||
+_solo2__app__ndef__help__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app ndef help aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath__aid_commands] )) ||
+_solo2__app__oath__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app oath aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath__help__aid_commands] )) ||
+_solo2__app__oath__help__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app oath help aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__piv__aid_commands] )) ||
+_solo2__app__piv__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app piv aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__piv__help__aid_commands] )) ||
+_solo2__app__piv__help__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app piv help aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__aid_commands] )) ||
+_solo2__app__provision__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__help__aid_commands] )) ||
+_solo2__app__provision__help__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision help aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__qa__aid_commands] )) ||
+_solo2__app__qa__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app qa aid commands' commands "$@"
+}
+(( $+functions[_solo2__app__qa__help__aid_commands] )) ||
+_solo2__app__qa__help__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app qa help aid commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__admin__aid_commands] )) ||
+_solo2__help__app__admin__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app admin aid commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__ndef__aid_commands] )) ||
+_solo2__help__app__ndef__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app ndef aid commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__oath__aid_commands] )) ||
+_solo2__help__app__oath__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app oath aid commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__piv__aid_commands] )) ||
+_solo2__help__app__piv__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app piv aid commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__provision__aid_commands] )) ||
+_solo2__help__app__provision__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app provision aid commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__qa__aid_commands] )) ||
+_solo2__help__app__qa__aid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app qa aid commands' commands "$@"
+}
+(( $+functions[_solo2__app_commands] )) ||
+_solo2__app_commands() {
+    local commands; commands=(
+'admin:admin app' \
+'fido:FIDO app' \
+'ndef:NDEF app' \
+'oath:OATH app' \
+'piv:PIV app' \
+'provision:Provision app' \
+'qa:QA app' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app commands' commands "$@"
+}
+(( $+functions[_solo2__help__app_commands] )) ||
+_solo2__help__app_commands() {
+    local commands; commands=(
+'admin:admin app' \
+'fido:FIDO app' \
+'ndef:NDEF app' \
+'oath:OATH app' \
+'piv:PIV app' \
+'provision:Provision app' \
+'qa:QA app' \
+    )
+    _describe -t commands 'solo2 help app commands' commands "$@"
+}
+(( $+functions[_solo2__completion__bash_commands] )) ||
+_solo2__completion__bash_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 completion bash commands' commands "$@"
+}
+(( $+functions[_solo2__completion__help__bash_commands] )) ||
+_solo2__completion__help__bash_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 completion help bash commands' commands "$@"
+}
+(( $+functions[_solo2__help__completion__bash_commands] )) ||
+_solo2__help__completion__bash_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help completion bash commands' commands "$@"
+}
+(( $+functions[_solo2__bootloader_commands] )) ||
+_solo2__bootloader_commands() {
+    local commands; commands=(
+'list:List all available bootloaders' \
+'ls:List all available bootloaders' \
+'reboot:Reboots (into device if firmware is valid)' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 bootloader commands' commands "$@"
+}
+(( $+functions[_solo2__help__bootloader_commands] )) ||
+_solo2__help__bootloader_commands() {
+    local commands; commands=(
+'list:List all available bootloaders' \
+'reboot:Reboots (into device if firmware is valid)' \
+    )
+    _describe -t commands 'solo2 help bootloader commands' commands "$@"
+}
+(( $+functions[_solo2__help__pki__ca_commands] )) ||
+_solo2__help__pki__ca_commands() {
+    local commands; commands=(
+'fetch-certificate:Fetch one of the well-known Solo 2 PKI certificates in DER format' \
+    )
+    _describe -t commands 'solo2 help pki ca commands' commands "$@"
+}
+(( $+functions[_solo2__pki__ca_commands] )) ||
+_solo2__pki__ca_commands() {
+    local commands; commands=(
+'fetch-certificate:Fetch one of the well-known Solo 2 PKI certificates in DER format' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 pki ca commands' commands "$@"
+}
+(( $+functions[_solo2__pki__help__ca_commands] )) ||
+_solo2__pki__help__ca_commands() {
+    local commands; commands=(
+'fetch-certificate:Fetch one of the well-known Solo 2 PKI certificates in DER format' \
+    )
+    _describe -t commands 'solo2 pki help ca commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__ndef__capabilities_commands] )) ||
+_solo2__app__help__ndef__capabilities_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help ndef capabilities commands' commands "$@"
+}
+(( $+functions[_solo2__app__ndef__capabilities_commands] )) ||
+_solo2__app__ndef__capabilities_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app ndef capabilities commands' commands "$@"
+}
+(( $+functions[_solo2__app__ndef__help__capabilities_commands] )) ||
+_solo2__app__ndef__help__capabilities_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app ndef help capabilities commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__ndef__capabilities_commands] )) ||
+_solo2__help__app__ndef__capabilities_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app ndef capabilities commands' commands "$@"
+}
+(( $+functions[_solo2__completion_commands] )) ||
+_solo2__completion_commands() {
+    local commands; commands=(
+'bash:Print completion script for Bash' \
+'fish:Print completion script for Fish' \
+'power-shell:Print completion script for PowerShell' \
+'zsh:Print completion script for Zsh' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 completion commands' commands "$@"
+}
+(( $+functions[_solo2__help__completion_commands] )) ||
+_solo2__help__completion_commands() {
+    local commands; commands=(
+'bash:Print completion script for Bash' \
+'fish:Print completion script for Fish' \
+'power-shell:Print completion script for PowerShell' \
+'zsh:Print completion script for Zsh' \
+    )
+    _describe -t commands 'solo2 help completion commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__ndef__data_commands] )) ||
+_solo2__app__help__ndef__data_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help ndef data commands' commands "$@"
+}
+(( $+functions[_solo2__app__ndef__data_commands] )) ||
+_solo2__app__ndef__data_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app ndef data commands' commands "$@"
+}
+(( $+functions[_solo2__app__ndef__help__data_commands] )) ||
+_solo2__app__ndef__help__data_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app ndef help data commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__ndef__data_commands] )) ||
+_solo2__help__app__ndef__data_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app ndef data commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__oath__delete_commands] )) ||
+_solo2__app__help__oath__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help oath delete commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath__delete_commands] )) ||
+_solo2__app__oath__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app oath delete commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath__help__delete_commands] )) ||
+_solo2__app__oath__help__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app oath help delete commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__oath__delete_commands] )) ||
+_solo2__help__app__oath__delete_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app oath delete commands' commands "$@"
+}
+(( $+functions[_solo2__help__pki__dev_commands] )) ||
+_solo2__help__pki__dev_commands() {
+    local commands; commands=(
+'fido:Fetch one of the well-known Solo 2 PKI certificates in DER format' \
+    )
+    _describe -t commands 'solo2 help pki dev commands' commands "$@"
+}
+(( $+functions[_solo2__pki__dev_commands] )) ||
+_solo2__pki__dev_commands() {
+    local commands; commands=(
+'fido:Fetch one of the well-known Solo 2 PKI certificates in DER format' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 pki dev commands' commands "$@"
+}
+(( $+functions[_solo2__pki__help__dev_commands] )) ||
+_solo2__pki__help__dev_commands() {
+    local commands; commands=(
+'fido:Fetch one of the well-known Solo 2 PKI certificates in DER format' \
+    )
+    _describe -t commands 'solo2 pki help dev commands' commands "$@"
+}
+(( $+functions[_solo2__help__pki__ca__fetch-certificate_commands] )) ||
+_solo2__help__pki__ca__fetch-certificate_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help pki ca fetch-certificate commands' commands "$@"
+}
+(( $+functions[_solo2__pki__ca__fetch-certificate_commands] )) ||
+_solo2__pki__ca__fetch-certificate_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 pki ca fetch-certificate commands' commands "$@"
+}
+(( $+functions[_solo2__pki__ca__help__fetch-certificate_commands] )) ||
+_solo2__pki__ca__help__fetch-certificate_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 pki ca help fetch-certificate commands' commands "$@"
+}
+(( $+functions[_solo2__pki__help__ca__fetch-certificate_commands] )) ||
+_solo2__pki__help__ca__fetch-certificate_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 pki help ca fetch-certificate commands' commands "$@"
+}
+(( $+functions[_solo2__app__fido_commands] )) ||
+_solo2__app__fido_commands() {
+    local commands; commands=(
+'init:FIDO init response' \
+'wink:FIDO wink' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app fido commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__fido_commands] )) ||
+_solo2__app__help__fido_commands() {
+    local commands; commands=(
+'init:FIDO init response' \
+'wink:FIDO wink' \
+    )
+    _describe -t commands 'solo2 app help fido commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__fido_commands] )) ||
+_solo2__help__app__fido_commands() {
+    local commands; commands=(
+'init:FIDO init response' \
+'wink:FIDO wink' \
+    )
+    _describe -t commands 'solo2 help app fido commands' commands "$@"
+}
+(( $+functions[_solo2__help__pki__dev__fido_commands] )) ||
+_solo2__help__pki__dev__fido_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help pki dev fido commands' commands "$@"
+}
+(( $+functions[_solo2__pki__dev__fido_commands] )) ||
+_solo2__pki__dev__fido_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 pki dev fido commands' commands "$@"
+}
+(( $+functions[_solo2__pki__dev__help__fido_commands] )) ||
+_solo2__pki__dev__help__fido_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 pki dev help fido commands' commands "$@"
+}
+(( $+functions[_solo2__pki__help__dev__fido_commands] )) ||
+_solo2__pki__help__dev__fido_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 pki help dev fido commands' commands "$@"
+}
+(( $+functions[_solo2__completion__fish_commands] )) ||
+_solo2__completion__fish_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 completion fish commands' commands "$@"
+}
+(( $+functions[_solo2__completion__help__fish_commands] )) ||
+_solo2__completion__help__fish_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 completion help fish commands' commands "$@"
+}
+(( $+functions[_solo2__help__completion__fish_commands] )) ||
+_solo2__help__completion__fish_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help completion fish commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__provision__generate-ed255-key_commands] )) ||
+_solo2__app__help__provision__generate-ed255-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help provision generate-ed255-key commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__generate-ed255-key_commands] )) ||
+_solo2__app__provision__generate-ed255-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision generate-ed255-key commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__help__generate-ed255-key_commands] )) ||
+_solo2__app__provision__help__generate-ed255-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision help generate-ed255-key commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__provision__generate-ed255-key_commands] )) ||
+_solo2__help__app__provision__generate-ed255-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app provision generate-ed255-key commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__provision__generate-p256-key_commands] )) ||
+_solo2__app__help__provision__generate-p256-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help provision generate-p256-key commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__generate-p256-key_commands] )) ||
+_solo2__app__provision__generate-p256-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision generate-p256-key commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__help__generate-p256-key_commands] )) ||
+_solo2__app__provision__help__generate-p256-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision help generate-p256-key commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__provision__generate-p256-key_commands] )) ||
+_solo2__help__app__provision__generate-p256-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app provision generate-p256-key commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__provision__generate-x255-key_commands] )) ||
+_solo2__app__help__provision__generate-x255-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help provision generate-x255-key commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__generate-x255-key_commands] )) ||
+_solo2__app__provision__generate-x255-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision generate-x255-key commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__help__generate-x255-key_commands] )) ||
+_solo2__app__provision__help__generate-x255-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision help generate-x255-key commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__provision__generate-x255-key_commands] )) ||
+_solo2__help__app__provision__generate-x255-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app provision generate-x255-key commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__help_commands] )) ||
+_solo2__app__admin__help_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'locked:Is device locked? (not available in early firmware)' \
+'maintenance:Switch device to maintenance mode (reboot into LPC 55 bootloader)' \
+'restart:Reboot device (as Solo 2)' \
+'uuid:Return device UUID (not available over CTAP in early firmware)' \
+'version:Return device firmware version' \
+'wink:Wink the device' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app admin help commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__help__help_commands] )) ||
+_solo2__app__admin__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin help help commands' commands "$@"
+}
+(( $+functions[_solo2__app__fido__help_commands] )) ||
+_solo2__app__fido__help_commands() {
+    local commands; commands=(
+'init:FIDO init response' \
+'wink:FIDO wink' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app fido help commands' commands "$@"
+}
+(( $+functions[_solo2__app__fido__help__help_commands] )) ||
+_solo2__app__fido__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app fido help help commands' commands "$@"
+}
+(( $+functions[_solo2__app__help_commands] )) ||
+_solo2__app__help_commands() {
+    local commands; commands=(
+'admin:admin app' \
+'fido:FIDO app' \
+'ndef:NDEF app' \
+'oath:OATH app' \
+'piv:PIV app' \
+'provision:Provision app' \
+'qa:QA app' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app help commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__help_commands] )) ||
+_solo2__app__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help help commands' commands "$@"
+}
+(( $+functions[_solo2__app__ndef__help_commands] )) ||
+_solo2__app__ndef__help_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'capabilities:NDEF capabilities' \
+'data:NDEF data' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app ndef help commands' commands "$@"
+}
+(( $+functions[_solo2__app__ndef__help__help_commands] )) ||
+_solo2__app__ndef__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app ndef help help commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath__help_commands] )) ||
+_solo2__app__oath__help_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'delete:Delete existing credential' \
+'list:List all credentials' \
+'register:Register new credential' \
+'reset:Reset OATH app, deleting all credentials' \
+'totp:Calculate TOTP for a registered credential' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app oath help commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath__help__help_commands] )) ||
+_solo2__app__oath__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app oath help help commands' commands "$@"
+}
+(( $+functions[_solo2__app__piv__help_commands] )) ||
+_solo2__app__piv__help_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app piv help commands' commands "$@"
+}
+(( $+functions[_solo2__app__piv__help__help_commands] )) ||
+_solo2__app__piv__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app piv help help commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__help_commands] )) ||
+_solo2__app__provision__help_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'generate-ed255-key:Generate new Trussed Ed255 attestation key' \
+'generate-p256-key:Generate new Trussed P256 attestation key' \
+'generate-x255-key:Generate new Trussed X255 attestation key' \
+'store-ed255-cert:Store Trussed Ed255 attestation certificate' \
+'store-p256-cert:Store Trussed P256 attestation certificate' \
+'store-x255-cert:Store Trussed X255 attestation certificate' \
+'store-t1-pubkey:Store Trussed T1 intermediate public key' \
+'store-fido-batch-cert:Store FIDO batch attestation certificate' \
+'store-fido-batch-key:Store FIDO batch attestation private key' \
+'reformat-filesystem:Reformat the internal filesystem' \
+'write-file:Write binary file to specified path' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app provision help commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__help__help_commands] )) ||
+_solo2__app__provision__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision help help commands' commands "$@"
+}
+(( $+functions[_solo2__app__qa__help_commands] )) ||
+_solo2__app__qa__help_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app qa help commands' commands "$@"
+}
+(( $+functions[_solo2__app__qa__help__help_commands] )) ||
+_solo2__app__qa__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app qa help help commands' commands "$@"
+}
+(( $+functions[_solo2__bootloader__help_commands] )) ||
+_solo2__bootloader__help_commands() {
+    local commands; commands=(
+'list:List all available bootloaders' \
+'reboot:Reboots (into device if firmware is valid)' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 bootloader help commands' commands "$@"
+}
+(( $+functions[_solo2__bootloader__help__help_commands] )) ||
+_solo2__bootloader__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 bootloader help help commands' commands "$@"
+}
+(( $+functions[_solo2__completion__help_commands] )) ||
+_solo2__completion__help_commands() {
+    local commands; commands=(
+'bash:Print completion script for Bash' \
+'fish:Print completion script for Fish' \
+'power-shell:Print completion script for PowerShell' \
+'zsh:Print completion script for Zsh' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 completion help commands' commands "$@"
+}
+(( $+functions[_solo2__completion__help__help_commands] )) ||
+_solo2__completion__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 completion help help commands' commands "$@"
+}
+(( $+functions[_solo2__help_commands] )) ||
+_solo2__help_commands() {
+    local commands; commands=(
+'app:Interact with on-device applications' \
+'bootloader:Interact with bootloader' \
+'completion:Generate shell completion scripts' \
+'list:List all available devices' \
+'pki:PKI-related' \
+'update:Update to latest firmware published by SoloKeys. Warns on Major updates' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 help commands' commands "$@"
+}
+(( $+functions[_solo2__help__help_commands] )) ||
+_solo2__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help help commands' commands "$@"
+}
+(( $+functions[_solo2__pki__ca__help_commands] )) ||
+_solo2__pki__ca__help_commands() {
+    local commands; commands=(
+'fetch-certificate:Fetch one of the well-known Solo 2 PKI certificates in DER format' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 pki ca help commands' commands "$@"
+}
+(( $+functions[_solo2__pki__ca__help__help_commands] )) ||
+_solo2__pki__ca__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 pki ca help help commands' commands "$@"
+}
+(( $+functions[_solo2__pki__dev__help_commands] )) ||
+_solo2__pki__dev__help_commands() {
+    local commands; commands=(
+'fido:Fetch one of the well-known Solo 2 PKI certificates in DER format' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 pki dev help commands' commands "$@"
+}
+(( $+functions[_solo2__pki__dev__help__help_commands] )) ||
+_solo2__pki__dev__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 pki dev help help commands' commands "$@"
+}
+(( $+functions[_solo2__pki__help_commands] )) ||
+_solo2__pki__help_commands() {
+    local commands; commands=(
+'ca:CA-related' \
+'dev:PKI for development' \
+'web:' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 pki help commands' commands "$@"
+}
+(( $+functions[_solo2__pki__help__help_commands] )) ||
+_solo2__pki__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 pki help help commands' commands "$@"
+}
+(( $+functions[_solo2__app__fido__help__init_commands] )) ||
+_solo2__app__fido__help__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app fido help init commands' commands "$@"
+}
+(( $+functions[_solo2__app__fido__init_commands] )) ||
+_solo2__app__fido__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app fido init commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__fido__init_commands] )) ||
+_solo2__app__help__fido__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help fido init commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__fido__init_commands] )) ||
+_solo2__help__app__fido__init_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app fido init commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__oath__list_commands] )) ||
+_solo2__app__help__oath__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help oath list commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath__help__list_commands] )) ||
+_solo2__app__oath__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app oath help list commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath__list_commands] )) ||
+_solo2__app__oath__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app oath list commands' commands "$@"
+}
+(( $+functions[_solo2__bootloader__help__list_commands] )) ||
+_solo2__bootloader__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 bootloader help list commands' commands "$@"
+}
+(( $+functions[_solo2__bootloader__list_commands] )) ||
+_solo2__bootloader__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 bootloader list commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__oath__list_commands] )) ||
+_solo2__help__app__oath__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app oath list commands' commands "$@"
+}
+(( $+functions[_solo2__help__bootloader__list_commands] )) ||
+_solo2__help__bootloader__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help bootloader list commands' commands "$@"
+}
+(( $+functions[_solo2__help__list_commands] )) ||
+_solo2__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help list commands' commands "$@"
+}
+(( $+functions[_solo2__list_commands] )) ||
+_solo2__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 list commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__help__locked_commands] )) ||
+_solo2__app__admin__help__locked_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin help locked commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__locked_commands] )) ||
+_solo2__app__admin__locked_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin locked commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__admin__locked_commands] )) ||
+_solo2__app__help__admin__locked_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help admin locked commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__admin__locked_commands] )) ||
+_solo2__help__app__admin__locked_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app admin locked commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__help__maintenance_commands] )) ||
+_solo2__app__admin__help__maintenance_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin help maintenance commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__maintenance_commands] )) ||
+_solo2__app__admin__maintenance_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin maintenance commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__admin__maintenance_commands] )) ||
+_solo2__app__help__admin__maintenance_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help admin maintenance commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__admin__maintenance_commands] )) ||
+_solo2__help__app__admin__maintenance_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app admin maintenance commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__ndef_commands] )) ||
+_solo2__app__help__ndef_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'capabilities:NDEF capabilities' \
+'data:NDEF data' \
+    )
+    _describe -t commands 'solo2 app help ndef commands' commands "$@"
+}
+(( $+functions[_solo2__app__ndef_commands] )) ||
+_solo2__app__ndef_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'capabilities:NDEF capabilities' \
+'data:NDEF data' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app ndef commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__ndef_commands] )) ||
+_solo2__help__app__ndef_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'capabilities:NDEF capabilities' \
+'data:NDEF data' \
+    )
+    _describe -t commands 'solo2 help app ndef commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__oath_commands] )) ||
+_solo2__app__help__oath_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'delete:Delete existing credential' \
+'list:List all credentials' \
+'register:Register new credential' \
+'reset:Reset OATH app, deleting all credentials' \
+'totp:Calculate TOTP for a registered credential' \
+    )
+    _describe -t commands 'solo2 app help oath commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath_commands] )) ||
+_solo2__app__oath_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'delete:Delete existing credential' \
+'list:List all credentials' \
+'register:Register new credential' \
+'reset:Reset OATH app, deleting all credentials' \
+'totp:Calculate TOTP for a registered credential' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app oath commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__oath_commands] )) ||
+_solo2__help__app__oath_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'delete:Delete existing credential' \
+'list:List all credentials' \
+'register:Register new credential' \
+'reset:Reset OATH app, deleting all credentials' \
+'totp:Calculate TOTP for a registered credential' \
+    )
+    _describe -t commands 'solo2 help app oath commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__piv_commands] )) ||
+_solo2__app__help__piv_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+    )
+    _describe -t commands 'solo2 app help piv commands' commands "$@"
+}
+(( $+functions[_solo2__app__piv_commands] )) ||
+_solo2__app__piv_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app piv commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__piv_commands] )) ||
+_solo2__help__app__piv_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+    )
+    _describe -t commands 'solo2 help app piv commands' commands "$@"
+}
+(( $+functions[_solo2__help__pki_commands] )) ||
+_solo2__help__pki_commands() {
+    local commands; commands=(
+'ca:CA-related' \
+'dev:PKI for development' \
+'web:' \
+    )
+    _describe -t commands 'solo2 help pki commands' commands "$@"
+}
+(( $+functions[_solo2__pki_commands] )) ||
+_solo2__pki_commands() {
+    local commands; commands=(
+'ca:CA-related' \
+'dev:PKI for development' \
+'web:' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 pki commands' commands "$@"
+}
+(( $+functions[_solo2__completion__help__power-shell_commands] )) ||
+_solo2__completion__help__power-shell_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 completion help power-shell commands' commands "$@"
+}
+(( $+functions[_solo2__completion__power-shell_commands] )) ||
+_solo2__completion__power-shell_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 completion power-shell commands' commands "$@"
+}
+(( $+functions[_solo2__help__completion__power-shell_commands] )) ||
+_solo2__help__completion__power-shell_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help completion power-shell commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__provision_commands] )) ||
+_solo2__app__help__provision_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'generate-ed255-key:Generate new Trussed Ed255 attestation key' \
+'generate-p256-key:Generate new Trussed P256 attestation key' \
+'generate-x255-key:Generate new Trussed X255 attestation key' \
+'store-ed255-cert:Store Trussed Ed255 attestation certificate' \
+'store-p256-cert:Store Trussed P256 attestation certificate' \
+'store-x255-cert:Store Trussed X255 attestation certificate' \
+'store-t1-pubkey:Store Trussed T1 intermediate public key' \
+'store-fido-batch-cert:Store FIDO batch attestation certificate' \
+'store-fido-batch-key:Store FIDO batch attestation private key' \
+'reformat-filesystem:Reformat the internal filesystem' \
+'write-file:Write binary file to specified path' \
+    )
+    _describe -t commands 'solo2 app help provision commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision_commands] )) ||
+_solo2__app__provision_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'generate-ed255-key:Generate new Trussed Ed255 attestation key' \
+'generate-p256-key:Generate new Trussed P256 attestation key' \
+'generate-x255-key:Generate new Trussed X255 attestation key' \
+'store-ed255-cert:Store Trussed Ed255 attestation certificate' \
+'store-p256-cert:Store Trussed P256 attestation certificate' \
+'store-x255-cert:Store Trussed X255 attestation certificate' \
+'store-t1-pubkey:Store Trussed T1 intermediate public key' \
+'store-fido-batch-cert:Store FIDO batch attestation certificate' \
+'store-fido-batch-key:Store FIDO batch attestation private key' \
+'reformat-filesystem:Reformat the internal filesystem' \
+'write-file:Write binary file to specified path' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app provision commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__provision_commands] )) ||
+_solo2__help__app__provision_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'generate-ed255-key:Generate new Trussed Ed255 attestation key' \
+'generate-p256-key:Generate new Trussed P256 attestation key' \
+'generate-x255-key:Generate new Trussed X255 attestation key' \
+'store-ed255-cert:Store Trussed Ed255 attestation certificate' \
+'store-p256-cert:Store Trussed P256 attestation certificate' \
+'store-x255-cert:Store Trussed X255 attestation certificate' \
+'store-t1-pubkey:Store Trussed T1 intermediate public key' \
+'store-fido-batch-cert:Store FIDO batch attestation certificate' \
+'store-fido-batch-key:Store FIDO batch attestation private key' \
+'reformat-filesystem:Reformat the internal filesystem' \
+'write-file:Write binary file to specified path' \
+    )
+    _describe -t commands 'solo2 help app provision commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__qa_commands] )) ||
+_solo2__app__help__qa_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+    )
+    _describe -t commands 'solo2 app help qa commands' commands "$@"
+}
+(( $+functions[_solo2__app__qa_commands] )) ||
+_solo2__app__qa_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'solo2 app qa commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__qa_commands] )) ||
+_solo2__help__app__qa_commands() {
+    local commands; commands=(
+'aid:Print the application'\''s AID' \
+    )
+    _describe -t commands 'solo2 help app qa commands' commands "$@"
+}
+(( $+functions[_solo2__bootloader__help__reboot_commands] )) ||
+_solo2__bootloader__help__reboot_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 bootloader help reboot commands' commands "$@"
+}
+(( $+functions[_solo2__bootloader__reboot_commands] )) ||
+_solo2__bootloader__reboot_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 bootloader reboot commands' commands "$@"
+}
+(( $+functions[_solo2__help__bootloader__reboot_commands] )) ||
+_solo2__help__bootloader__reboot_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help bootloader reboot commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__provision__reformat-filesystem_commands] )) ||
+_solo2__app__help__provision__reformat-filesystem_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help provision reformat-filesystem commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__help__reformat-filesystem_commands] )) ||
+_solo2__app__provision__help__reformat-filesystem_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision help reformat-filesystem commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__reformat-filesystem_commands] )) ||
+_solo2__app__provision__reformat-filesystem_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision reformat-filesystem commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__provision__reformat-filesystem_commands] )) ||
+_solo2__help__app__provision__reformat-filesystem_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app provision reformat-filesystem commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__oath__register_commands] )) ||
+_solo2__app__help__oath__register_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help oath register commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath__help__register_commands] )) ||
+_solo2__app__oath__help__register_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app oath help register commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath__register_commands] )) ||
+_solo2__app__oath__register_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app oath register commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__oath__register_commands] )) ||
+_solo2__help__app__oath__register_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app oath register commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__oath__reset_commands] )) ||
+_solo2__app__help__oath__reset_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help oath reset commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath__help__reset_commands] )) ||
+_solo2__app__oath__help__reset_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app oath help reset commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath__reset_commands] )) ||
+_solo2__app__oath__reset_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app oath reset commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__oath__reset_commands] )) ||
+_solo2__help__app__oath__reset_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app oath reset commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__help__restart_commands] )) ||
+_solo2__app__admin__help__restart_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin help restart commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__restart_commands] )) ||
+_solo2__app__admin__restart_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin restart commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__admin__restart_commands] )) ||
+_solo2__app__help__admin__restart_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help admin restart commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__admin__restart_commands] )) ||
+_solo2__help__app__admin__restart_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app admin restart commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__provision__store-ed255-cert_commands] )) ||
+_solo2__app__help__provision__store-ed255-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help provision store-ed255-cert commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__help__store-ed255-cert_commands] )) ||
+_solo2__app__provision__help__store-ed255-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision help store-ed255-cert commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__store-ed255-cert_commands] )) ||
+_solo2__app__provision__store-ed255-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision store-ed255-cert commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__provision__store-ed255-cert_commands] )) ||
+_solo2__help__app__provision__store-ed255-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app provision store-ed255-cert commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__provision__store-fido-batch-cert_commands] )) ||
+_solo2__app__help__provision__store-fido-batch-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help provision store-fido-batch-cert commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__help__store-fido-batch-cert_commands] )) ||
+_solo2__app__provision__help__store-fido-batch-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision help store-fido-batch-cert commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__store-fido-batch-cert_commands] )) ||
+_solo2__app__provision__store-fido-batch-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision store-fido-batch-cert commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__provision__store-fido-batch-cert_commands] )) ||
+_solo2__help__app__provision__store-fido-batch-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app provision store-fido-batch-cert commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__provision__store-fido-batch-key_commands] )) ||
+_solo2__app__help__provision__store-fido-batch-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help provision store-fido-batch-key commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__help__store-fido-batch-key_commands] )) ||
+_solo2__app__provision__help__store-fido-batch-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision help store-fido-batch-key commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__store-fido-batch-key_commands] )) ||
+_solo2__app__provision__store-fido-batch-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision store-fido-batch-key commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__provision__store-fido-batch-key_commands] )) ||
+_solo2__help__app__provision__store-fido-batch-key_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app provision store-fido-batch-key commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__provision__store-p256-cert_commands] )) ||
+_solo2__app__help__provision__store-p256-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help provision store-p256-cert commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__help__store-p256-cert_commands] )) ||
+_solo2__app__provision__help__store-p256-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision help store-p256-cert commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__store-p256-cert_commands] )) ||
+_solo2__app__provision__store-p256-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision store-p256-cert commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__provision__store-p256-cert_commands] )) ||
+_solo2__help__app__provision__store-p256-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app provision store-p256-cert commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__provision__store-t1-pubkey_commands] )) ||
+_solo2__app__help__provision__store-t1-pubkey_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help provision store-t1-pubkey commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__help__store-t1-pubkey_commands] )) ||
+_solo2__app__provision__help__store-t1-pubkey_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision help store-t1-pubkey commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__store-t1-pubkey_commands] )) ||
+_solo2__app__provision__store-t1-pubkey_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision store-t1-pubkey commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__provision__store-t1-pubkey_commands] )) ||
+_solo2__help__app__provision__store-t1-pubkey_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app provision store-t1-pubkey commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__provision__store-x255-cert_commands] )) ||
+_solo2__app__help__provision__store-x255-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help provision store-x255-cert commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__help__store-x255-cert_commands] )) ||
+_solo2__app__provision__help__store-x255-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision help store-x255-cert commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__store-x255-cert_commands] )) ||
+_solo2__app__provision__store-x255-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision store-x255-cert commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__provision__store-x255-cert_commands] )) ||
+_solo2__help__app__provision__store-x255-cert_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app provision store-x255-cert commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__oath__totp_commands] )) ||
+_solo2__app__help__oath__totp_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help oath totp commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath__help__totp_commands] )) ||
+_solo2__app__oath__help__totp_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app oath help totp commands' commands "$@"
+}
+(( $+functions[_solo2__app__oath__totp_commands] )) ||
+_solo2__app__oath__totp_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app oath totp commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__oath__totp_commands] )) ||
+_solo2__help__app__oath__totp_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app oath totp commands' commands "$@"
+}
+(( $+functions[_solo2__help__update_commands] )) ||
+_solo2__help__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help update commands' commands "$@"
+}
+(( $+functions[_solo2__update_commands] )) ||
+_solo2__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 update commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__help__uuid_commands] )) ||
+_solo2__app__admin__help__uuid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin help uuid commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__uuid_commands] )) ||
+_solo2__app__admin__uuid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin uuid commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__admin__uuid_commands] )) ||
+_solo2__app__help__admin__uuid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help admin uuid commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__admin__uuid_commands] )) ||
+_solo2__help__app__admin__uuid_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app admin uuid commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__help__version_commands] )) ||
+_solo2__app__admin__help__version_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin help version commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__version_commands] )) ||
+_solo2__app__admin__version_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin version commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__admin__version_commands] )) ||
+_solo2__app__help__admin__version_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help admin version commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__admin__version_commands] )) ||
+_solo2__help__app__admin__version_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app admin version commands' commands "$@"
+}
+(( $+functions[_solo2__help__pki__web_commands] )) ||
+_solo2__help__pki__web_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help pki web commands' commands "$@"
+}
+(( $+functions[_solo2__pki__help__web_commands] )) ||
+_solo2__pki__help__web_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 pki help web commands' commands "$@"
+}
+(( $+functions[_solo2__pki__web_commands] )) ||
+_solo2__pki__web_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 pki web commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__help__wink_commands] )) ||
+_solo2__app__admin__help__wink_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin help wink commands' commands "$@"
+}
+(( $+functions[_solo2__app__admin__wink_commands] )) ||
+_solo2__app__admin__wink_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app admin wink commands' commands "$@"
+}
+(( $+functions[_solo2__app__fido__help__wink_commands] )) ||
+_solo2__app__fido__help__wink_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app fido help wink commands' commands "$@"
+}
+(( $+functions[_solo2__app__fido__wink_commands] )) ||
+_solo2__app__fido__wink_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app fido wink commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__admin__wink_commands] )) ||
+_solo2__app__help__admin__wink_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help admin wink commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__fido__wink_commands] )) ||
+_solo2__app__help__fido__wink_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help fido wink commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__admin__wink_commands] )) ||
+_solo2__help__app__admin__wink_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app admin wink commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__fido__wink_commands] )) ||
+_solo2__help__app__fido__wink_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app fido wink commands' commands "$@"
+}
+(( $+functions[_solo2__app__help__provision__write-file_commands] )) ||
+_solo2__app__help__provision__write-file_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app help provision write-file commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__help__write-file_commands] )) ||
+_solo2__app__provision__help__write-file_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision help write-file commands' commands "$@"
+}
+(( $+functions[_solo2__app__provision__write-file_commands] )) ||
+_solo2__app__provision__write-file_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 app provision write-file commands' commands "$@"
+}
+(( $+functions[_solo2__help__app__provision__write-file_commands] )) ||
+_solo2__help__app__provision__write-file_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help app provision write-file commands' commands "$@"
+}
+(( $+functions[_solo2__completion__help__zsh_commands] )) ||
+_solo2__completion__help__zsh_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 completion help zsh commands' commands "$@"
+}
+(( $+functions[_solo2__completion__zsh_commands] )) ||
+_solo2__completion__zsh_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 completion zsh commands' commands "$@"
+}
+(( $+functions[_solo2__help__completion__zsh_commands] )) ||
+_solo2__help__completion__zsh_commands() {
+    local commands; commands=()
+    _describe -t commands 'solo2 help completion zsh commands' commands "$@"
+}
+
+_solo2 "$@"
