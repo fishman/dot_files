@@ -1,10 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
-
 #!/opt/local/bin/zsh
 source ~/.zinit/bin/zinit.zsh
 zinit light zsh-users/zsh-autosuggestions
@@ -21,6 +14,7 @@ if [ -f ~/.asdf/asdf.sh ]; then
 	fpath=(~/.asdf/completions $fpath)
 fi
 
+fpath=(~/.zsh.d/completions $fpath)
 source ~/.zsh.d/antigen.zsh
 
 if [ $UID -eq 0 ]; then
@@ -32,7 +26,6 @@ else
     zrecompile -p $f && rm -f $f.zwc.old
   done
 fi
-
 
 # PATH="/home/timebomb/perl5/bin${PATH+:}${PATH}"; export PATH;
 # PERL5LIB="/home/timebomb/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
@@ -60,25 +53,26 @@ if [ -f /usr/share/nnn/quitcd/quitcd.bash_zsh ]; then
 fi
 
 setopt extended_glob
+antigen use oh-my-zsh
+
+# # Bundles from the default repo (robbyrussell's oh-my-zsh).
+# antigen bundle git
+# # antigen bundle heroku
+# antigen bundle pip
+# # antigen bundle command-not-found
+# # antigen bundle kubectx
+# # antigen bundle kube-ps1
+
+# # Syntax highlighting bundle.
+# antigen bundle zsh-users/zsh-syntax-highlighting
+
+# Load the theme.
+antigen theme agnoster
+# antigen theme afowler
+
 for zshrc_snipplet in ~/.zsh.d/S[0-9][0-9]*[^~] ; do
   source $zshrc_snipplet
 done
-
-antigen use oh-my-zsh
-
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle git
-# antigen bundle heroku
-antigen bundle pip
-# antigen bundle command-not-found
-# antigen bundle kubectx
-# antigen bundle kube-ps1
-
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
-
-# Load the theme.
-antigen theme afowler
 
 # Tell Antigen that you're done.
 antigen apply

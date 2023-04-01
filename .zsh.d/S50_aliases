@@ -432,3 +432,4 @@ alias rmselect='fzf -m --print0 | xargs -0 -p rm'
 alias ssh="TERM=xterm-256color ssh"
 alias updatemirrors="sudo reflector --latest 10 --protocol http,https --sort rate --save /etc/pacman.d/mirrorlist"
 alias dotfiles='/usr/bin/git --git-dir=/home/timebomb/.dotfiles/ --work-tree=/home/timebomb'
+alias dotfilestig='/usr/bin/tig -C ~/.dotfiles'

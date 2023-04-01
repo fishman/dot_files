@@ -7,7 +7,7 @@ autoload predict-on
 
 #[ a ]##########################################################################
 setopt aliases              # expand aliases
-setopt all_export           # define = export
+# setopt all_export           # define = export
 #setopt always_last_prompt   #
 setopt always_to_end        # always go to end of word after completion
 setopt append_history       # append to history, dont truncate it
@@ -149,7 +149,7 @@ setopt no_sh_file_expansion # dont expand filnames first
 setopt no_sh_glob           # allow globbing with [(|)<]
 #setopt shin_stdin           #
 setopt no_sh_nullcmd        # use my NULLCMD
-setopt sh_option_letters    # interprete single option letters a la ksh
+setopt no_sh_option_letters # interprete single option letters a la ksh
 setopt short_loops          # short loops
 setopt no_sh_word_split     # `s="a b"; a=($s)' => array of length 1, not 2
 #setopt single_command       #
@@ -159,7 +159,7 @@ setopt transient_rprompt    # better for cut/paste
 #setopt typeset_silent       #
 #setopt unset                #
 #setopt verbose              #
-setopt vi                   # use bindkeys
+setopt no_vi                 # use bindkeys
 setopt no_xtrace            # do not debug by default
 setopt zle                  # use zsh le
 # use cursor as indicator of vi mode

@@ -65,4 +65,6 @@ bindkey -s '^p' 'vg^M'
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '^v' edit-command-line
+
+bindkey "^I" expand-or-complete
 # bindkey -M vicmd v edit-command-line
