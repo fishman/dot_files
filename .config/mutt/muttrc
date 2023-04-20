@@ -1,6 +1,6 @@
 # vim: filetype=neomuttrc
 source /usr/local/share/mutt-wizard/mutt-wizard.muttrc
-source /home/timebomb/.config/mutt/accounts/reza@jelveh.me.muttrc
-macro index,pager i1 '<sync-mailbox><enter-command>source /home/timebomb/.config/mutt/accounts/reza@jelveh.me.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to reza@jelveh.me"
+source /home/timebomb/.config/mutt/accounts/default.muttrc
+macro index,pager i1 '<sync-mailbox><enter-command>source /home/timebomb/.config/mutt/accounts/default.muttrc<enter><change-folder>!<enter>;<check-stats>' "switch to default"
 set new_mail_command="notify-send --icon='/usr/share/doc/neomutt/logo/neomutt.svg' \
   'New Email in %f' '%n new messages, %u unread.' &"
