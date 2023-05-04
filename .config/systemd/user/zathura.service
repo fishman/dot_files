@@ -1,0 +1,6 @@
+[Unit]
+ Description=Zathura
+ Documentation=zathura
+
+ [Service]
+ ExecStart=/usr/bin/zathura

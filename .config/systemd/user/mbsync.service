@@ -1,0 +1,18 @@
+[Unit]
+Description=Mailbox synchronization service for user %I
+After=network.target network-online.target dbus.socket
+
+[Service]
+Type=oneshot
+#ExecStartPre=/usr/bin/sh -c '! /usr/bin/pgrep dota2 > /dev/null'
+ExecStart=/usr/bin/mbsync -Va
+ExecStartPost=/usr/bin/notmuch new
+ExecStartPost=/usr/bin/vdirsyncer sync
+ExecStartPost=/usr/bin/notmuch tag --input=$HOME/.config/mutt/notmuch/tags
+User=%i
+#StandardOutput=syslog
+#StandardError=syslog
+Environment=DISPLAY=:0
+
+[Install]
+WantedBy=network.target
