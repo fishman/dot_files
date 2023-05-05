@@ -1,5 +1,6 @@
 {
   "ipc": true,
+  /*"layer": "top",*/
   "position": "top",
   "modules-left": [
     "idle_inhibitor",
@@ -22,30 +23,52 @@
     "custom/powermenu",
   ],
   "sway/workspaces": {
-    "disable-scroll-wraparound": true,
-    "format": " {icon} ",
+    "format": "{icon}",
+    "on-click": "activate",
     "format-icons": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
       "urgent": "",
-      "focused": "",
+      "active": "",
       "default": ""
     },
-    "smooth-scrolling-threshold": 4.5
+    "sort-by-number": true
+  },
+  "wlr/workspaces": {
+    "format": "{icon}",
+    "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "format-icons": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "urgent": "",
+      "active": "",
+      "default": ""
+    },
+    "sort-by-number": true
   },
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {
-      "activated": "",
-      "deactivated": ""
+      "activated": "󰈈",
+      "deactivated": "󰈉"
     },
     "tooltip": true
   },
   "pulseaudio": {
     "format": "{icon}",
-    "format-muted": "婢",
+    "format-muted": "󰖁",
     "format-icons": {
-      "headphone": [" ", " ", " "],
+      "headphone": ["󰥰 ", "󰋋 ", "󰋋 "],
       "headset": ["﫽 ", "﫽 ", "﫽 "],
-      "hands-free": [" ", " ", " "],
+      "hands-free": ["󰏳 ", "󰏳 ", "󰏳 "],
       "default": ["", "", ""]
     },
     "states": {
@@ -65,7 +88,7 @@
       "critical": 10
     },
     "format": "{capacity}% {icon}",
-    "format-icons": ["", "", "", "", "", "", "", "", ""],
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂁", "󰂂", "󰁹"],
     "format-plugged": " ",
     "format-charging": " {icon}",
     "tooltip-format-plugged": "",
@@ -95,14 +118,14 @@
   },
   "memory": {
     "interval": 4,
-    "format": "﬙ {percentage:2}%",
+    "format": "󰍛 {percentage:2}%",
     "states": {
       "warning": 85,
     },
   },
   "cpu": {
     "interval": 4,
-    "format": " {usage:2}%"
+    "format": "󰘚 {usage:2}%"
   },
   "mpd": {
     "max-length": 25,
@@ -120,12 +143,12 @@
   },
   "network": {
     "interval": 4,
-    "format-wifi": "說 {essid}",
-    "format-ethernet": "  {ifname}",
-    "format-linked": "說 {essid} (No IP)",
-    "format-disconnected": "說 Disconnected",
-    "tooltip-format-wifi": "{essid} ({signalStrength}%)\n  {ipaddr}\n  {gwaddr}/{cidr}",
-    "tooltip-format-ethernet": "  {ipaddr}\n  {gwaddr}/{cidr}",
+    "format-wifi": "󰒢 {essid}",
+    "format-ethernet": "󰈀  {ifname}",
+    "format-linked": "󰒢 {essid} (No IP)",
+    "format-disconnected": "󰌙 Disconnected",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%)\n󰖩  {ipaddr}\n  {gwaddr}/{cidr}",
+    "tooltip-format-ethernet": "󰈀  {ipaddr}\n  {gwaddr}/{cidr}",
     "tooltip-format-disconnected": "Disconnected",
     "on-click": "networkmanager_dmenu",
     "on-click-right": "nmtui",
@@ -133,10 +156,10 @@
     "tooltip": true
   },
   "bluetooth": {
-  	"format-on": "",
-    "format-disabled": "",
-    "format-off": "",
-  	"format-connected": " {num_connections}",
+  	"format-on": "󰂯",
+    "format-disabled": "󰂲",
+    "format-off": "󰂲",
+  	"format-connected": "󰂱 {num_connections}",
   	"tooltip-format": "{controller_alias}\t{controller_address}",
   	"tooltip-format-connected": "{device_enumerate}",
   	"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
